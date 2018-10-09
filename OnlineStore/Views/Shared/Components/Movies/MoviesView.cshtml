@@ -1,0 +1,28 @@
+﻿@model IEnumerable<MovieViewModel>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().ReleaseDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Genre)
+        </th> 
+        <th>
+            @Html.DisplayNameFor(model => model.First().Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Rating)
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem => item)
+}
+
+</table>
