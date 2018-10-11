@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DAL.Models.Base;
+using System;
 using System.Collections.Generic;
 
 namespace OnlineStore.Models
 {
-    public partial class Item
+    public partial class Item : EntityBase
     {
         public Item()
         {
@@ -13,7 +14,7 @@ namespace OnlineStore.Models
             LineItem = new HashSet<LineItem>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Name { get; set; }
         public decimal? Price { get; set; }
         public string Description { get; set; }
@@ -24,7 +25,7 @@ namespace OnlineStore.Models
         public bool? Deleted { get; set; }
         public decimal? AverageEvaluation { get; set; }
         public int? EventId { get; set; }
-        public byte[] Timestamp { get; set; }
+        //public byte[] Timestamp { get; set; }
 
         public Category Category { get; set; }
         public Event Event { get; set; }

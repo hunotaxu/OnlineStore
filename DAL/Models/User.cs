@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DAL.Models.Base;
+using System;
 using System.Collections.Generic;
 
 namespace OnlineStore.Models
 {
-    public partial class User
+    public partial class User : EntityBase
     {
         public User()
         {
@@ -11,7 +12,7 @@ namespace OnlineStore.Models
             Order = new HashSet<Order>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
@@ -21,7 +22,7 @@ namespace OnlineStore.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public int? Status { get; set; }
-        public byte[] Timestamp { get; set; }
+        //public byte[] Timestamp { get; set; }
 
         public TypeOfUser TypeOfUser { get; set; }
         public ICollection<Cart> Cart { get; set; }

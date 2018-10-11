@@ -116,27 +116,27 @@ namespace DAL.Repositories.Base
             return persist ? SaveChanges() : 0;
         }
 
-        //internal T GetEntryFromChangeTracker(int? id)
-        //{
-        //    //return Db.ChangeTracker.Entries<T>()
-        //    //    .Select((EntityEntry e) => (T)e.Entity)
-        //    //        .FirstOrDefault(x => x.ID == id);
-        //}
+        internal T GetEntryFromChangeTracker(int? id)
+        {
+            return Db.ChangeTracker.Entries<T>()
+                .Select((EntityEntry e) => (T)e.Entity)
+                    .FirstOrDefault(x => x.Id == id);
+        }
 
-        //public int Delete(int id, byte[] timeStamp, bool persist = true)
-        //{
-        //    var entry = GetEntryFromChangeTracker(id);
-        //    if (entry != null)
-        //    {
-        //        if (entry.Timestamp.SequenceEqual(timeStamp))
-        //        {
-        //            return Delete(entry, persist);
-        //        }
-        //        throw new Exception("Unable to delete due to concurrency violation.");
-        //    }
-        //    Db.Entry(new T { ID = id, Timestamp = timeStamp }).State = EntityState.Deleted;
-        //    return persist ? SaveChanges() : 0;
-        //}
+        public int Delete(int id, byte[] timeStamp, bool persist = true)
+        {
+            var entry = GetEntryFromChangeTracker(id);
+            if (entry != null)
+            {
+                if (entry.Timestamp.SequenceEqual(timeStamp))
+                {
+                    return Delete(entry, persist);
+                }
+                throw new Exception("Unable to delete due to concurrency violation.");
+            }
+            Db.Entry(new T { Id = id, Timestamp = timeStamp }).State = EntityState.Deleted;
+            return persist ? SaveChanges() : 0;
+        }
 
         public int SaveChanges()
         {

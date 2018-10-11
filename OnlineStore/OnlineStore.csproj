@@ -11,14 +11,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.163" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.8.391" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Views\Shared\Components\Movies\MoviesView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
@@ -29,6 +28,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="Views\Shared\Components\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
 </Project>

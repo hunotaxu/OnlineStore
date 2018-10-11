@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DAL.Models.Base;
+using System;
 using System.Collections.Generic;
 
 namespace OnlineStore.Models
 {
-    public partial class TypeOfUser
+    public partial class TypeOfUser : EntityBase
     {
         public TypeOfUser()
         {
@@ -11,9 +12,9 @@ namespace OnlineStore.Models
             UserDecentralization = new HashSet<UserDecentralization>();
         }
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Name { get; set; }
-        public byte[] Timestamp { get; set; }
+        //public byte[] Timestamp { get; set; }
 
         public ICollection<User> User { get; set; }
         public ICollection<UserDecentralization> UserDecentralization { get; set; }
