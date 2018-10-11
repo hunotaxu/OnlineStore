@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OnlineStore.Middleware;
 using OnlineStore.Models;
 
 namespace OnlineStore
@@ -55,6 +56,8 @@ namespace OnlineStore
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            //serve up files from the node_modules folder
+            app.UseNodeModules(env.ContentRootPath);
             app.UseCookiePolicy();
 
             app.UseMvc(configureRoutes);
