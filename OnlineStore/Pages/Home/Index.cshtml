@@ -1,0 +1,45 @@
+﻿@page
+@model IndexModel
+@{
+
+}
+
+@*@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
+}*@
+@*@{
+    IEnumerable<Item> lstDTM = (IEnumerable<Item>)ViewBag.ListDTM;
+    IEnumerable<Item> lstLTM = ViewBag.ListLTM as IEnumerable<Item>;
+    IEnumerable<Item> lstMTBM = ViewBag.ListMTBM as IEnumerable<Item>;
+}*@
+@*@Html.RouteLink("click vào đây để vào trang khách hàng", "khachhang")*@
+@*Bước 1: Chúng ta sẽ tách code và lồng PartialView*@
+@*Bước 2: Gán dữ liệu từ Controller thông qua ViewBag vào partialview*@
+@*Điện thoại*@
+<div class="content-top">
+    <h1>Điện thoại mới nhất </h1>
+    <div class="grid-in">
+        <div class="container">
+            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstDTM)*@
+            <partial name="SanPhamStyle1Partial" model="Model.lstDTM">
+        </div>
+    </div>
+
+    <h1>Máy vi tính xách tay mới nhất </h1>
+    <div class="grid-in">
+        <div class="container">
+            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstLT)*@
+            <partial name="SanPhamStyle1Partial" model="Model.lstLT">
+        </div>
+    </div>
+
+    <h1>Máy tính bảng mới nhất</h1>
+    <div class="grid-in">
+        @*Máy tính bảng*@
+        <div class="container">
+            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstMTB)*@
+            <partial name="SanPhamStyle1Partial" model="Model.lstMTB">
+        </div>
+    </div>
+</div>
