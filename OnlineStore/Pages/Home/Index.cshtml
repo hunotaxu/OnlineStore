@@ -1,18 +1,15 @@
 ﻿@page
-@model IndexModel
+@model OnlineStore.Pages.Home.IndexModel
 @{
-
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Layout/HomeLayout.cshtml";
 }
 
 @*@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Layout/HomeLayout.cshtml";
-}*@
-@*@{
-    IEnumerable<Item> lstDTM = (IEnumerable<Item>)ViewBag.ListDTM;
-    IEnumerable<Item> lstLTM = ViewBag.ListLTM as IEnumerable<Item>;
-    IEnumerable<Item> lstMTBM = ViewBag.ListMTBM as IEnumerable<Item>;
-}*@
+        IEnumerable<Item> lstDTM = (IEnumerable<Item>)ViewBag.ListDTM;
+        IEnumerable<Item> lstLTM = ViewBag.ListLTM as IEnumerable<Item>;
+        IEnumerable<Item> lstMTBM = ViewBag.ListMTBM as IEnumerable<Item>;
+    }*@
 @*@Html.RouteLink("click vào đây để vào trang khách hàng", "khachhang")*@
 @*Bước 1: Chúng ta sẽ tách code và lồng PartialView*@
 @*Bước 2: Gán dữ liệu từ Controller thông qua ViewBag vào partialview*@
@@ -22,7 +19,8 @@
     <div class="grid-in">
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstDTM)*@
-            <partial name="SanPhamStyle1Partial" model="Model.lstDTM">
+            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.lstLT)
+            @*<partial name="SanPhamStyle1Partial" model="Model.lstDTM">*@
         </div>
     </div>
 
@@ -30,7 +28,8 @@
     <div class="grid-in">
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstLT)*@
-            <partial name="SanPhamStyle1Partial" model="Model.lstLT">
+            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.lstLT)
+            @*<partial name="SanPhamStyle1Partial" model="Model.lstLT">*@
         </div>
     </div>
 
@@ -39,7 +38,8 @@
         @*Máy tính bảng*@
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstMTB)*@
-            <partial name="SanPhamStyle1Partial" model="Model.lstMTB">
+            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.LstMTB)
+            @*<partial name="SanPhamStyle1Partial" model="Model.lstMTB">*@
         </div>
     </div>
 </div>

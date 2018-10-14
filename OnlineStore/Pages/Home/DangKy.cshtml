@@ -1,0 +1,289 @@
+﻿@page
+@model OnlineStore.Pages.Home.DangKyModel
+@{
+    ViewData["Title"] = "DangKy";
+    Layout = "~/Pages/Layout/ProductLayout.cshtml";
+}
+
+<h2>Đăng Ký Tài Khoản</h2>
+
+@using (Ajax.BeginForm("DangKy", "Home",
+               new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Họ</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Ho, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ho, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="ho"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Tên Lót</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TenLot, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenLot, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Tên</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="ten"></span>
+        </div>
+        @{
+            var selectList = new SelectList(
+                new List<SelectListItem>
+                {
+                new SelectListItem {Text = "Nam", Value = "True"},
+                new SelectListItem {Text = "Nữ", Value = "False"},
+                }, "Value", "Text");
+        }
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Giới Tính</label>
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.GioiTinh, selectList, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Địa Chỉ</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="diachi"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Số Điện Thoại</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="sdt"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Email</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="email"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Tài Khoản</label>
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+            </div>
+            <span class="col-md-4" id="tk"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Mật Khẩu</label>
+            <div class="col-md-6">
+                <input type="password" name="MatKhau" id="MatKhau" class="form-control" />
+            </div>
+            <span class="col-md-4" id="mk"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" style="text-align:left">Nhập Lại Mật Khẩu</label>
+            <div class="col-md-6">
+                <input type="password" id="NhapLai" class="form-control" />
+            </div>
+            <span class="col-md-4" id="nlmk"></span>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Đăng Ký" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Trở Về", "Index")
+</div>
+<script>
+    function IsCheck() {
+        var rs = true;
+    var x = document.getElementById("Ho").value;
+    if (x == "") {
+        document.getElementById("ho").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("ho").innerHTML = "";
+    }
+
+    var x = document.getElementById("Ten").value;
+    if (x == "") {
+        document.getElementById("ten").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("ten").innerHTML = "";
+    }
+    var x = document.getElementById("DiaChi").value;
+    if (x == "") {
+        document.getElementById("diachi").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("diachi").innerHTML = "";
+    }
+    var x = document.getElementById("SoDienThoai").value;
+    var sdt = isNaN(x);
+    if (x == "") {
+        document.getElementById("sdt").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("sdt").innerHTML = "";
+    }
+    if (sdt == true){
+        document.getElementById("sdt").innerHTML = "Chỉ Nhập Số";
+        rs = false;
+    }
+
+    var x = document.getElementById("Email").value;
+    if (x == "") {
+        document.getElementById("email").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("email").innerHTML = "";
+    }
+    var email = document.getElementById("TaiKhoan").value;
+    if (email == "") {
+        document.getElementById("tk").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("tk").innerHTML = "";
+    }
+    var MK = document.getElementById("MatKhau").value;
+    if (MK == "") {
+        document.getElementById("mk").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("mk").innerHTML = "";
+    }
+    var x = document.getElementById("NhapLai").value;
+    if (x == "") {
+        document.getElementById("nlmk").innerHTML = "Không được để trống";
+        rs = false;
+    }
+    else {
+        document.getElementById("nlmk").innerHTML = "";
+    }
+    if (x != MK) {
+        document.getElementById("nlmk").innerHTML = "Mật khẩu nhập lại không trùng";
+        document.getElementById("NhapLai").innerHTML = "";
+        rs = false;
+    }
+    return rs;
+
+}
+</script>
+@*@using CaptchaMvc.HtmlHelpers
+    @using CaptchaMvc;
+
+    @using WebSiteBanHang.Models
+    @model ThanhVien
+    @{
+        ViewBag.Title = "DangKy";
+        Layout = "~/Views/Layout/ProductLayout.cshtml";
+    }
+
+    <div class="DangKy">
+        <div class=" register">
+            <h1>Đăng ký thành viên</h1>
+            @using (Html.BeginForm()) {
+
+                  @Html.AntiForgeryToken()
+                  <hr />
+                 @Html.ValidationSummary(true)
+                <div class="col-md-6 register-top-grid">
+                    <h3>Thông tin cá nhân</h3>
+                    <div class="titleclass">
+                        <span>@Html.LabelFor(model => model.TaiKhoan, new { @class = "control-label " })</span>
+                        @Html.TextBoxFor(model => model.TaiKhoan, new {@class="cTaiKhoan" })
+                        @Html.ValidationMessageFor(model=>model.TaiKhoan)
+                    </div>
+                    <div class="titleclass">
+                        <span>Họ tên</span>
+                        @Html.TextBox("HoTen")
+                    </div>
+                    <div class="titleclass">
+                        <span>Địa chỉ</span>
+                        @Html.TextBox("DiaChi")
+                    </div>
+                    <div class="titleclass">
+                        <span>Email </span>
+                        @Html.TextBox("Email")
+                    </div>
+                    <div class="titleclass">
+                        <span>Điện thoại </span>
+                        @Html.TextBox("SoDienThoai")
+                    </div>
+                </div>
+                <div class="col-md-6 register-bottom-grid register-top-grid">
+                    <h3>Thông tin đăng nhập</h3>
+                    <div class="titleclass">
+                        <span>Mật khẩu</span>
+                        @Html.Password("MatKhau")
+                    </div>
+                    <div class="titleclass">
+                        <span>Nhập lại mật khẩu</span>
+                        @Html.Password("NhapLaiMatKhau")
+                    </div>
+                    <div class="titleclass">
+                        <span>Câu hỏi bí mật</span>
+                        @Html.DropDownList("CauHoi",null, new {@class="form-control" })
+                    </div>
+                    <div class="titleclass">
+                        <span>Câu trả lời</span>
+                        @Html.TextBox("CauTraLoi")
+                    </div>
+                    <div class="titleclass">
+                        @Html.MathCaptcha()
+                    </div>
+                    <input value="Xác nhận" type="submit">
+                </div>
+                <div class="clearfix"> </div>
+            }
+        </div>
+    </div>
+    <h1 style="color:red;"> @ViewBag.ThongBao</h1>
+    <style>
+        .titleclass {
+            margin-top:1%;
+            text-align:left;
+
+        }
+    </style>
+    <script>
+        $(".titleclass").find("a").prop("href", "#a");
+    </script>*@
+
+

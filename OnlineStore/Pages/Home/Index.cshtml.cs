@@ -13,9 +13,9 @@ namespace OnlineStore.Pages.Home
     {
         private IItemRepository _itemRepository;
 
-        public IList<Item> lstDTM { get; set; }
-        public IList<Item> lstLT { get; set; }
-        public IList<Item> lstMTB { get; set; }
+        public IEnumerable<Item> lstDTM { get; set; }
+        public IEnumerable<Item> lstLT { get; set; }
+        public IEnumerable<Item> lstMTB { get; set; }
 
         public IndexModel(IItemRepository itemRepository)
         {

@@ -32,7 +32,7 @@ namespace OnlineStore
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineStore")));
             services.AddMvc();
-            //services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
             //services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
         }
 
