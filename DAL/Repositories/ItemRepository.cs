@@ -1,10 +1,8 @@
 ﻿using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using OnlineStore.Models;
-using System;
+using DAL.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DAL.Repositories
 {
@@ -15,7 +13,7 @@ namespace DAL.Repositories
 
         }
 
-        public ItemRepository(DbContextOptions<OnlineStoreDBContext> options) : base(options)
+        public ItemRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 
         }

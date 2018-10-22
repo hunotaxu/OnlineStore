@@ -1,10 +1,9 @@
 ﻿using DAL.Models.Base;
-using System;
 using System.Collections.Generic;
 
-namespace OnlineStore.Models
+namespace DAL.Models
 {
-    public partial class Cart : EntityBase
+    public class Cart : EntityBase
     {
         public Cart()
         {

@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL.Models;
 using DAL.Models.Base;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
-using OnlineStore.Models;
 
 namespace DAL.Repositories.Base
 {
     public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
     {
-        protected readonly OnlineStoreDBContext Db;
+        protected readonly OnlineStoreDbContext Db;
         protected RepoBase()
         {
-            Db = new OnlineStoreDBContext();
+            Db = new OnlineStoreDbContext();
             Table = Db.Set<T>();
         }
-        protected RepoBase(DbContextOptions<OnlineStoreDBContext> options)
+        protected RepoBase(DbContextOptions<OnlineStoreDbContext> options)
         {
-            Db = new OnlineStoreDBContext(options);
+            Db = new OnlineStoreDbContext(options);
             Table = Db.Set<T>();
         }
 
         protected DbSet<T> Table;
-        public OnlineStoreDBContext Context => Db;
+        public OnlineStoreDbContext Context => Db;
 
         public bool HasChanges => Db.ChangeTracker.HasChanges();
 
@@ -166,7 +166,7 @@ namespace DAL.Repositories.Base
             }
         }
 
-        bool _disposed = false;
+        bool _disposed;
 
         public void Dispose()
         {

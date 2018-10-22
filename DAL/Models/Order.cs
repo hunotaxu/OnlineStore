@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace OnlineStore.Models
+namespace DAL.Models
 {
-    public partial class Order : EntityBase
+    public class Order : EntityBase
     {
         public Order()
         {

@@ -1,3 +1,5 @@
+using System;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineStore.Middleware;
-using OnlineStore.Models;
 
 namespace OnlineStore
 {
@@ -29,8 +30,19 @@ namespace OnlineStore
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            // Set up in-memory session provider
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddSingleton(_ => Configuration);
-            services.AddDbContext<OnlineStoreDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineStore")));
+            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineStore")));
             services.AddMvc();
             services.AddScoped<IItemRepository, ItemRepository>();
             //services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
@@ -58,8 +70,8 @@ namespace OnlineStore
             app.UseStaticFiles();
             //serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
+            app.UseSession();
             app.UseCookiePolicy();
-
             app.UseMvc(configureRoutes);
         }
 

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineStore.Models
+﻿namespace DAL.Models
 {
-    public partial class GoodsReceiptDetail
+    public class GoodsReceiptDetail
     {
         public int GoodsReceiptId { get; set; }
         public int ItemId { get; set; }

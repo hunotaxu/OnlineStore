@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineStore.Models
+﻿namespace DAL.Models
 {
-    public partial class UserDecentralization
+    public class UserDecentralization
     {
         public int TypeOfUserId { get; set; }
         public int RoleId { get; set; }

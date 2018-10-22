@@ -5,15 +5,6 @@
     Layout = "~/Pages/Layout/HomeLayout.cshtml";
 }
 
-@*@{
-        IEnumerable<Item> lstDTM = (IEnumerable<Item>)ViewBag.ListDTM;
-        IEnumerable<Item> lstLTM = ViewBag.ListLTM as IEnumerable<Item>;
-        IEnumerable<Item> lstMTBM = ViewBag.ListMTBM as IEnumerable<Item>;
-    }*@
-@*@Html.RouteLink("click vào đây để vào trang khách hàng", "khachhang")*@
-@*Bước 1: Chúng ta sẽ tách code và lồng PartialView*@
-@*Bước 2: Gán dữ liệu từ Controller thông qua ViewBag vào partialview*@
-@*Điện thoại*@
 <div class="content-top">
     <h1>Điện thoại mới nhất </h1>
     <div class="grid-in">
@@ -38,7 +29,7 @@
         @*Máy tính bảng*@
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstMTB)*@
-            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.LstMTB)
+            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.lstMTB)
             @*<partial name="SanPhamStyle1Partial" model="Model.lstMTB">*@
         </div>
     </div>

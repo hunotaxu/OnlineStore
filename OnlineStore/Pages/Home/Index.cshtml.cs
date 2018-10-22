@@ -1,22 +1,18 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Models;
+using DAL.Models;
 
 namespace OnlineStore.Pages.Home
 {
     public class IndexModel : PageModel
     {
-        private IItemRepository _itemRepository;
-
+        private readonly IItemRepository _itemRepository;
+        
         public IEnumerable<Item> lstDTM { get; set; }
         public IEnumerable<Item> lstLT { get; set; }
         public IEnumerable<Item> lstMTB { get; set; }
-
+        
         public IndexModel(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;

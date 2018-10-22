@@ -1,10 +1,8 @@
 ﻿using DAL.Models.Base;
-using System;
-using System.Collections.Generic;
 
-namespace OnlineStore.Models
+namespace DAL.Models
 {
-    public partial class Comment : EntityBase
+    public class Comment : EntityBase
     {
         //public int Id { get; set; }
         public string Content { get; set; }

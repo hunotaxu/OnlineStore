@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace SessionSample
+namespace OnlineStore.Extensions
 {
     public static class SessionExtensions
     {

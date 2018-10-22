@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineStore.Models
+﻿namespace DAL.Models
 {
-    public partial class CartDetail
+    public class CartDetail
     {
         public int CartId { get; set; }
         public int ItemId { get; set; }
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
         public byte[] Timestamp { get; set; }
 
         public Cart Cart { get; set; }

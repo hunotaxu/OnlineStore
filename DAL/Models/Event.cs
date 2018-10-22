@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace OnlineStore.Models
+namespace DAL.Models
 {
-    public partial class Event : EntityBase
+    public class Event : EntityBase
     {
         public Event()
         {

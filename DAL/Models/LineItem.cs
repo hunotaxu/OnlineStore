@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace OnlineStore.Models
+﻿namespace DAL.Models
 {
-    public partial class LineItem
+    public class LineItem
     {
         public int OrderId { get; set; }
         public int ItemId { get; set; }
