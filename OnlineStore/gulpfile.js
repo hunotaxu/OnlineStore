@@ -1,11 +1,19 @@
-﻿/// <binding BeforeBuild='clean' Clean='clean' />
+﻿/// <binding BeforeBuild='clean, less' AfterBuild='less' Clean='clean' />
 "use strict";
 
 const gulp = require("gulp"),
+    fs = require("fs"),
+    less = require("gulp-less"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify");
+
+gulp.task("less", function () {
+    return gulp.src('Styles/main.less')
+        .pipe(less())
+        .pipe(gulp.dest('wwwroot/css'));
+});
 
 const paths = {
     webroot: "./wwwroot/"
