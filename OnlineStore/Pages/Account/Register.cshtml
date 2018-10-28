@@ -1,5 +1,7 @@
 ﻿@page
+@using DAL.Models
 @model OnlineStore.Pages.Account.RegisterModel
+
 @{
     ViewData["Title"] = "DangKy";
     Layout = "~/Pages/Layout/ProductLayout.cshtml";
@@ -7,10 +9,10 @@
 
 <h2>Đăng Ký Tài Khoản</h2>
 
-@using (Ajax.BeginForm("DangKy", "Home",
-               new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))
-{
-    @Html.AntiForgeryToken()
+@*@using (Ajax.BeginForm("DangKy", "Home",
+    new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))*@
+<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">
+    @*@Html.AntiForgeryToken()*@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -18,50 +20,45 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Họ</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Ho, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ho, "", new { @class = "text-danger" })
+                <input asp-for="User.LastName" class="form-control" />
+                <span asp-validation-for="User.LastName" class="text-danger"></span>
             </div>
             <span class="col-md-4" id="ho"></span>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Tên Lót</label>
-            <div class="col-md-6">
-                @Html.EditorFor(model => model.TenLot, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenLot, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Tên</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Ten, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Ten, "", new { @class = "text-danger" })
+                <input asp-for="User.FirstName" class="form-control" />
+                <span asp-validation-for="User.FirstName" class="text-danger"></span>
             </div>
             <span class="col-md-4" id="ten"></span>
         </div>
-        @{
-            var selectList = new SelectList(
-                new List<SelectListItem>
-                {
-                new SelectListItem {Text = "Nam", Value = "True"},
-                new SelectListItem {Text = "Nữ", Value = "False"},
-                }, "Value", "Text");
-        }
+        @*@{
+                var selectList = new SelectList(
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem {Text = "Nam", Value = "True"},
+                        new SelectListItem {Text = "Nữ", Value = "False"},
+                    }, "Value", "Text");
+            }*@
         <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Giới Tính</label>
+            <label class="control-label col-md-2" style="text-align:left">Giới tính</label>
             <div class="col-md-6">
-                @Html.DropDownListFor(model => model.GioiTinh, selectList, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                <select asp-for="User.Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                <span asp-validation-for="User.Gender" class="text-danger"></span>
+                @*@Html.DropDownListFor(model => model.GioiTinh, selectList, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })*@
             </div>
-
         </div>
 
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Địa Chỉ</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                <input asp-for="User.Address" class="form-control" />
+                <span asp-validation-for="User.Address" class="text-danger"></span>
+                @*@Html.EditorFor(model => model.DiaChi, new {htmlAttributes = new {@class = "form-control"}})*@
+                @*@Html.ValidationMessageFor(model => model.DiaChi, "", new {@class = "text-danger"})*@
             </div>
             <span class="col-md-4" id="diachi"></span>
         </div>
@@ -69,8 +66,10 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Số Điện Thoại</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })
+                <input asp-for="User.PhoneNumber" class="form-control" />
+                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                @*@Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })*@
             </div>
             <span class="col-md-4" id="sdt"></span>
         </div>
@@ -78,8 +77,10 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Email</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+                @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
             </div>
             <span class="col-md-4" id="email"></span>
         </div>
@@ -87,8 +88,10 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Tài Khoản</label>
             <div class="col-md-6">
-                @Html.EditorFor(model => model.TaiKhoan, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+                <input asp-for="User.Username" class="form-control" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+                @*@Html.EditorFor(model => model.TaiKhoan, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.TaiKhoan, "", new {@class = "text-danger"})*@
             </div>
             <span class="col-md-4" id="tk"></span>
         </div>
@@ -96,7 +99,9 @@
         <div class="form-group">
             <label class="control-label col-md-2" style="text-align:left">Mật Khẩu</label>
             <div class="col-md-6">
-                <input type="password" name="MatKhau" id="MatKhau" class="form-control" />
+                <input asp-for="User.Password" class="form-control" />
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+                @*<input type="password" name="MatKhau" id="MatKhau" class="form-control" />*@
             </div>
             <span class="col-md-4" id="mk"></span>
         </div>
@@ -117,7 +122,7 @@
             </div>
         </div>
     </div>
-}
+</form>
 
 <div>
     @Html.ActionLink("Trở Về", "Index")
@@ -125,85 +130,85 @@
 <script>
     function IsCheck() {
         var rs = true;
-    var x = document.getElementById("Ho").value;
-    if (x == "") {
-        document.getElementById("ho").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("ho").innerHTML = "";
-    }
+        var x = document.getElementById("Ho").value;
+        if (x == "") {
+            document.getElementById("ho").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("ho").innerHTML = "";
+        }
 
-    var x = document.getElementById("Ten").value;
-    if (x == "") {
-        document.getElementById("ten").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("ten").innerHTML = "";
-    }
-    var x = document.getElementById("DiaChi").value;
-    if (x == "") {
-        document.getElementById("diachi").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("diachi").innerHTML = "";
-    }
-    var x = document.getElementById("SoDienThoai").value;
-    var sdt = isNaN(x);
-    if (x == "") {
-        document.getElementById("sdt").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("sdt").innerHTML = "";
-    }
-    if (sdt == true){
-        document.getElementById("sdt").innerHTML = "Chỉ Nhập Số";
-        rs = false;
-    }
+        var x = document.getElementById("Ten").value;
+        if (x == "") {
+            document.getElementById("ten").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("ten").innerHTML = "";
+        }
+        var x = document.getElementById("DiaChi").value;
+        if (x == "") {
+            document.getElementById("diachi").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("diachi").innerHTML = "";
+        }
+        var x = document.getElementById("SoDienThoai").value;
+        var sdt = isNaN(x);
+        if (x == "") {
+            document.getElementById("sdt").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("sdt").innerHTML = "";
+        }
+        if (sdt == true) {
+            document.getElementById("sdt").innerHTML = "Chỉ Nhập Số";
+            rs = false;
+        }
 
-    var x = document.getElementById("Email").value;
-    if (x == "") {
-        document.getElementById("email").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("email").innerHTML = "";
-    }
-    var email = document.getElementById("TaiKhoan").value;
-    if (email == "") {
-        document.getElementById("tk").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("tk").innerHTML = "";
-    }
-    var MK = document.getElementById("MatKhau").value;
-    if (MK == "") {
-        document.getElementById("mk").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("mk").innerHTML = "";
-    }
-    var x = document.getElementById("NhapLai").value;
-    if (x == "") {
-        document.getElementById("nlmk").innerHTML = "Không được để trống";
-        rs = false;
-    }
-    else {
-        document.getElementById("nlmk").innerHTML = "";
-    }
-    if (x != MK) {
-        document.getElementById("nlmk").innerHTML = "Mật khẩu nhập lại không trùng";
-        document.getElementById("NhapLai").innerHTML = "";
-        rs = false;
-    }
-    return rs;
+        var x = document.getElementById("Email").value;
+        if (x == "") {
+            document.getElementById("email").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("email").innerHTML = "";
+        }
+        var email = document.getElementById("TaiKhoan").value;
+        if (email == "") {
+            document.getElementById("tk").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("tk").innerHTML = "";
+        }
+        var MK = document.getElementById("Password").value;
+        if (MK == "") {
+            document.getElementById("mk").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("mk").innerHTML = "";
+        }
+        var x = document.getElementById("NhapLai").value;
+        if (x == "") {
+            document.getElementById("nlmk").innerHTML = "Không được để trống";
+            rs = false;
+        }
+        else {
+            document.getElementById("nlmk").innerHTML = "";
+        }
+        if (x != MK) {
+            document.getElementById("nlmk").innerHTML = "Mật khẩu nhập lại không trùng";
+            document.getElementById("NhapLai").innerHTML = "";
+            rs = false;
+        }
+        return rs;
 
-}
+    }
 </script>
 @*@using CaptchaMvc.HtmlHelpers
     @using CaptchaMvc;

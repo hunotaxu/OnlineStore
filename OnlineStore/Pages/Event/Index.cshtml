@@ -1,0 +1,47 @@
+﻿@page
+@model OnlineStore.Pages.Event.IndexModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
+</script>
+<a class="btn btn-primary" href="@Url.Action("ThemSuKien","SuKien")">Thêm sự kiện</a>
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Mã sự kiện</th>
+        <th>Tên sự kiện</th>
+        <th>Mô tả</th>
+        <th>Hình ảnh</th>
+        <th>Ưu đãi</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Event)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Description</td>
+            <td><img width="200" height="100" src="@Url.Content("~/Content/images/" + @item.Image)" /></td>
+            <td>@item.Bonus %</td>
+            <td>@item.StartDate</td>
+            <td>@item.EndDate</td>
+            <td><span><a class="btn btn-danger" href="@Url.Action("SuaSuKien","SuKien",new { @maSuKien= item.Id})">Sửa sự kiện</a></span><span><br /><a class="btn btn-danger" href="@Url.Action("XoaSuKien","SuKien",new { @maSuKien= item.Id})">Xóa sự kiện</a></span></td>
+            @*<td><a class="btn btn-danger" href="@Url.Action("XoaSuKien","SuKien")">Xóa sự kiện</a></td>*@
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+

@@ -66,7 +66,7 @@
         </div>
         <h2>Đăng nhập</h2>
         <div class="form-info">
-            <form asp-page="/Account/Login" method="POST" data-ajax="true" data-ajax-update="ThongBao">
+            <form asp-page="/Account/Login" ata-ajax-method="POST" data-ajax="true" data-ajax-update="ThongBao">
                 @*@using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })){*@
                 <input class="email TaiKhoan" name="txtTenDangNhap" placeholder="Tên đăng nhập" required="" type="text">
                 <input class="password MatKhau" name="txtMatKhau" placeholder="Mật khẩu" required="" type="password">

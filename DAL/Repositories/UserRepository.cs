@@ -17,6 +17,11 @@ namespace DAL.Repositories
 
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return Table.SingleOrDefault(n => n.Username == username);
+        }
+
         public User GetUser(string username, string password)
         {
             return Table.SingleOrDefault(n => n.Username == username && n.Password == password);

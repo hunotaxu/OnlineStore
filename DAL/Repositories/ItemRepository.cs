@@ -22,5 +22,15 @@ namespace DAL.Repositories
         {
             return GetSome(x => x.Category.Id == categoryId && x.Deleted == false, x => x.Name, true).ToList();
         }
+
+        public Item GetItem(int? id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Item> GetItemByName(string name)
+        {
+            return Table.Where(s => s.Name.Contains(name));
+        }
     }
 }

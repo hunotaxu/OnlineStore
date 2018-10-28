@@ -24,6 +24,7 @@ namespace DAL.Models
         //public byte[] Timestamp { get; set; }
 
         public TypeOfUser TypeOfUser { get; set; }
+        public Gender Gender { get; set; }
         public ICollection<Cart> Cart { get; set; }
         public ICollection<Order> Order { get; set; }
     }
