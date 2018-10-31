@@ -7,7 +7,7 @@ namespace DAL.Models
     {
         public Supplier()
         {
-            GoodsReceipt = new HashSet<GoodsReceipt>();
+            GoodsReceipts = new HashSet<GoodsReceipt>();
         }
 
         //public int Id { get; set; }
@@ -17,6 +17,6 @@ namespace DAL.Models
         public string Email { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public ICollection<GoodsReceipt> GoodsReceipt { get; set; }
+        public ICollection<GoodsReceipt> GoodsReceipts { get; set; }
     }
 }

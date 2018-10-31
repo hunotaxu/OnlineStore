@@ -23,12 +23,12 @@ namespace DAL.Repositories
 
         public int GetQuantity(int cartId)
         {
-            return Find(cartId).CartDetail.Sum(n => n.Quantity);
+            return Find(cartId).CartDetails.Sum(n => n.Quantity);
         }
 
         public decimal GetTotalAmount(int cartId)
         {
-            return Find(cartId).CartDetail.Sum(n => n.Item.Price);
+            return Find(cartId).CartDetails.Sum(n => n.Item.Price);
         }
     }
 }

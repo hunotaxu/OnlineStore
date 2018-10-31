@@ -7,14 +7,14 @@ namespace DAL.Models
     {
         public Cart()
         {
-            CartDetail = new HashSet<CartDetail>();
+            CartDetails = new HashSet<CartDetail>();
         }
 
         //public int Id { get; set; }
         public int CustomerId { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public User Customer { get; set; }
-        public ICollection<CartDetail> CartDetail { get; set; }
+        public Customer Customer { get; set; }
+        public ICollection<CartDetail> CartDetails { get; set; }
     }
 }

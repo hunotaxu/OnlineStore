@@ -1,4 +1,3 @@
-using System;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -36,14 +35,14 @@ namespace OnlineStore
 
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                //// Set a short timeout for easy testing.
+                //options.IdleTimeout = TimeSpan.FromSeconds(10);
                 options.Cookie.HttpOnly = true;
             });
 
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("OnlineStore")));
-            services.AddMvc();
+            services.AddMvc().AddSessionStateTempDataProvider();
             services.AddScoped<IItemRepository, ItemRepository>();
             //services.AddScoped<IMovieGenreRepository, MovieGenreRepository>();
         }

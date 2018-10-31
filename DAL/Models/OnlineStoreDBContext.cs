@@ -49,7 +49,7 @@ namespace DAL.Models
                 entity.Property(e => e.Timestamp).IsRowVersion();
 
                 entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Cart)
+                    .WithMany(p => p.Carts)
                     .HasForeignKey(d => d.CustomerId)
                     .HasConstraintName("FK_Cart_User");
             });
@@ -61,12 +61,12 @@ namespace DAL.Models
                 entity.Property(e => e.Timestamp).IsRowVersion();
 
                 entity.HasOne(d => d.Cart)
-                    .WithMany(p => p.CartDetail)
+                    .WithMany(p => p.CartDetails)
                     .HasForeignKey(d => d.CartId)
                     .HasConstraintName("FK_CartDetail_Cart");
 
                 entity.HasOne(d => d.Item)
-                    .WithMany(p => p.CartDetail)
+                    .WithMany(p => p.CartDetails)
                     .HasForeignKey(d => d.ItemId)
                     .HasConstraintName("FK_CartDetail_Item");
             });
@@ -83,7 +83,7 @@ namespace DAL.Models
                 entity.Property(e => e.Content).HasMaxLength(200);
 
                 entity.HasOne(d => d.Item)
-                    .WithMany(p => p.Comment)
+                    .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.ItemId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Comment_Item");
@@ -109,7 +109,7 @@ namespace DAL.Models
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 0)");
 
                 entity.HasOne(d => d.Supplier)
-                    .WithMany(p => p.GoodsReceipt)
+                    .WithMany(p => p.GoodsReceipts)
                     .HasForeignKey(d => d.SupplierId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_GoodsReceipt_Supplier");
@@ -122,12 +122,12 @@ namespace DAL.Models
                 entity.Property(e => e.Timestamp).IsRowVersion();
 
                 entity.HasOne(d => d.GoodsReceipt)
-                    .WithMany(p => p.GoodsReceiptDetail)
+                    .WithMany(p => p.GoodsReceiptDetails)
                     .HasForeignKey(d => d.GoodsReceiptId)
                     .HasConstraintName("FK_GoodsReceiptDetail_GoodsReceipt");
 
                 entity.HasOne(d => d.Item)
-                    .WithMany(p => p.GoodsReceiptDetail)
+                    .WithMany(p => p.GoodsReceiptDetails)
                     .HasForeignKey(d => d.ItemId)
                     .HasConstraintName("FK_GoodsReceiptDetail_Item");
             });
@@ -166,31 +166,14 @@ namespace DAL.Models
                 entity.Property(e => e.Timestamp).IsRowVersion();
 
                 entity.HasOne(d => d.Item)
-                    .WithMany(p => p.LineItem)
+                    .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.ItemId)
                     .HasConstraintName("FK_LineItem_Item");
 
                 entity.HasOne(d => d.Order)
-                    .WithMany(p => p.LineItem)
+                    .WithMany(p => p.LineItems)
                     .HasForeignKey(d => d.OrderId)
                     .HasConstraintName("FK_LineItem_Order");
-            });
-
-            modelBuilder.Entity<Order>(entity =>
-            {
-                entity.Property(e => e.Bonus).HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.DeliveryDate).HasColumnType("datetime");
-
-                entity.Property(e => e.ShippingFee).HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.Timestamp).IsRowVersion();
-
-                entity.HasOne(d => d.Customer)
-                    .WithMany(p => p.Order)
-                    .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_Order_User");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -251,7 +234,7 @@ namespace DAL.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.TypeOfUser)
-                    .WithMany(p => p.User)
+                    .WithMany(p => p.Users)
                     .HasForeignKey(d => d.TypeOfUserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_User_TypeOfUser");
@@ -262,12 +245,12 @@ namespace DAL.Models
                 entity.HasKey(e => new { e.TypeOfUserId, e.RoleId });
 
                 entity.HasOne(d => d.Role)
-                    .WithMany(p => p.UserDecentralization)
+                    .WithMany(p => p.UserDecentralizations)
                     .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("FK_UserDecentralization_Role");
 
                 entity.HasOne(d => d.TypeOfUser)
-                    .WithMany(p => p.UserDecentralization)
+                    .WithMany(p => p.UserDecentralizations)
                     .HasForeignKey(d => d.TypeOfUserId)
                     .HasConstraintName("FK_UserDecentralization_TypeOfUser");
             });

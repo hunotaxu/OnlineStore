@@ -7,16 +7,16 @@ namespace DAL.Models
     {
         public GoodsReceipt()
         {
-            GoodsReceiptDetail = new HashSet<GoodsReceiptDetail>();
+            GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
         }
 
         //public int Id { get; set; }
-        public int? SupplierId { get; set; }
-        public decimal? TotalAmount { get; set; }
-        public int? EmployeeId { get; set; }
+        public int SupplierId { get; set; }
+        public decimal TotalAmount { get; set; }
+        public int EmployeeId { get; set; }
         //public byte[] Timestamp { get; set; }
 
         public Supplier Supplier { get; set; }
-        public ICollection<GoodsReceiptDetail> GoodsReceiptDetail { get; set; }
+        public ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }
