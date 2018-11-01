@@ -1,21 +1,16 @@
 ﻿using DAL.Models.Base;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models
 {
     public class User : EntityBase
     {
-        public User()
-        {
-            //Cart = new HashSet<Cart>();
-            //Order = new HashSet<Order>();
-        }
-
         //public int Id { get; set; }
+        [Display(Name="Tên")]
         public string FirstName { get; set; }
-        public string LastName { get; set; }
 
+        [Display(Name = "Họ")]
+        public string LastName { get; set; }
 
         public string Address { get; set; }
 
@@ -25,14 +20,15 @@ namespace DAL.Models
         [Display(Name = "Địa chỉ Email")]
         public string Email { get; set; }
 
-        public int? TypeOfUserId { get; set; }
+        public int TypeOfUserId { get; set; }
+
         public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        public int? Status { get; set; }
+        public int Status { get; set; }
         //public byte[] Timestamp { get; set; }
 
         public TypeOfUser TypeOfUser { get; set; }
