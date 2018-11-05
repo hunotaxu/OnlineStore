@@ -1,4 +1,5 @@
-﻿using DAL.Repositories;
+﻿using System.Threading.Tasks;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStore.ViewComponents
@@ -12,12 +13,14 @@ namespace OnlineStore.ViewComponents
             _itemRepository = itemRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public Task<IViewComponentResult> InvokeAsync()
         {
             //Truy vấn lấy về 1 list các sản phẩm
             var lstSP = _itemRepository.GetAll();
             //var lstSP = _itemRepository. db.SANPHAMs;
-            return View("Default", lstSP);
+            //return View("Default", lstSP);
+            return Task.FromResult<IViewComponentResult>(View("Default", lstSP));
+
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using DAL.Models
 @using Microsoft.AspNetCore.Http
 @using OnlineStore.Extensions
-@inject ISession Session
+@*@inject ISession Session*@
 
 <div class="header-top">
     <div class="container">
@@ -15,9 +15,9 @@
         </div>
         <div class="header-left">
             <ul>
-                @if (Session.Get<User>("User") != null)
+                @if (Context.Session.Get<User>("User") != null)
                 {
-                    User tv = Session.Get<User>("User");
+                    User tv = Context.Session.Get<User>("User");
                     <li>Chào @tv.FirstName </li>
                     @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new { @style = "color: red;" })
                     <div class="dropdown">
@@ -37,16 +37,16 @@
             </ul>
             @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
 
-            @if (Session.Get<User>("NGUOIDUNG") == null)
+            @if (Context.Session.Get<User>("NGUOIDUNG") == null)
             {
-                @Component.InvokeAsync("GioHangPartial");
+                @await Component.InvokeAsync("GioHangPartial");
             }
-            @if (Session.Get<User>("NGUOIDUNG") != null)
+            @if (Context.Session.Get<User>("NGUOIDUNG") != null)
             {
-                User user = Session.Get<User>("NGUOIDUNG");
+                User user = Context.Session.Get<User>("NGUOIDUNG");
                 if (user.TypeOfUserId == 1)
                 {
-                    @Component.InvokeAsync("GioHangPartial");
+                    @await Component.InvokeAsync("GioHangPartial");
                 }
             }
             <div class="clearfix"> </div>

@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using System.Threading.Tasks;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Extensions;
@@ -14,17 +15,17 @@ namespace OnlineStore.ViewComponents
             _cartRepository = cartRepository;
         }
 
-        public IViewComponentResult Invoke()
+        public Task<IViewComponentResult> InvokeAsync()
         {
             if (SumQuantity() == 0)
             {
                 ViewBag.TongSoLuong = 0;
                 ViewBag.TongTien = 0;
-                return View("Default");
+                return Task.FromResult<IViewComponentResult>(View("Default"));
             }
             ViewBag.TongSoLuong = SumQuantity();
             ViewBag.TongTien = SumTotalAmount();
-            return View("Default");
+            return Task.FromResult<IViewComponentResult>(View("Default"));
         }
 
         public int SumQuantity()

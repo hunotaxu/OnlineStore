@@ -12,8 +12,9 @@
         {
             <div class="col-md-4 bottom-cd simpleCart_shelfItem">
                 <div class="product-at ">
-                    <a href="@Url.Action("XemChiTiet","SanPham", new { @id=item.Id})">
-                        <img class="img-responsive" src="@Url.Content("~/Content/HinhAnhSP/"+item.Image)" alt="" style="width:150px;height:150px;">
+                    @*<a href="@Url.Action("XemChiTiet", "SanPham", new {@id = item.Id})">*@
+                    <a asp-page="/Product/Detail" asp-route-id="@item.Id">
+                        <img class="img-responsive" src="@Url.Content("~/Content/HinhAnhSP/" + item.Image)" alt="" style="width: 150px; height: 150px;">
                         <div class="pro-grid">
                             <span class="buy-in">@item.Price.ToString("#,##") VNĐ</span>
                         </div>
@@ -48,17 +49,10 @@
 }
 
 <div class="dlink">
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-page="@(Model.Items.PageIndex - 1)"
-       class="btn btn-default @prevDisabled">
+    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex - 1)" class="btn btn-default @prevDisabled">
         Previous
     </a>
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-page="@(Model.Items.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @nextDisabled">
+    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex + 1)" class="btn btn-default @nextDisabled">
         Next
     </a>
     @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
