@@ -20,7 +20,7 @@ namespace DAL.Models
         public int Status { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public User Customer { get; set; }
+        public Customer Customer { get; set; }
         public ICollection<LineItem> LineItems { get; set; }
     }
 }

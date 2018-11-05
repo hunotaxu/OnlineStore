@@ -1,6 +1,9 @@
-﻿namespace DAL.Repositories
+﻿using DAL.Models;
+using DAL.Repositories.Base;
+
+namespace DAL.Repositories
 {
-    public class OrderRepository
+    public class OrderRepository : RepoBase<User>, IOrderRepository
     {
 
     }
