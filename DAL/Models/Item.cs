@@ -25,7 +25,7 @@ namespace DAL.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [Column(TypeName = "nvarchar(500)")]
+        [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }
 
         public string Image { get; set; }
@@ -35,6 +35,8 @@ namespace DAL.Models
         public int View { get; set; }
 
         public int CategoryId { get; set; }
+
+        public string BrandName { get; set; }
 
         public bool Deleted { get; set; }
 

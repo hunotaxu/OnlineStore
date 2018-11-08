@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,20 +8,23 @@ namespace OnlineStore.ViewComponents
 {
     public class MenuPartialViewComponent : ViewComponent
     {
-        private readonly IItemRepository _itemRepository;
+        //private readonly IItemRepository _itemRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public MenuPartialViewComponent(IItemRepository itemRepository)
+        public MenuPartialViewComponent(ICategoryRepository categoryRepository)
         {
-            _itemRepository = itemRepository;
+            _categoryRepository = categoryRepository;
+            //_itemRepository = itemRepository;
         }
 
         public Task<IViewComponentResult> InvokeAsync()
         {
             //Truy vấn lấy về 1 list các sản phẩm
-            var lstSP = _itemRepository.GetAll();
+            //var items = _itemRepository.GetAll();
+            IEnumerable<Category> categories = _categoryRepository.GetAll();
             //var lstSP = _itemRepository. db.SANPHAMs;
             //return View("Default", lstSP);
-            return Task.FromResult<IViewComponentResult>(View("Default", lstSP));
+            return Task.FromResult<IViewComponentResult>(View("Default", categories));
 
         }
     }

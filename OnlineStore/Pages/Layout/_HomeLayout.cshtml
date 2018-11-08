@@ -44,7 +44,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <div class="container">
             <div class="head-top">
                 <div class="logo">
-                    <a href="index.html"><img src="~/Content/images/logo.png" alt=""></a>
+                    <a asp-page="/Home/Index">
+                        <img src="~/images/logo.png" alt="">
+                    </a>
                 </div>
                 @await Component.InvokeAsync("MenuPartial")
                 <div class="clearfix"> </div>

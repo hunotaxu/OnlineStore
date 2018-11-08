@@ -19,7 +19,7 @@
                 {
                     User tv = Context.Session.Get<User>("User");
                     <li>Chào @tv.FirstName </li>
-                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new { @style = "color: red;" })
+                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new {@style = "color: red;"})
                     <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Tài khoản @tv.FirstName</button>
                         <div id="myDropdown" class="dropdown-content">
@@ -39,14 +39,16 @@
 
             @if (Context.Session.Get<User>("NGUOIDUNG") == null)
             {
-                @await Component.InvokeAsync("GioHangPartial");
+                @await Component.InvokeAsync("GioHangPartial")
+                ;
             }
             @if (Context.Session.Get<User>("NGUOIDUNG") != null)
             {
                 User user = Context.Session.Get<User>("NGUOIDUNG");
                 if (user.TypeOfUserId == 1)
                 {
-                    @await Component.InvokeAsync("GioHangPartial");
+                    @await Component.InvokeAsync("GioHangPartial")
+                    ;
                 }
             }
             <div class="clearfix"> </div>

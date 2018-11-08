@@ -1,11 +1,9 @@
 using DAL.EF;
-using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Rewrite;
-using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,6 +55,7 @@ namespace OnlineStore
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
         }
