@@ -23,12 +23,12 @@ namespace OnlineStore.Pages.Event
             DAL.Models.Event evt = _eventRepository.Find(n => n.Id == id);
             if (evt.StartDate != null)
             {
-                TempData["StartDate"] = evt.StartDate.Value.ToString("MM/dd/yyyy");
+                TempData["StartDate"] = evt.StartDate.ToString("MM/dd/yyyy");
             }
 
             if (evt.EndDate != null)
             {
-                TempData["EndDate"] = evt.EndDate.Value.ToString("MM/dd/yyyy");
+                TempData["EndDate"] = evt.EndDate.ToString("MM/dd/yyyy");
             }
             return Page();
         }

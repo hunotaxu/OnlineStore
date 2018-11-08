@@ -1,5 +1,7 @@
-﻿using DAL.Models.Base;
+﻿using System.ComponentModel;
+using DAL.Models.Base;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,8 +14,10 @@ namespace DAL.Models
         [Display(Name = "Họ")]
         public string LastName { get; set; }
 
+        [Column(TypeName = "nvarchar(500)")]
         public string Address { get; set; }
 
+        [Column(TypeName = "varchar(20)")]
         public string PhoneNumber { get; set; }
 
         [EmailAddress]

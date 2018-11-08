@@ -5,7 +5,9 @@ namespace DAL.Models
     public class GoodsReceiptDetail
     {
         public int GoodsReceiptId { get; set; }
+
         public int ItemId { get; set; }
+
         public int Quantity { get; set; }
 
         [Timestamp]

@@ -1,5 +1,6 @@
 ﻿using DAL.Models.Base;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,9 +13,9 @@ namespace DAL.Models
 
         //public int Id { get; set; }
         public int SupplierId { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
-        public int EmployeeId { get; set; }
-        //public byte[] Timestamp { get; set; }
 
         public Supplier Supplier { get; set; }
         public ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }

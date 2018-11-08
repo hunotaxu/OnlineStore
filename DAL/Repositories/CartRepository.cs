@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using DAL.EF;
 using DAL.Models;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;

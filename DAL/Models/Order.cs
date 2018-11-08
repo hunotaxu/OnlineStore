@@ -1,6 +1,8 @@
 ﻿using DAL.Models.Base;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -12,11 +14,19 @@ namespace DAL.Models
         }
 
         //public int Id { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime DeliveryDate { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Bonus { get; set; }
+
         public int EmployeeId { get; set; }
+
         public int CustomerId { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingFee { get; set; }
+
         public int Status { get; set; }
         //public byte[] Timestamp { get; set; }
 

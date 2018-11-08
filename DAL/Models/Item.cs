@@ -1,5 +1,8 @@
 ﻿using DAL.Models.Base;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Models
 {
@@ -14,16 +17,30 @@ namespace DAL.Models
         }
 
         //public int Id { get; set; }
+        [DisplayName("Tên sản phẩm")]
+        [Required]
+        [Column(TypeName="nvarchar(100)")]
         public string Name { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
+
+        [Column(TypeName = "nvarchar(500)")]
         public string Description { get; set; }
-        public byte[] Image { get; set; }
+
+        public string Image { get; set; }
+
         public int Inventory { get; set; }
+
         public int View { get; set; }
+
         public int CategoryId { get; set; }
+
         public bool Deleted { get; set; }
-        public decimal AverageEvaluation { get; set; }
-        public int EventId { get; set; }
+
+        public decimal? AverageEvaluation { get; set; }
+
+        public int? EventId { get; set; }
         //public byte[] Timestamp { get; set; }
 
         public Category Category { get; set; }
