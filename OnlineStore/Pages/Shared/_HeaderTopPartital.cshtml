@@ -7,11 +7,13 @@
     <div class="container">
         <div class="search">
             @*Tạo form submit về action tìm kiếm*@
-            @using (Html.BeginForm("LayTuKhoaTimKiem", "TimKiem"))
-            {
-                <input type="text" name="sTuKhoa" placeholder="Nhập tên sản phẩm cần tìm..">
+            @*@using (Html.BeginForm("LayTuKhoaTimKiem", "TimKiem"))
+                {*@
+            <form asp-page="/Product/Index" method="get">
+                <input type="text" name="searchString" placeholder="Nhập tên sản phẩm cần tìm...">
                 <input type="submit" value="Tìm kiếm">
-            }
+            </form>
+            @*}*@
         </div>
         <div class="header-left">
             <ul>
@@ -19,7 +21,7 @@
                 {
                     User tv = Context.Session.Get<User>("User");
                     <li>Chào @tv.FirstName </li>
-                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new {@style = "color: red;"})
+                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new { @style = "color: red;" })
                     <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Tài khoản @tv.FirstName</button>
                         <div id="myDropdown" class="dropdown-content">

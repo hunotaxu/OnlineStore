@@ -1,61 +1,314 @@
 ﻿@page
+@using DAL.Models
 @using Microsoft.AspNetCore.Http.Extensions
 @model OnlineStore.Pages.Product.IndexModel
+
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Pages/Layout/_ProductLayout.cshtml";
+    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
 }
 
-<div class="col-md-12 product1">
-    <div class=" bottom-product">
-        @foreach (var item in Model.Items.OrderBy(n => n.Price))
-        {
-            <div class="col-md-4 bottom-cd simpleCart_shelfItem">
-                <div class="product-at ">
-                    @*<a href="@Url.Action("XemChiTiet", "SanPham", new {@id = item.Id})">*@
-                    <a asp-page="/Product/Detail" asp-route-id="@item.Id">
-                        <img class="img-responsive" src="@Url.Content("~/Content/HinhAnhSP/" + item.Image)" alt="" style="width: 150px; height: 150px;">
-                        <div class="pro-grid">
-                            <span class="buy-in">@item.Price.ToString("#,##") VNĐ</span>
-                        </div>
-                    </a>
+<div class="product">
+    <div class="container">
+        <div class="col-md-3 product-price">
+            <div class=" rsidebar span_1_of_left">
+                <div class="of-left">
+                    <h3 class="cate">Lọc sản phẩm</h3>
                 </div>
-                <p class="tun">@item.Name</p>
-
-                <form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
-                      data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Request.GetEncodedUrl()" class="btn btn-primary center-block"></form>
-
-                @*@Ajax.ActionLink("Thêm vào giỏ hàng", "ThemGioHangAjax", "GioHang",
-                    new { @MaSP = item.MaSP, @strURL = Request.Url.ToString() },
-                    new AjaxOptions {
-                        HttpMethod = "GET",
-                        UpdateTargetId = "divGioHang",
-                        InsertionMode = InsertionMode.Replace },
-                    new
-                        {
-                            @class = "btn btn-primary center-block"
-
-                        })*@
+                <ul class="menu">
+                    <h4>Thương hiệu</h4>
+                    @foreach (var item in Model.Items.GroupBy(i => i.BrandName))
+                    {
+                        <li><input type="checkbox" />@item.Key</li>
+                    }
+                </ul>
+                <ul class="cute">
+                    @*<input id="input-21e" value="2" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                        title="" disabled="true">*@
+                    <input id="input-21e" value="2" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
+                           title="" disabled="true">
+                    @*<input type="hidden" class="rating" disabled="disabled" value="5" />
+                        <input type="hidden" class="rating" disabled="disabled" value="4" />
+                        <input type="hidden" class="rating" disabled="disabled" value="3" />
+                        <input type="hidden" class="rating" disabled="disabled" value="2" />
+                        <input type="hidden" class="rating" disabled="disabled" value="1" />*@
+                    @*<input type="hidden" class="rating" disabled="disabled" value="5" />
+                        <input type="hidden" class="rating" disabled="disabled" value="4" />
+                        <input type="hidden" class="rating" disabled="disabled" value="3" />
+                        <input type="hidden" class="rating" disabled="disabled" value="2" />
+                        <input type="hidden" class="rating" disabled="disabled" value="1" />*@
+                </ul>
+                @*<li class="item2">
+                        <a href="#"></a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html"></a></li>
+                            <li class="subitem2"><a href="single.html"></a></li>
+                            <li class="subitem3"><a href="single.html"></a></li>
+                        </ul>
+                    </li>
+                    <li class="item3">
+                        <a href="#"></a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html"></a></li>
+                            <li class="subitem2"><a href="single.html"></a></li>
+                            <li class="subitem3"><a href="single.html"></a></li>
+                        </ul>
+                    </li>*@
             </div>
-        }
-        <div class="clearfix"> </div>
+            <!--initiate accordion-->
+            <script type="text/javascript">
+                $(function () {
+                    var menu_ul = $('.menu > li > ul'),
+                        menu_a = $('.menu > li > a');
+                    menu_ul.hide();
+                    menu_a.click(function (e) {
+                        e.preventDefault();
+                        if (!$(this).hasClass('active')) {
+                            menu_a.removeClass('active');
+                            menu_ul.filter(':visible').slideUp('normal');
+                            $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                        } else {
+                            $(this).removeClass('active');
+                            $(this).next().stop(true, true).slideUp('normal');
+                        }
+                    });
+                });
+            </script>
+            <div class="product-middle">
+                <div class="fit-top">
+                    <h6 class="shop-top"></h6>
+                    <a href="single.html" class="shop-now"></a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="sellers">
+                <div class="of-left-in">
+                    <h3 class="tag"></h3>
+                </div>
+                <div class="tags">
+                    @*<ul>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                        </ul>*@
+                </div>
+            </div>
+            <div class="product-bottom">
+                <div class="of-left-in">
+                    <h3 class="best"></h3>
+                </div>
+                <div class="product-go">
+                    <div class=" fashion-grid">
+                        <a href="single.html"><img class="img-responsive " src="images/p1.jpg" alt=""></a>
+
+                    </div>
+                    <div class=" fashion-grid1">
+                        <h6 class="best2">
+                            <a href="single.html">
+                            </a>
+                        </h6>
+
+                        <span class=" price-in1"></span>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+                <div class="product-go">
+                    <div class=" fashion-grid">
+                        <a href="single.html"><img class="img-responsive " src="images/p2.jpg" alt=""></a>
+
+                    </div>
+                    <div class="fashion-grid1">
+                        <h6 class="best2">
+                            <a href="single.html">
+                            </a>
+                        </h6>
+                        <span class=" price-in1"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 product1">
+            <div class="col-md-offset-9">
+                Sắp xếp theo: <select asp-for="CurrentSort" asp-items="Html.GetEnumSelectList<SortType>()" onchange="sortProduct()"></select>
+            </div>
+            <div class="bottom-product">
+                @await Html.PartialAsync("_SearchResultGridPartial", Model.Items)
+            </div>
+            @*<div class="clearfix"></div>
+            <nav class="in">
+                @{
+                    var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
+                    var startIndex = Math.Max(Model.Items.PageIndex - 5, 1);
+                    var finishIndex = Math.Min(Model.Items.PageIndex + 5, Model.Items.Count);
+                }
+                <ul class="pagination">
+                    <li>
+                        <a id="btnPrevious" class="btn btn-default @prevDisabled">«</a>
+                        @*<button id="btnPrevious" class="btn btn-default @prevDisabled"></button>*@
+                        @*<a asp-page-handler="/Product/Index?handler=Search"
+                               asp-route-pageIndex="@(Model.Items.PageIndex - 1)"
+                               asp-route-currentSort="@Model.CurrentSort"
+                               asp-route-currentBrand="@Model.CurrentBrand"
+                               class="btn btn-default @prevDisabled">
+                                Previous
+                            </a>*@
+                    @*</li>*@
+                    @*@{
+                        for (var i = startIndex; i <= finishIndex; i++)
+                        {
+                            if (i == Model.Items.PageIndex)
+                            {
+                                <li class="active"><a>@i<span class="sr-only">(current)</span></a></li>
+                            }
+                            else
+                            {
+                                <li><a href="#">@i<span class="sr-only"></span></a></li>
+                            }
+                        }
+                    }*@
+                    @*<li>*@
+                        @*<a id="btnNext" class="btn btn-default @nextDisabled">»</a>*@
+                        @*<button id="btnNext" class="btn btn-default @nextDisabled"></button>*@
+                        @*<a asp-page-handler="/Product/Index?handler=Search"
+                               asp-route-pageIndex="@(Model.Items.PageIndex + 1)"
+                               asp-route-currentSort="@Model.CurrentSort"
+                               asp-route-currentBrand="@Model.CurrentBrand"
+                               class="btn btn-default @nextDisabled">
+                                Next
+                            </a>*@
+            @*</li>
+                </ul>
+            </nav>*@
+        </div>
     </div>
+    @*@{
+            var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
+        }*@
+
+    @*<div class="dlink">
+        <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex - 1)" class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+        <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex + 1)" class="btn btn-default @nextDisabled">
+            Next
+        </a>
+        @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaLoaiSP }))*@
+    @*</div>*@
 
 </div>
 
-@{
-    var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
+@section Scripts{
+    <script>
+        jQuery.ajaxSettings.traditional = true;
+        var listBrandName = [];
+
+        function sortProduct() {
+            $.ajax({
+                type: "GET",
+                url: "/Product/Index?handler=Search",
+                data: {
+                    "currentSearchString": "@Model.CurrentSearchString",
+                    "currentSort": $('#CurrentSort option:selected').val(),
+                    "currentBrand": listBrandName
+                }
+            }).done(function(result) {
+                $(".bottom-product").html(result);
+            }).fail(function(result) {
+                console.log(result);
+            });
+        }
+
+        $("input[type=checkbox]").change(function() {
+            var brand = $(this).closest("li").text();
+            if (this.checked) {
+                listBrandName.push(brand);
+            } else {
+                listBrandName.splice(listBrandName.indexOf(brand, 1));
+            }
+            $.ajax({
+                type: "GET",
+                url: "/Product/Index?handler=Search",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                cache: false,
+                data: {
+                    "currentSearchString": "@Model.CurrentSearchString",
+                    CurrentSort: $('#CurrentSort option:selected').val(),
+                    "currentBrand": listBrandName
+                }
+            }).done(function(result) {
+                $(".bottom-product").empty();
+                $(".bottom-product").html(result);
+            }).fail(function(result) {
+                console.log(result);
+            });
+        });
+
+        function loadPage(pageIndex) {
+            console.log('page index truyền vào hien tai la: ' + pageIndex);
+            $.ajax({
+                type: "GET",
+                url: "/Product/Index?handler=Search",
+                data: {
+                    "currentSearchString": "@Model.CurrentSearchString",
+                    "currentSort": $('#CurrentSort option:selected').val(),
+                    "currentBrand": listBrandName,
+                    "pageIndex": pageIndex
+                }
+            }).done(function(result) {
+                $(".bottom-product").html(result);
+            }).fail(function(result) {
+                console.log(result);
+            });
+        }
+
+        $(document).on('click', '#btnPrevious', function () {
+            console.log(@(Model.PageIndex));
+            @*loadPage(@(Model.PageIndex - 1));*@
+            @*if (@Model.PageIndex != null) {
+                console.log('Model.PageIndex != null');
+                loadPage(@(Model.PageIndex - 1));
+            } else {
+                console.log('Model.PageIndex != null');
+                loadPage(@(Model.Items.PageIndex - 1));
+            }*@
+        });
+
+        $(document).on('click', '#btnNext', function () {
+            console.log('gia tri cua pageindex là:' + @(Model.PageIndex));
+            if (@(Model.PageIndex) != null && @(Model.PageIndex) != undefined) {
+                console.log('Model.PageIndex != null');
+                @*loadPage(@(Model.PageIndex + 1));*@
+            } else {
+                console.log('Model.PageIndex == null');
+                @*loadPage(@(Model.Items.PageIndex + 1));*@
+            }
+            @*loadPage(@(Model.PageIndex + 1));*@
+        });
+
+        @*$("#btnPrevious").click(function() {
+            loadPage(@(Model.Items.PageIndex - 1));
+        });*@
+
+        @*$("#btnNext").click(function() {
+            loadPage(@(Model.Items.PageIndex + 1));
+        });*@
+    </script>
 }
-
-<div class="dlink">
-    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex - 1)" class="btn btn-default @prevDisabled">
-        Previous
-    </a>
-    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex + 1)" class="btn btn-default @nextDisabled">
-        Next
-    </a>
-    @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaLoaiSP }))*@
-</div>
-

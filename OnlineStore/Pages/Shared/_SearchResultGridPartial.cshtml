@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Http.Extensions
+@model PaginatedList<DAL.Models.Item>
+
+@foreach (var item in Model)
+{
+    <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+        <div class="product-at ">
+            @*<a href="@Url.Action("XemChiTiet", "SanPham", new {@id = item.Id})"><a href="@Url.Action(" XemChiTiet", "SanPham" , new {@id=item.Id})">*@
+            <a asp-page="/Product/Detail" asp-route-id="@item.Id">
+                <img class="img-responsive" src="~/images/ProductImages/@item.Image" alt="" style="width: 150px; height: 150px;">
+                @*<div class="pro-grid">
+                        <span class="buy-in">@item.Price.ToString("#,##") VNĐ</span>
+                    </div>*@
+            </a>
+        </div>
+        <p class="tun">@item.Name</p>
+
+        <form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
+              data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Context.Request.GetEncodedUrl()" class="btn btn-primary center-block">
+            Thêm vào giỏ hàng
+        </form>
+    </div>
+}
+<div class="clearfix"></div>
+<nav class="in">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        var startIndex = Math.Max(Model.PageIndex - 5, 1);
+        var finishIndex = Math.Min(Model.PageIndex + 5, Model.TotalPages);
+    }
+    <ul class="pagination">
+        <li>
+            <a id="btnPrevious" class="btn btn-default @prevDisabled">«</a>
+            @*<button id="btnPrevious" class="btn btn-default @prevDisabled"></button>*@
+            @*<a asp-page-handler="/Product/Index?handler=Search"
+           asp-route-pageIndex="@(Model.Items.PageIndex - 1)"
+           asp-route-currentSort="@Model.CurrentSort"
+           asp-route-currentBrand="@Model.CurrentBrand"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>*@
+        </li>
+        @{
+            for (var i = startIndex; i <= finishIndex; i++)
+            {
+                if (i == Model.PageIndex)
+                {
+                    <li class="active"><a>@i<span class="sr-only">(current)</span></a></li>
+                }
+                else
+                {
+                    <li><a href="#">@i<span class="sr-only"></span></a></li>
+                }
+            }
+        }
+        <li>
+            <a id="btnNext" class="btn btn-default @nextDisabled">»</a>
+            @*<button id="btnNext" class="btn btn-default @nextDisabled"></button>*@
+            @*<a asp-page-handler="/Product/Index?handler=Search"
+                   asp-route-pageIndex="@(Model.Items.PageIndex + 1)"
+                   asp-route-currentSort="@Model.CurrentSort"
+                   asp-route-currentBrand="@Model.CurrentBrand"
+                   class="btn btn-default @nextDisabled">
+                    Next
+                </a>*@
+        </li>
+    </ul>
+</nav>
