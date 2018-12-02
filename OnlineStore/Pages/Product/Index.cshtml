@@ -1,6 +1,5 @@
 ﻿@page
 @using DAL.Models
-@using Microsoft.AspNetCore.Http.Extensions
 @model OnlineStore.Pages.Product.IndexModel
 
 @{
@@ -38,22 +37,6 @@
                         <input type="hidden" class="rating" disabled="disabled" value="2" />
                         <input type="hidden" class="rating" disabled="disabled" value="1" />*@
                 </ul>
-                @*<li class="item2">
-                        <a href="#"></a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="single.html"></a></li>
-                            <li class="subitem2"><a href="single.html"></a></li>
-                            <li class="subitem3"><a href="single.html"></a></li>
-                        </ul>
-                    </li>
-                    <li class="item3">
-                        <a href="#"></a>
-                        <ul class="cute">
-                            <li class="subitem1"><a href="single.html"></a></li>
-                            <li class="subitem2"><a href="single.html"></a></li>
-                            <li class="subitem3"><a href="single.html"></a></li>
-                        </ul>
-                    </li>*@
             </div>
             <!--initiate accordion-->
             <script type="text/javascript">
@@ -86,20 +69,6 @@
                     <h3 class="tag"></h3>
                 </div>
                 <div class="tags">
-                    @*<ul>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                            <li><a href="#"></a></li>
-                        </ul>*@
                 </div>
             </div>
             <div class="product-bottom">
@@ -142,73 +111,12 @@
             <div class="col-md-offset-9">
                 Sắp xếp theo: <select asp-for="CurrentSort" asp-items="Html.GetEnumSelectList<SortType>()" onchange="sortProduct()"></select>
             </div>
+            <input type="hidden" asp-for="CurrentPage" />
             <div class="bottom-product">
                 @await Html.PartialAsync("_SearchResultGridPartial", Model.Items)
             </div>
-            @*<div class="clearfix"></div>
-            <nav class="in">
-                @{
-                    var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
-                    var startIndex = Math.Max(Model.Items.PageIndex - 5, 1);
-                    var finishIndex = Math.Min(Model.Items.PageIndex + 5, Model.Items.Count);
-                }
-                <ul class="pagination">
-                    <li>
-                        <a id="btnPrevious" class="btn btn-default @prevDisabled">«</a>
-                        @*<button id="btnPrevious" class="btn btn-default @prevDisabled"></button>*@
-                        @*<a asp-page-handler="/Product/Index?handler=Search"
-                               asp-route-pageIndex="@(Model.Items.PageIndex - 1)"
-                               asp-route-currentSort="@Model.CurrentSort"
-                               asp-route-currentBrand="@Model.CurrentBrand"
-                               class="btn btn-default @prevDisabled">
-                                Previous
-                            </a>*@
-                    @*</li>*@
-                    @*@{
-                        for (var i = startIndex; i <= finishIndex; i++)
-                        {
-                            if (i == Model.Items.PageIndex)
-                            {
-                                <li class="active"><a>@i<span class="sr-only">(current)</span></a></li>
-                            }
-                            else
-                            {
-                                <li><a href="#">@i<span class="sr-only"></span></a></li>
-                            }
-                        }
-                    }*@
-                    @*<li>*@
-                        @*<a id="btnNext" class="btn btn-default @nextDisabled">»</a>*@
-                        @*<button id="btnNext" class="btn btn-default @nextDisabled"></button>*@
-                        @*<a asp-page-handler="/Product/Index?handler=Search"
-                               asp-route-pageIndex="@(Model.Items.PageIndex + 1)"
-                               asp-route-currentSort="@Model.CurrentSort"
-                               asp-route-currentBrand="@Model.CurrentBrand"
-                               class="btn btn-default @nextDisabled">
-                                Next
-                            </a>*@
-            @*</li>
-                </ul>
-            </nav>*@
         </div>
     </div>
-    @*@{
-            var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
-        }*@
-
-    @*<div class="dlink">
-        <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex - 1)" class="btn btn-default @prevDisabled">
-            Previous
-        </a>
-        <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex + 1)" class="btn btn-default @nextDisabled">
-            Next
-        </a>
-        @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
-            @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaLoaiSP }))*@
-    @*</div>*@
-
 </div>
 
 @section Scripts{
@@ -217,6 +125,7 @@
         var listBrandName = [];
 
         function sortProduct() {
+            $('#CurrentPage').val(1);
             $.ajax({
                 type: "GET",
                 url: "/Product/Index?handler=Search",
@@ -234,6 +143,7 @@
 
         $("input[type=checkbox]").change(function() {
             var brand = $(this).closest("li").text();
+            $('#CurrentPage').val(1);
             if (this.checked) {
                 listBrandName.push(brand);
             } else {
@@ -250,8 +160,8 @@
                 cache: false,
                 data: {
                     "currentSearchString": "@Model.CurrentSearchString",
-                    CurrentSort: $('#CurrentSort option:selected').val(),
-                    "currentBrand": listBrandName
+                    "currentSort": $('#CurrentSort option:selected').val(),
+                    "currentBrand": listBrandName,
                 }
             }).done(function(result) {
                 $(".bottom-product").empty();
@@ -261,8 +171,7 @@
             });
         });
 
-        function loadPage(pageIndex) {
-            console.log('page index truyền vào hien tai la: ' + pageIndex);
+        function loadPage(currentPage) {
             $.ajax({
                 type: "GET",
                 url: "/Product/Index?handler=Search",
@@ -270,45 +179,27 @@
                     "currentSearchString": "@Model.CurrentSearchString",
                     "currentSort": $('#CurrentSort option:selected').val(),
                     "currentBrand": listBrandName,
-                    "pageIndex": pageIndex
+                    "currentPage": currentPage
                 }
             }).done(function(result) {
                 $(".bottom-product").html(result);
+                $('#CurrentPage').val(currentPage);
             }).fail(function(result) {
                 console.log(result);
             });
+
         }
 
-        $(document).on('click', '#btnPrevious', function () {
-            console.log(@(Model.PageIndex));
-            @*loadPage(@(Model.PageIndex - 1));*@
-            @*if (@Model.PageIndex != null) {
-                console.log('Model.PageIndex != null');
-                loadPage(@(Model.PageIndex - 1));
-            } else {
-                console.log('Model.PageIndex != null');
-                loadPage(@(Model.Items.PageIndex - 1));
-            }*@
-        });
+        $(document).on('click',
+            '#btnPrevious',
+            function() {
+                loadPage(Number($('#CurrentPage').val()) - 1);
+            });
 
-        $(document).on('click', '#btnNext', function () {
-            console.log('gia tri cua pageindex là:' + @(Model.PageIndex));
-            if (@(Model.PageIndex) != null && @(Model.PageIndex) != undefined) {
-                console.log('Model.PageIndex != null');
-                @*loadPage(@(Model.PageIndex + 1));*@
-            } else {
-                console.log('Model.PageIndex == null');
-                @*loadPage(@(Model.Items.PageIndex + 1));*@
-            }
-            @*loadPage(@(Model.PageIndex + 1));*@
-        });
-
-        @*$("#btnPrevious").click(function() {
-            loadPage(@(Model.Items.PageIndex - 1));
-        });*@
-
-        @*$("#btnNext").click(function() {
-            loadPage(@(Model.Items.PageIndex + 1));
-        });*@
+        $(document).on('click',
+            '#btnNext',
+            function() {
+                loadPage(Number($('#CurrentPage').val()) + 1);
+            });
     </script>
 }

@@ -13,14 +13,9 @@ namespace OnlineStore.Pages.Product
     public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
-        public string NameSort { get; set; }
-        public string DateSort { get; set; }
-        //public string CurrentFilter { get; set; }
         public SortType CurrentSort { get; set; }
-        public string CurrentBrand { get; set; }
         public string CurrentSearchString { get; set; }
-        public int? PageIndex { get; set; }
-
+        public int CurrentPage { get; set; }
         public PaginatedList<Item> Items { get; set; }
 
         public IndexModel(IItemRepository itemRepository)
@@ -31,46 +26,19 @@ namespace OnlineStore.Pages.Product
         public void OnGet(string searchString)
         {
             List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString))).ToList();
-
-            Items = PaginatedList<Item>.CreateAsync(items, 1, 5);
-
-            //ViewData["Keyword"] = searchString;
+            CurrentPage = 1;
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 5);
             CurrentSearchString = searchString;
-
-            //if (!Items.Any())
-            //{
-            //    return RedirectToPage("/Home/Index");
-            //}
-
-            //return View(lstSP.OrderBy(n => n.DonGia));
-            //return Page();
         }
 
         public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
-            decimal currentMaxPrice, string currentRating, string currentSearchString, int? pageIndex)
+            decimal currentMaxPrice, string currentRating, string currentSearchString, int? currentPage)
         {
             List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((currentSearchString))).ToList();
-            //CurrentSort = sortOrder;
-            //NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //DateSort = sortOrder == "Date" ? "date_desc" : "Date";
-            //if (searchString != null)
-            //{
-            //    pageIndex = 1;
-            //}
-            //else
-            //{
-            //    searchString = currentSearch;
-            //}
-
-            //CurrentSearchString = searchString;
-
-            //List<Item> itemResult = items;
-
-            if (pageIndex != null)
+            if (currentPage != null)
             {
-                PageIndex =  pageIndex;
+                CurrentPage = currentPage.Value;
             }
-
             if (currentBrand.Any())
             {
                 if (currentBrand.Count != items.Count)
@@ -97,10 +65,9 @@ namespace OnlineStore.Pages.Product
             }
 
             int pageSize = 5;
-            Items = PaginatedList<Item>.CreateAsync(items, pageIndex ?? 1, pageSize);
+            Items = PaginatedList<Item>.CreateAsync(items, currentPage ?? 1, pageSize);
 
-            //var myViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { { "itemResult", itemResult } };
-            var myViewData = new ViewDataDictionary(new Microsoft.AspNetCore.Mvc.ModelBinding.EmptyModelMetadataProvider(), new Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary()) { { "Items", Items } };
+            var myViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { { "Items", Items } };
             myViewData.Model = Items;
 
             PartialViewResult result = new PartialViewResult()
