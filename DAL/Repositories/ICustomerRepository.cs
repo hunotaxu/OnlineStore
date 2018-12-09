@@ -5,6 +5,6 @@ namespace DAL.Repositories
 {
     public interface ICustomerRepository : IRepo<Customer>
     {
-
+        bool CheckDuplicateCustomer(string email, string phoneNumber);
     }
 }

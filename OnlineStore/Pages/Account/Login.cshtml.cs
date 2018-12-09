@@ -1,79 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel;
 using DAL.Models;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace OnlineStore.Pages.Account
 {
     public class LoginModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
-        private readonly IUserDecentralizationRepository _userDecentralization;
+        private readonly ICustomerRepository _customerRepository;
 
-        public LoginModel(IUserRepository userRepository, IUserDecentralizationRepository userDecentralization)
+        //public string UsernameMessage { get; set; }
+
+        //public string PasswordMessage { get; set; }
+
+        public LoginModel(ICustomerRepository customerRepository)
         {
-            _userRepository = userRepository;
-            _userDecentralization = userDecentralization;
+            _customerRepository = customerRepository;
+            //UsernameMessage = "";
+            //PasswordMessage = "";
         }
 
-        public ActionResult OnPost(FormCollection f)
+        public IActionResult OnGet()
         {
-            // Kiểm tra tên đăng nhập và mật khẩu
-            string username = f["txtUsername"].ToString();
-            string password = f["txtPassword"].ToString();
-            User user = _userRepository.GetUser(username, password);
-            //NGUOIDUNG tv = db.NGUOIDUNGs.SingleOrDefault(n => n.TaiKhoan == sTaiKhoan && n.MatKhau == sMatKhau);
-            if (user != null)
+            return Page();
+        }
+
+        public IActionResult OnPost(string username, string password)
+        {
+            Customer cus = _customerRepository.Find(c => c.Email.Equals(username) || c.PhoneNumber.Equals(username));
+            if (cus == null)
             {
-                if (user.Status == 0)
-                {
-                    return Content("Tài khoản đã bị khóa!");
-                }
-                else
-                {
-                    IList<UserDecentralization> lstDecentralization = _userDecentralization.GetDecentralizations(user.TypeOfUserId);
-                    string decentralization = "";
-                    if (lstDecentralization != null)
-                    {
-                        foreach (var item in lstDecentralization)
-                        {
-                            decentralization += item.RoleId + ",";
-                        }
-                        decentralization = decentralization.Substring(0, decentralization.Length - 1);
-                        //PhanQuyen(user.Id.ToString(), decentralization);
-                        // Session["NGUOIDUNG"] = user;
-                        HttpContext.Session.Set("User", user);
-                        if (user.TypeOfUserId == 1)
-                        {
-                            return Content("<script>window.location.reload();</script>");
-                        }
-                        if (user.TypeOfUserId == 3)
-                        {
-                            return RedirectToPage("/Account/Index");
-                            //return JavaScript("window.location = '" + Url.Action("Index", "QuanLyTaiKhoan") + "'");
-                        }
-                        if (user.TypeOfUserId == 4)
-                        {
-                            return RedirectToPage("/Account/Index");
-                            //return JavaScript("window.location = '" + Url.Action("Index", "QuanLyTaiKhoan") + "'");
-                        }
-                        if (user.TypeOfUserId == 5)
-                        {
-                            return RedirectToPage("/Product/Index");
-                            //return JavaScript("window.location = '" + Url.Action("Index", "QuanLySanPham") + "'");
-                        }
-                        if (user.TypeOfUserId == 6)
-                        {
-                            return RedirectToPage("/Customer/Index");
-                            //return JavaScript("window.location = '" + Url.Action("Index", "QuanLyKhachHang") + "'");
-                        }
-                    }
-                }
+                ModelState.AddModelError(string.Empty, "Email hoặc số điện thoại không đúng!");
+                return Page();
             }
-            return Content("Tài khoản hoặc mật khẩu không đúng!");
+
+            if (!cus.Password.Equals(password))
+            {
+                ModelState.AddModelError(string.Empty, "Mật khẩu không đúng!");
+                return Page();
+            }
+
+            HttpContext.Session.Set<Customer>("Customer", cus);
+
+            return RedirectToPage("/Home/Index");
         }
 
         //[Authorize(Roles = "31")]

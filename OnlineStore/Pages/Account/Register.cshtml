@@ -3,130 +3,58 @@
 @model OnlineStore.Pages.Account.RegisterModel
 
 @{
-    ViewData["Title"] = "DangKy";
-    Layout = "~/Pages/Layout/_ProductLayout.cshtml";
+    ViewData["Title"] = "";
+    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
 }
-
-<h2>Đăng Ký Tài Khoản</h2>
-
+<div class=" container">
+    <div class=" register">
+        <h1>Tạo tài khoản</h1>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-6 register-top-grid">
+                <div>
+                    <label asp-for="Customer.FullName" class="control-label"></label>
+                    <input asp-for="Customer.FullName" class="form-control"/>
+                    <span asp-validation-for="Customer.FullName" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Customer.DateOfBirth" class="control-label"></label>
+                    <input asp-for="Customer.DateOfBirth" class="form-control"/>
+                    <span asp-validation-for="Customer.DateOfBirth" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Customer.Gender" class="control-label"></label>
+                    <select asp-for="Customer.Gender" placeholder="Chọn" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
+                    <span asp-validation-for="Customer.Gender" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6 register-bottom-grid">
+                <div>
+                    <label asp-for="Customer.PhoneNumber" class="control-label"></label>
+                    <input asp-for="Customer.PhoneNumber" class="form-control"/>
+                    <span asp-validation-for="Customer.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Customer.Email" class="control-label"></label>
+                    <input asp-for="Customer.Email" class="form-control"/>
+                    <span asp-validation-for="Customer.Email" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="Customer.Password" class="control-label"></label>
+                    <input asp-for="Customer.Password" class="form-control"/>
+                    <span asp-validation-for="Customer.Password" class="text-danger"></span>
+                </div>
+                <input type="submit" value="Đăng ký" class="btn btn-default"/>
+            </div>
+            <div class="clearfix"> </div>
+        </form>
+    </div>
+</div>
 @*@using (Ajax.BeginForm("DangKy", "Home",
     new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))*@
-<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">
-    @*@Html.AntiForgeryToken()*@
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Họ</label>
-            <div class="col-md-6">
-                <input asp-for="User.LastName" class="form-control" />
-                <span asp-validation-for="User.LastName" class="text-danger"></span>
-            </div>
-            <span class="col-md-4" id="ho"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Tên</label>
-            <div class="col-md-6">
-                <input asp-for="User.FirstName" class="form-control" />
-                <span asp-validation-for="User.FirstName" class="text-danger"></span>
-            </div>
-            <span class="col-md-4" id="ten"></span>
-        </div>
-        @*@{
-                var selectList = new SelectList(
-                    new List<SelectListItem>
-                    {
-                        new SelectListItem {Text = "Nam", Value = "True"},
-                        new SelectListItem {Text = "Nữ", Value = "False"},
-                    }, "Value", "Text");
-            }*@
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Giới tính</label>
-            <div class="col-md-6">
-                <select asp-for="User.Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="form-control"></select>
-                <span asp-validation-for="User.Gender" class="text-danger"></span>
-                @*@Html.DropDownListFor(model => model.GioiTinh, selectList, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Địa Chỉ</label>
-            <div class="col-md-6">
-                <input asp-for="User.Address" class="form-control" />
-                <span asp-validation-for="User.Address" class="text-danger"></span>
-                @*@Html.EditorFor(model => model.DiaChi, new {htmlAttributes = new {@class = "form-control"}})*@
-                @*@Html.ValidationMessageFor(model => model.DiaChi, "", new {@class = "text-danger"})*@
-            </div>
-            <span class="col-md-4" id="diachi"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Số Điện Thoại</label>
-            <div class="col-md-6">
-                <input asp-for="User.PhoneNumber" class="form-control" />
-                <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
-                @*@Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.SoDienThoai, "", new { @class = "text-danger" })*@
-            </div>
-            <span class="col-md-4" id="sdt"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Email</label>
-            <div class="col-md-6">
-                <input asp-for="User.Email" class="form-control" />
-                <span asp-validation-for="User.Email" class="text-danger"></span>
-                @*@Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })*@
-            </div>
-            <span class="col-md-4" id="email"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Tài Khoản</label>
-            <div class="col-md-6">
-                <input asp-for="User.Username" class="form-control" />
-                <span asp-validation-for="User.Username" class="text-danger"></span>
-                @*@Html.EditorFor(model => model.TaiKhoan, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.TaiKhoan, "", new {@class = "text-danger"})*@
-            </div>
-            <span class="col-md-4" id="tk"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Mật Khẩu</label>
-            <div class="col-md-6">
-                <input asp-for="User.Password" class="form-control" />
-                <span asp-validation-for="User.Password" class="text-danger"></span>
-                @*<input type="password" name="MatKhau" id="MatKhau" class="form-control" />*@
-            </div>
-            <span class="col-md-4" id="mk"></span>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" style="text-align:left">Nhập Lại Mật Khẩu</label>
-            <div class="col-md-6">
-                <input type="password" id="NhapLai" class="form-control" />
-            </div>
-            <span class="col-md-4" id="nlmk"></span>
-        </div>
-
-
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Đăng Ký" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-</form>
-
-<div>
-    @Html.ActionLink("Trở Về", "Index")
-</div>
+@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">*@
+@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">*@
+@*@Html.AntiForgeryToken()*@
 <script>
     function IsCheck() {
         var rs = true;
@@ -290,5 +218,14 @@
     <script>
         $(".titleclass").find("a").prop("href", "#a");
     </script>*@
+<style>
+    .titleclass {
+        margin-top: 1%;
+        text-align: left;
+    }
+</style>
+<script>
+    $(".titleclass").find("a").prop("href", "#a");
+</script>
 
 

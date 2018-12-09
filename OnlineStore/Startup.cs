@@ -1,3 +1,4 @@
+using System;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -30,15 +31,10 @@ namespace OnlineStore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // Set up in-memory session provider
-            services.AddDistributedMemoryCache();
-
-            services.AddSession(options =>
-            {
-                //// Set a short timeout for easy testing.
-                //options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);
             });
+            services.AddMemoryCache();
 
             services.AddSingleton(_ => _configuration);
             services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
@@ -47,7 +43,6 @@ namespace OnlineStore
                 options.Conventions.AddPageRoute("/Home/Index", "");
             });
 
-            services.AddMvc();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
@@ -82,8 +77,8 @@ namespace OnlineStore
             app.UseStaticFiles();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
-            app.UseSession();
             app.UseCookiePolicy();
+            app.UseSession();
             app.UseMvc();
         }
     }

@@ -2,8 +2,7 @@
 {
     public enum Gender
     {
-        Male,
-        Female,
-        Unknown
+        Nam,
+        Nữ
     }
 }

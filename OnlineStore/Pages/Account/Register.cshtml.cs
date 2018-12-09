@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using System.Threading.Tasks;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -7,14 +8,14 @@ namespace OnlineStore.Pages.Account
 {
     public class RegisterModel : PageModel
     {
-        private readonly IUserRepository _userRepository;
+        private readonly ICustomerRepository _customerRepository;
 
         [BindProperty]
-        public new User User { get; set; }
+        public Customer Customer { get; set; }
 
-        public RegisterModel(IUserRepository userRepository)
+        public RegisterModel(ICustomerRepository customerRepository)
         {
-            _userRepository = userRepository;
+            _customerRepository = customerRepository;
         }
 
         public IActionResult OnGet()
@@ -24,17 +25,20 @@ namespace OnlineStore.Pages.Account
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                User user = _userRepository.GetUserByUsername(User.Username);
-                if (user != null)
-                {
-                    return Content("Tài khoản đã tồn tại");
-                }
-                _userRepository.Update(User);
-                return RedirectToPage("/Home/Index");
+                return Page();
             }
-            return Page();
+
+            if (_customerRepository.CheckDuplicateCustomer(Customer.Email, Customer.Password))
+            {
+                return Page();
+            }
+            Customer.TypeOfCustomerId = 1;
+            _customerRepository.Add(Customer);
+            _customerRepository.SaveChanges();
+
+            return RedirectToPage("/Account/Login");
         }
     }
 }
