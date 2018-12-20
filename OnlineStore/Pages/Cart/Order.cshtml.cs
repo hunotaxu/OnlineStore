@@ -11,7 +11,7 @@ namespace OnlineStore.Pages.Cart
         private ICartRepository _cartRepository;
         private IOrderRepository _orderRepository;
 
-        [BindProperty] public User User { get; set; }
+        [BindProperty] public Customer Customer { get; set; }
 
         [BindProperty] public Order Order { get; set; }
 

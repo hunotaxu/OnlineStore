@@ -1,7 +1,5 @@
-﻿using System.ComponentModel;
-using DAL.Models;
+﻿using DAL.Models;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Extensions;
@@ -20,8 +18,6 @@ namespace OnlineStore.Pages.Account
         public LoginModel(ICustomerRepository customerRepository)
         {
             _customerRepository = customerRepository;
-            //UsernameMessage = "";
-            //PasswordMessage = "";
         }
 
         public IActionResult OnGet()
@@ -29,7 +25,7 @@ namespace OnlineStore.Pages.Account
             return Page();
         }
 
-        public IActionResult OnPost(string username, string password)
+        public IActionResult OnPost(string username, string password, string url, string itemId)
         {
             Customer cus = _customerRepository.Find(c => c.Email.Equals(username) || c.PhoneNumber.Equals(username));
             if (cus == null)
@@ -45,7 +41,10 @@ namespace OnlineStore.Pages.Account
             }
 
             HttpContext.Session.Set<Customer>("Customer", cus);
-
+            if (itemId != null && !itemId.Equals(""))
+            {
+                return Redirect("/Cart/Create?handler=AddItem&itemId=" + itemId);
+            }
             return RedirectToPage("/Home/Index");
         }
 

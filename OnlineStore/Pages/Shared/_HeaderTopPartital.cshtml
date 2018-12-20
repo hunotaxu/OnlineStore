@@ -1,5 +1,6 @@
 ﻿@using DAL.Models
 @using OnlineStore.Extensions
+@using Microsoft.AspNetCore.Http
 
 <div class="header-top">
     <div class="container">
@@ -36,43 +37,84 @@
                 }
             </ul>
             @await Component.InvokeAsync("GioHangPartial")
+            @*@if (Context.Session.Get<Customer>("Customer") != null)
+                {
+                    Customer tv = Context.Session.Get<Customer>("Customer");
+                    <li>Chào @tv.FullName.ToString()</li>
+                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new { @style = "color: red;" })
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Tài khoản @tv.FullName.ToString()</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            @Html.ActionLink("Thông tin cá nhân", "Index", "KhachHang")
+                            @Html.ActionLink("Đổi Mật Khẩu", "DoiMatKhau", "KhachHang")
+                            @Html.ActionLink("Đăng xuất", "DangXuat", "Home")
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    @*<li style="display: inline;"><a id="btnDangNhapDanhGia" class="lock" href="#">Đăng nhập</a></li>*@
+            @*<li style="display: inline;"><a class="lock" asp-page="/Account/Login">Đăng nhập</a></li>
+                <li style="display: inline;"><a class="lock" asp-page="/Account/Register">Đăng ký</a></li>*@
+            }
+            @*</ul>*@
+            @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
+
+            @*@if (Context.Session.Get<User>("NGUOIDUNG") == null)
+                {
+                    @await Component.InvokeAsync("GioHangPartial");
+                }
+                @if (Context.Session.Get<User>("NGUOIDUNG") != null)
+                {
+                    User user = Context.Session.Get<User>("NGUOIDUNG");
+                    if (user.TypeOfUserId == 1)
+                    {
+                        @await Component.InvokeAsync("GioHangPartial")
+                    }
+                }*@
             <div class="clearfix"> </div>
         </div>
         <div class="clearfix"> </div>
     </div>
 </div>
 <br />
-@*Tạo 1 div bên ngoài chứa div login-form *@
-<div id="popup_login">
-    <div class="login-form" id="login-form">
-        <div style="clear:both;text-align:right;margin-bottom:0;">
-            <span id="close-form" class="btn btn-danger">X</span>
-        </div>
-        <h2>Đăng nhập</h2>
-        <div class="form-info">
-            <form asp-page="/Account/Login" data-ajax-method="POST" data-ajax="true" data-ajax-update="ThongBao">
-                @*@using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })){*@
-                <input class="email TaiKhoan" name="txtTenDangNhap" placeholder="Tên đăng nhập" required="" type="text">
-                <input class="password MatKhau" name="txtMatKhau" placeholder="Mật khẩu" required="" type="password">
-                <p><a href="#">Quên mật khẩu?</a></p>
-                <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"> </h3>
-                <ul class="login-buttons">
-                    <li><input value="Đăng nhập" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>
-                    <li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>
-                </ul>
-            </form>
-            @*}*@
 
+<link href="~/css/style_form_dangnhap.css" rel="stylesheet" />
+
+@*Tạo 1 div bên ngoài chứa div login-form *@
+@*<div id="popup_login">
+        <div class="login-form" id="login-form">
+            <div style="clear:both;text-align:right;margin-bottom:0;">
+                <span id="close-form" class="btn btn-danger">X</span>
+            </div>
+            <h2>Đăng nhập</h2>
+            <div class="form-info">
+                @*<form asp-page="/Account/Login" data-ajax-method="POST" data-ajax="true" data-ajax-update="ThongBao">
+                <form asp-page="/Account/Login" method="post">
+                    @using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })){
+                    <input type="hidden" name="url" value="@Context.Request.Path" />
+                    <input class="email TaiKhoan" name="username" placeholder="Email hoặc số điện thoại" required="" type="text">
+                    <input class="password MatKhau" name="password" placeholder="Mật khẩu" required="" type="password">
+                    <p><a href="#">Quên mật khẩu?</a></p>
+                    <p>Chưa có tài khoản? <a asp-page="/Account/Register">Đăng ký ngay</a></p>
+                    <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"> </h3>
+                    <ul class="login-buttons">
+                        <li><input value="Đăng nhập" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>
+                        <li><input value="Đăng ký" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>
+                        <li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>
+                    </ul>
+                </form>
+                }
+
+            </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 
 <style>
     #close-form {
         color: white;
     }
-
 
     #login-form {
         background: #3a3a46;
@@ -112,8 +154,8 @@
         var TaiKhoan = $(".TaiKhoan").val();
         var MatKhau = $(".MatKhau").val();
         //alert("Tài khoản:" + TaiKhoan + "\n Mật khẩu:" + MatKhau);
-        if (TaiKhoan == "") {
-            alert("Lỗi");
+        if (TaiKhoan.length === 0 || MatKhau.length === 0) {
+            toastr.error("Đã có lỗi xãy ra");
             return;
         }
     });

@@ -9,7 +9,7 @@ namespace DAL.Models
     {
         public Customer()
         {
-            Carts = new HashSet<Cart>();
+            Cart = new Cart();
             Orders = new HashSet<Order>();
             Comments = new HashSet<Comment>();
         }
@@ -63,7 +63,7 @@ namespace DAL.Models
         public Gender Gender { get; set; }
 
         public TypeOfCustomer TypeOfCustomer { get; set; }
-        public ICollection<Cart> Carts { get; set; }
+        public Cart Cart { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Comment> Comments { get; set; }
     }

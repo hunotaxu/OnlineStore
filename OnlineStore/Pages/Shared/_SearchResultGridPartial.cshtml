@@ -10,11 +10,11 @@
             </a>
         </div>
         <p class="tun">@item.Name</p>
-
-        <form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
-              data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Context.Request.GetEncodedUrl()" class="btn btn-primary center-block">
-            Thêm vào giỏ hàng
-        </form>
+        <p class="tun">@item.Price.ToString("#,##") VNĐ</p>
+        @*<form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
+                  data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Context.Request.GetEncodedUrl()" class="btn btn-primary center-block">
+                Thêm vào giỏ hàng
+            </form>*@
     </div>
 }
 <div class="clearfix"></div>

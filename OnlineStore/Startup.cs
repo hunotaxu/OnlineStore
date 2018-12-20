@@ -31,17 +31,21 @@ namespace OnlineStore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
             });
             services.AddMemoryCache();
-
-            services.AddSingleton(_ => _configuration);
-            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
-            services.AddMvc().AddSessionStateTempDataProvider().AddRazorPagesOptions(options =>
+            services.AddMvc().AddRazorPagesOptions(options =>
             {
                 options.Conventions.AddPageRoute("/Home/Index", "");
             });
+            services.AddSingleton(_ => _configuration);
+            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
+            //services.AddMvc().AddSessionStateTempDataProvider().AddRazorPagesOptions(options =>
+            //{
+            //    options.Conventions.AddPageRoute("/Home/Index", "");
+            //});
 
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
@@ -53,6 +57,8 @@ namespace OnlineStore
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICartDetailRepository, CartDetailRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,11 +79,12 @@ namespace OnlineStore
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseHttpsRedirection();
             app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
             app.UseSession();
             app.UseMvc();
         }
