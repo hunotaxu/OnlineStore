@@ -1,6 +1,5 @@
 ﻿@using DAL.Models
 @using OnlineStore.Extensions
-@using Microsoft.AspNetCore.Http
 
 <div class="header-top">
     <div class="container">
@@ -36,7 +35,7 @@
                     }
                 }
             </ul>
-            @await Component.InvokeAsync("GioHangPartial")
+            @await Component.InvokeAsync("CartPartial")
             @*@if (Context.Session.Get<Customer>("Customer") != null)
                 {
                     Customer tv = Context.Session.Get<Customer>("Customer");

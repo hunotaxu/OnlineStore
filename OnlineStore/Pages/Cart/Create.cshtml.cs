@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using DAL.Models;
+﻿using DAL.Models;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Extensions;
@@ -10,35 +8,43 @@ namespace OnlineStore.Pages.Cart
 {
     public class CreateModel : PageModel
     {
-        private readonly IItemRepository _itemRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
+        private readonly ICartRepository _cartRepository;
 
-
-        public CreateModel(IItemRepository itemRepository, ICartDetailRepository cartDetailRepository)
+        public CreateModel(ICartDetailRepository cartDetailRepository, ICartRepository cartRepository)
         {
-            _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
-        }
-
-        public void OnGet(string itemId)
-        {
-
+            _cartRepository = cartRepository;
         }
 
         public IActionResult OnGetAddItem(int itemId)
         {
             Customer cus = HttpContext.Session.Get<Customer>("Customer");
-            CartDetail itemCart = cus.Carts.CartDetails.SingleOrDefault(c => c.ItemId == itemId);
+            //DAL.Models.Cart cart = new DAL.Models.Cart();
+            DAL.Models.Cart cart = _cartRepository.Find(m => m.CustomerId == cus.Id);
+            if (cart == null)
+            {
+                cart = new DAL.Models.Cart
+                {
+                    CustomerId = cus.Id
+                };
+                _cartRepository.Add(cart);
+            }
+
+            //CartDetail itemCart = cus.Cart.CartDetails.SingleOrDefault(c => c.ItemId == itemId);
+
+            CartDetail itemCart = _cartDetailRepository.Find(c => c.CartId == cart.Id && c.ItemId == itemId);
+
             if (itemCart != null)
             {
                 itemCart.Quantity++;
+                _cartDetailRepository.Update(itemCart);
             }
             else
             {
-                Item item = _itemRepository.Find(itemId);
                 CartDetail cartDetail = new CartDetail
                 {
-                    CartId = cus.Carts.Id,
+                    CartId = cart.Id,
                     ItemId = itemId,
                     Quantity = 1
                 };
