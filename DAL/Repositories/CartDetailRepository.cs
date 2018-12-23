@@ -41,6 +41,26 @@ namespace DAL.Repositories
             return persist ? SaveChanges() : 0;
         }
 
+        public int Update(int itemId, int cartId, int newQuantity, bool persist = true)
+        {
+            CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
+            Table.Attach(cartDetail).State = EntityState.Deleted;
+            return persist ? SaveChanges() : 0;
+        }
+
+        public virtual int Delete(CartDetail entity, bool persist = true)
+        {
+            Table.Remove(entity);
+            return persist ? SaveChanges() : 0;
+        }
+
+        public int Delete(int itemId, int cartId, bool persist = true)
+        {
+            CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
+            Table.Attach(cartDetail).State = EntityState.Deleted;
+            return persist ? SaveChanges() : 0;
+        }
+
         public int SaveChanges()
         {
             try

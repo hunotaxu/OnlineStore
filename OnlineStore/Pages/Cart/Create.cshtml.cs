@@ -31,8 +31,6 @@ namespace OnlineStore.Pages.Cart
                 _cartRepository.Add(cart);
             }
 
-            //CartDetail itemCart = cus.Cart.CartDetails.SingleOrDefault(c => c.ItemId == itemId);
-
             CartDetail itemCart = _cartDetailRepository.Find(c => c.CartId == cart.Id && c.ItemId == itemId);
 
             if (itemCart != null)

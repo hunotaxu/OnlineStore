@@ -6,11 +6,11 @@ using OnlineStore.Extensions;
 
 namespace OnlineStore.ViewComponents
 {
-    public class GioHangPartialViewComponent : ViewComponent
+    public class CartPartialViewComponent : ViewComponent
     {
         private readonly ICartRepository _cartRepository;
 
-        public GioHangPartialViewComponent(ICartRepository cartRepository)
+        public CartPartialViewComponent(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
         }
@@ -31,18 +31,18 @@ namespace OnlineStore.ViewComponents
         public int SumQuantity()
         {
             Cart cart;
-            var user = HttpContext.Session.Get<User>("User");
-            if (user != null)
+            var cus = HttpContext.Session.Get<Customer>("Customer");
+            if (cus != null)
             {
-                cart = GetCart(user.Id);
+                cart = GetCart(cus.Id);
             }
             else
             {
-                cart = HttpContext.Session.Get<Cart>("Cart");
-                if (cart == null)
-                {
+                ////cart = HttpContext.Session.Get<Cart>("Cart");
+                //if (cart == null)
+                //{
                     return 0;
-                }
+                //}
             }
             return _cartRepository.GetQuantity(cart.Id);
         }
@@ -70,7 +70,7 @@ namespace OnlineStore.ViewComponents
         public Cart GetCart(int customerId)
         {
             Cart cart = _cartRepository.GetCartByCustomerId(customerId);
-            HttpContext.Session.Set("Cart", cart);
+            //HttpContext.Session.Set("Cart", cart);
             return cart;
         }
     }
