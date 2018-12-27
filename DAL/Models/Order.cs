@@ -17,6 +17,9 @@ namespace DAL.Models
         [DataType(DataType.DateTime)]
         public DateTime DeliveryDate { get; set; }
 
+        [DataType(DataType.DateTime)]
+        public DateTime OrderDate { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal Bonus { get; set; }
 

@@ -9,8 +9,6 @@ namespace DAL.Repositories
         public bool CheckDuplicateCustomer(string email, string phoneNumber)
         {
             return Table.Any(c => c.Email == email || c.PhoneNumber == phoneNumber);
-            //GetSome(c => c.Email == email || c.PhoneNumber == phoneNumber);
-            //return Table.SingleOrDefault(n => n.Username == username);
         }
     }
 }

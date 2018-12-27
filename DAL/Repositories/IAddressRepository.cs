@@ -3,8 +3,8 @@ using DAL.Repositories.Base;
 
 namespace DAL.Repositories
 {
-    public interface IOrderRepository : IRepo<Order>
+    public interface IAddressRepository : IRepo<Address>
     {
-        int GetMaxId();
+
     }
 }

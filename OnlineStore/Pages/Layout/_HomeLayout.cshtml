@@ -10,6 +10,7 @@
     <environment include="Development">
         <!--Styles-->
         <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/form-validation-order.css" rel="stylesheet" />
         <link href="~/css/style.css" rel="stylesheet" />
         <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
         <link href="~/css/star-rating.css" rel="stylesheet" />
@@ -22,6 +23,8 @@
         <script>$(document).ready(function () { $(".memenu").memenu(); });</script>
         <script src="~/js/star-rating.js"></script>
         <script src="~/js/toastr.js"></script>
+        <script src="~/js/holder.min.js"></script>
+        <script src="~/js/popper.min.js"></script>
         <script src="~/node_modules/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js"></script>
     </environment>
     <environment exclude="Development">
@@ -131,6 +134,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     @RenderSection("Scripts", required: false)
-
+    @RenderSection("Styles", required: false)
 </body>
 </html>

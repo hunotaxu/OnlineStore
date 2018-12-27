@@ -31,10 +31,7 @@ namespace OnlineStore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(5);
-            });
+            services.AddSession();
             services.AddMemoryCache();
             services.AddMvc().AddRazorPagesOptions(options =>
             {
@@ -42,10 +39,6 @@ namespace OnlineStore
             });
             services.AddSingleton(_ => _configuration);
             services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
-            //services.AddMvc().AddSessionStateTempDataProvider().AddRazorPagesOptions(options =>
-            //{
-            //    options.Conventions.AddPageRoute("/Home/Index", "");
-            //});
 
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
@@ -58,6 +51,7 @@ namespace OnlineStore
             services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -67,12 +61,7 @@ namespace OnlineStore
         {
             if (env.IsDevelopment())
             {
-                // app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
-                //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                //{
-                //    StoreDataInitializer.InitializeData(app.ApplicationServices);
-                //}
             }
             else
             {

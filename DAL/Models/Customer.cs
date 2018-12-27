@@ -12,6 +12,7 @@ namespace DAL.Models
             Cart = new Cart();
             Orders = new HashSet<Order>();
             Comments = new HashSet<Comment>();
+			Addresses = new HashSet<Address>();
         }
 
         [Required(ErrorMessage = "Họ tên là bắt buộc. Vui lòng nhập")]
@@ -66,5 +67,6 @@ namespace DAL.Models
         public Cart Cart { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }
