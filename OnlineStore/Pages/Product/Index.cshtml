@@ -1,7 +1,6 @@
 ﻿@page
-@using DAL.Models
+@using Microsoft.AspNetCore.Http.Extensions
 @model OnlineStore.Pages.Product.IndexModel
-
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Layout/_HomeLayout.cshtml";
@@ -12,30 +11,50 @@
         <div class="col-md-3 product-price">
             <div class=" rsidebar span_1_of_left">
                 <div class="of-left">
-                    <h3 class="cate">Lọc sản phẩm</h3>
+                    <h3 class="cate">Tên thương hiệu</h3>
                 </div>
                 <ul class="menu">
-                    <h4>Thương hiệu</h4>
-                    @foreach (var item in Model.Items.GroupBy(i => i.BrandName))
-                    {
-                        <li><input type="checkbox" />@item.Key</li>
-                    }
-                </ul>
-                <ul class="cute">
-                    @*<input id="input-21e" value="2" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
-                        title="" disabled="true">*@
-                    <input id="input-21e" value="2" type="text" class="rating" data-min=0 data-max=5 data-step=0.5 data-size="xs"
-                           title="" disabled="true">
-                    @*<input type="hidden" class="rating" disabled="disabled" value="5" />
-                        <input type="hidden" class="rating" disabled="disabled" value="4" />
-                        <input type="hidden" class="rating" disabled="disabled" value="3" />
-                        <input type="hidden" class="rating" disabled="disabled" value="2" />
-                        <input type="hidden" class="rating" disabled="disabled" value="1" />*@
-                    @*<input type="hidden" class="rating" disabled="disabled" value="5" />
-                        <input type="hidden" class="rating" disabled="disabled" value="4" />
-                        <input type="hidden" class="rating" disabled="disabled" value="3" />
-                        <input type="hidden" class="rating" disabled="disabled" value="2" />
-                        <input type="hidden" class="rating" disabled="disabled" value="1" />*@
+                    <li class="item1">
+                        <a href="#">Men </a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="single.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
+                    <li class="item2">
+                        <a href="#">Women </a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="single.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
+                    <li class="item3">
+                        <a href="#">Kids</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="single.html">Automatic Fails</a></li>
+                        </ul>
+                    </li>
+                    <li class="item4">
+                        <a href="#">Accesories</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="single.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="single.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="single.html">Automatic Fails</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="item4">
+                        <a href="#">Shoes</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
             <!--initiate accordion-->
@@ -55,25 +74,47 @@
                             $(this).next().stop(true, true).slideUp('normal');
                         }
                     });
+
                 });
             </script>
+            <!---->
             <div class="product-middle">
+
                 <div class="fit-top">
-                    <h6 class="shop-top"></h6>
-                    <a href="single.html" class="shop-now"></a>
-                    <div class="clearfix"></div>
+                    <h6 class="shop-top">Lorem Ipsum</h6>
+                    <a href="single.html" class="shop-now">SHOP NOW</a>
+                    <div class="clearfix"> </div>
                 </div>
             </div>
             <div class="sellers">
                 <div class="of-left-in">
-                    <h3 class="tag"></h3>
+                    <h3 class="tag">Tags</h3>
                 </div>
                 <div class="tags">
+                    <ul>
+                        <li><a href="#">design</a></li>
+                        <li><a href="#">fashion</a></li>
+                        <li><a href="#">lorem</a></li>
+                        <li><a href="#">dress</a></li>
+                        <li><a href="#">fashion</a></li>
+                        <li><a href="#">dress</a></li>
+                        <li><a href="#">design</a></li>
+                        <li><a href="#">dress</a></li>
+                        <li><a href="#">design</a></li>
+                        <li><a href="#">fashion</a></li>
+                        <li><a href="#">lorem</a></li>
+                        <li><a href="#">dress</a></li>
+
+                        <div class="clearfix"> </div>
+                    </ul>
+
                 </div>
+
             </div>
+            <!---->
             <div class="product-bottom">
                 <div class="of-left-in">
-                    <h3 class="best"></h3>
+                    <h3 class="best">Best Sellers</h3>
                 </div>
                 <div class="product-go">
                     <div class=" fashion-grid">
@@ -83,13 +124,15 @@
                     <div class=" fashion-grid1">
                         <h6 class="best2">
                             <a href="single.html">
+                                Lorem ipsum dolor sit
+                                amet consectetuer
                             </a>
                         </h6>
 
-                        <span class=" price-in1"></span>
+                        <span class=" price-in1"> $40.00</span>
                     </div>
 
-                    <div class="clearfix"></div>
+                    <div class="clearfix"> </div>
                 </div>
                 <div class="product-go">
                     <div class=" fashion-grid">
@@ -99,107 +142,60 @@
                     <div class="fashion-grid1">
                         <h6 class="best2">
                             <a href="single.html">
+                                Lorem ipsum dolor sit
+                                amet consectetuer
                             </a>
                         </h6>
-                        <span class=" price-in1"></span>
+
+                        <span class=" price-in1"> $40.00</span>
                     </div>
-                    <div class="clearfix"></div>
+
+                    <div class="clearfix"> </div>
                 </div>
+
             </div>
         </div>
         <div class="col-md-9 product1">
-            <div class="col-md-offset-9">
-                Sắp xếp theo: <select asp-for="CurrentSort" asp-items="Html.GetEnumSelectList<SortType>()" onchange="sortProduct()"></select>
+            <div class=" bottom-product">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                        <div class="product-at ">
+                            @*<a href="@Url.Action("XemChiTiet", "SanPham", new {@id = item.Id})">*@
+                            <a asp-page="/Product/Detail" asp-route-id="@item.Id">
+                                <img class="img-responsive" src="~/images/ProductImages/@item.Image)" alt="" style="width: 150px; height: 150px;">
+                                <div class="pro-grid">
+                                    <span class="buy-in">@item.Price.ToString("#,##") VNĐ</span>
+                                </div>
+                            </a>
+                        </div>
+                        <p class="tun">@item.Name</p>
+
+                        <form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
+                              data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Request.GetEncodedUrl()" class="btn btn-primary center-block">
+                            Thêm vào giỏ hàng
+                        </form>
+                    </div>
+                }
+                <div class="clearfix"> </div>
             </div>
-            <input type="hidden" asp-for="CurrentPage" />
-            <div class="bottom-product">
-                @await Html.PartialAsync("_SearchResultGridPartial", Model.Items)
-            </div>
+
         </div>
     </div>
 </div>
-
-@section Scripts{
-    <script>
-        jQuery.ajaxSettings.traditional = true;
-        var listBrandName = [];
-
-        function sortProduct() {
-            $('#CurrentPage').val(1);
-            $.ajax({
-                type: "GET",
-                url: "/Product/Index?handler=Search",
-                data: {
-                    "currentSearchString": "@Model.CurrentSearchString",
-                    "currentSort": $('#CurrentSort option:selected').val(),
-                    "currentBrand": listBrandName
-                }
-            }).done(function(result) {
-                $(".bottom-product").html(result);
-            }).fail(function(result) {
-                console.log(result);
-            });
-        }
-
-        $("input[type=checkbox]").change(function() {
-            var brand = $(this).closest("li").text();
-            $('#CurrentPage').val(1);
-            if (this.checked) {
-                listBrandName.push(brand);
-            } else {
-                listBrandName.splice(listBrandName.indexOf(brand, 1));
-            }
-            $.ajax({
-                type: "GET",
-                url: "/Product/Index?handler=Search",
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN", $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                contentType: "application/json; charset=utf-8",
-                dataType: "html",
-                cache: false,
-                data: {
-                    "currentSearchString": "@Model.CurrentSearchString",
-                    "currentSort": $('#CurrentSort option:selected').val(),
-                    "currentBrand": listBrandName
-                }
-            }).done(function(result) {
-                $(".bottom-product").empty();
-                $(".bottom-product").html(result);
-            }).fail(function(result) {
-                console.log(result);
-            });
-        });
-
-        function loadPage(currentPage) {
-            $.ajax({
-                type: "GET",
-                url: "/Product/Index?handler=Search",
-                data: {
-                    "currentSearchString": "@Model.CurrentSearchString",
-                    "currentSort": $('#CurrentSort option:selected').val(),
-                    "currentBrand": listBrandName,
-                    "currentPage": currentPage
-                }
-            }).done(function(result) {
-                $(".bottom-product").html(result);
-                $('#CurrentPage').val(currentPage);
-            }).fail(function(result) {
-                console.log(result);
-            });
-
-        }
-
-        $(document).on('click',
-            '#btnPrevious',
-            function() {
-                loadPage(Number($('#CurrentPage').val()) - 1);
-            });
-
-        $(document).on('click',
-            '#btnNext',
-            function() {
-                loadPage(Number($('#CurrentPage').val()) + 1);
-            });
-    </script>
+@{
+    var prevDisabled = !Model.Items.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Items.HasNextPage ? "disabled" : "";
 }
+
+<div class="dlink">
+    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex - 1)" class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    <a asp-page="/Product/Index" asp-route-page="@(Model.Items.PageIndex + 1)" class="btn btn-default @nextDisabled">
+        Next
+    </a>
+    @*Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaLoaiSP }))*@
+</div>
+

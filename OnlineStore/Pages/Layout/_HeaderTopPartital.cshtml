@@ -1,0 +1,208 @@
+﻿@using DAL.Models
+@using Microsoft.AspNetCore.Http
+@using OnlineStore.Extensions
+@*@inject ISession Session*@
+
+<div class="header-top">
+    <div class="container">
+        <div class="search">
+            @*Tạo form submit về action tìm kiếm*@
+            @*@using (Html.BeginForm("LayTuKhoaTimKiem", "TimKiem"))
+                {*@
+            <form asp-page="/Product/Index" method="post">
+                <input type="text" name="searchString" placeholder="Nhập tên sản phẩm cần tìm...">
+                <input type="submit" value="Tìm kiếm">
+            </form>
+            @*}*@
+        </div>
+        <div class="header-left">
+            <ul>
+                @if (Context.Session.Get<User>("User") != null)
+                {
+                    User tv = Context.Session.Get<User>("User");
+                    <li>Chào @tv.FirstName </li>
+                    @Html.ActionLink("Đăng xuất", "DangXuat", "Home", new { @style = "color: red;" })
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Tài khoản @tv.FirstName</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            @Html.ActionLink("Thông tin cá nhân", "Index", "KhachHang")
+                            @Html.ActionLink("Đổi Mật Khẩu", "DoiMatKhau", "KhachHang")
+                            @Html.ActionLink("Đăng xuất", "DangXuat", "Home")
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <li style="display: inline;"><a id="btnDangNhapDanhGia" class="lock" href="@Url.Action("index","Admin")">Đăng nhập</a></li>
+                    <li style="display: inline;"><a class="lock" href="@Url.Action("DangKy", "Home")">Đăng ký</a></li>
+                }
+            </ul>
+            @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
+
+            @if (Context.Session.Get<User>("NGUOIDUNG") == null)
+            {
+                @await Component.InvokeAsync("GioHangPartial")
+                ;
+            }
+            @if (Context.Session.Get<User>("NGUOIDUNG") != null)
+            {
+                User user = Context.Session.Get<User>("NGUOIDUNG");
+                if (user.TypeOfUserId == 1)
+                {
+                    @await Component.InvokeAsync("GioHangPartial")
+                    ;
+                }
+            }
+            <div class="clearfix"> </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+
+<link href="~/Content/css/style_form_dangnhap.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<br />
+@*Tạo 1 div bên ngoài chứa div login-form *@
+<div id="popup_login">
+    <div class="login-form" id="login-form">
+        <div style="clear:both;text-align:right;margin-bottom:0;">
+            <span id="close-form" class="btn btn-danger">X</span>
+        </div>
+        <h2>Đăng nhập</h2>
+        <div class="form-info">
+            <form asp-page="/Account/Login" data-ajax-method="POST" data-ajax="true" data-ajax-update="ThongBao">
+                @*@using (Ajax.BeginForm("DangNhap", "Home", new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "ThongBao" })){*@
+                <input class="email TaiKhoan" name="txtTenDangNhap" placeholder="Tên đăng nhập" required="" type="text">
+                <input class="password MatKhau" name="txtMatKhau" placeholder="Mật khẩu" required="" type="password">
+                <p><a href="#">Quên mật khẩu?</a></p>
+                <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"> </h3>
+                <ul class="login-buttons">
+                    <li><input value="Đăng nhập" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>
+                    <li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>
+                </ul>
+            </form>
+            @*}*@
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+    #close-form {
+        color: white;
+    }
+
+
+    #login-form {
+        background: #3a3a46;
+        cursor: pointer;
+    }
+    /*css cho phần div popup_login*/
+    #popup_login {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,.5);
+        z-index: 9999;
+        display: none;
+    }
+
+    ul {
+        text-align: left;
+    }
+</style>
+@*Sử dụng jquery hiển thị popup đăng nhập*@
+<script type="text/javascript">
+    //Hiển thị popup_login
+    $("#btnDangNhapDanhGia").click(function () {
+        $("#popup_login").show();
+    });
+    //Ẩn đi popup_login
+    $("#close-form").click(AnForm);
+
+    //Định nghĩa function ẩn form
+    function AnForm() {
+        $("#popup_login").hide();
+    }
+    //Ví dụ về lấy giá trị từ textbox
+    $("#btnDangNhap1").click(function () {
+        var TaiKhoan = $(".TaiKhoan").val();
+        var MatKhau = $(".MatKhau").val();
+        //alert("Tài khoản:" + TaiKhoan + "\n Mật khẩu:" + MatKhau);
+        if (TaiKhoan == "") {
+            alert("Lỗi");
+            return;
+        }
+    });
+
+</script>
+<style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #3e8e41;
+        }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        right: 0;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 180px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown a:hover {
+        background-color: #f1f1f1
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>

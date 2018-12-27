@@ -24,7 +24,7 @@ namespace OnlineStore
         
         public bool HasNextPage => (PageIndex < TotalPages);
 
-        public static PaginatedList<T> CreateAsync(
+        public static async Task<PaginatedList<T>> CreateAsync(
             List<T> source, int pageIndex, int pageSize)
         {
             var count = source.Count();

@@ -1,10 +1,7 @@
-﻿using DAL.Models;
-using DAL.Repositories.Base;
-
-namespace DAL.Repositories
+﻿namespace DAL.Repositories
 {
-    public interface IOrderRepository : IRepo<Order>
+    public interface IOrderRepository
     {
-        int GetMaxId();
+
     }
 }

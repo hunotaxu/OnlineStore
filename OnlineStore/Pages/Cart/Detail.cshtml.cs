@@ -7,7 +7,7 @@ namespace OnlineStore.Pages.Cart
     public class DetailModel : PageModel
     {
         public Item Item { get; set; }
-        private readonly IItemRepository _itemRepository;
+        private IItemRepository _itemRepository;
 
         public DetailModel(IItemRepository itemRepository)
         {

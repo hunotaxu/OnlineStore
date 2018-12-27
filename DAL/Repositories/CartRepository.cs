@@ -24,7 +24,7 @@ namespace DAL.Repositories
 
         public int GetQuantity(int cartId)
         {
-            return Db.CartDetail.Where(c => c.CartId == cartId).Sum(n => n.Quantity);
+            return Find(cartId).CartDetails.Sum(n => n.Quantity);
         }
 
         public decimal GetTotalAmount(int cartId)

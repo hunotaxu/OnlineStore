@@ -2,12 +2,11 @@
 {
     public class CustomerCartViewModel
     {
-        public string Image { get; set; }
-        public decimal Price { get; set; }
-        public string ItemName { get; set; }
-        public int CartId { get; set; }
-        public int ItemId { get; set; }
-        public int Quantity { get; set; }
-        public decimal Subtotal { get; set; }
+        public string Image;
+        public decimal Price;
+        public string ItemName;
+        public int CartId;
+        public int ItemId;
+        public int Quantity;
     }
 }

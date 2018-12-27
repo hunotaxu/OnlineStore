@@ -1,0 +1,44 @@
+﻿@page
+@model OnlineStore.Pages.Admin.GoodsReceipts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GoodsReceipt[0].TotalAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GoodsReceipt[0].Supplier)
+            </th>
+            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.GoodsReceipt) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.Id)
+            </td>
+        
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./GoodsReceiptDetails/Index" asp-route-id="@item.Id">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

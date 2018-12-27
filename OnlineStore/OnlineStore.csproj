@@ -2,9 +2,35 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>7b9b8e7b-efd9-441e-8795-192e6f71e9d9</UserSecretsId>
+    <NoWin32Manifest>true</NoWin32Manifest>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="wwwroot\css\admin\clndr.css" />
+    <Content Remove="wwwroot\css\admin\flexslider.css" />
+    <Content Remove="wwwroot\css\admin\jqvmap.css" />
+    <Content Remove="wwwroot\css\admin\memenu.css" />
+    <Content Remove="wwwroot\css\admin\nav.css" />
+    <Content Remove="wwwroot\css\admin\style.css" />
+    <Content Remove="wwwroot\css\admin\style_form_dangnhap.css" />
+    <Content Remove="wwwroot\images\logo.png" />
+    <Content Remove="wwwroot\js\admin\Chart1.js" />
+    <Content Remove="wwwroot\js\admin\clndr.js" />
+    <Content Remove="wwwroot\js\admin\easyResponsiveTabs.js" />
+    <Content Remove="wwwroot\js\admin\jquery.easydropdown.js" />
+    <Content Remove="wwwroot\js\admin\jquery.min.js" />
+    <Content Remove="wwwroot\js\admin\jquery.nicescroll.js" />
+    <Content Remove="wwwroot\js\admin\jquery.vmap.js" />
+    <Content Remove="wwwroot\js\admin\jquery.vmap.sampledata.js" />
+    <Content Remove="wwwroot\js\admin\jquery.vmap.world.js" />
+    <Content Remove="wwwroot\js\admin\main.js" />
+    <Content Remove="wwwroot\js\admin\moment-2.2.1.js" />
+    <Content Remove="wwwroot\js\admin\site.js" />
+    <Content Remove="wwwroot\js\admin\underscore-min.js" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
@@ -14,6 +40,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.163" />
+    <PackageReference Include="Twitter.Bootstrap.Less" Version="3.3.6" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.8.391" />
@@ -22,13 +49,350 @@
     <ProjectReference Include="..\DAL\DAL.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Views\_ViewImports.cshtml">
+    <Content Update="Pages\Shared\Error.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Shared\_Layout.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Components\MenuPartial\Default.cshtml">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Views\Shared\Components\" />
-    <Folder Include="Views\Shared\DisplayTemplates\" />
+    <Folder Include="Pages\Account\" />
+    <Folder Include="Views\Shared\Components\BannerPartial\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\admin\clndr.css" />
+    <None Include="wwwroot\css\admin\flexslider.css" />
+    <None Include="wwwroot\css\admin\jqvmap.css" />
+    <None Include="wwwroot\css\admin\memenu.css" />
+    <None Include="wwwroot\css\admin\nav.css" />
+    <None Include="wwwroot\css\admin\style.css" />
+    <None Include="wwwroot\css\admin\style_form_dangnhap.css" />
+    <None Include="wwwroot\css\flexslider.css" />
+    <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\css\style_progressbar.css" />
+    <None Include="wwwroot\images\logo.png" />
+    <None Include="wwwroot\images\ProductImages\0201_Sonyvaiopro13-1.jpg" />
+    <None Include="wwwroot\images\ProductImages\1-141023232635.jpg" />
+    <None Include="wwwroot\images\ProductImages\1.jpg" />
+    <None Include="wwwroot\images\ProductImages\12226700_1009231122431681_1745030512_n.jpg" />
+    <None Include="wwwroot\images\ProductImages\12231372_1009226802432113_1184438083_n.jpg" />
+    <None Include="wwwroot\images\ProductImages\12311036_735010596630665_3287399790386457454_n.jpg" />
+    <None Include="wwwroot\images\ProductImages\1397272_5b1684c5cdf18acf2aa3d4478c3b3975.jpg" />
+    <None Include="wwwroot\images\ProductImages\150608_iphone_concept_1.jpg" />
+    <None Include="wwwroot\images\ProductImages\321321.jpg" />
+    <None Include="wwwroot\images\ProductImages\324493-sony-vaio-pro-11.jpg" />
+    <None Include="wwwroot\images\ProductImages\3310c.jpg" />
+    <None Include="wwwroot\images\ProductImages\5.jpg" />
+    <None Include="wwwroot\images\ProductImages\7.jpg" />
+    <None Include="wwwroot\images\ProductImages\a.png" />
+    <None Include="wwwroot\images\ProductImages\ACER-2215i.png" />
+    <None Include="wwwroot\images\ProductImages\AcerA1-810-2CW-316T.png" />
+    <None Include="wwwroot\images\ProductImages\AcerA1-811-G2CG-316T.png" />
+    <None Include="wwwroot\images\ProductImages\AcerA101-16GB.png" />
+    <None Include="wwwroot\images\ProductImages\AcerA101-Red.png" />
+    <None Include="wwwroot\images\ProductImages\AcerB1-A71-83170501NK.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-432.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-470-01.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-470-02.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-470G.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-472.png" />
+    <None Include="wwwroot\images\ProductImages\AcerE1-572.png" />
+    <None Include="wwwroot\images\ProductImages\AcerIconiaTabW511.png" />
+    <None Include="wwwroot\images\ProductImages\AcerP3-171.png" />
+    <None Include="wwwroot\images\ProductImages\AcerTAB-A101.png" />
+    <None Include="wwwroot\images\ProductImages\AcerTAB-A501.png" />
+    <None Include="wwwroot\images\ProductImages\AcerV3-471.png" />
+    <None Include="wwwroot\images\ProductImages\AcerV5-471.png" />
+    <None Include="wwwroot\images\ProductImages\AcerV5-471G.png" />
+    <None Include="wwwroot\images\ProductImages\AcerW501.png" />
+    <None Include="wwwroot\images\ProductImages\AcerW510-27602G06ISS.png" />
+    <None Include="wwwroot\images\ProductImages\AcerW511-27602G06ASS.png" />
+    <None Include="wwwroot\images\ProductImages\anhdaidien.jpg" />
+    <None Include="wwwroot\images\ProductImages\AP-ME294ZP.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMC975ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMC976ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD101ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD102ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD103ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD104ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD223ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD224ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD231ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\AppleMD232ZP-A.png" />
+    <None Include="wwwroot\images\ProductImages\Apple_iPad_Air_Silver_600_lq_0001.jpg" />
+    <None Include="wwwroot\images\ProductImages\Apple_MBA11_LW007.jpg74ddbdf5-e3ab-4f55-883f-2a7ca1f52652Original.jpg" />
+    <None Include="wwwroot\images\ProductImages\ASUS-S1750.png" />
+    <None Include="wwwroot\images\ProductImages\Asus10-ME102A.png" />
+    <None Include="wwwroot\images\ProductImages\asus3.jpg" />
+    <None Include="wwwroot\images\ProductImages\asus4.png" />
+    <None Include="wwwroot\images\ProductImages\AsusF451CA-VX123D.png" />
+    <None Include="wwwroot\images\ProductImages\ASUSFONEPADME371MG.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME175CG-8G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME180A-8G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME372CG-16G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME372CG-8G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME560CG-1A052A-32G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME560CG-1B052A-32G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusME571K-1C018A-8G.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450CC-WX009.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450CC-WX016.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450L-WX014D.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450L-WX035D.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450LA-WX021.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450LA-WX022D.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX450LC-WX035.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX550CC-XO032D.png" />
+    <None Include="wwwroot\images\ProductImages\AsusX550LD-XX144D.png" />
+    <None Include="wwwroot\images\ProductImages\asus_1.jpg" />
+    <None Include="wwwroot\images\ProductImages\asus_2.png" />
+    <None Include="wwwroot\images\ProductImages\b31.jpg" />
+    <None Include="wwwroot\images\ProductImages\Blackberry9220.png" />
+    <None Include="wwwroot\images\ProductImages\Blackberry9320.png" />
+    <None Include="wwwroot\images\ProductImages\Blackberry9790.png" />
+    <None Include="wwwroot\images\ProductImages\BlackBerryCurve9220.png" />
+    <None Include="wwwroot\images\ProductImages\BlackberryQ10.png" />
+    <None Include="wwwroot\images\ProductImages\BlackberryZ10.png" />
+    <None Include="wwwroot\images\ProductImages\BlackberryZ30.png" />
+    <None Include="wwwroot\images\ProductImages\cubotvip.png" />
+    <None Include="wwwroot\images\ProductImages\cubot_x15_1.jpg" />
+    <None Include="wwwroot\images\ProductImages\cubot_x15_2.jpg" />
+    <None Include="wwwroot\images\ProductImages\cubot_x15_3.jpg" />
+    <None Include="wwwroot\images\ProductImages\cubot_x15_4.jpg" />
+    <None Include="wwwroot\images\ProductImages\cubot_x15_5.jpg" />
+    <None Include="wwwroot\images\ProductImages\cubox15_1.png" />
+    <None Include="wwwroot\images\ProductImages\cubox15_2.png" />
+    <None Include="wwwroot\images\ProductImages\cubox15_3.png" />
+    <None Include="wwwroot\images\ProductImages\cubox15_4.png" />
+    <None Include="wwwroot\images\ProductImages\DELL-11721PS.png" />
+    <None Include="wwwroot\images\ProductImages\DELL-9943XL.png" />
+    <None Include="wwwroot\images\ProductImages\DELL14-3437.png" />
+    <None Include="wwwroot\images\ProductImages\DELL14R-D8MMY1.png" />
+    <None Include="wwwroot\images\ProductImages\DELL15-52GNP1.png" />
+    <None Include="wwwroot\images\ProductImages\DELL15-52GNP4.png" />
+    <None Include="wwwroot\images\ProductImages\DELL15-7537.png" />
+    <None Include="wwwroot\images\ProductImages\DELL15-N3521.png" />
+    <None Include="wwwroot\images\ProductImages\DELL15R-5537.png" />
+    <None Include="wwwroot\images\ProductImages\DELL3440.png" />
+    <None Include="wwwroot\images\ProductImages\DELLN3437A.png" />
+    <None Include="wwwroot\images\ProductImages\DELLN5437A.png" />
+    <None Include="wwwroot\images\ProductImages\design_hero.jpg" />
+    <None Include="wwwroot\images\ProductImages\GalaxyG7102.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyK-Zoom.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyN9000.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyNote-10-P601.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyNote-8-N5100.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyNote3-Neo.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyNotePro-12-2.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyS4-I9500.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyS5.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyS7392.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyS7580.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-3-10-P5200.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-3-8-T311.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-3-Lite7-3G.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-3-Lite7-Wifi.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-4-10-T531.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-4-7.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyTab-4-8-T331.png" />
+    <None Include="wwwroot\images\ProductImages\GalaxyY-S5360.png" />
+    <None Include="wwwroot\images\ProductImages\Gear2-Neo.png" />
+    <None Include="wwwroot\images\ProductImages\GoogleNexus7-16G.png" />
+    <None Include="wwwroot\images\ProductImages\GoogleNexus7-32G.png" />
+    <None Include="wwwroot\images\ProductImages\HP-3175.png" />
+    <None Include="wwwroot\images\ProductImages\HP-3421s.png" />
+    <None Include="wwwroot\images\ProductImages\HP1000-1404TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP1000-1418TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP14-b068TX.png" />
+    <None Include="wwwroot\images\ProductImages\HP14-d008TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP14-d009TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP14-d010TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP15-D062TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP15-N052TX.png" />
+    <None Include="wwwroot\images\ProductImages\HP4-1214TU.png" />
+    <None Include="wwwroot\images\ProductImages\HP450-D5J85PA.png" />
+    <None Include="wwwroot\images\ProductImages\HTC-8S.png" />
+    <None Include="wwwroot\images\ProductImages\HTC-8X.png" />
+    <None Include="wwwroot\images\ProductImages\HTC-L.png" />
+    <None Include="wwwroot\images\ProductImages\HTC-OneM8.png" />
+    <None Include="wwwroot\images\ProductImages\HTC-U.png" />
+    <None Include="wwwroot\images\ProductImages\HTC310.png" />
+    <None Include="wwwroot\images\ProductImages\HTC700.png" />
+    <None Include="wwwroot\images\ProductImages\HTCONE-32G.png" />
+    <None Include="wwwroot\images\ProductImages\HTCONE-GOLD-32G.png" />
+    <None Include="wwwroot\images\ProductImages\HTCONE-M8.png" />
+    <None Include="wwwroot\images\ProductImages\HTCSV.png" />
+    <None Include="wwwroot\images\ProductImages\htc_one_1.JPG" />
+    <None Include="wwwroot\images\ProductImages\htc_one_1.png" />
+    <None Include="wwwroot\images\ProductImages\htc_one_2.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_2.png" />
+    <None Include="wwwroot\images\ProductImages\htc_one_3.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_3.png" />
+    <None Include="wwwroot\images\ProductImages\htc_one_4.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_4.png" />
+    <None Include="wwwroot\images\ProductImages\htc_one_5.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_6.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_7.jpg" />
+    <None Include="wwwroot\images\ProductImages\htc_one_8.JPG" />
+    <None Include="wwwroot\images\ProductImages\ipad air blue.jpg" />
+    <None Include="wwwroot\images\ProductImages\Ipad-ME840TH.png" />
+    <None Include="wwwroot\images\ProductImages\IpadAir-32G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadAir-Cellular-128G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadAir-Cellular-16G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-128G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-16G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-32G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-64G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-Cellular-16G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-Cellular-32G.png" />
+    <None Include="wwwroot\images\ProductImages\IpadMini-Cellular-64G.png" />
+    <None Include="wwwroot\images\ProductImages\ipad_air_1.png" />
+    <None Include="wwwroot\images\ProductImages\ipad_air_2.png" />
+    <None Include="wwwroot\images\ProductImages\ipad_air_3.png" />
+    <None Include="wwwroot\images\ProductImages\ipad_air_4.png" />
+    <None Include="wwwroot\images\ProductImages\iphone-6-201421010614.jpg" />
+    <None Include="wwwroot\images\ProductImages\iphone-7-concept-display-design-hello_UTMY.jpg" />
+    <None Include="wwwroot\images\ProductImages\iPhone-7-Images-8.jpg" />
+    <None Include="wwwroot\images\ProductImages\Iphone4-8G.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone4S-8G.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5-16G.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5-32G.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5C.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5S-16G-GOLD.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5S-16G.PNG" />
+    <None Include="wwwroot\images\ProductImages\Iphone5S-32G-GOLD.png" />
+    <None Include="wwwroot\images\ProductImages\Iphone5S-64G.PNG" />
+    <None Include="wwwroot\images\ProductImages\iphone_1.png" />
+    <None Include="wwwroot\images\ProductImages\iphone_2.png" />
+    <None Include="wwwroot\images\ProductImages\iphone_3.png" />
+    <None Include="wwwroot\images\ProductImages\iphone_4.png" />
+    <None Include="wwwroot\images\ProductImages\kethatbaijpg1418604522.jpg" />
+    <None Include="wwwroot\images\ProductImages\l84208-macbook-pro-13-inch-43364.jpg" />
+    <None Include="wwwroot\images\ProductImages\large_apple_macbook_air_13_inch_retina_3d_model_fbx_c4d_obj_hrc_xsi_max_cb5de0c0-ddf7-4684-896d-7d68ae017f13.jpg" />
+    <None Include="wwwroot\images\ProductImages\lg-g-flex-smartphone-leak-photos.jpg" />
+    <None Include="wwwroot\images\ProductImages\LGG-686.png" />
+    <None Include="wwwroot\images\ProductImages\LGG-D682.png" />
+    <None Include="wwwroot\images\ProductImages\LGG-E988.png" />
+    <None Include="wwwroot\images\ProductImages\LGG-Flex.png" />
+    <None Include="wwwroot\images\ProductImages\LGG-Pro2.png" />
+    <None Include="wwwroot\images\ProductImages\LGG2-32G.png" />
+    <None Include="wwwroot\images\ProductImages\LGG2-D802-16G.png" />
+    <None Include="wwwroot\images\ProductImages\LGG2.png" />
+    <None Include="wwwroot\images\ProductImages\LGL70.png" />
+    <None Include="wwwroot\images\ProductImages\LGL90.png" />
+    <None Include="wwwroot\images\ProductImages\LGOptimusSolE730.png" />
+    <None Include="wwwroot\images\ProductImages\logo.png" />
+    <None Include="wwwroot\images\ProductImages\Lumia920.png" />
+    <None Include="wwwroot\images\ProductImages\m9plus.png" />
+    <None Include="wwwroot\images\ProductImages\MacBook-Air-1024x515.png" />
+    <None Include="wwwroot\images\ProductImages\macbook-air-retina.jpg" />
+    <None Include="wwwroot\images\ProductImages\macbook_1.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_2.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_3.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_4.png" />
+    <None Include="wwwroot\images\ProductImages\MacBook_air_11_550.jpg" />
+    <None Include="wwwroot\images\ProductImages\macbook_pro_1.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_pro_2.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_pro_3.png" />
+    <None Include="wwwroot\images\ProductImages\macbook_pro_4.png" />
+    <None Include="wwwroot\images\ProductImages\macpro.png" />
+    <None Include="wwwroot\images\ProductImages\mac_air_1.png" />
+    <None Include="wwwroot\images\ProductImages\maxresdefault.jpg" />
+    <None Include="wwwroot\images\ProductImages\New-Samsung-Rumors.jpg" />
+    <None Include="wwwroot\images\ProductImages\nokia.jpg" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-1020.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-1320-2.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-1320.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-1520.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-525.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-625.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-630.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-920.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaLumia-925.png" />
+    <None Include="wwwroot\images\ProductImages\NokiaX.png" />
+    <None Include="wwwroot\images\ProductImages\perfektes-Smartphone_qu.jpg" />
+    <None Include="wwwroot\images\ProductImages\pre-order-iphone6.jpg" />
+    <None Include="wwwroot\images\ProductImages\Samsung-4401s.png" />
+    <None Include="wwwroot\images\ProductImages\samsung-galaxy-tab-s-10.5-retail-1-e1419704627986.jpg" />
+    <None Include="wwwroot\images\ProductImages\samsung-galaxy-tab-s-best-android-tablets-2015-images.jpg" />
+    <None Include="wwwroot\images\ProductImages\samsung-galaxy-tab-s.jpg" />
+    <None Include="wwwroot\images\ProductImages\Samsung300E7A-S03.png" />
+    <None Include="wwwroot\images\ProductImages\Samsung5-535U3X.png" />
+    <None Include="wwwroot\images\ProductImages\Samsung900X3A.png" />
+    <None Include="wwwroot\images\ProductImages\SAMSUNGGALAXY3LITESM-T111.png" />
+    <None Include="wwwroot\images\ProductImages\SamSunggalaxyS5-SMG900H.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP270E4V-K01VN.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP270E4V-X01VN.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP530U4E-K01VN.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP540U4E-K01VN.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP700Z3A-S01US.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungNP900X3C.png" />
+    <None Include="wwwroot\images\ProductImages\SamsungXE700T1C-A01VN.png" />
+    <None Include="wwwroot\images\ProductImages\Samsung_Note_Pro_3_0_0 %281%29.jpg" />
+    <None Include="wwwroot\images\ProductImages\sony-vaio-sve-1513b1ew.jpg" />
+    <None Include="wwwroot\images\ProductImages\sony-vaio-T14_Silver-2.jpg" />
+    <None Include="wwwroot\images\ProductImages\Sony-Vio7431.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF14217SGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1421DSGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1421ESGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1421ESGW.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1421QSGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1421QSGW.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVF1521DSGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVP13223SGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVP13223SGW.png" />
+    <None Include="wwwroot\images\ProductImages\SonyVaio-SVT11215SGB.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-C-C2305.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-E-C1505.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-E1.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-L-C2105.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-L-MT25I.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-M-C1905.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-M2-D2305.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-ST23I.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-TX-LT29I.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-V-LT25I.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-Z.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperia-Z2.png" />
+    <None Include="wwwroot\images\ProductImages\SONYXPERIAZ-SGP321.png" />
+    <None Include="wwwroot\images\ProductImages\SonyXperiaZ.png" />
+    <None Include="wwwroot\images\ProductImages\SQL.txt" />
+    <None Include="wwwroot\images\ProductImages\tablet_ss_1.png" />
+    <None Include="wwwroot\images\ProductImages\tablet_ss_2.png" />
+    <None Include="wwwroot\images\ProductImages\tablet_ss_3.png" />
+    <None Include="wwwroot\images\ProductImages\TOSHIBA-SYM0510.png" />
+    <None Include="wwwroot\images\ProductImages\Ultimate-Smartphone-01 %281%29.jpg" />
+    <None Include="wwwroot\images\ProductImages\Ultimate-Smartphone-01.jpg" />
+    <None Include="wwwroot\images\ProductImages\untilmate_phone_1.png" />
+    <None Include="wwwroot\images\ProductImages\untilmate_phone_2.png" />
+    <None Include="wwwroot\images\ProductImages\untilmate_phone_3.png" />
+    <None Include="wwwroot\images\ProductImages\untilmate_phone_4.jpg" />
+    <None Include="wwwroot\images\ProductImages\vaio_1.png" />
+    <None Include="wwwroot\images\ProductImages\vaio_2.png" />
+    <None Include="wwwroot\images\ProductImages\vaio_3.png" />
+    <None Include="wwwroot\images\ProductImages\vaio_4.png" />
+    <None Include="wwwroot\js\admin\Chart1.js" />
+    <None Include="wwwroot\js\admin\clndr.js" />
+    <None Include="wwwroot\js\admin\easyResponsiveTabs.js" />
+    <None Include="wwwroot\js\admin\jquery.easydropdown.js" />
+    <None Include="wwwroot\js\admin\jquery.min.js" />
+    <None Include="wwwroot\js\admin\jquery.nicescroll.js" />
+    <None Include="wwwroot\js\admin\jquery.vmap.js" />
+    <None Include="wwwroot\js\admin\jquery.vmap.sampledata.js" />
+    <None Include="wwwroot\js\admin\jquery.vmap.world.js" />
+    <None Include="wwwroot\js\admin\main.js" />
+    <None Include="wwwroot\js\admin\moment-2.2.1.js" />
+    <None Include="wwwroot\js\admin\site.js" />
+    <None Include="wwwroot\js\admin\underscore-min.js" />
+    <None Include="wwwroot\js\memenu.js" />
+    <None Include="wwwroot\js\simpleCart.min.js" />
   </ItemGroup>
 </Project>

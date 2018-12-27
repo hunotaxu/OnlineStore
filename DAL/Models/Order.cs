@@ -15,21 +15,25 @@ namespace DAL.Models
 
         //public int Id { get; set; }
         [DataType(DataType.DateTime)]
+
+        [Display(Name = "Ngày giao")]
         public DateTime DeliveryDate { get; set; }
 
-        [DataType(DataType.DateTime)]
-        public DateTime OrderDate { get; set; }
-
+        [Display(Name = "Tên")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Bonus { get; set; }
 
+        [Display(Name = "Người duyệt")]
         public int EmployeeId { get; set; }
 
+        [Display(Name = "Mã khách hàng")]
         public int CustomerId { get; set; }
 
+        [Display(Name = "Phí giao hàng")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingFee { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public int Status { get; set; }
         //public byte[] Timestamp { get; set; }
 

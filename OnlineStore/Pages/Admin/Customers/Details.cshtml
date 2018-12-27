@@ -1,0 +1,85 @@
+﻿@page
+@model OnlineStore.Pages.Admin.Customers.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.PhoneNumber)
+        </dd>
+       
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Password)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.ShippingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.ShippingAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.BillingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.BillingAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.TypeOfCustomer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.TypeOfCustomer.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Timestamp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Timestamp)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Customer.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

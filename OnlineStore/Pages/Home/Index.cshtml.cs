@@ -8,11 +8,11 @@ namespace OnlineStore.Pages.Home
     public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
-
+        
         public IEnumerable<Item> phones { get; set; }
         public IEnumerable<Item> laptops { get; set; }
         public IEnumerable<Item> tablets { get; set; }
-
+        
         public IndexModel(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;

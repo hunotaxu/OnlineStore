@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineStore", "OnlineStore\OnlineStore.csproj", "{9B99ECDA-58D0-422C-ADBF-8CF8D8CD775B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineStore", "OnlineStore\OnlineStore.csproj", "{9B99ECDA-58D0-422C-ADBF-8CF8D8CD775B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{BC5017D7-E743-45BD-AD1B-8A87BB06CAB1}"
 EndProject

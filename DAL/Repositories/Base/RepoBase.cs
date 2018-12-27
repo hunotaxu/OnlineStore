@@ -19,7 +19,6 @@ namespace DAL.Repositories.Base
             Db = new OnlineStoreDbContext();
             Table = Db.Set<T>();
         }
-
         protected RepoBase(DbContextOptions<OnlineStoreDbContext> options)
         {
             Db = new OnlineStoreDbContext(options);

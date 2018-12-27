@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DAL.Models.Base;
 
@@ -9,64 +8,53 @@ namespace DAL.Models
     {
         public Customer()
         {
-            Cart = new Cart();
+            Carts = new HashSet<Cart>();
             Orders = new HashSet<Order>();
             Comments = new HashSet<Comment>();
-			Addresses = new HashSet<Address>();
         }
 
-        [Required(ErrorMessage = "Họ tên là bắt buộc. Vui lòng nhập")]
         [MaxLength(100)]
         [Display(Name = "Họ tên")]
         public string FullName { get; set; }
 
-        //[MaxLength(100)]
-        //[Display(Name = "Họ")]
-        //public string LastName { get; set; }
+    
 
-        [Required(ErrorMessage = "Ngày sinh là bắt buộc. Vui lòng nhập")]
-        [Display(Name = "Ngày sinh")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DateOfBirth { get; set; }
-
-        [Required(ErrorMessage = "Email là bắt buộc.Vui lòng nhập")]
         [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "Địa chỉ Email")]
+        public string Address { get; set; }
 
-        [Required(ErrorMessage = "Số điện thoại là bắt buộc.Vui lòng nhập")]
         [DataType(DataType.PhoneNumber)]
         [Display(Name = "Số điện thoại")]
         public string PhoneNumber { get; set; }
+      
 
-        //[Required]
-        //public string Username { get; set; }
-
-        [Required(ErrorMessage = "Mật khẩu là bắt buộc.Vui lòng nhập")]
-        [DataType(DataType.Password)]
         [Display(Name = "Mật khẩu")]
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Display(Name = "Trạng thái")]
         [Required]
         public int Status { get; set; }
 
+        [Display(Name = "Địa chỉ giao hàng")]
         [MaxLength(500)]
         public string ShippingAddress { get; set; }
 
+        [Display(Name = "Địa chỉ thanh toán")]
         [MaxLength(500)]
         public string BillingAddress { get; set; }
 
+        [Display(Name = "Mã loại khách hàng")]
         public int TypeOfCustomerId { get; set; }
 
-        [Required(ErrorMessage = "Giới tính là bắt buộc.Vui lòng chọn")]
         [Display(Name = "Giới tính")]
         public Gender Gender { get; set; }
 
+        [Display(Name = "Loại KH")]
         public TypeOfCustomer TypeOfCustomer { get; set; }
-        public Cart Cart { get; set; }
+        public ICollection<Cart> Carts { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Comment> Comments { get; set; }
-        public ICollection<Address> Addresses { get; set; }
     }
 }
