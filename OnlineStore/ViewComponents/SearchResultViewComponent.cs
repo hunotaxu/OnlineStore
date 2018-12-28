@@ -16,12 +16,8 @@ namespace OnlineStore.ViewComponents
 
         public Task<IViewComponentResult> InvokeAsync(string sTuKhoa)
         {
-            //tìm kiếm theo ten sản phẩm
             var items = _itemRepository.GetItemByName(sTuKhoa);
-            //ViewBag.TuKhoa = sTuKhoa;
-            //return View("Default",items.OrderBy(i => i.Price));
             return Task.FromResult<IViewComponentResult>(View("Default", items.OrderBy(i => i.Price)));
-
         }
     }
 }

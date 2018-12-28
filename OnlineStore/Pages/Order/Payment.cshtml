@@ -1,0 +1,104 @@
+﻿@page
+@using DAL.Models
+@using OnlineStore.Extensions
+@model OnlineStore.Pages.Order.PaymentModel
+@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
+}
+@{
+    Customer cus = HttpContext.Session.Get<Customer>("Customer");
+}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>Thanh toán với&hellip;</h3>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <div class="list-group-item-heading">
+                        <div class="row radio">
+                            <div class="col-xs-3">
+                                <label>
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" checked>
+                                    Thanh toán qua thẻ tín dụng
+                                </label>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <dl class="dl-small">
+                                            <dt>Credit Card Number</dt>
+                                            <dd>**********1111</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <dl class="dl-small">
+                                            <dt>Expiration</dt>
+                                            <dd>07/2016</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <dl class="dl-small">
+                                            <dt>Billing Address</dt>
+                                            <dd>1509 Latona St, Philadelphia, PA 19146 </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm">Edit</button>
+                                <button class="btn btn-sm btn-link">Delete this card</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <div class="list-group-item-heading">
+                        <div class="row radio">
+                            <div class="col-xs-3">
+                                <label data-toggl-e="collapse" data-target="#newcard">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    Thanh toán khi nhận hàng
+                                </label>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="media">
+                                    <a class="media-left" href="#">
+                                        <img src="https://lovewithfood.com/assets/credit_cards/cards-b3a7c7b8345355bf110ebedfd6401312.png" height="25" alt="" />
+                                    </a>
+                                    <div class="media-body" id="newcard">
+                                        Bạn sẽ trả tiền khi hàng đến chỗ nhận
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="list-group-item">
+                <div class="list-group-item-heading">
+                    <div class="row radio">
+                        <div class="col-xs-3">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                Paypal
+                            </label>
+                        </div>
+                        <div class="col-xs-9">
+                            <div class="media">
+                                <a class="media-left" href="#">
+                                    <img src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png" height="25" alt="" />
+                                </a>
+                                <div class="media-body">
+                                    When you click "Place Order", you will be taken to the PayPal website.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            </div>
+            <div class="well">
+                <a asp-page="/Order/Payment" asp-page-handler="Action" asp-route-customerId="@cus.Id" class="btn btn-primary btn-lg btn-block">Xác nhận mua hàng</a>
+            </div>
+        </div>
+    </div>
+</div>
+

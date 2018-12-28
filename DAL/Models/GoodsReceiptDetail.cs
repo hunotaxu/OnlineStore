@@ -6,12 +6,9 @@ namespace DAL.Models
     {
         public int GoodsReceiptId { get; set; }
 
-        [Display(Name = "Mã sản phẩm")]
         public int ItemId { get; set; }
 
-        [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
-
 
         [Timestamp]
         public byte[] Timestamp { get; set; }

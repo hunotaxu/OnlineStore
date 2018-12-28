@@ -22,40 +22,30 @@ namespace DAL.Models
         [Column(TypeName="nvarchar(100)")]
         public string Name { get; set; }
 
-        [Display(Name = "Giá")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        [Display(Name = "Mô tả")]
         [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }
 
-        [Display(Name = "Hình ảnh")]
         public string Image { get; set; }
 
         public int Inventory { get; set; }
 
-        [Display(Name = "Số lượt xem")]
         public int View { get; set; }
 
-        [Display(Name = "Mã mặt hàng")]
         public int CategoryId { get; set; }
 
-        [Display(Name = "Thương hiệu")]
         public string BrandName { get; set; }
 
-        [Display(Name = "Gỡ khỏi web")]
         public bool Deleted { get; set; }
 
-        [Display(Name = "Đánh giá")]
         public decimal? AverageEvaluation { get; set; }
 
         public int? EventId { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        [Display(Name = "Loại mặt hàng")]
         public Category Category { get; set; }
-
         public Event Event { get; set; }
         public ICollection<CartDetail> CartDetails { get; set; }
         public ICollection<Comment> Comments { get; set; }

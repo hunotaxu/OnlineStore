@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace OnlineStore.Pages.Product
 {
     public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
-        public string NameSort { get; set; }
-        public string DateSort { get; set; }
-        public string CurrentFilter { get; set; }
-        public string CurrentSort { get; set; }
-
+        public SortType CurrentSort { get; set; }
+        public string CurrentSearchString { get; set; }
+        public int CurrentPage { get; set; }
         public PaginatedList<Item> Items { get; set; }
 
         public IndexModel(IItemRepository itemRepository)
@@ -24,70 +23,60 @@ namespace OnlineStore.Pages.Product
             _itemRepository = itemRepository;
         }
 
-        public async Task<IActionResult> OnGet(int? categoryId, int? pageIndex)
+        public void OnGet(string searchString)
         {
-            if (categoryId == null)
-            {
-                return BadRequest();
-            }
-
-            var items = _itemRepository.GetSome(item => item.CategoryId == categoryId);
-
-            var enumerable = items as Item[] ?? items.ToArray();
-            if (!enumerable.Any())
-            {
-                return NotFound();
-            }
-
-            //Tạo biến số sản phẩm trên trang
-            int pageSize = 5;
-
-            ViewData["CategoryId"] = categoryId;
-
-            Items = await PaginatedList<Item>.CreateAsync(
-                enumerable.OrderBy(n => n.Name), pageIndex ?? 1, pageSize);
-
-            return Page();
+            List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString))).ToList();
+            CurrentPage = 1;
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 5);
+            CurrentSearchString = searchString;
         }
 
-        public async Task OnPostAsync(string sortOrder, string currentFilter, string searchString, int? pageIndex)
+        public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
+            decimal currentMaxPrice, string currentRating, string currentSearchString, int? currentPage)
         {
-            CurrentSort = sortOrder;
-            //NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            //DateSort = sortOrder == "Date" ? "date_desc" : "Date";
-            if (searchString != null)
+            List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((currentSearchString))).ToList();
+            if (currentPage != null)
             {
-                pageIndex = 1;
+                CurrentPage = currentPage.Value;
             }
-            else
+            if (currentBrand.Any())
             {
-                searchString = currentFilter;
-            }
-
-            CurrentFilter = searchString;
-
-            List<Item> itemResult = null;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                itemResult = _itemRepository.GetSome(i => i.Name.Contains((searchString))).ToList();
+                if (currentBrand.Count != items.Count)
+                {
+                    List<Item> itemFilters = (from c in currentBrand
+                        from i in items
+                        where (i.BrandName.Equals(c))
+                        select i).ToList();
+                    items = itemFilters;
+                }
             }
 
-            switch (sortOrder)
+            switch (currentSort)
             {
-                case "lowtohigh":
-                    itemResult = new List<Item>(itemResult.OrderBy(s => s.Price));
+                case SortType.PriceLowToHigh:
+                    items = new List<Item>(items.OrderBy(s => s.Price));
                     break;
-                case "hightolow":
-                    itemResult = new List<Item>(itemResult.OrderByDescending(s => s.Price));
+                case SortType.PriceHighToLow:
+                    items = new List<Item>(items.OrderByDescending(s => s.Price));
                     break;
                 default:
-                    itemResult = new List<Item>(itemResult.OrderByDescending(s => s.View));
+                    items = new List<Item>(items.OrderByDescending(s => s.View));
                     break;
             }
 
             int pageSize = 5;
-            Items = await PaginatedList<Item>.CreateAsync(itemResult, pageIndex ?? 1, pageSize);
+            Items = PaginatedList<Item>.CreateAsync(items, currentPage ?? 1, pageSize);
+
+            var myViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { { "Items", Items } };
+            myViewData.Model = Items;
+
+            PartialViewResult result = new PartialViewResult()
+            {
+                ViewName = "_SearchResultGridPartial",
+                ViewData = myViewData
+            };
+
+            return result;
         }
     }
 }

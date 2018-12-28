@@ -4,12 +4,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Layout/_HomeLayout.cshtml";
 }
+
 <div class="content-top">
     <h1>Điện thoại mới nhất </h1>
     <div class="grid-in">
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstDTM)*@
-            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.phones)
+            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle1Partial.cshtml", Model.phones)
             @*<partial name="SanPhamStyle1Partial" model="Model.lstDTM">*@
         </div>
     </div>
@@ -18,7 +19,7 @@
     <div class="grid-in">
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstLT)*@
-            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.laptops)
+            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle1Partial.cshtml", Model.laptops)
             @*<partial name="SanPhamStyle1Partial" model="Model.lstLT">*@
         </div>
     </div>
@@ -28,7 +29,7 @@
         @*Máy tính bảng*@
         <div class="container">
             @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstMTB)*@
-            @await Html.PartialAsync("~/Pages/Product/_SanPhamStyle1Partial.cshtml", Model.tablets)
+            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle1Partial.cshtml", Model.tablets)
             @*<partial name="SanPhamStyle1Partial" model="Model.lstMTB">*@
         </div>
     </div>

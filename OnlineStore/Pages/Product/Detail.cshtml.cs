@@ -49,7 +49,7 @@ namespace OnlineStore.Pages.Product
 
             List<Comment> comments = _commentRepository.GetSome(n => n.CustomerId == id).ToList();
 
-            if (!comments.Any())
+            if (comments.Any())
             {
                 foreach (Comment comment in comments.ToList())
                 {
@@ -62,7 +62,7 @@ namespace OnlineStore.Pages.Product
                         CommentId = comment.Id,
                         Content = comment.Content,
                         CustomerId = comment.CustomerId,
-                        CustomerName = cus.FullName,
+                        //CustomerName = cus.FirstName + ' ' + cus.LastName,
                         Evaluation = comment.Evaluation,
                         ItemId = comment.ItemId,
                         Time = DateTime.Now

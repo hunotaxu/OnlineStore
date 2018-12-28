@@ -1,0 +1,35 @@
+﻿@using DAL.Models
+@model IEnumerable<Category>
+
+<div class="h_menu4">
+    <ul class="memenu skyblue">
+        <li class="showhide" style="display: none;"><span class="title">MENU</span><span class="icon1"></span><span class="icon2"></span></li>
+        @*<li class="active grid" style="display: inline;"><a class="color8" href="@Url.Action("Index","Home")">Trang chủ</a></li>*@
+        @foreach (Category item in Model)
+        {
+            <li style="display: inline;">
+                <a class="color1" href="@Url.Action("SanPham", "SanPham",new { @MaLoaiSP=item.Id})">@item.Name</a>
+            </li>
+        }
+        <li class="grid" style="display: inline;">
+            @*<a class="color2" href="#">Thương hiệu nổi bật</a>*@
+            @*<div class="mepanel">
+                    <div class="row">
+                        @foreach (var groupItem in Model.GroupBy(n => n.Category))
+                        {
+                            if (groupItem.Key != null)
+                            {
+                                <div class="col1">
+                                    <div class="h_nav">
+                                        <h4>@groupItem.Key.Name</h4>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>*@
+        </li>
+        <li style="display: inline;"><a class="color4" href="blog.html">Giới thiệu</a></li>
+        <li style="display: inline;"><a class="color6" href="contact.html">Liên hệ</a></li>
+    </ul>
+</div>
