@@ -12,7 +12,6 @@ namespace DAL.Models
         [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
 
-
         [Timestamp]
         public byte[] Timestamp { get; set; }
 

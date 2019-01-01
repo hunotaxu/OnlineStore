@@ -29,7 +29,8 @@ namespace DAL.Models
         [Display(Name = "Mã khách hàng")]
         public int CustomerId { get; set; }
 
-        [Display(Name = "Phí giao hàng")]
+        public int AddressId { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingFee { get; set; }
 
@@ -38,6 +39,7 @@ namespace DAL.Models
         //public byte[] Timestamp { get; set; }
 
         public Customer Customer { get; set; }
+        public Address Address { get; set; }
         public ICollection<LineItem> LineItems { get; set; }
     }
 }

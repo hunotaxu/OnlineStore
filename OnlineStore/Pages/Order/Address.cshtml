@@ -19,27 +19,36 @@
                     <div class="list-group-item-heading">
                         @foreach (var address in Model.AddressOfCustomer)
                         {
-                            
                             <div class="row radio">
                                 <div class="col-xs-3">
                                     <label>
-                                        <input type="radio" name="optionShipp" id="optionShipp1" value="option2">
+                                        <input type="radio" class="optionShip" value="@address.Id">
                                         @address.Province
                                     </label>
                                 </div>
                                 <div class="col-xs-5">
                                     <dl class="dl-small">
-                                        @*<dt>@Model.Customer.BillingAddress</dt>*@
                                         <dd>@address.Detail</dd>
                                     </dl>
                                     <button class="btn btn-sm btn-link editAddress">Edit</button>
                                     <a class="btn btn-sm btn-link" asp-page="/Order/Address" asp-page-handler="DeleteAddress" asp-route-addressId="@address.Id">Xóa địa chỉ này</a>
-                                    <input class="idAddress" value="@address.Id" type="hidden"/>
-                                    <input class="Detail" value="@address.Detail" type="hidden"/>
-                                    <input class="District" value="@address.District" type="hidden"/>
-                                    <input class="PhoneNumber" value="@address.PhoneNumber" type="hidden"/>
-                                    <input class="Province" value="@address.Province" type="hidden"/>
-                                    <input class="Ward" value="@address.Ward" type="hidden"/>
+                                    <input class="idAddress" value="@address.Id" type="hidden" />
+                                    <input class="Detail" value="@address.Detail" type="hidden" />
+                                    <input class="District" value="@address.District" type="hidden" />
+                                    <input class="PhoneNumber" value="@address.PhoneNumber" type="hidden" />
+                                    <input class="Province" value="@address.Province" type="hidden" />
+                                    <input class="Ward" value="@address.Ward" type="hidden" />
+                                </div>
+                                <div class="col-xs-4">
+                                    <label>Phí vận chuyển:</label>
+                                    @if (address.Province == "Hồ Chí Minh")
+                                    {
+                                        <label class="shippingFee">10000</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="shippingFee">30000</label>
+                                    }
                                 </div>
                             </div>
                         }
@@ -52,19 +61,19 @@
                         <div class="row">
                             <div class="col-xs-3">
                                 @*<div class="radio">
-                            <label>
-                                <input type="radio" name="optionShipp" id="optionShipp2" value="option2" checked>
-                                Thêm địa chỉ mới
-                            </label>
-                        </div>*@
+                                        <label>
+                                            <input type="radio" name="optionShipp" id="optionShipp2" value="option2" checked>
+                                            Thêm địa chỉ mới
+                                        </label>
+                                    </div>*@
                             </div>
                             <div class="col-xs-9">
                                 <form role="form" method="post" id="addressForm" style="display: none" asp-page-handler="Address">
-                                    <input type="hidden" name="Id" id="Id"/>
+                                    <input type="hidden" name="Id" id="Id" />
                                     @*<div class="form-group">
-                                        <label for="inputname">Tên người nhận</label>
-                                        <input type="text" class="form-control form-control-large" id="inputname" placeholder="Nhập họ tên người nhận">
-                                    </div>*@
+                                            <label for="inputname">Tên người nhận</label>
+                                            <input type="text" class="form-control form-control-large" id="inputname" placeholder="Nhập họ tên người nhận">
+                                        </div>*@
                                     <div class="form-group">
                                         <label for="inputAddress1">Số điện thoại</label>
                                         <input type="text" class="form-control form-control-large" name="PhoneNumber" id="PhoneNumber" placeholder="Nhập số điện thoại">
@@ -108,7 +117,7 @@
                                             <option>Hải Dương</option>
                                             <option>Hải Phòng</option>
                                             <option>Hòa Bình</option>
-                                            <option>Hồ Chí Minh</option>)
+                                            <option>Hồ Chí Minh</option>
                                             <option>Hậu Giang</option>
                                             <option>Hưng Yên</option>
                                             <option>Khánh Hòa</option>
@@ -157,7 +166,7 @@
                 </div>
             </div>
             <div class="well">
-                <a asp-page="/Order/Payment"  class="btn btn-primary btn-lg btn-block">Tiếp tục</a>
+                <a id="continue" class="btn btn-primary btn-lg btn-block">Tiếp tục</a>
             </div>
         </div>
     </div>
@@ -196,8 +205,13 @@
 @section Scripts{
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
     <script>
-        $(document).ready(function(){
-            $("#addAddress").click(function(){
+        $("#continue").click(function () {
+            var radioValue = $("input[class='optionShip']:checked").closest(".row").find(".shippingFee").text();
+            var addressId = $("input[class='optionShip']:checked").val();
+            window.location = "/Order/Payment?addressId=" + addressId + "&shippingFee=" + radioValue;
+        });
+        $(document).ready(function () {
+            $("#addAddress").click(function () {
                 $("#addressForm").toggle();
                 $("#Id").val(0);
                 $("#Detail").val("");

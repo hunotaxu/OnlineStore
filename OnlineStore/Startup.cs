@@ -68,12 +68,7 @@ namespace OnlineStore
         {
             if (env.IsDevelopment())
             {
-                // app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
-                //using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                //{
-                //    StoreDataInitializer.InitializeData(app.ApplicationServices);
-                //}
             }
             else
             {

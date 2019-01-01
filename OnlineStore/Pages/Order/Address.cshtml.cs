@@ -24,12 +24,14 @@ namespace OnlineStore.Pages.Order
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
             _itemRepository = itemRepository;
+            ShippingFeeLocal = 10000;
+            ShippingFeeGlobal = 30000;
         }
 
         public Customer Customer { get; set; }
         public IList<Address> AddressOfCustomer { get; set; }
-
-
+        public decimal ShippingFeeLocal { get; set; }
+        public decimal ShippingFeeGlobal { get; set; }
 
         public IActionResult OnGet(int cartId)
         {

@@ -14,8 +14,9 @@ namespace DAL.EF
         {
         }
 
+        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
+		public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CartDetail> CartDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
