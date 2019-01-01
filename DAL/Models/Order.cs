@@ -23,13 +23,17 @@ namespace DAL.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Bonus { get; set; }
 
+        [Display(Name = "Người duyệt")]
         public int EmployeeId { get; set; }
 
+        [Display(Name = "Mã khách hàng")]
         public int CustomerId { get; set; }
 
+        [Display(Name = "Phí giao hàng")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingFee { get; set; }
 
+        [Display(Name = "Trạng thái")]
         public StatusOrder Status { get; set; }
         //public byte[] Timestamp { get; set; }
 

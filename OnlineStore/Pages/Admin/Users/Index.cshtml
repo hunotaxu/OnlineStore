@@ -1,5 +1,6 @@
 ﻿@page
 @model OnlineStore.Pages.Admin.Users.IndexModel
+@using DAL.Models
 
 @{
     ViewData["Title"] = "Index";
@@ -10,6 +11,12 @@
 <p>
     <a asp-page="./Create">Create New</a>
 </p>
+<form>
+    <p>
+        Nhập tên: <input type="text" asp-for="SearchString" />
+        <input type="submit" value="Tìm kiếm" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr>

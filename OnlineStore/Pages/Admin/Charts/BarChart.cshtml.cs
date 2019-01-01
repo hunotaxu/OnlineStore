@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using DAL.EF;
 using DAL.Models;
 using OnlineStore.Models.ViewModels;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
+using System.Text;
 
 namespace OnlineStore.Pages.Admin.Charts
 {

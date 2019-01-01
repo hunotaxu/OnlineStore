@@ -45,7 +45,7 @@ namespace OnlineStore
                 options.UseSqlServer(_configuration.GetConnectionString("OnlineStoreContext")));
             services.AddMvc().AddSessionStateTempDataProvider().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AddPageRoute("/Admin/Charts/BarChart", "");
+                options.Conventions.AddPageRoute("/LoginPage/Index", "");
             });
 
             services.AddMvc();

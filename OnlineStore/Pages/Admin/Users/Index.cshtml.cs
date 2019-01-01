@@ -21,10 +21,22 @@ namespace OnlineStore.Pages.Admin.Users
 
         public IList<User> User { get;set; }
 
+        [BindProperty(SupportsGet = true)]
+        public string SearchString { get; set; }
+        public string labelSearch { get; set; }
         public async Task OnGetAsync()
         {
+            var Users = from m in _context.User
+                         select m;
+
             User = await _context.User
                 .Include(u => u.TypeOfUser).ToListAsync();
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                Users = Users.Where(s => s.FirstName.Contains(SearchString));
+            }
+            User = await Users.ToListAsync();
+
         }
     }
 }
