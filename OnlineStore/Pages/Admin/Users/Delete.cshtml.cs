@@ -50,7 +50,9 @@ namespace OnlineStore.Pages.Admin.Users
 
             if (User != null)
             {
-                _context.User.Remove(User);
+                User.Status = 0;
+                _context.Attach(User).State = EntityState.Modified;
+                _context.User.Update(User);
                 await _context.SaveChangesAsync();
             }
 

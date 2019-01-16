@@ -14,6 +14,7 @@ namespace DAL.Models
         }
 
         //public int Id { get; set; }
+        [Display(Name = "Ngày giao dự kiến")]
         [DataType(DataType.Date)]
         public DateTime DeliveryDate { get; set; }
 

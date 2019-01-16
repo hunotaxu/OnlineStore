@@ -50,20 +50,17 @@ namespace DAL.Repositories
 
         public virtual int Delete(LineItem entity, bool persist = true)
         {
-            Table.Remove(entity);
+            entity.Deleted = true;
+            Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
 
         public int Delete(int itemId, int orderId, bool persist = true)
         {
-            LineItem LineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
-            Table.Attach(LineItem).State = EntityState.Deleted;
-            return persist ? SaveChanges() : 0;
-        }
-
-        public int DeleteRange(IEnumerable<LineItem> entities, bool persist = true)
-        {
-            Table.RemoveRange(entities);
+            LineItem lineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
+            lineItem.Deleted = true;
+            Table.Update(lineItem);
+            //Table.Attach(LineItem).State = EntityState.Deleted;
             return persist ? SaveChanges() : 0;
         }
 

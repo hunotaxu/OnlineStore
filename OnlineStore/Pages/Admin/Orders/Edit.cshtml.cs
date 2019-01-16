@@ -8,20 +8,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.EF;
 using DAL.Models;
+using DAL.Repositories;
 
 namespace OnlineStore.Pages.Admin.Orders
 {
     public class EditModel : PageModel
     {
         private readonly DAL.EF.OnlineStoreDbContext _context;
+        private IOrderRepository _orderRepository;
+        private IAddressRepository _addressRepository;
 
-        public EditModel(DAL.EF.OnlineStoreDbContext context)
+        public EditModel(DAL.EF.OnlineStoreDbContext context, IOrderRepository orderRepository, IAddressRepository addressRepository)
         {
             _context = context;
+            _orderRepository = orderRepository;
+            _addressRepository = addressRepository;
         }
 
         [BindProperty]
-        public Order Order { get; set; }
+        public DAL.Models.Order Order { get; set; }
+
+        public Address Address { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +37,11 @@ namespace OnlineStore.Pages.Admin.Orders
                 return NotFound();
             }
 
-            Order = await _context.Order
-                .Include(o => o.Customer).FirstOrDefaultAsync(m => m.Id == id);
+            //Order = await _context.Order
+            //    .Include(o => o.Customer).FirstOrDefaultAsync(m => m.Id == id);
 
+            Order = _orderRepository.Find(id);
+            Address = _addressRepository.Find(Order.AddressId);
             if (Order == null)
             {
                 return NotFound();
@@ -41,18 +50,19 @@ namespace OnlineStore.Pages.Admin.Orders
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync(int Id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            Order = _orderRepository.Find(Id);
             _context.Attach(Order).State = EntityState.Modified;
-
+            Order.Status = StatusOrder.ReadyToShip;
             try
             {
-                await _context.SaveChangesAsync();
+                _orderRepository.Update(Order);
             }
             catch (DbUpdateConcurrencyException)
             {

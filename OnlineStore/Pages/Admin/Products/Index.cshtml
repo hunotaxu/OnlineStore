@@ -30,7 +30,9 @@
 </head>
 
 <body>
-
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
@@ -44,48 +46,42 @@
                         <tr>
                             <th>Tên</th>
                             <th>Giá</th>
-                            <th>Hình ảnh</th>
-                            <th>Deleted</th>
+                            @*<th>Hình ảnh</th>*@
+                            @*<th>Deleted</th>*@
+                            <th>Số lượng tồn</th>
                             <th>Brandname</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Giá</th>
-                            <th>Hình ảnh</th>
-                            <th>Deleted</th>
-                            <th>Brandname</th>
-                        </tr>
-                    </tfoot>
-
 
                     <tbody>
 
                         @foreach (var item in Model.Item)
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Image)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Deleted)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BrandName)
-                                </td>
-                                <td>
-                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            @*<td>
+            @Html.DisplayFor(modelItem => item.Image)
+        </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Inventory)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BrandName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Deleted)
+                            </td>
+                            <td>
+                                <a asp-page="./Edit" asp-route-id="@item.Id">Sửa</a> |
+                                <a asp-page="./Details" asp-route-id="@item.Id">Chi tiết</a> |
+                                <a asp-page="./Delete" asp-route-id="@item.Id">Xóa</a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>

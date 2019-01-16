@@ -22,9 +22,6 @@ namespace DAL.Models
         [StringLength(500)]
         public string Description { get; set; }
 
-        [Display(Name="Hình ảnh sự kiện")]
-        public byte[] Image { get; set; }
-
         [Display(Name="Ưu đãi")]
         [Column(TypeName="decimal(18,2)")]
         public decimal Bonus { get; set; }

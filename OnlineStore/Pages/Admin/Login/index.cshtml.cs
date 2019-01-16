@@ -30,7 +30,7 @@ namespace OnlineStore.Pages.LoginPage
         public IActionResult OnPost(string username, string password, string url, string itemId)
         {
 
-            User user_ = _userRepository.Find(x => x.Email.Equals(username) || x.PhoneNumber.Equals(username));
+            User user_ = _userRepository.Find(x => x.Username.Equals(username));
 
             if (user_ == null)
             {

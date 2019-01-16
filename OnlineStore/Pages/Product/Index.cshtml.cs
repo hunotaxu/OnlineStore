@@ -25,10 +25,18 @@ namespace OnlineStore.Pages.Product
 
         public void OnGet(string searchString)
         {
-            List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString))).ToList();
+            List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString)))
+                .OrderByDescending(s => s.View).ToList();
             CurrentPage = 1;
-            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 5);
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);
             CurrentSearchString = searchString;
+        }
+
+        public void OnGetCategory(int categoryId)
+        {
+            List<Item> items = _itemRepository.GetSome(i => i.CategoryId == categoryId).OrderByDescending(s => s.View).ToList();
+            CurrentPage = 1;
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);
         }
 
         public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
@@ -44,9 +52,9 @@ namespace OnlineStore.Pages.Product
                 if (currentBrand.Count != items.Count)
                 {
                     List<Item> itemFilters = (from c in currentBrand
-                        from i in items
-                        where (i.BrandName.Equals(c))
-                        select i).ToList();
+                                              from i in items
+                                              where (i.BrandName.Equals(c))
+                                              select i).ToList();
                     items = itemFilters;
                 }
             }
@@ -64,7 +72,7 @@ namespace OnlineStore.Pages.Product
                     break;
             }
 
-            int pageSize = 5;
+            int pageSize = 6;
             Items = PaginatedList<Item>.CreateAsync(items, currentPage ?? 1, pageSize);
 
             var myViewData = new ViewDataDictionary(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { { "Items", Items } };

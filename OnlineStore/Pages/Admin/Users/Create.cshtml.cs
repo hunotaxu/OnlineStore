@@ -36,7 +36,7 @@ namespace OnlineStore.Pages.Admin.Users
             {
                 return Page();
             }
-
+            User.Status = 1;
             _context.User.Add(User);
             await _context.SaveChangesAsync();
 

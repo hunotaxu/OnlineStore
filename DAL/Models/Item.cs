@@ -33,6 +33,7 @@ namespace DAL.Models
         [Display(Name = "Hình ảnh")]
         public string Image { get; set; }
 
+        [Display(Name = "Số lượng tồn")]
         public int Inventory { get; set; }
 
         [Display(Name = "Số lượt xem")]
@@ -44,7 +45,7 @@ namespace DAL.Models
         [Display(Name = "Thương hiệu")]
         public string BrandName { get; set; }
 
-        [Display(Name = "Gỡ khỏi web")]
+        //[Display(Name = "Gỡ khỏi web")]
         public bool Deleted { get; set; }
 
         [Display(Name = "Đánh giá")]

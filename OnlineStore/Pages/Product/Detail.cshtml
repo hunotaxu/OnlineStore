@@ -105,7 +105,7 @@
             <nav>
                 <ul class="cd-tabs-navigation">
                     <li><a data-content="Information" class="selected" href="#0">Thông tin sản phẩm</a></li>
-                    <li><a data-content="Comment" href="#0">Nhận xét từ khách hàng (@numberOfComments)</a></li>
+                    @*<li><a data-content="Comment" href="#0">Nhận xét từ khách hàng (@numberOfComments)</a></li>*@
                 </ul>
             </nav>
             <ul class="cd-tabs-content">
@@ -114,65 +114,65 @@
                         @Html.Raw(Model.Item.Description)
                     </div>
                 </li>
-                <li data-content="Comment">
+                @*<li data-content="Comment">
                     <div class="comments-top-top">
                         @*<div class="top-comment-left">
                               <img class="img-responsive" src="images/co.png" alt="">
                             </div>*@
-                        @if (ViewBag.thongTinNguoiDung == null)
-                        {
+                @*if (ViewBag.thongTinNguoiDung == null)
+                    {
+                    }
+                    else
+                    {
+                        foreach (var itemDanhGia in ViewBag.thongTinNguoiDung)
+                        {*@
+                @*<div class="top-comment-right">
+                    <h6><a href="#">@itemDanhGia.HoTen</a></h6><br />
+                    <div>@itemDanhGia.ThoiDiem</div>
+                    <ul class="star-footer">
+                        <input type="hidden" value="@itemDanhGia.DiemDanhGia" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" disabled />*@
+                @*<li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>
+                    <li><a href="#"><i> </i></a></li>*@
+                @*</ul>
+                    <p>@itemDanhGia.NoiDungBL</p>*@
+                @*</div>
                         }
-                        else
-                        {
-                            foreach (var itemDanhGia in ViewBag.thongTinNguoiDung)
-                            {
-                                <div class="top-comment-right">
-                                    <h6><a href="#">@itemDanhGia.HoTen</a></h6><br />
-                                    <div>@itemDanhGia.ThoiDiem</div>
-                                    <ul class="star-footer">
-                                        <input type="hidden" value="@itemDanhGia.DiemDanhGia" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" disabled />
-                                        @*<li><a href="#"><i> </i></a></li>
-                                            <li><a href="#"><i> </i></a></li>
-                                            <li><a href="#"><i> </i></a></li>
-                                            <li><a href="#"><i> </i></a></li>
-                                            <li><a href="#"><i> </i></a></li>*@
-                                    </ul>
-                                    <p>@itemDanhGia.NoiDungBL</p>
-                                </div>
-                            }
-                        }
-                        <div class="clearfix"> </div>
-                        @if (HttpContext.Session.Get<Customer>("Customer") == null)
-                        {
-                            <a id="btnDangNhap" class="add-re" href="#">Đăng nhập để đánh giá</a>
-                        }
-                        else
-                        {
-                            <a class="add-re" href="#reviews-anchor" id="open-review-box">Thêm nhận xét</a>
-                            <div class="row" id="post-review-box" style="display:none;">
-                                <div class="col-md-12">
-                                    @*<form accept-charset="UTF-8" action="" method="post">*@
-                                    <form asp-page="/Product/SendFeedBack" data-ajax="true" data-ajax-method="GET" asp-route-itemId="@Model.Item.Id" asp-route-url="@Request.GetEncodedUrl()" data-ajax-success="onSuccess">
-                                        @*@using (Ajax.BeginForm("GuiDanhGia", "SanPham", new { @maSP = Model.MaSP, @url = Request.Url.ToString() }, new AjaxOptions { OnSuccess = "onSuccess" }))
-                                            {*@
-                                        @*<input id="ratings-hidden" name="rating" type="hidden">*@
-                                        @*<input name="rating" type="hidden"/>*@
-                                        <label>Đánh giá của bạn về sản phẩm này</label>
-                                        <input type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" name="rating" />
-                                        <textarea class="form-control animated" cols="50" id="new-review" name="comment"
-                                                  placeholder="Viết nhận xét của bạn" rows="5"></textarea>
-                                        <div class="text-right">
-                                            <button class="btn btn-danger" type="button" id="close-review-box">Hủy</button>
-                                            <button class="btn btn-success" type="submit">Lưu</button>
-                                        </div>
-                                        @*}*@
-                                    </form>
-                                    @*</form>*@
-                                </div>
+                    }*@
+                @*<div class="clearfix"> </div>
+                    @if (HttpContext.Session.Get<Customer>("Customer") == null)
+                    {
+                        <a id="btnDangNhap" class="add-re" href="#">Đăng nhập để đánh giá</a>
+                    }
+                    else
+                    {
+                        <a class="add-re" href="#reviews-anchor" id="open-review-box">Thêm nhận xét</a>
+                        <div class="row" id="post-review-box" style="display:none;">*@
+                @*<div class="col-md-12">
+                    @*<form accept-charset="UTF-8" action="" method="post">*@
+                @*<form asp-page="/Product/SendFeedBack" data-ajax="true" data-ajax-method="GET" asp-route-itemId="@Model.Item.Id" asp-route-url="@Request.GetEncodedUrl()" data-ajax-success="onSuccess">*@
+                @*@using (Ajax.BeginForm("GuiDanhGia", "SanPham", new { @maSP = Model.MaSP, @url = Request.Url.ToString() }, new AjaxOptions { OnSuccess = "onSuccess" }))
+                    {*@
+                @*<input id="ratings-hidden" name="rating" type="hidden">*@
+                @*<input name="rating" type="hidden"/>*@
+                @*<label>Đánh giá của bạn về sản phẩm này</label>
+                    <input type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" name="rating" />
+                    <textarea class="form-control animated" cols="50" id="new-review" name="comment"
+                              placeholder="Viết nhận xét của bạn" rows="5"></textarea>
+                    <div class="text-right">
+                        <button class="btn btn-danger" type="button" id="close-review-box">Hủy</button>
+                        <button class="btn btn-success" type="submit">Lưu</button>
+                    </div>*@
+                @*}*@
+                @*</form>*@
+                @*</form>*@
+                @*</div>
                             </div>
                         }
-                    </div>
-                </li>
+                    </div>*@
+                @*</li>*@
             </ul>
         </div>
         <!---->

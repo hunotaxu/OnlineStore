@@ -14,7 +14,6 @@ namespace DAL.Repositories
         int Update(int itemId, int cartId, int newQuantity, bool persist = true);
         int Delete(LineItem entity, bool persist = true);
         int Delete(int itemId, int cartId, bool persist = true);
-        int DeleteRange(IEnumerable<LineItem> entities, bool persist = true);
         int SaveChanges();
     }
 }

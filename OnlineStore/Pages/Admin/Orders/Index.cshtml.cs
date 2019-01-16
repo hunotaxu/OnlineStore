@@ -19,7 +19,7 @@ namespace OnlineStore.Pages.Admin.Orders
             _context = context;
         }
 
-        public IList<Order> Order { get;set; }
+        public IList<DAL.Models.Order> Order { get;set; }
 
         public async Task OnGetAsync()
         {

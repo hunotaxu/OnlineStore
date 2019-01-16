@@ -33,7 +33,7 @@ namespace OnlineStore.Pages.Admin.Users
                 .Include(u => u.TypeOfUser).ToListAsync();
             if (!String.IsNullOrEmpty(SearchString))
             {
-                Users = Users.Where(s => s.FirstName.Contains(SearchString));
+                Users = Users.Where(s => s.FirstName.Contains(SearchString) && s.Status == 1);
             }
             User = await Users.ToListAsync();
 

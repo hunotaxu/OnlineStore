@@ -8,16 +8,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DAL.EF;
 using DAL.Models;
+using DAL.Repositories;
 
 namespace OnlineStore.Pages.Admin.Users
 {
     public class EditModel : PageModel
     {
         private readonly DAL.EF.OnlineStoreDbContext _context;
+        private IUserRepository _userRepository;
 
-        public EditModel(DAL.EF.OnlineStoreDbContext context)
+        public EditModel(DAL.EF.OnlineStoreDbContext context, IUserRepository userRepository)
         {
             _context = context;
+            _userRepository = userRepository;
         }
 
         [BindProperty]
@@ -37,24 +40,22 @@ namespace OnlineStore.Pages.Admin.Users
             {
                 return NotFound();
             }
-           ViewData["TypeOfUserId"] = new SelectList(_context.TypeOfUser, "Id", "Name");
+
+            ViewData["TypeOfUserId"] = new SelectList(_context.TypeOfUser, "Id", "Name");
             return Page();
-            
+
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync(int Id)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(User).State = EntityState.Modified;
-
+            //_context.Attach(User).State = EntityState.Modified;
+            User user = _userRepository.Find(Id);
+            user.Username = User.Username;
+            user.Status = User.Status;
             try
             {
-                _context.User.Update(User);
-                await _context.SaveChangesAsync();
+                _userRepository.Update(user);
+                //await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {

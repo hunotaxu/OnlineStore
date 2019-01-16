@@ -26,13 +26,15 @@
             @Html.DisplayNameFor(model => model.Item.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item.Description)
+            @Html.Raw(@Model.Item.Description)
+            @*@Html.DisplayFor(model => model.Item.Description)*@
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Item.Image)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Item.Image)
+            <img class="img-responsive" src="~/images/ProductImages/@Model.Item.Image" alt="" style="width: 150px; height: 150px;">
+            @*@Html.DisplayFor(model => model.Item.Image)*@
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Item.Inventory)
@@ -52,18 +54,18 @@
         <dd>
             @Html.DisplayFor(model => model.Item.BrandName)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Item.Deleted)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Item.Deleted)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Item.AverageEvaluation)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Item.AverageEvaluation)
-        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Item.Deleted)
+            </dt>*@
+        @*<dd>
+                @Html.DisplayFor(model => model.Item.Deleted)
+            </dd>*@
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Item.AverageEvaluation)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Item.AverageEvaluation)
+            </dd>*@
         <dt>
             @Html.DisplayNameFor(model => model.Item.Category)
         </dt>
@@ -76,12 +78,12 @@
         <dd>
             @Html.DisplayFor(model => model.Item.Event.Name)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Item.Timestamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Item.Timestamp)
-        </dd>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.Item.Timestamp)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Item.Timestamp)
+            </dd>*@
     </dl>
 </div>
 <div>

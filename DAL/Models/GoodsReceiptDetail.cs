@@ -15,6 +15,8 @@ namespace DAL.Models
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
+        public bool Deleted { get; set; }
+
         public GoodsReceipt GoodsReceipt { get; set; }
         public Item Item { get; set; }
     }

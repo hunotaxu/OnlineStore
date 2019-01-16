@@ -3,17 +3,17 @@
 
 @foreach (var item in Model.Take(3))
 {
-<div class="col-md-4 grid-top">
-    <a href="@Url.RouteUrl("XemChiTiet", new { @id = item.Id, @tensp=item.Name})" class="b-link-stripe b-animate-go  thickbox">
-        <img class="img-responsive" src="~/images/ProductImages/@item.Image" alt="Hình ảnh không thể hiển thị">
-        <div class="b-wrapper">
-            <h3 class="b-animate b-from-left    b-delay03 " style="text-align:left;font-size:15pt;">
-                @Html.Raw(item.Description)
-            </h3>
-        </div>
-    </a>
-    <p><a href="single.html">@item.Name</a></p>
-</div>
+    <div class="col-md-4 grid-top">
+        <a href="@Url.RouteUrl("XemChiTiet", new { @id = item.Id, @tensp=item.Name})" class="b-link-stripe b-animate-go  thickbox">
+            <img class="img-responsive" src="~/images/ProductImages/@item.Image" alt="Hình ảnh không thể hiển thị">
+            @*<div class="b-wrapper">
+                    <h3 class="b-animate b-from-left    b-delay03 " style="text-align:left;font-size:15pt;">
+                        @Html.Raw(item.Description)
+                    </h3>
+                </div>*@
+        </a>
+        <p><a href="single.html">@item.Name</a></p>
+    </div>
 }
 <div class="clearfix"> </div>
 

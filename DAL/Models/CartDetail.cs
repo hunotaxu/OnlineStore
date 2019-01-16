@@ -10,6 +10,8 @@ namespace DAL.Models
 
         public int Quantity { get; set; }
 
+        public bool Deleted { get; set; }
+
         [Timestamp]
         public byte[] Timestamp { get; set; }
 

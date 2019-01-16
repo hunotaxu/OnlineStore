@@ -17,6 +17,12 @@ a {
     -ms-transition: 0.5s all;
 }
 
+.col-25 {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    padding: 0 16px;
+}
+
 ul {
     padding: 0;
     margin: 0;
@@ -1405,9 +1411,9 @@ h3.real {
             color: #fff;
         }
 
-.cd-tabs-content li {
+/*.cd-tabs-content li {
     display: none;
-}
+}*/
 
     .cd-tabs-content li.selected {
         display: block;
@@ -2899,9 +2905,9 @@ ul.qty {
     max-width: 800px;
 }*/
 
-.form-control {
+/*.form-control {
     width: auto;
-}
+}*/
 
 .form-control-small {
     width: 100px;

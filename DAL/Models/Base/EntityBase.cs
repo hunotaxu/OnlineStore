@@ -10,5 +10,7 @@ namespace DAL.Models.Base
 
         [Timestamp]
         public byte[] Timestamp { get; set; }
+
+        public bool Deleted { get; set; }
     }
 }

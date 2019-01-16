@@ -8,7 +8,7 @@
         @foreach (Category item in Model)
         {
             <li style="display: inline;">
-                <a class="color1" href="@Url.Action("SanPham", "SanPham",new { @MaLoaiSP=item.Id})">@item.Name</a>
+                <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
             </li>
         }
         <li class="grid" style="display: inline;">

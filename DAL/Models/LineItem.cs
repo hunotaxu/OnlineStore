@@ -14,6 +14,8 @@ namespace DAL.Models
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
+        public bool Deleted { get; set; }
+
         [Column(TypeName="decimal(18,2)")]
         public decimal Amount { get; set; }
 
