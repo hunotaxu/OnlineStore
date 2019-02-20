@@ -3,7 +3,6 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>7b9b8e7b-efd9-441e-8795-192e6f71e9d9</UserSecretsId>
     <NoWin32Manifest>true</NoWin32Manifest>
-    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\admin\clndr.css" />
@@ -14,33 +13,19 @@
     <Content Remove="wwwroot\css\admin\style.css" />
     <Content Remove="wwwroot\css\admin\style_form_dangnhap.css" />
     <Content Remove="wwwroot\images\logo.png" />
-    <Content Remove="wwwroot\js\admin\Chart1.js" />
-    <Content Remove="wwwroot\js\admin\clndr.js" />
-    <Content Remove="wwwroot\js\admin\easyResponsiveTabs.js" />
-    <Content Remove="wwwroot\js\admin\jquery.easydropdown.js" />
-    <Content Remove="wwwroot\js\admin\jquery.min.js" />
-    <Content Remove="wwwroot\js\admin\jquery.nicescroll.js" />
-    <Content Remove="wwwroot\js\admin\jquery.vmap.js" />
-    <Content Remove="wwwroot\js\admin\jquery.vmap.sampledata.js" />
-    <Content Remove="wwwroot\js\admin\jquery.vmap.world.js" />
-    <Content Remove="wwwroot\js\admin\main.js" />
-    <Content Remove="wwwroot\js\admin\moment-2.2.1.js" />
-    <Content Remove="wwwroot\js\admin\site.js" />
-    <Content Remove="wwwroot\js\admin\underscore-min.js" />
+    <Content Remove="wwwroot\js\site.js" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
-    <PackageReference Include="EntityFrameworkCore.Triggers" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.163" />
-    <PackageReference Include="Twitter.Bootstrap.Less" Version="3.3.6" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.8.391" />
@@ -56,17 +41,17 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Views\Shared\Components\MenuPartial\Default.cshtml">
+    <Content Update="Pages\Components\MenuPartial\Default.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shared\Components\SearchResult\Default.cshtml">
+    <Content Update="Pages\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Pages\Account\" />
-    <Folder Include="Views\Shared\Components\BannerPartial\" />
+    <Folder Include="Pages\Components\BannerPartial\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\css\admin\clndr.css" />
@@ -75,7 +60,7 @@
     <None Include="wwwroot\css\admin\memenu.css" />
     <None Include="wwwroot\css\admin\nav.css" />
     <None Include="wwwroot\css\admin\style.css" />
-    <None Include="wwwroot\css\admin\style_form_dangnhap.css" />
+    <None Include="wwwroot\css\style_form_dangnhap.css" />
     <None Include="wwwroot\css\flexslider.css" />
     <None Include="wwwroot\css\style.css" />
     <None Include="wwwroot\css\style_progressbar.css" />
@@ -379,19 +364,19 @@
     <None Include="wwwroot\images\ProductImages\vaio_2.png" />
     <None Include="wwwroot\images\ProductImages\vaio_3.png" />
     <None Include="wwwroot\images\ProductImages\vaio_4.png" />
-    <None Include="wwwroot\js\admin\Chart1.js" />
-    <None Include="wwwroot\js\admin\clndr.js" />
-    <None Include="wwwroot\js\admin\easyResponsiveTabs.js" />
-    <None Include="wwwroot\js\admin\jquery.easydropdown.js" />
-    <None Include="wwwroot\js\admin\jquery.min.js" />
-    <None Include="wwwroot\js\admin\jquery.nicescroll.js" />
-    <None Include="wwwroot\js\admin\jquery.vmap.js" />
-    <None Include="wwwroot\js\admin\jquery.vmap.sampledata.js" />
-    <None Include="wwwroot\js\admin\jquery.vmap.world.js" />
-    <None Include="wwwroot\js\admin\main.js" />
-    <None Include="wwwroot\js\admin\moment-2.2.1.js" />
-    <None Include="wwwroot\js\admin\site.js" />
-    <None Include="wwwroot\js\admin\underscore-min.js" />
+    <None Include="wwwroot\js\Chart1.js" />
+    <None Include="wwwroot\js\clndr.js" />
+    <None Include="wwwroot\js\easyResponsiveTabs.js" />
+    <None Include="wwwroot\js\jquery.easydropdown.js" />
+    <None Include="wwwroot\js\jquery.min.js" />
+    <None Include="wwwroot\js\jquery.nicescroll.js" />
+    <None Include="wwwroot\js\jquery.vmap.js" />
+    <None Include="wwwroot\js\jquery.vmap.sampledata.js" />
+    <None Include="wwwroot\js\jquery.vmap.world.js" />
+    <None Include="wwwroot\js\main.js" />
+    <None Include="wwwroot\js\moment-2.2.1.js" />
+    <None Include="wwwroot\js\site.js" />
+    <None Include="wwwroot\js\underscore-min.js" />
     <None Include="wwwroot\js\memenu.js" />
     <None Include="wwwroot\js\simpleCart.min.js" />
   </ItemGroup>

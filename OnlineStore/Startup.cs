@@ -1,3 +1,4 @@
+using System;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -30,25 +31,19 @@ namespace OnlineStore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // Set up in-memory session provider
-            services.AddDistributedMemoryCache();
-
             services.AddSession(options =>
             {
-                //// Set a short timeout for easy testing.
-                //options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(69);
             });
-
-            services.AddSingleton(_ => _configuration);
-            services.AddDbContext<OnlineStoreDbContext>(options => 
-                options.UseSqlServer(_configuration.GetConnectionString("OnlineStoreContext")));
-            services.AddMvc().AddSessionStateTempDataProvider().AddRazorPagesOptions(options =>
+            services.AddMemoryCache();
+            services.AddMvc().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AddPageRoute("/LoginPage/Index", "");
+                options.Conventions.AddPageRoute("/Home/Index", "");
+                options.AllowAreas = true;
             });
+            services.AddSingleton(_ => _configuration);
+            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
 
-            services.AddMvc();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
@@ -59,8 +54,11 @@ namespace OnlineStore
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICartDetailRepository, CartDetailRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ILineItemRepository, LineItemRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
@@ -75,22 +73,14 @@ namespace OnlineStore
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+            app.UseHttpsRedirection();
             app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
+            //app.UseCookiePolicy();
             app.UseSession();
-            app.UseCookiePolicy();
             app.UseMvc();
-        }
-        public Startup(IHostingEnvironment env)
-        {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
         }
     }
 }

@@ -22,8 +22,8 @@ namespace DAL.Models
         [Column(TypeName = "varchar(20)")]
         public string PhoneNumber { get; set; }
 
-        [EmailAddress]
         [Display(Name = "Email")]
+        [RegularExpression("^[a-z][a-z0-9_\\.]{5,32}@[a-z0-9]{2,}(\\.[a-z0-9]{2,4}){1,2}$", ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; }
 
         public int TypeOfUserId { get; set; }

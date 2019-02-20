@@ -109,12 +109,20 @@ namespace DAL.Repositories.Base
         }
         public virtual int Delete(T entity, bool persist = true)
         {
-            Table.Remove(entity);
+            entity.Deleted = true;
+            Table.Update(entity);
+            //Table.Remove(entity);
             return persist ? SaveChanges() : 0;
         }
         public virtual int DeleteRange(IEnumerable<T> entities, bool persist = true)
         {
-            Table.RemoveRange(entities);
+            foreach (T entity in entities)
+            {
+                entity.Deleted = true;
+                Table.Update(entity);
+            }
+            //UpdateRange(entities);
+            //Table.RemoveRange(entities);
             return persist ? SaveChanges() : 0;
         }
 
