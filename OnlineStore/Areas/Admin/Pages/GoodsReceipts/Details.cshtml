@@ -1,0 +1,38 @@
+﻿@page
+@model OnlineStore.Pages.Admin.GoodsReceipts.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>GoodsReceipt</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.GoodsReceipt.TotalAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GoodsReceipt.TotalAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GoodsReceipt.Supplier)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GoodsReceipt.Supplier.Id)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.GoodsReceipt.Timestamp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.GoodsReceipt.Timestamp)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.GoodsReceipt.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

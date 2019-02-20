@@ -1,0 +1,84 @@
+﻿@page
+@model OnlineStore.Pages.Admin.Customers.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.FullName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.FullName)
+        </dd>
+        @*<dt>
+            @Html.DisplayNameFor(model => model.Customer.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Address)
+        </dd>*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.PhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.PhoneNumber)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Password)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Password)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.ShippingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.ShippingAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.BillingAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.BillingAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Gender)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Gender)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.TypeOfCustomer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.TypeOfCustomer.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.Timestamp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.Timestamp)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Customer.Id" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
