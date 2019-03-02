@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OnlineStore.Middleware;
 
 namespace OnlineStore
@@ -66,8 +67,10 @@ namespace OnlineStore
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
-                              IHostingEnvironment env)
+                              IHostingEnvironment env,
+                              ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddFile("Logs/log-{Date}.txt");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TeduCoreApp.Data.Interfaces
+namespace DAL.Data.Interfaces
 {
     public interface IDateTracking
     {
