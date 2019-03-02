@@ -1,35 +1,120 @@
-﻿@using DAL.Models
+﻿
+@using DAL.Models
 @model IEnumerable<Category>
+@*<div class="h_menu4">
+        <ul class="memenu skyblue">
+            <li class="showhide" style="display: none;"><span class="title">MENU</span><span class="icon1"></span><span class="icon2"></span></li>
+            @foreach (Category item in Model)
+            {
+                <li style="display:block;">
+                    <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
+                </li>
+            }
+            <li class="grid" style="display: inline;">
 
-<div class="h_menu4">
-    <ul class="memenu skyblue">
-        <li class="showhide" style="display: none;"><span class="title">MENU</span><span class="icon1"></span><span class="icon2"></span></li>
-        @*<li class="active grid" style="display: inline;"><a class="color8" href="@Url.Action("Index","Home")">Trang chủ</a></li>*@
-        @foreach (Category item in Model)
-        {
-            <li style="display: inline;">
-                <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
             </li>
+            <li style="display: block";><a class="color4" href="blog.html">Giới thiệu</a></li>
+            <li style="display: block";><a class="color6" href="contact.html">Liên hệ</a></li>
+        </ul>
+    </div>*@
+
+<style>
+    .menu_icon {
+        width: 35px;
+        height: 5px;
+        background-color: #f67777;
+        margin: 6px 0;
+    }
+
+    .dropbtn {
+        background-color: #ffffff;        
+        border: none;
+        font-size: 14px;
+        color: #3A3A3A;
+        padding: 1.4em;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
         }
-        <li class="grid" style="display: inline;">
-            @*<a class="color2" href="#">Thương hiệu nổi bật</a>*@
-            @*<div class="mepanel">
-                    <div class="row">
-                        @foreach (var groupItem in Model.GroupBy(n => n.Category))
+
+        .dropdown-content a {
+            color: black;
+            padding: 14px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown-content a:hover {
+                background-color: #ddd;
+            }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #f67777;
+        color: white;
+    }
+
+    #menu1 li {
+        display: inline-block;
+    }
+   
+</style>
+
+<!--menu-bar-->
+<div id="menu1">
+    <ul>        
+        <li>
+            <div class="dropdown" style="float:left">
+
+                <button class="dropbtn">
+                    Danh mục <span class="caret"></span>
+                </button>
+                <div class="dropdown-content">
+                    <ul>
+                        @foreach (Category item in Model)
                         {
-                            if (groupItem.Key != null)
-                            {
-                                <div class="col1">
-                                    <div class="h_nav">
-                                        <h4>@groupItem.Key.Name</h4>
-                                    </div>
-                                </div>
-                            }
+                            <li style="display:block;">
+                                <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
+                            </li>
                         }
-                    </div>
-                </div>*@
-        </li>
-        <li style="display: inline;"><a class="color4" href="blog.html">Giới thiệu</a></li>
-        <li style="display: inline;"><a class="color6" href="contact.html">Liên hệ</a></li>
+                    </ul>
+                    <a href="#">Link 1</a>
+                    <a href="#">Link 2</a>
+                    <a href="#">Link 3</a>
+                </div>
+            </div>
+        </li>        
     </ul>
-</div>
+</div> <!--menu-bar-->
+@*<script>
+        $(document).ready(function (e) {
+            $('.search-panel .dropdown-menu').find('a').click(function (e) {
+                e.preventDefault();
+                var param = $(this).attr("href").replace("#", "");
+                var concept = $(this).text();
+                $('.search-panel span#search_concept').text(concept);
+                $('.input-group #search_param').val(param);
+            });
+        });
+    </script>*@
