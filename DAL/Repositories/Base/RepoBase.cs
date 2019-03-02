@@ -111,7 +111,6 @@ namespace DAL.Repositories.Base
         {
             entity.Deleted = true;
             Table.Update(entity);
-            //Table.Remove(entity);
             return persist ? SaveChanges() : 0;
         }
         public virtual int DeleteRange(IEnumerable<T> entities, bool persist = true)
@@ -121,8 +120,6 @@ namespace DAL.Repositories.Base
                 entity.Deleted = true;
                 Table.Update(entity);
             }
-            //UpdateRange(entities);
-            //Table.RemoveRange(entities);
             return persist ? SaveChanges() : 0;
         }
 

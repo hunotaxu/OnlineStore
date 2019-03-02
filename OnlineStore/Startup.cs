@@ -1,14 +1,17 @@
 using System;
+using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineStore.Middleware;
+using TeduCoreApp.Data.Entities;
 
 namespace OnlineStore
 {
@@ -43,7 +46,9 @@ namespace OnlineStore
             });
             services.AddSingleton(_ => _configuration);
             services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
-
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<OnlineStoreDbContext>()
+                .AddDefaultTokenProviders();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
