@@ -11,7 +11,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineStore.Middleware;
-using TeduCoreApp.Data.Entities;
 
 namespace OnlineStore
 {

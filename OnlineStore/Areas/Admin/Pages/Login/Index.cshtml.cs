@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Extensions;
 
-namespace OnlineStore.Pages.Admin.Login
+namespace OnlineStore.Areas.Admin.Pages.Login
 {
     public class IndexModel : PageModel
     {

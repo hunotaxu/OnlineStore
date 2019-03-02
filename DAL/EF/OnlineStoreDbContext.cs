@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using DAL.Data.Entities;
-using TeduCoreApp.Data.Entities;
 
 namespace DAL.EF
 {
@@ -49,6 +48,7 @@ namespace DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<CartDetail>().HasKey(c => new { c.ItemId, c.CartId });
             modelBuilder.Entity<GoodsReceiptDetail>().HasKey(c => new { c.ItemId, c.GoodsReceiptId });
             modelBuilder.Entity<LineItem>().HasKey(c => new { c.ItemId, c.OrderId });
