@@ -1,9 +1,12 @@
 ﻿using DAL.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
+using DAL.Data.Entities;
 
 namespace DAL.EF
 {
-    public class OnlineStoreDbContext : DbContext
+    public class OnlineStoreDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public OnlineStoreDbContext()
         {
@@ -45,6 +48,7 @@ namespace DAL.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<CartDetail>().HasKey(c => new { c.ItemId, c.CartId });
             modelBuilder.Entity<GoodsReceiptDetail>().HasKey(c => new { c.ItemId, c.GoodsReceiptId });
             modelBuilder.Entity<LineItem>().HasKey(c => new { c.ItemId, c.OrderId });
@@ -53,7 +57,7 @@ namespace DAL.EF
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Điện thoại" },
                 new Category { Id = 2, Name = "Laptop" },
-                new Category { Id = 3, Name = "Máy tính bảng" },
+                new Category { Id = 3, Name = "Tablet" },
                 new Category { Id = 4, Name = "Phụ kiện" }
             );
             modelBuilder.Entity<TypeOfUser>().HasData(
@@ -72,14 +76,14 @@ namespace DAL.EF
             );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 2, FirstName = "Le", LastName = "Nam2", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262",TypeOfUserId=1, Gender= Gender.Male },
-                new User { Id = 3, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 4, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 5, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 6, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 7, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 8, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male },
-                new User { Id = 9, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Male }
+                new User { Id = 2, FirstName = "Le", LastName = "Nam2", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262",TypeOfUserId=1, Gender= Gender.Nam },
+                new User { Id = 3, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 4, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 5, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 6, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 7, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 8, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam },
+                new User { Id = 9, FirstName = "Le", LastName = "Nam", Address = "abc", Username = "nam1", Password = "nam1", Status = 1, PhoneNumber = "015262", TypeOfUserId = 2, Gender = Gender.Nam }
 
             );
 

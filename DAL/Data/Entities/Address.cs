@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DAL.Models;
 using DAL.Models.Base;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class Address : EntityBase
     {

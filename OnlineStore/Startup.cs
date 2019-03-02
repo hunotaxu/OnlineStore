@@ -1,9 +1,11 @@
 using System;
+using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -38,12 +40,14 @@ namespace OnlineStore
             services.AddMemoryCache();
             services.AddMvc().AddRazorPagesOptions(options =>
             {
-                options.Conventions.AddPageRoute("/Home/Index", "");
+                options.Conventions.AddPageRoute("/_Home/Index", "");
                 options.AllowAreas = true;
             });
             services.AddSingleton(_ => _configuration);
             services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
-
+            services.AddIdentity<AppUser, AppRole>()
+                .AddEntityFrameworkStores<OnlineStoreDbContext>()
+                .AddDefaultTokenProviders();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();

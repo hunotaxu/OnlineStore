@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using DAL.Data.Entities;
 using DAL.Models.Base;
 
 namespace DAL.Models
