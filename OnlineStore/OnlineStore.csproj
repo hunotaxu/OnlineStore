@@ -49,6 +49,17 @@
     <Folder Include="node_modules\" />
     <Folder Include="Pages\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
+	<Folder Include="wwwroot\menu-site\image\" />
+    <Folder Include="wwwroot\menu-site\search-box\css\" />
+    <Folder Include="wwwroot\menu-site\search-box\js\" />
+	<Folder Include="wwwroot\css\client\order\" />
+    <Folder Include="wwwroot\css\client\product\" />
+    <Folder Include="wwwroot\js\client\order\" />
+    <Folder Include="wwwroot\js\client\product\" />
+    <Folder Include="wwwroot\fonts\" />
+	<Folder Include="wwwroot\menu-site\image\" />
+    <Folder Include="wwwroot\menu-site\search-box\css\" />
+    <Folder Include="wwwroot\menu-site\search-box\js\" />
     <Folder Include="wwwroot\css\client\order\" />
     <Folder Include="wwwroot\css\client\product\" />
     <Folder Include="wwwroot\js\client\order\" />

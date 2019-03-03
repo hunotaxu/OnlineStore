@@ -1,4 +1,5 @@
 ﻿@page
+
 @model OnlineStore.Pages._Home.IndexModel
 @{
     ViewData["Title"] = "Index";
@@ -101,21 +102,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                         </div>
                         <!-- Collect the nav links, forms, and other content for toggling -->
+                        @await Component.InvokeAsync("MenuPartial")                     
 
-                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-                            <ul class="nav navbar-nav nav_1">
-
-                                <li class="dropdown mega-dropdown active">
-                                    @await Component.InvokeAsync("MenuPartial")
-                                </li>
-                                <li><a class="color" href="#">Giới thiệu</a></li>
-                                <li><a class="color" href="#">Liên hệ</a></li>
-                                <li><a class="color" href="#">Tin tức</a></li>
-                                <li><a class="color" href="#">Tuyển dụng</a></li>
-
-
-                            </ul>
-                        </div><!-- /.navbar-collapse -->
+                        <!-- /.navbar-collapse -->
 
                     </nav>
                 </div>
@@ -208,56 +197,61 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="content">
         <div class="container">
             @*<div class="content-top">
-                <div class="col-md-6 col-md">
-                    <div class="col-1">
-                        <a href="single.html" class="b-link-stroke b-animate-go  thickbox">
-                            <img src="/home-site/images/pi.jpg" class="img-responsive" alt="" /><div class="b-wrapper1 long-img"><p class="b-animate b-from-right    b-delay03 ">Lorem ipsum</p><label class="b-animate b-from-right    b-delay03 "></label><h3 class="b-animate b-from-left    b-delay03 ">Trendy</h3></div>
-                        </a>
+                    <div class="col-md-6 col-md">
+                        <div class="col-1">
+                            <a href="single.html" class="b-link-stroke b-animate-go  thickbox">
+                                <img src="/home-site/images/pi.jpg" class="img-responsive" alt="" /><div class="b-wrapper1 long-img"><p class="b-animate b-from-right    b-delay03 ">Lorem ipsum</p><label class="b-animate b-from-right    b-delay03 "></label><h3 class="b-animate b-from-left    b-delay03 ">Trendy</h3></div>
+                            </a>
 
-                        <!---<a href="single.html"><img src="/home-site/images/pi.jpg" class="img-responsive" alt=""></a>-->
+                            <!---<a href="single.html"><img src="/home-site/images/pi.jpg" class="img-responsive" alt=""></a>-->
+                        </div>
+                        <div class="col-2">
+                            <span>Hot Deal</span>
+                            <h2><a href="single.html">Luxurious &amp; Trendy</a></h2>
+                            <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years</p>
+                            <a href="single.html" class="buy-now">Buy Now</a>
+                        </div>
                     </div>
-                    <div class="col-2">
-                        <span>Hot Deal</span>
-                        <h2><a href="single.html">Luxurious &amp; Trendy</a></h2>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years</p>
-                        <a href="single.html" class="buy-now">Buy Now</a>
+                    <div class="col-md-6 col-md1">
+                        <div class="col-3">
+                            <a href="single.html">
+                                <img src="/home-site/images/pi1.jpg" class="img-responsive" alt="">
+                                <div class="col-pic">
+                                    <p>Lorem Ipsum</p>
+                                    <label></label>
+                                    <h5>For Men</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="single.html">
+                                <img src="/home-site/images/pi2.jpg" class="img-responsive" alt="">
+                                <div class="col-pic">
+                                    <p>Lorem Ipsum</p>
+                                    <label></label>
+                                    <h5>For Kids</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-3">
+                            <a href="single.html">
+                                <img src="/home-site/images/pi3.jpg" class="img-responsive" alt="">
+                                <div class="col-pic">
+                                    <p>Lorem Ipsum</p>
+                                    <label></label>
+                                    <h5>For Women</h5>
+                                </div>
+                            </a>
+                        </div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
-                <div class="col-md-6 col-md1">
-                    <div class="col-3">
-                        <a href="single.html">
-                            <img src="/home-site/images/pi1.jpg" class="img-responsive" alt="">
-                            <div class="col-pic">
-                                <p>Lorem Ipsum</p>
-                                <label></label>
-                                <h5>For Men</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a href="single.html">
-                            <img src="/home-site/images/pi2.jpg" class="img-responsive" alt="">
-                            <div class="col-pic">
-                                <p>Lorem Ipsum</p>
-                                <label></label>
-                                <h5>For Kids</h5>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a href="single.html">
-                            <img src="/home-site/images/pi3.jpg" class="img-responsive" alt="">
-                            <div class="col-pic">
-                                <p>Lorem Ipsum</p>
-                                <label></label>
-                                <h5>For Women</h5>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <!--products-->*@
+
+
+
+
+
+                <!--products-->*@
             <div class="content-mid">
                 <h3>Trending Items</h3>
                 <label class="line"></label>
@@ -525,6 +519,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
             </div>
             <!--//products-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             <!--brand-->
             <div class="brand">
                 <div class="col-md-3 brand-grid">

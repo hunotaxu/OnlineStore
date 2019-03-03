@@ -21,7 +21,14 @@ namespace DAL.Data.Entities
             Avatar = avatar;
             Status = status;
         }
+       
         public string FullName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Email { get; set; }
+        public string UserName { get; set; }
+        public Guid Id { get; set; }
+
+
 
         public DateTime? BirthDay { set; get; }
 
