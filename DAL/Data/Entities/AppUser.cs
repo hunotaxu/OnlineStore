@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Enums;
 using DAL.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
-using TeduCoreApp.Data.Interfaces;
 
 namespace DAL.Data.Entities
 {
