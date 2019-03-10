@@ -19,7 +19,7 @@ namespace OnlineStore.Areas.Admin.Pages.Login
         private readonly SignInManager<AppUser> _signInManager;
         private readonly ILogger _logger;
 
-        public IndexModel(ICustomerRepository customerRepository, IUserRepository userRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, ILogger logger)
+        public IndexModel(ICustomerRepository customerRepository, IUserRepository userRepository, SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, ILogger<IndexModel> logger)
         {
             _customerRepository = customerRepository;
             _userRepository = userRepository;
