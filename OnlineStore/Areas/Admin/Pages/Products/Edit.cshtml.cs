@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using DAL.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DAL.EF;
-using DAL.Models;
 
-namespace OnlineStore.Pages.Admin.Products
+namespace OnlineStore.Areas.Admin.Pages.Products
 {
     public class EditModel : PageModel
     {

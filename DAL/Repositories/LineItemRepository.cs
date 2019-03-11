@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;

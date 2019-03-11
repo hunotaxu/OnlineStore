@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using DAL.Data.Entities;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using DAL.EF;
-using DAL.Models;
 
-namespace OnlineStore.Pages.Admin.Products
+namespace OnlineStore.Areas.Admin.Pages.Products
 {
     public class IndexModel : PageModel
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using DAL.Data.Entities;
 using DAL.Models;
 
 namespace DAL.Repositories

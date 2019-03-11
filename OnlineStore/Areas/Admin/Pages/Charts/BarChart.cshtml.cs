@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using System.Text;
+using DAL.Data.Entities;
 using DAL.Repositories;
 
 namespace OnlineStore.Pages.Admin.Charts
@@ -41,7 +42,7 @@ namespace OnlineStore.Pages.Admin.Charts
             Thang12 = 0;
         }
 
-        public IList<DAL.Models.Order> Order { get; set; }
+        public IList<DAL.Data.Entities.Order> Order { get; set; }
         public IList<LineItem> LineItems { get; set; }
         public decimal Thang1;
         public decimal Thang2;
@@ -58,7 +59,7 @@ namespace OnlineStore.Pages.Admin.Charts
 
         public ActionResult OnGetAsync()
         {
-            IList<DAL.Models.Order> orders= _orderRepository.GetSome(o => o.DeliveryDate.Year == 2018).ToList();
+            IList<DAL.Data.Entities.Order> orders= _orderRepository.GetSome(o => o.DeliveryDate.Year == 2018).ToList();
             foreach (var order in orders)
             {
                 switch (order.DeliveryDate.Month)

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL.Models;
+﻿using System.Collections.Generic;
+using DAL.Data.Entities;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace OnlineStore.Pages._Home

@@ -1,7 +1,8 @@
-﻿using DAL.Models.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Data.Entities;
+using DAL.Data.Entities.Base;
 
 namespace DAL.Models
 {

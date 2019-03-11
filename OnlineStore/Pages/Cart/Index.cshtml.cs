@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DAL.Data.Entities;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,7 @@ namespace OnlineStore.Pages.Cart
             {
                 return RedirectToPage("/Home/Index");
             }
-            DAL.Models.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
+            DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
             IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetItems(c => c.CartId == cart.Id);
             foreach (CartDetail itemInCart in cartItems)
             {

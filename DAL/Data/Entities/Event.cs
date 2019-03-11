@@ -1,10 +1,10 @@
-﻿using DAL.Models.Base;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Data.Entities.Base;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class Event : EntityBase
     {

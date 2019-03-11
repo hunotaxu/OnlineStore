@@ -1,6 +1,7 @@
 ﻿using DAL.Repositories.Base;
 using DAL.Models;
 using System.Linq;
+using DAL.Data.Entities;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 

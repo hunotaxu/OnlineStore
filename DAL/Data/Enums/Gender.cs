@@ -1,4 +1,4 @@
-﻿namespace DAL.Models
+﻿namespace DAL.Data.Enums
 {
     public enum Gender
     {

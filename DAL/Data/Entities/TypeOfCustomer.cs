@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Models.Base;
+using DAL.Data.Entities.Base;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class TypeOfCustomer : EntityBase
     {

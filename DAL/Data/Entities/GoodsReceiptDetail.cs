@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class GoodsReceiptDetail
     {

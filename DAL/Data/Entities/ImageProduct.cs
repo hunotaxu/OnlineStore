@@ -1,6 +1,6 @@
-﻿using DAL.Models.Base;
+﻿using DAL.Data.Entities.Base;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class ImageProduct : EntityBase
     {
