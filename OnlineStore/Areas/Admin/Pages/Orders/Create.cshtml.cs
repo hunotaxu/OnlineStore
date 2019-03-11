@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,7 +27,7 @@ namespace OnlineStore.Pages.Admin.Orders
         }
 
         [BindProperty]
-        public DAL.Models.Order Order { get; set; }
+        public DAL.Data.Entities.Order Order { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {

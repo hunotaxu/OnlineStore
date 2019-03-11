@@ -33,9 +33,6 @@ namespace OnlineStore.Areas.Admin.Pages.Login
             return Page();
         }
 
-        [HttpPost]
-        [AllowAnonymous]
-        [Route("login.html", Name = "Login")]
         public async Task<IActionResult> OnPost(LoginViewModel model)
         {
             if (ModelState.IsValid)

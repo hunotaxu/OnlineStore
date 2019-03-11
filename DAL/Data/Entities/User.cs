@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
-using DAL.Models.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Data.Entities.Base;
+using DAL.Data.Enums;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class User : EntityBase
     {

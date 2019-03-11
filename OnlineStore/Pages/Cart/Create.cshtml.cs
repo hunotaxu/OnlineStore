@@ -1,4 +1,5 @@
-﻿using DAL.Models;
+﻿using DAL.Data.Entities;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -21,10 +22,10 @@ namespace OnlineStore.Pages.Cart
         {
             Customer cus = HttpContext.Session.Get<Customer>("Customer");
             //DAL.Models.Cart cart = new DAL.Models.Cart();
-            DAL.Models.Cart cart = _cartRepository.Find(m => m.CustomerId == cus.Id);
+            DAL.Data.Entities.Cart cart = _cartRepository.Find(m => m.CustomerId == cus.Id);
             if (cart == null)
             {
-                cart = new DAL.Models.Cart
+                cart = new DAL.Data.Entities.Cart
                 {
                     CustomerId = cus.Id
                 };

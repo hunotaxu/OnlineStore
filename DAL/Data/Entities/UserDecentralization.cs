@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class UserDecentralization
     {

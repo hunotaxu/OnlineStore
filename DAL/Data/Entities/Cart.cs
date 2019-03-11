@@ -1,7 +1,8 @@
-﻿using DAL.Models.Base;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using DAL.Data.Entities.Base;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class Cart : EntityBase
     {

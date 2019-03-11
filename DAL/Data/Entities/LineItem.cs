@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class LineItem
     {

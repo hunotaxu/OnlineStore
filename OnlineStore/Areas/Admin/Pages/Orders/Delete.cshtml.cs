@@ -20,7 +20,7 @@ namespace OnlineStore.Pages.Admin.Orders
         }
 
         [BindProperty]
-        public DAL.Models.Order Order { get; set; }
+        public DAL.Data.Entities.Order Order { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

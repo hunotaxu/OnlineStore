@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DAL.Data.Entities;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;

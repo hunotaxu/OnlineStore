@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DAL.Models;

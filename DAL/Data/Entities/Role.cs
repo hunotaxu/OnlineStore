@@ -1,9 +1,9 @@
-﻿using DAL.Models.Base;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using DAL.Data.Entities.Base;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class Role : EntityBase
     {

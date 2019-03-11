@@ -19,7 +19,7 @@ namespace OnlineStore.Pages.Admin.Orders
             _context = context;
         }
 
-        public DAL.Models.Order Order { get; set; }
+        public DAL.Data.Entities.Order Order { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

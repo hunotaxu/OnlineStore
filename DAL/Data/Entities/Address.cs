@@ -1,5 +1,5 @@
-﻿using DAL.Models;
-using DAL.Models.Base;
+﻿using DAL.Data.Entities.Base;
+using DAL.Models;
 
 namespace DAL.Data.Entities
 {

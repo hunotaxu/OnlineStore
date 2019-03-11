@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +42,7 @@ namespace OnlineStore.Pages.Order
             }
             ShippingFee = shippingFee;
             AddressId = addressId;
-            DAL.Models.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
+            DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
             IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetItems(c => c.CartId == cart.Id);
             foreach (CartDetail itemInCart in cartItems)
             {
@@ -63,7 +65,7 @@ namespace OnlineStore.Pages.Order
         public IActionResult OnGetAction(int customerId, decimal shippingFee, int addressId)
         {
             int a = AddressId;
-            DAL.Models.Order order = new DAL.Models.Order
+            DAL.Data.Entities.Order order = new DAL.Data.Entities.Order
             {
                 CustomerId = customerId,
                 Status = StatusOrder.Pending,
@@ -73,7 +75,7 @@ namespace OnlineStore.Pages.Order
                 AddressId = addressId
             };
             _orderRepository.Add(order);
-            DAL.Models.Cart cart = _cartRepository.Find(c => c.CustomerId == customerId);
+            DAL.Data.Entities.Cart cart = _cartRepository.Find(c => c.CustomerId == customerId);
             IEnumerable<CartDetail> items = _cartDetailRepository.GetItems(i => i.CartId == cart.Id);
             foreach (CartDetail item in items)
             {

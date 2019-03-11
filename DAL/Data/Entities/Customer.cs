@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DAL.Data.Entities;
-using DAL.Models.Base;
+using DAL.Data.Entities.Base;
+using DAL.Data.Enums;
+using DAL.Models;
 
-namespace DAL.Models
+namespace DAL.Data.Entities
 {
     public class Customer : EntityBase
     {
