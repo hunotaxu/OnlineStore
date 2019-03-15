@@ -37,7 +37,8 @@
     login = function (user, pass) {
         $.ajax({
             type: "POST",
-            url: "/login/OnPost",
+            url: "/Admin/Login/Index",
+            traditional: true,
             data: {
                 username: user,
                 password: pass
