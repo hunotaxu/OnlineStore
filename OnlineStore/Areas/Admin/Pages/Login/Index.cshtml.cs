@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
