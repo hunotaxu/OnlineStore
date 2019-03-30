@@ -49,10 +49,8 @@ namespace OnlineStore.Areas.Admin.Pages.Login
                     _logger.LogWarning("User account locked out.");
                     return new ObjectResult(new GenericResult(false, "Tài khoản đã bị khóa"));
                 }
-                else
-                {
-                    return new ObjectResult(new GenericResult(false, "Đăng nhập sai"));
-                }
+
+                return new ObjectResult(new GenericResult(false, "Đăng nhập sai"));
             }
 
             // If we got this far, something failed, redisplay form

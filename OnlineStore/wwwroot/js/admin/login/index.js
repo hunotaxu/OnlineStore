@@ -1,17 +1,14 @@
 ﻿var login = (function () {
-    // #region Variants
-    var login;
-    var onRegister;
-    // #endregion
-
     // #region Publics
-    var init = function() {
-        onRegister();
+    var init = function () {
+        $(document).ready(function() {
+            onRegister();
+        });
     };
     // #endregion
 
     // #region Events
-    onRegister = function () {
+    var onRegister = function () {
         //$('#frmLogin').validate({
         //    errorClass: 'red',
         //    ignore: [],
@@ -34,11 +31,10 @@
             });
     };
 
-    login = function (user, pass) {
+    var login = function (user, pass) {
         $.ajax({
             type: "POST",
             url: "/Admin/Login/Index",
-            traditional: true,
             data: {
                 username: user,
                 password: pass
