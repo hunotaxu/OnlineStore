@@ -13,11 +13,6 @@ namespace DAL.Repositories.Base
     public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
     {
         protected readonly OnlineStoreDbContext Db;
-        protected RepoBase()
-        {
-            Db = new OnlineStoreDbContext();
-            Table = Db.Set<T>();
-        }
 
         protected RepoBase(DbContextOptions<OnlineStoreDbContext> options)
         {

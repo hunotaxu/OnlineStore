@@ -7,10 +7,6 @@ namespace DAL.Repositories
 {
     public class AddressRepository : RepoBase<Address>, IAddressRepository
     {
-        public AddressRepository()
-        {
-
-        }
         public AddressRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 

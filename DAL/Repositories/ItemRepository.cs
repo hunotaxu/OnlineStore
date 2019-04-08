@@ -10,11 +10,6 @@ namespace DAL.Repositories
 {
     public class ItemRepository : RepoBase<Item>, IItemRepository
     {
-        public ItemRepository()
-        {
-
-        }
-
         public ItemRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 

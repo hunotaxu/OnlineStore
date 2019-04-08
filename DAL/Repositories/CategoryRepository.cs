@@ -10,11 +10,6 @@ namespace DAL.Repositories
 {
     public class CategoryRepository : RepoBase<Category>, ICategoryRepository
     {
-        public CategoryRepository()
-        {
-
-        }
-
         public CategoryRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 

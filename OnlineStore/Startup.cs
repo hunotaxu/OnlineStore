@@ -1,28 +1,29 @@
 using System;
-using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OnlineStore.Middleware;
+using OnlineStore.Services;
 
 namespace OnlineStore
 {
     public class Startup
     {
-        IConfiguration _configuration;
-
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            Configuration = configuration;
         }
+
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,16 +40,33 @@ namespace OnlineStore
                 options.IdleTimeout = TimeSpan.FromMinutes(69);
             });
             services.AddMemoryCache();
-            services.AddMvc().AddRazorPagesOptions(options =>
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            services.AddSingleton(_ => Configuration);
+            services.AddDbContext<OnlineStoreDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")));
+            services.AddIdentity<OnlineStoreUser, IdentityRole>()
+                .AddEntityFrameworkStores<OnlineStoreDbContext>();
+                //.AddDefaultTokenProviders();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AddPageRoute("/_Home/Index", "");
+                    options.AllowAreas = true;
+                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                });
+
+            services.ConfigureApplicationCookie(options =>
             {
-                options.Conventions.AddPageRoute("/_Home/Index", "");
-                options.AllowAreas = true;
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
-            services.AddSingleton(_ => _configuration);
-            services.AddDbContext<OnlineStoreDbContext>(options => options.UseSqlServer(_configuration.GetConnectionString("OnlineStore")));
-            services.AddIdentity<AppUser, AppRole>()
-                .AddEntityFrameworkStores<OnlineStoreDbContext>()
-                .AddDefaultTokenProviders();
+
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
@@ -81,8 +99,10 @@ namespace OnlineStore
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
+            //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
+            app.UseCookiePolicy();
+            app.UseAuthentication();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
             //app.UseCookiePolicy();

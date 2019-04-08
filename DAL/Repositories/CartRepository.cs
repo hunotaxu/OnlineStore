@@ -9,10 +9,6 @@ namespace DAL.Repositories
 {
     public class CartRepository : RepoBase<Cart>, ICartRepository
     {
-        public CartRepository()
-        {
-
-        }
         public CartRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 

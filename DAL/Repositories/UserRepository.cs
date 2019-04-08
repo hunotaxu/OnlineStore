@@ -9,11 +9,6 @@ namespace DAL.Repositories
 {
     public class UserRepository : RepoBase<User>, IUserRepository
     {
-        public UserRepository()
-        {
-
-        }
-
         public UserRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 
