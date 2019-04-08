@@ -2,6 +2,7 @@
     // #region Publics
     var init = function () {
         $(document).ready(function() {
+            onValidateForm();
             onRegister();
         });
     };
@@ -9,7 +10,7 @@
 
     // #region Events
     var onRegister = function () {
-        //$('#frmLogin').validate({
+        //$('#frmAdminLogin').validate({
         //    errorClass: 'red',
         //    ignore: [],
         //    lang: 'en',
@@ -25,20 +26,56 @@
         $('#btnLogin').on('click',
             function (event) {
                 event.preventDefault();
-                var username = $('#txtUserName').val();
+                var email = $('#txtEmail').val();
                 var password = $('#txtPassword').val();
-                login(username, password);
+                //loginFunc(email, password);
+                $.ajax({
+                    type: "POST",
+                    url: "/Login/Index",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: {
+                        Email: email,
+                        Password: $('#txtPassword').val()
+                    },
+                    //contentType: "text",
+                    //dataType: "json",
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = "~/Areas/Admin/Pages/Home/Index";
+                        } else {
+                            commons.notify('Đăng nhập không đúng', 'error');
+                        }
+                    },
+                    failure: function (response) {
+                        console.log(response);
+                    },
+                    complete: function (res) {
+                        console.log(res);
+                    }
+                });
             });
     };
 
-    var login = function (user, pass) {
+    const onValidateForm = function() {
+        $('#frmAdminLogin').parsley();
+    };
+
+    var loginFunc = function (email, pass) {
         $.ajax({
             type: "POST",
-            url: "/Admin/Login/Index",
-            data: {
-                username: user,
-                password: pass
+            url: "/Login/Index",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
             },
+            data: {
+                "Email": email,
+                "Password": pass
+            },
+            contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
                 if (response.success) {
@@ -47,8 +84,8 @@
                     commons.notify('Đăng nhập không đúng', 'error');
                 }
             },
-            error: function (res) {
-                console.log(res);
+            failure: function (response) {
+                console.log(response);
             },
             complete: function (res) {
                 console.log(res);

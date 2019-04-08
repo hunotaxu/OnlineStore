@@ -10,7 +10,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNet.Identity.EntityFramework" Version="2.1.0" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Owin" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.4" />
@@ -38,17 +42,18 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Pages\Components\MenuPartial\Default.cshtml">
+    <Content Update="Pages\Shared\Components\MenuPartial\Default.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Components\SearchResult\Default.cshtml">
+    <Content Update="Pages\Shared\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Identity\Services\" />
     <Folder Include="node_modules\" />
-    <Folder Include="Pages\Components\BannerPartial\" />
+    <Folder Include="Pages\Shared\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
 	<Folder Include="wwwroot\menu-site\image\" />
     <Folder Include="wwwroot\menu-site\search-box\css\" />

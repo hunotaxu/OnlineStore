@@ -1,17 +1,12 @@
-﻿using DAL.Models;
+using DAL.Data.Entities;
+using DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using DAL.Data.Entities;
 
 namespace DAL.EF
 {
-    public class OnlineStoreDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class OnlineStoreDbContext : IdentityDbContext<OnlineStoreUser>
     {
-        public OnlineStoreDbContext()
-        {
-        }
-
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options)
             : base(options)
         {
@@ -19,7 +14,7 @@ namespace DAL.EF
 
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
-		public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<Customer> Customer { get; set; }
         public virtual DbSet<CartDetail> CartDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
