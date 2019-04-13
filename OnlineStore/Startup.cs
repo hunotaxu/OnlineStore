@@ -47,8 +47,8 @@ namespace OnlineStore
             services.AddDbContext<OnlineStoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")));
             services.AddIdentity<OnlineStoreUser, IdentityRole>()
-                .AddEntityFrameworkStores<OnlineStoreDbContext>();
-                //.AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<OnlineStoreDbContext>()
+                .AddDefaultTokenProviders();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>
                 {
