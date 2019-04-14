@@ -65,10 +65,10 @@ namespace DAL.Data.Entities
         [Display(Name = "Giới tính")]
         public Gender Gender { get; set; }
 
-        public TypeOfCustomer TypeOfCustomer { get; set; }
-        public Cart Cart { get; set; }
-        public ICollection<Order> Orders { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Address> Addresses { get; set; }
+        public virtual TypeOfCustomer TypeOfCustomer { get; set; }
+        public virtual Cart Cart { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

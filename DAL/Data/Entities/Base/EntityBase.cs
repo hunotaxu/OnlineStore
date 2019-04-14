@@ -11,6 +11,6 @@ namespace DAL.Data.Entities.Base
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
-        public bool Deleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

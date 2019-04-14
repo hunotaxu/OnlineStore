@@ -51,7 +51,7 @@ namespace OnlineStore.ViewComponents
         private decimal SumTotalAmount()
         {
             Cart cart;
-            var user = HttpContext.Session.Get<User>("User");
+            var user = HttpContext.Session.Get<Customer>("User");
             if (user != null)
             {
                 cart = GetCart(user.Id);

@@ -30,6 +30,6 @@ namespace DAL.Data.Entities
         [Column(TypeName = "varchar(100)")]
         public string Email { get; set; }
 
-        public ICollection<GoodsReceipt> GoodsReceipts { get; set; }
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
     }
 }

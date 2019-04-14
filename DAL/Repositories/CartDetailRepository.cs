@@ -51,7 +51,7 @@ namespace DAL.Repositories
 
         public virtual int Delete(CartDetail entity, bool persist = true)
         {
-            entity.Deleted = true;
+            entity.IsDeleted = true;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
@@ -59,9 +59,9 @@ namespace DAL.Repositories
         public int Delete(int itemId, int cartId, bool persist = true)
         {
             CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
-            cartDetail.Deleted = true;
+            cartDetail.IsDeleted = true;
             Table.Update(cartDetail);
-            //Table.Attach(cartDetail).State = EntityState.Deleted;
+            //Table.Attach(cartDetail).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
 
@@ -69,7 +69,7 @@ namespace DAL.Repositories
         {
             foreach (CartDetail cartDetail in entities)
             {
-                cartDetail.Deleted = true;
+                cartDetail.IsDeleted = true;
                 Table.Update(cartDetail);
             }
             //Table.RemoveRange(entities);

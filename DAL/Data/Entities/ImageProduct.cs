@@ -8,6 +8,6 @@ namespace DAL.Data.Entities
 
         public int ItemId { get; set; }
 
-        public Item Item { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

@@ -20,6 +20,6 @@ namespace DAL.Data.Entities
 
         //public byte[] Timestamp { get; set; }
 
-        public ICollection<Item> Item { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }

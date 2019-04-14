@@ -16,14 +16,14 @@ namespace OnlineStore.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<OnlineStoreUser> _signInManager;
-        private readonly UserManager<OnlineStoreUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<OnlineStoreUser> userManager,
-            SignInManager<OnlineStoreUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -77,7 +77,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new OnlineStoreUser
+                var user = new ApplicationUser
                 {
                     Name = Input.Name,
                     DOB = Input.DOB,

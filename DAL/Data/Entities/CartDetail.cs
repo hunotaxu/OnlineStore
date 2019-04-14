@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Data.Entities
 {
@@ -10,12 +11,12 @@ namespace DAL.Data.Entities
 
         public int Quantity { get; set; }
 
-        public bool Deleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
-        public Cart Cart { get; set; }
-        public Item Item { get; set; }
+        public virtual Cart Cart { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

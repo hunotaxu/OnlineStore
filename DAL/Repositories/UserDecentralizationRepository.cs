@@ -15,7 +15,7 @@ namespace DAL.Repositories
             _context = context;
         }
 
-        public IList<UserDecentralization> GetDecentralizations(int? userTypeOfUserId) =>
-            _context.Set<UserDecentralization>().Where(u => u.TypeOfUserId == userTypeOfUserId).ToList();
+        //public IList<UserDecentralization> GetDecentralizations(int? userTypeOfUserId) =>
+        //    _context.Set<UserDecentralization>().Where(u => u.TypeOfUserId == userTypeOfUserId).ToList();
     }
 }

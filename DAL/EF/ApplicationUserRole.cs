@@ -4,11 +4,9 @@ using Microsoft.AspNetCore.Identity;
 namespace DAL.EF
 {
     // Add profile data for application users by adding properties to the OnlineStoreUser class
-    public class OnlineStoreUser : IdentityUser
+    public class ApplicationUserRole : IdentityUserRole<string>
     {
-        [PersonalData]
-        public string Name { get; set; }
-        [PersonalData]
-        public DateTime DOB { get; set; }
+        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationRole Role { get; set; }
     }
 }

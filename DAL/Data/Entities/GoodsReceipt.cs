@@ -21,7 +21,7 @@ namespace DAL.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
 
-        public Supplier Supplier { get; set; }
-        public ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }
