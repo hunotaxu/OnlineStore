@@ -47,7 +47,7 @@
                             <th>Tên</th>
                             <th>Giá</th>
                             @*<th>Hình ảnh</th>*@
-                            @*<th>Deleted</th>*@
+                            @*<th>IsDeleted</th>*@
                             <th>Số lượng tồn</th>
                             <th>Brandname</th>
                         </tr>
@@ -74,7 +74,7 @@
                                 @Html.DisplayFor(modelItem => item.BrandName)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Deleted)
+                                @Html.DisplayFor(modelItem => item.IsDeleted)
                             </td>
                             <td>
                                 <a asp-page="./Edit" asp-route-id="@item.Id">Sửa</a> |

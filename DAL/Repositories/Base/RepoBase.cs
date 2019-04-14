@@ -103,7 +103,7 @@ namespace DAL.Repositories.Base
         }
         public virtual int Delete(T entity, bool persist = true)
         {
-            entity.Deleted = true;
+            entity.IsDeleted = true;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
@@ -111,7 +111,7 @@ namespace DAL.Repositories.Base
         {
             foreach (T entity in entities)
             {
-                entity.Deleted = true;
+                entity.IsDeleted = true;
                 Table.Update(entity);
             }
             return persist ? SaveChanges() : 0;

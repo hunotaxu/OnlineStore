@@ -41,8 +41,8 @@ namespace DAL.Data.Entities
         public StatusOrder Status { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public Customer Customer { get; set; }
-        public Address Address { get; set; }
-        public ICollection<LineItem> LineItems { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Address Address { get; set; }
+        public virtual ICollection<LineItem> LineItems { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace DAL.Repositories
 
         public virtual int Delete(LineItem entity, bool persist = true)
         {
-            entity.Deleted = true;
+            entity.IsDeleted = true;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
@@ -59,9 +59,9 @@ namespace DAL.Repositories
         public int Delete(int itemId, int orderId, bool persist = true)
         {
             LineItem lineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
-            lineItem.Deleted = true;
+            lineItem.IsDeleted = true;
             Table.Update(lineItem);
-            //Table.Attach(LineItem).State = EntityState.Deleted;
+            //Table.Attach(LineItem).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
 

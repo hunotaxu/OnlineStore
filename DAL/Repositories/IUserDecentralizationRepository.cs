@@ -6,6 +6,6 @@ namespace DAL.Repositories
 {
     public interface IUserDecentralizationRepository
     {
-        IList<UserDecentralization> GetDecentralizations(int? userTypeOfUserId);
+        //IList<UserDecentralization> GetDecentralizations(int? userTypeOfUserId);
     }
 }

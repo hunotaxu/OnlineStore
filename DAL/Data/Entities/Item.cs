@@ -47,7 +47,7 @@ namespace DAL.Data.Entities
         public string BrandName { get; set; }
 
         //[Display(Name = "Gỡ khỏi web")]
-        public bool Deleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         [Display(Name = "Đánh giá")]
         public decimal? AverageEvaluation { get; set; }
@@ -56,12 +56,12 @@ namespace DAL.Data.Entities
         //public byte[] Timestamp { get; set; }
 
         [Display(Name = "Loại mặt hàng")]
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
 
-        public Event Event { get; set; }
-        public ICollection<CartDetail> CartDetails { get; set; }
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
-        public ICollection<LineItem> LineItems { get; set; }
+        public virtual Event Event { get; set; }
+        public virtual ICollection<CartDetail> CartDetails { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        public virtual ICollection<LineItem> LineItems { get; set; }
     }
 }

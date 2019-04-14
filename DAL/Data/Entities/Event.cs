@@ -35,6 +35,6 @@ namespace DAL.Data.Entities
         public DateTime EndDate { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public ICollection<Item> Item { get; set; }
+        public virtual ICollection<Item> Item { get; set; }
     }
 }

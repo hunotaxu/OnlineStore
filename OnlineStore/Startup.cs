@@ -45,8 +45,8 @@ namespace OnlineStore
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")));
-            services.AddIdentity<OnlineStoreUser, IdentityRole>()
+                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")).UseLazyLoadingProxies());
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>()
                 .AddDefaultTokenProviders();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
@@ -76,7 +76,7 @@ namespace OnlineStore
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            //services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<ILineItemRepository, LineItemRepository>();

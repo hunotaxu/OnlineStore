@@ -17,7 +17,7 @@ namespace DAL.Repositories
 
         public IList<Item> GetByCategory(int categoryId)
         {
-            return GetSome(x => x.Category.Id == categoryId && x.Deleted == false, x => x.Name, true).ToList();
+            return GetSome(x => x.Category.Id == categoryId && x.IsDeleted == false, x => x.Name, true).ToList();
         }
 
         public Item GetItem(int? id)

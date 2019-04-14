@@ -16,7 +16,7 @@ namespace DAL.Data.Entities
 
         public int CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
-        public Item Item { get; set; }
+        public virtual Customer Customer { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

@@ -15,12 +15,12 @@ namespace DAL.Data.Entities
         [Timestamp]
         public byte[] Timestamp { get; set; }
 
-        public bool Deleted { get; set; }
+        public bool IsDeleted { get; set; }
 
         [Column(TypeName="decimal(18,2)")]
         public decimal Amount { get; set; }
 
-        public Item Item { get; set; }
-        public Order Order { get; set; }
+        public virtual Item Item { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

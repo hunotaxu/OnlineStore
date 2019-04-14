@@ -18,6 +18,6 @@ namespace DAL.Data.Entities
         [Column(TypeName = "nvarchar(200)")]
         public string Name { get; set; }
 
-        public ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }
