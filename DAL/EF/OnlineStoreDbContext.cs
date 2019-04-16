@@ -31,7 +31,7 @@ namespace DAL.EF
         public virtual DbSet<Order> Order { get; set; }
         //public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
-        public virtual DbSet<TypeOfUser> TypeOfUser { get; set; }
+        //public virtual DbSet<TypeOfUser> TypeOfUser { get; set; }
         //public virtual DbSet<User> User { get; set; }
         //public virtual DbSet<UserDecentralization> UserDecentralization { get; set; }
 
