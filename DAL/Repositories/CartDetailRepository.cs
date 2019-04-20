@@ -1,5 +1,4 @@
 ﻿using DAL.EF;
-using DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;

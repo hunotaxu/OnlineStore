@@ -18,7 +18,7 @@
     {
         numberOfComments = ViewBag.thongTinNguoiDung.Count;
     }
-    var cus = HttpContext.Session.Get<Customer>("Customer");
+    var cus = HttpContext.Session.Get<ApplicationUser>("UserSession");
 }
 <input type="hidden" value="@cus" id="sessionCustomer" />
 <div class="product">

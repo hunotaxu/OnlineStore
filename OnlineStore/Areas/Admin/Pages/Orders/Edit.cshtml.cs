@@ -48,7 +48,7 @@ namespace OnlineStore.Pages.Admin.Orders
             {
                 return NotFound();
             }
-           ViewData["CustomerId"] = new SelectList(_context.Set<Customer>(), "Id", "Password");
+           //ViewData["CustomerId"] = new SelectList(_context.Set<Customer>(), "Id", "Password");
             return Page();
         }
 

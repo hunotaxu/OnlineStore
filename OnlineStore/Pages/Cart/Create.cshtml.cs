@@ -3,6 +3,7 @@ using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Commons;
 using OnlineStore.Extensions;
 
 namespace OnlineStore.Pages.Cart
@@ -20,7 +21,7 @@ namespace OnlineStore.Pages.Cart
 
         public IActionResult OnGetAddItem(int itemId)
         {
-            Customer cus = HttpContext.Session.Get<Customer>("Customer");
+            var cus = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
             //DAL.Models.Cart cart = new DAL.Models.Cart();
             DAL.Data.Entities.Cart cart = _cartRepository.Find(m => m.CustomerId == cus.Id);
             if (cart == null)

@@ -29,7 +29,7 @@ namespace OnlineStore.Pages.Order
             ShippingFeeGlobal = 30000;
         }
 
-        public Customer Customer { get; set; }
+        public ApplicationUser Customer { get; set; }
         public IList<Address> AddressOfCustomer { get; set; }
         public decimal ShippingFeeLocal { get; set; }
         public decimal ShippingFeeGlobal { get; set; }
@@ -38,18 +38,18 @@ namespace OnlineStore.Pages.Order
         {
 
             //decimal a = _cartDetailRepository.GetItems(c => c.CartId == cartId).Sum(x => x.Quantity);
-            Customer = HttpContext.Session.Get<Customer>("Customer");
+            //Customer = HttpContext.Session.Get<ApplicationUser>("Customer");
             if (Customer == null)
             {
                 return RedirectToPage("/Account/Login");
             }
-            AddressOfCustomer = _addressRepository.GetSome(c => c.CustomerId == Customer.Id).ToList();
+            //AddressOfCustomer = _addressRepository.GetSome(c => c.CustomerId == Customer.Id).ToList();
             return Page();
         }
 
         public IActionResult OnPostAddress(Address address)
         {
-            Customer = HttpContext.Session.Get<Customer>("Customer");
+            //Customer = HttpContext.Session.Get<Customer>("Customer");
             if (Customer == null)
             {
                 return RedirectToPage("/Account/Login");
@@ -66,7 +66,7 @@ namespace OnlineStore.Pages.Order
                 return RedirectToPage("./Address");
             }
 
-            address.CustomerId = Customer.Id;
+            //address.CustomerId = Customer.Id;
             _addressRepository.Add(address);
 
             return RedirectToPage("./Address");

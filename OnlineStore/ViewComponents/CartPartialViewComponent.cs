@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Commons;
 using OnlineStore.Extensions;
 
 namespace OnlineStore.ViewComponents
@@ -32,7 +34,7 @@ namespace OnlineStore.ViewComponents
         public int SumQuantity()
         {
             Cart cart;
-            var cus = HttpContext.Session.Get<Customer>("Customer");
+            var cus = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
             if (cus != null)
             {
                 cart = GetCart(cus.Id);
@@ -51,7 +53,7 @@ namespace OnlineStore.ViewComponents
         private decimal SumTotalAmount()
         {
             Cart cart;
-            var user = HttpContext.Session.Get<Customer>("User");
+            var user = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
             if (user != null)
             {
                 cart = GetCart(user.Id);
@@ -68,9 +70,9 @@ namespace OnlineStore.ViewComponents
             return _cartRepository.GetTotalAmount(cart.Id);
         }
 
-        public Cart GetCart(int customerId)
+        public Cart GetCart(Guid customerId)
         {
-            Cart cart = _cartRepository.GetCartByCustomerId(customerId);
+            var cart = _cartRepository.GetCartByCustomerId(customerId);
             //HttpContext.Session.Set("Cart", cart);
             return cart;
         }

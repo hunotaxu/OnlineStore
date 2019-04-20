@@ -17,11 +17,11 @@
         <div class="header-left">
             <ul>
                 @{
-                    Customer cus = Context.Session.Get<Customer>("Customer");
+                    var cus = Context.Session.Get<ApplicationUser>("UserSession");
                     if (cus != null)
                     {
                         <div class="dropdown">
-                            <button onclick="myFunction()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Tài khoản @cus.FullName.ToString()</button>
+                            <button onclick="myFunction()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-secondary dropdown-toggle">Tài khoản @cus.Name.ToString()</button>
                             <div id="myDropdown" class="dropdown-content">
                                 @Html.ActionLink("Thông tin cá nhân", "Index", "KhachHang")
                                 @Html.ActionLink("Đổi mật khẩu", "DoiMatKhau", "KhachHang")

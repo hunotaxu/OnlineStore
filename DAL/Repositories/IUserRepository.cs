@@ -1,12 +1,15 @@
-﻿//using DAL.Data.Entities;
-//using DAL.Repositories.Base;
-//using DAL.Models;
+﻿using System;
+using System.Linq.Expressions;
+using DAL.Data.Entities;
 
-//namespace DAL.Repositories
-//{
-//    public interface IUserRepository : IRepo<User>
-//    {
-//        User GetUserByUsername(string username);
-//        User GetUser(string username, string password);
-//    }
-//}
+namespace DAL.Repositories
+{
+    public interface IUserRepository
+    {
+        ApplicationUser Find(Expression<Func<ApplicationUser, bool>> where);
+
+        bool IsDuplicatePhoneNumber(string phoneNumber);
+
+        bool IsDuplicateEmail(string email);
+    }
+}

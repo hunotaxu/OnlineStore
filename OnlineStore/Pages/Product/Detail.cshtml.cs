@@ -13,16 +13,16 @@ namespace OnlineStore.Pages.Product
     {
         private readonly IItemRepository _itemRepository;
         private readonly ICommentRepository _commentRepository;
-        private readonly ICustomerRepository _customerRepository;
+        private readonly IUserRepository _userRepository;
         public Item Item { get; set; }
         public List<CustomerCommentViewModel> Customers { get; set; }
         public double Average { get; set; }
 
-        public DetailModel(IItemRepository itemRepository, ICommentRepository commentRepository, ICustomerRepository customerRepository)
+        public DetailModel(IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository)
         {
             _itemRepository = itemRepository;
             _commentRepository = commentRepository;
-            _customerRepository = customerRepository;
+            _userRepository = userRepository;
         }
 
         public IActionResult OnGet(int? id)
@@ -47,7 +47,7 @@ namespace OnlineStore.Pages.Product
                 return NotFound();
             }
 
-            List<Comment> comments = _commentRepository.GetSome(n => n.CustomerId == id).ToList();
+            List<Comment> comments = _commentRepository.GetSome(n => n.ItemId == id).ToList();
 
             if (comments.Any())
             {
@@ -55,7 +55,7 @@ namespace OnlineStore.Pages.Product
                 {
                     sumEvaluation += comment.Evaluation;
 
-                    Customer cus = _customerRepository.Find(comment.CustomerId);
+                    var cus = _userRepository.Find(c =>c.Id == comment.CustomerId);
 
                     Customers.Add(new CustomerCommentViewModel()
                     {

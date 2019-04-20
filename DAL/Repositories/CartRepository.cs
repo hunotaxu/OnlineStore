@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Models;
@@ -14,7 +15,7 @@ namespace DAL.Repositories
 
         }
 
-        public Cart GetCartByCustomerId(int customerId)
+        public Cart GetCartByCustomerId(Guid customerId)
         {
             return Table.FirstOrDefault(c => c.CustomerId == customerId);
         }

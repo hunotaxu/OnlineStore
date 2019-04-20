@@ -6,6 +6,7 @@ using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Commons;
 using OnlineStore.Extensions;
 using OnlineStore.Models.ViewModels;
 
@@ -35,7 +36,7 @@ namespace OnlineStore.Pages.Order
 
         public IActionResult OnGet(decimal shippingFee, int addressId)
         {
-            Customer cus = HttpContext.Session.Get<Customer>("Customer");
+            ApplicationUser cus = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
             if (cus == null)
             {
                 return RedirectToPage("/Home/Index");
@@ -62,7 +63,7 @@ namespace OnlineStore.Pages.Order
             return Page();
         }
 
-        public IActionResult OnGetAction(int customerId, decimal shippingFee, int addressId)
+        public IActionResult OnGetAction(Guid customerId, decimal shippingFee, int addressId)
         {
             int a = AddressId;
             DAL.Data.Entities.Order order = new DAL.Data.Entities.Order

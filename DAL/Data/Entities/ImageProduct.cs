@@ -4,7 +4,7 @@ namespace DAL.Data.Entities
 {
     public class ImageProduct : EntityBase
     {
-        public string Directory { get; set; }
+        public string Url { get; set; }
 
         public int ItemId { get; set; }
 

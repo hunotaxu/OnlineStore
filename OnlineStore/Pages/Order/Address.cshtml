@@ -8,7 +8,7 @@
     Layout = "~/Pages/Layout/_HomeLayout.cshtml";
 }
 @{
-    Customer cus = HttpContext.Session.Get<Customer>("Customer");
+    var cus = HttpContext.Session.Get<ApplicationUser>("UserSession");
 }
 
 <div class="container">
