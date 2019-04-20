@@ -49,11 +49,11 @@ namespace OnlineStore.Areas.Identity.Pages.Account
         {
             [Required(ErrorMessage = "Vui lòng nhập họ tên.")]
             [DataType(DataType.Text)]
-            [Display(Name = "Full name")]
+            [Display(Name = "Họ tên")]
             public string Name { get; set; }
 
             [Required(ErrorMessage = "Vui lòng nhập ngày sinh.")]
-            [Display(Name = "Birth Date")]
+            [Display(Name = "Ngày sinh")]
             [DataType(DataType.Date, ErrorMessage = "Định dạng ngày chưa đúng.")]
             public DateTime DOB { get; set; }
 
@@ -66,7 +66,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [StringLength(32, ErrorMessage = "Vui lòng nhập {0} có tổi thiểu {2} ký tự và tối đa {1} ký tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Mật khẩu")]
             public string Password { get; set; }
 
             [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
