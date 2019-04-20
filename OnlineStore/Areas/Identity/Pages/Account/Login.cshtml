@@ -3,11 +3,12 @@
 
 @{
     ViewData["Title"] = "Log in";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewData["Title"]</h2>
+<br />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-md-offset-2">
         <section>
             <form method="post">
                 <h4>Sử dụng tài khoản đã đăng ký để đăng nhập.</h4>
@@ -32,22 +33,22 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default">Log in</button>
+                    <button type="submit" class="btn btn-default">Đăng nhập</button>
                 </div>
                 <div class="form-group">
                     <p>
-                        <a asp-page="./ForgotPassword">Forgot your password?</a>
+                        <a asp-page="./ForgotPassword">Quên mật khẩu?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Tạo một tài khoản mới</a>
                     </p>
                 </div>
             </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
+    <div class="col-md-6">
         <section>
-            <h4>Use another service to log in.</h4>
+            <h4>Hoặc đăng nhập bằng.</h4>
             <hr />
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)

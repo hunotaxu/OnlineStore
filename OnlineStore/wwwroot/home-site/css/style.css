@@ -19,11 +19,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	font-family:'Oxygen-Regular';
 	src:url(../fonts/Oxygen-Regular.ttf) format('truetype');
 }
-html,body{
-	background:#fff;
-	font-size: 100%;
-	font-family:'Oxygen-Regular';
-	 
+@font-face {
+    font-family: 'Helvetica Neue';
+    src: url(../fonts/Oxygen-Regular.ttf) format('truetype');
+}
+html, body {
+    background: #fff;
+    font-size: 100%;
+    font-family: 'Helvetica', 'Arial', sans-serif;
 }
 body a{
 	transition: 0.5s all;
