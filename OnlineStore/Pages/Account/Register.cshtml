@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @using DAL.Data.Enums
 @using DAL.Models
 @model OnlineStore.Pages.Account.RegisterModel
@@ -51,11 +51,11 @@
         </form>
     </div>
 </div>
-@*@using (Ajax.BeginForm("DangKy", "Home",
-    new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))*@
-@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">*@
-@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">*@
-@*@Html.AntiForgeryToken()*@
+@using (Ajax.BeginForm("DangKy", "Home",
+    new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "tk", InsertionMode = InsertionMode.Replace, OnBegin = "return IsCheck()" }))
+@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">
+@*<form asp-page="/Home/Register" data-ajax-method="POST" data-ajax="true" data-ajax-update="tk" data-ajax-begin="IsCheck">
+@Html.AntiForgeryToken()
 <script>
     function IsCheck() {
         var rs = true;
@@ -139,7 +139,7 @@
 
     }
 </script>
-@*@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc.HtmlHelpers
     @using CaptchaMvc;
 
     @using WebSiteBanHang.Models
@@ -218,7 +218,7 @@
     </style>
     <script>
         $(".titleclass").find("a").prop("href", "#a");
-    </script>*@
+    </script>
 <style>
     .titleclass {
         margin-top: 1%;
@@ -227,6 +227,6 @@
 </style>
 <script>
     $(".titleclass").find("a").prop("href", "#a");
-</script>
+</script>*@
 
 

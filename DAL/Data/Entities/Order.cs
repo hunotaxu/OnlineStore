@@ -27,10 +27,10 @@ namespace DAL.Data.Entities
         public decimal Bonus { get; set; }
 
         [Display(Name = "Người duyệt")]
-        public int EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
 
         [Display(Name = "Mã khách hàng")]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         public int AddressId { get; set; }
 
@@ -41,7 +41,7 @@ namespace DAL.Data.Entities
         public StatusOrder Status { get; set; }
         //public byte[] Timestamp { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public virtual ApplicationUser Customer { get; set; }
         public virtual Address Address { get; set; }
         public virtual ICollection<LineItem> LineItems { get; set; }
     }

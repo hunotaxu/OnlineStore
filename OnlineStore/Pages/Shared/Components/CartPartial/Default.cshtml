@@ -8,13 +8,13 @@
 @*<link href="~/Content/toastr.css" rel="stylesheet" />*@
 @*<script src="~/Scripts/toastr.js"></script>*@
 @{
-    var cus = Context.Session.Get<Customer>("Customer");
+    var cus = Context.Session.Get<ApplicationUser>("UserSession");
 }
 <input type="hidden" value="@cus" id="sessionCustomer" />
 <div id="divGioHang" class="cart box_1">
     <a id="cartIndex">
         <h3>
-            @if (Context.Session.Get<Customer>("Customer") != null)
+            @if (Context.Session.Get<ApplicationUser>("UserSession") != null)
             {
                 <div class="total">
                     (<span id="simpleCart_quantity" class="simpleCart_quantity">@ViewBag.TongSoLuong</span>

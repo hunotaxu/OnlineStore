@@ -1,27 +1,39 @@
-﻿//using DAL.Repositories.Base;
-//using DAL.Models;
-//using System.Linq;
-//using DAL.Data.Entities;
-//using DAL.EF;
-//using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
+using DAL.Data.Entities;
+using DAL.EF;
+using Microsoft.EntityFrameworkCore;
 
-//namespace DAL.Repositories
-//{
-//    public class UserRepository : RepoBase<User>, IUserRepository
-//    {
-//        public UserRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
-//        {
+namespace DAL.Repositories
+{
+    public class UserRepository : IUserRepository
+    {
+        private DbSet<ApplicationUser> _table;
+        protected readonly OnlineStoreDbContext Db;
 
-//        }
+        public UserRepository()
+        {
 
-//        //public User GetUserByUsername(string username)
-//        //{
-//        //    return Table.SingleOrDefault(n => n.Username == username);
-//        //}
+        }
 
-//        //public User GetUser(string username, string password)
-//        //{
-//        //    return Table.SingleOrDefault(n => n.Username == username && n.Password == password);
-//        //}
-//    }
-//}
+        public UserRepository(DbContextOptions<OnlineStoreDbContext> options)
+        {
+            Db = new OnlineStoreDbContext(options);
+            _table = Db.Set<ApplicationUser>();
+        }
+
+        public ApplicationUser Find(Expression<Func<ApplicationUser, bool>> where)
+            => _table.FirstOrDefault(where);
+
+        public bool IsDuplicatePhoneNumber(string phoneNumber)
+        {
+            return Find(u => string.Equals(u.PhoneNumber, phoneNumber)) != null;
+        }
+
+        public bool IsDuplicateEmail(string email)
+        {
+            return Find(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)) != null;
+        }
+    }
+}

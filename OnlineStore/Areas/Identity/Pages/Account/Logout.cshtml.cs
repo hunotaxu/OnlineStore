@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DAL.EF;
+﻿using System.Threading.Tasks;
+using DAL.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OnlineStore.Commons;
 
 namespace OnlineStore.Areas.Identity.Pages.Account
 {
@@ -31,14 +29,13 @@ namespace OnlineStore.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            HttpContext.Session.Remove(CommonConstants.UserSession);
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);
             }
-            else
-            {
-                return Page();
-            }
+
+            return LocalRedirect(CommonConstants.UrlHomePage);
         }
     }
 }

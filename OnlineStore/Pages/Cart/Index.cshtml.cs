@@ -4,6 +4,7 @@ using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Commons;
 using OnlineStore.Extensions;
 using OnlineStore.Models.ViewModels;
 
@@ -26,7 +27,7 @@ namespace OnlineStore.Pages.Cart
 
         public IActionResult OnGet()
         {
-            Customer cus = HttpContext.Session.Get<Customer>("Customer");
+            var cus = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
             if (cus == null)
             {
                 return RedirectToPage("/Home/Index");

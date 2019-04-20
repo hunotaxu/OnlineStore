@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using DAL.Data.Entities.Base;
 
 namespace DAL.Data.Entities
@@ -14,9 +15,9 @@ namespace DAL.Data.Entities
         [Range(1, 5)]
         public int Evaluation { get; set; }
 
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
-        public virtual Customer Customer { get; set; }
+        public virtual ApplicationUser Customer { get; set; }
         public virtual Item Item { get; set; }
     }
 }

@@ -1,14 +1,13 @@
 ﻿using System;
 using DAL.Data.Entities;
 using DAL.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace DAL.EF
 {
     public class OnlineStoreDbContext : IdentityDbContext<
-        ApplicationUser, ApplicationRole, string,
+        ApplicationUser, ApplicationRole, Guid,
         ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
         ApplicationRoleClaim, ApplicationUserToken>
     {
@@ -19,7 +18,7 @@ namespace DAL.EF
 
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
+        public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<CartDetail> CartDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
@@ -50,41 +49,44 @@ namespace DAL.EF
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ApplicationUser>(b =>
-            {
-                // Each User can have many UserClaims
-                b.HasMany(e => e.Claims)
-                    .WithOne()
-                    .HasForeignKey(uc => uc.UserId)
-                    .IsRequired();
+            //modelBuilder.Entity<ApplicationUser>(b =>
+            //{
+            //    // Each User can have many UserClaims
+            //    b.HasMany(e => e.Claims)
+            //        .WithOne()
+            //        .HasForeignKey(uc => uc.UserId)
+            //        .IsRequired();
 
-                // Each User can have many UserLogins
-                b.HasMany(e => e.Logins)
-                    .WithOne()
-                    .HasForeignKey(ul => ul.UserId)
-                    .IsRequired();
+            //    // Each User can have many UserLogins
+            //    b.HasMany(e => e.Logins)
+            //        .WithOne()
+            //        .HasForeignKey(ul => ul.UserId)
+            //        .IsRequired();
 
-                // Each User can have many UserTokens
-                b.HasMany(e => e.Tokens)
-                    .WithOne()
-                    .HasForeignKey(ut => ut.UserId)
-                    .IsRequired();
+            //    // Each User can have many UserTokens
+            //    b.HasMany(e => e.Tokens)
+            //        .WithOne()
+            //        .HasForeignKey(ut => ut.UserId)
+            //        .IsRequired();
 
-                // Each User can have many entries in the UserRole join table
-                b.HasMany(e => e.UserRoles)
-                    .WithOne()
-                    .HasForeignKey(ur => ur.UserId)
-                    .IsRequired();
-            });
+            //    // Each User can have many entries in the UserRole join table
+            //    b.HasMany(e => e.UserRoles)
+            //        .WithOne()
+            //        .HasForeignKey(ur => ur.UserId)
+            //        .IsRequired();
+            //});
 
-            modelBuilder.Entity<ApplicationRole>(b =>
-            {
-                // Each Role can have many entries in the UserRole join table
-                b.HasMany(e => e.UserRoles)
-                    .WithOne(e => e.Role)
-                    .HasForeignKey(ur => ur.RoleId)
-                    .IsRequired();
-            });
+            //modelBuilder.Entity<ApplicationRole>(b =>
+            //{
+            //    // Each Role can have many entries in the UserRole join table
+            //    b.HasMany(e => e.UserRoles)
+            //        .WithOne(e => e.Role)
+            //        .HasForeignKey(ur => ur.RoleId)
+            //        .IsRequired();
+            //});
+
+            modelBuilder.Entity<UserAddress>()
+                .HasKey(c => new { c.AddressId, c.UserId });
 
             modelBuilder.Entity<CartDetail>()
                 .HasKey(c => new { c.CartId, c.ItemId });
