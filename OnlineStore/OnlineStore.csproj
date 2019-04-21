@@ -367,6 +367,12 @@
     <None Include="wwwroot\images\client\ProductImages\vaio_3.png" />
     <None Include="wwwroot\images\client\ProductImages\vaio_4.png" />
     <None Include="wwwroot\lib\notifyjs\styles\metro\notify-metro.js" />
+    <None Include="wwwroot\lib\parsley\extra\plugin\bind.js" />
+    <None Include="wwwroot\lib\parsley\extra\validator\comparison.js" />
+    <None Include="wwwroot\lib\parsley\extra\validator\dateiso.js" />
+    <None Include="wwwroot\lib\parsley\extra\validator\luhn.js" />
+    <None Include="wwwroot\lib\parsley\extra\validator\notequalto.js" />
+    <None Include="wwwroot\lib\parsley\extra\validator\words.js" />
     <None Include="wwwroot\lib\parsley\i18n\al.js" />
     <None Include="wwwroot\lib\parsley\i18n\ar.js" />
     <None Include="wwwroot\lib\parsley\i18n\bg.js" />
@@ -433,6 +439,9 @@
     <None Include="wwwroot\lib\parsley\i18n\ua.js" />
     <None Include="wwwroot\lib\parsley\i18n\uk.extra.js" />
     <None Include="wwwroot\lib\parsley\i18n\uk.js" />
+    <None Include="wwwroot\lib\parsley\i18n\ur.js" />
+    <None Include="wwwroot\lib\parsley\i18n\vi.extra.js" />
+    <None Include="wwwroot\lib\parsley\i18n\vi.js" />
     <None Include="wwwroot\lib\parsley\i18n\zh_cn.extra.js" />
     <None Include="wwwroot\lib\parsley\i18n\zh_cn.js" />
     <None Include="wwwroot\lib\parsley\i18n\zh_tw.js" />
@@ -440,5 +449,20 @@
     <None Include="wwwroot\lib\parsley\parsley.js.map" />
     <None Include="wwwroot\lib\parsley\parsley.min.js" />
     <None Include="wwwroot\lib\parsley\parsley.min.js.map" />
+    <None Include="wwwroot\lib\parsley\parsley\base.js" />
+    <None Include="wwwroot\lib\parsley\parsley\constraint.js" />
+    <None Include="wwwroot\lib\parsley\parsley\defaults.js" />
+    <None Include="wwwroot\lib\parsley\parsley\factory.js" />
+    <None Include="wwwroot\lib\parsley\parsley\field.js" />
+    <None Include="wwwroot\lib\parsley\parsley\form.js" />
+    <None Include="wwwroot\lib\parsley\parsley\main.js" />
+    <None Include="wwwroot\lib\parsley\parsley\multiple.js" />
+    <None Include="wwwroot\lib\parsley\parsley\pubsub.js" />
+    <None Include="wwwroot\lib\parsley\parsley\remote.js" />
+    <None Include="wwwroot\lib\parsley\parsley\ui.js" />
+    <None Include="wwwroot\lib\parsley\parsley\utils.js" />
+    <None Include="wwwroot\lib\parsley\parsley\validator.js" />
+    <None Include="wwwroot\lib\parsley\parsley\validator_registry.js" />
+    <None Include="wwwroot\lib\parsley\vendor\inputevent.js" />
   </ItemGroup>
 </Project>
