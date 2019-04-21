@@ -2,13 +2,13 @@
 @model OnlineStore.Pages.Order.checkoutModel
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Pages/Layout/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<link href="/home-site/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom Theme files -->
 <!--theme-style-->
-<link href="~/home-site/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/css/client/home/style.css" rel="stylesheet" type="text/css" media="all" />
 <!--//theme-style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,14 +16,14 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--theme-style-->
-<link href="~/home-site/css/style4.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/css/client/home/style4.css" rel="stylesheet" type="text/css" media="all" />
 <!--//theme-style-->
-<script src="~/home-site/js/jquery.min.js"></script>
+<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
 <!--- start-rate---->
-<script src="~/home-site/js/jstarbox.js"></script>
-<link rel="stylesheet" href="~/home-site/css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
+<script src="~/js/client/home/jstarbox.js"></script>
+<link href="~/css/client/home/jstarbox.css" rel="stylesheet" type="text/css" media="screen" charset="utf-8" />
 
-@*<link href="~/home-site/css/checkout_style.css" rel="stylesheet" />*@
+<link href="~/css/client/home/checkout_style.css" rel="stylesheet" />
 
 <script type="text/javascript">
     jQuery(function () {
@@ -47,7 +47,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 <!---//End-rate---->
-
 <!--banner-->
 <div class="banner-top">
     <div class="container">
@@ -116,7 +115,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </tr>
                     <tr class="cart-header1">
                         <td class="ring-in">
-                            <a href="single.html" class="at-in"><img src="~/home-site/images/ch2.jpg" class="img-responsive" alt=""></a>
+                            <a href="single.html" class="at-in"><img src="/images/client/home/ch2.jpg" class="img-responsive" alt=""></a>
                             <div class="sed">
                                 <h5><a href="single.html">Sed ut perspiciatis unde</a></h5>
                                 <p>(At vero eos et accusamus et iusto odio dignissimos ducimus ) </p>
@@ -131,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     </tr>
                     <tr class="cart-header2">
                         <td class="ring-in">
-                            <a href="single.html" class="at-in"><img src="~/home-site/images/ch1.jpg" class="img-responsive" alt=""></a>
+                            <a href="single.html" class="at-in"><img src="/images/client/home/ch1.jpg" class="img-responsive" alt=""></a>
                             <div class="sed">
                                 <h5><a href="single.html">Sed ut perspiciatis unde</a></h5>
                                 <p>(At vero eos et accusamus et iusto odio dignissimos ducimus ) </p>
@@ -160,16 +159,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="container">
     <div class="brand">
         <div class="col-md-3 brand-grid">
-            <img src="~/home-siteimages/ic.png" class="img-responsive" alt="">
+            <img src="/images/client/home/ic.png" class="img-responsive" alt="">
         </div>
         <div class="col-md-3 brand-grid">
-            <img src="~/home-siteimages/ic1.png" class="img-responsive" alt="">
+            <img src="/images/client/home/ic1.png" class="img-responsive" alt="">
         </div>
         <div class="col-md-3 brand-grid">
-            <img src="~/home-siteimages/ic2.png" class="img-responsive" alt="">
+            <img src="/images/client/home/ic2.png" class="img-responsive" alt="">
         </div>
         <div class="col-md-3 brand-grid">
-            <img src="~/home-siteimages/ic3.png" class="img-responsive" alt="">
+            <img src="/images/client/home/ic3.png" class="img-responsive" alt="">
         </div>
         <div class="clearfix"></div>
     </div>
@@ -177,12 +176,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--//brand-->
 <!--//content-->
 
-<script src="~/home-site/js/simpleCart.min.js"></script>
+<script src="~/js/client/home/simpleCart.min.js"></script>
 <!-- slide -->
-<script src="~/home-site/js/bootstrap.min.js"></script>
-
-
-
-
-@*<script src="~/home-site/js/checkout_script.js"></script>
-<script src="~/home-site/js/checkout_simplecart.js"></script>*@
+<script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>

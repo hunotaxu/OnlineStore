@@ -51,32 +51,21 @@
     <Content Update="Pages\Shared\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="wwwroot\css\client\home\style.css">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="node_modules\" />
+    <Folder Include="Logs\" />
     <Folder Include="Pages\Shared\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\fonts\" />
     <Folder Include="wwwroot\js\client\shared\" />
-	<Folder Include="wwwroot\menu-site\image\" />
-    <Folder Include="wwwroot\menu-site\search-box\css\" />
-    <Folder Include="wwwroot\menu-site\search-box\js\" />
     <Folder Include="wwwroot\js\client\order\" />
-    <Folder Include="wwwroot\js\client\product\" />
-    <Folder Include="wwwroot\fonts\" />
-	<Folder Include="wwwroot\menu-site\image\" />
-    <Folder Include="wwwroot\menu-site\search-box\css\" />
-    <Folder Include="wwwroot\menu-site\search-box\js\" />
     <Folder Include="wwwroot\js\client\order\" />
-    <Folder Include="wwwroot\js\client\product\" />
-    <Folder Include="wwwroot\fonts\" />
-    <Folder Include="wwwroot\product-site\css\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\css\client\style_form_dangnhap.css" />
-    <None Include="wwwroot\css\client\flexslider.css" />
-    <None Include="wwwroot\css\client\style.css" />
-    <None Include="wwwroot\css\client\style_progressbar.css" />
     <None Include="wwwroot\images\client\logo.png" />
     <None Include="wwwroot\images\client\ProductImages\0201_Sonyvaiopro13-1.jpg" />
     <None Include="wwwroot\images\client\ProductImages\1-141023232635.jpg" />

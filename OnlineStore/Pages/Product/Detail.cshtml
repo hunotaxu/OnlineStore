@@ -23,10 +23,10 @@
 <input type="hidden" value="@cus" id="sessionCustomer" />
 
 <title>Shopin A Ecommerce Category</title>
-<link href="~/home-site/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom Theme files -->
 <!--theme-style-->
-<link href="~/home-site/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/css/client/home/style.css" rel="stylesheet" type="text/css" media="all" />
 <!--//theme-style-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -34,12 +34,12 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!--theme-style-->
-<link href="~/home-site/css/style4.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/css/client/home/style4.css" rel="stylesheet" />
 <!--//theme-style-->
-<script src="~/home-site/js/jquery.min.js"></script>
+<script src="~/js/client/home/jquery.min.js"></script>
 <!--- start-rate---->
-<script src="~/home-site/js/jstarbox.js"></script>
-<link rel="stylesheet" href="~/home-site/css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
+<script src="~/js/client/home/jstarbox.js"></script>
+<link href="~/css/client/home/jstarbox.css" rel="stylesheet" />
 <script type="text/javascript">
     jQuery(function () {
         jQuery('.starbox').each(function () {
@@ -103,7 +103,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="span_2_of_a1 simpleCart_shelfItem">
                     <h3>@Html.Raw(Model.Item.Name)</h3>
 
-                    <div class="block" style="float:left"  >
+                    <div class="block" style="float:left">
                         <div class="starbox small ghosting"> </div>
                     </div>
                     <p class="in-para">
@@ -164,7 +164,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <!--quantity-->
                     @*<a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>*@
                     <div class="img item_add">
-                        <a href="#" class="add-to item_add hvr-skew-backward">Thêm vào giỏ<img src="~/home-site/images/ca.png" alt=""></a>
+                        <a href="#" class="add-to item_add hvr-skew-backward">Thêm vào giỏ<img src="~/images/client/home/ca.png" alt=""></a>
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -387,16 +387,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <div class="container">
         <div class="brand">
             <div class="col-md-3 brand-grid">
-                <img src="~/home-site/images/ic.png" class="img-responsive" alt="">
+                <img src="~/images/client/home/ic.png" class="img-responsive" alt="">
             </div>
             <div class="col-md-3 brand-grid">
-                <img src="~/home-site/images/ic1.png" class="img-responsive" alt="">
+                <img src="~/images/client/home/ic1.png" class="img-responsive" alt="">
             </div>
             <div class="col-md-3 brand-grid">
-                <img src="~/home-site/images/ic2.png" class="img-responsive" alt="">
+                <img src="~/images/client/home/ic2.png" class="img-responsive" alt="">
             </div>
             <div class="col-md-3 brand-grid">
-                <img src="~/home-site/images/ic3.png" class="img-responsive" alt="">
+                <img src="~/images/client/home/ic3.png" class="img-responsive" alt="">
             </div>
             <div class="clearfix"></div>
         </div>
@@ -406,11 +406,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--//content-->
 
-<script src="~/home-site/js/imagezoom.js"></script>
+<script src="~/js/client/home/imagezoom.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script defer src="~/home-site/js/jquery.flexslider.js"></script>
-<link rel="stylesheet" href="~/home-site/css/flexslider.css" type="text/css" media="screen" />
+<script src="~/js/client/product/jquery.flexslider.js"></script>
+<link href="~/css/client/product/flexslider.css" rel="stylesheet" />
 
 <script>
     // Can also be used with $(document).ready()
@@ -422,12 +422,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="~/home-site/js/simpleCart.min.js"></script>
+<script src="~/js/client/home/simpleCart.min.js"></script>
 <!-- slide -->
-<script src="~/home-site/js/bootstrap.min.js"></script>
+<script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <!--light-box-files -->
-<script src="~/home-site/js/jquery.chocolat.js"></script>
-<link rel="stylesheet" href="~/home-site/css/chocolat.css" type="text/css" media="screen" charset="utf-8">
+<script src="~/js/client/home/jquery.chocolat.js"></script>
+<link rel="stylesheet" href="~/css/client/home/chocolat.css" type="text/css" media="screen" charset="utf-8">
 <!--light-box-files -->
 <script type="text/javascript" charset="utf-8">
     $(function () {
