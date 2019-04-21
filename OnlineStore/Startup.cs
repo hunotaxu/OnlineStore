@@ -59,7 +59,7 @@ namespace OnlineStore
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddRazorPagesOptions(options =>
                 {
-                    options.Conventions.AddPageRoute("/_Home/Index", "");
+                    options.Conventions.AddPageRoute("/Home/Index", "");
                     options.AllowAreas = true;
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");

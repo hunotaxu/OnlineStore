@@ -22,7 +22,7 @@
                 @foreach (Category item in Model)
                 {
                     <li style="display:block;">
-                        <a class="color1" asp-page="/Product/_Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
+                        <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
                     </li>
                 }
             </ul>

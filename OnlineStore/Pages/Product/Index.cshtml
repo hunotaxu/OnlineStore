@@ -8,10 +8,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-<link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-<link href="~/css/client/home/style.css" rel="stylesheet" />
-<link href="~/css/client/home/style4.css" rel="stylesheet" />
-<link href="~/css/client/home/jstarbox.css" rel="stylesheet" />
+
 <!--banner-->
 <div class="banner-top">
     <div class="container">
@@ -70,39 +67,8 @@
 
         <div class="clearfix"></div>
     </div>
-    <!--products-->
-    <!--//products-->
+    
+
 </div>
-<script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-<script src="~/js/client/home/jstarbox.js"></script>
-<script src="~/js/client/home/simpleCart.min.js"></script>
-<script src="~/js/client/home/jquery.chocolat.js"></script>
-<link href="~/css/client/home/chocolat.css" rel="stylesheet" />
-
-
-@*@section Scripts{
-
-        <script src="~/product-site/js/product-style.js"></script>
-    }*@
-
-
-<script>
-    jQuery.ajaxSettings.traditional = true;
-    var listBrandName = [];
-function sortProduct() {
-    $('#CurrentPage').val(1);
-    $.ajax({
-        type: "GET",
-        url: "/Product/_Index?handler=Search",
-        data: {
-            "currentSearchString": "@Model.CurrentSearchString",
-            "currentSort": $('#CurrentSort option:selected').val(),
-            "currentBrand": listBrandName
-        }
-    }).done(function (result) {
-        $(".bottom-product").html(result);
-    }).fail(function (result) {
-        console.log(result);
-    });
-}
-</script>
+<script src="~/home-site/js/jstarbox.js"></script>
+<script src="~/js/client/product-site/products-script.js"></script>

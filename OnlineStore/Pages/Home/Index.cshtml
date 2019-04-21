@@ -2,35 +2,211 @@
 @model OnlineStore.Pages.Home.IndexModel
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+
+
 }
-
-<div class="content-top">
-    <h1>Điện thoại mới nhất </h1>
-    <div class="grid-in">
-        <div class="container">
-            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstDTM)*@
-            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.phones)
-            @*<partial name="SanPhamStyle1Partial" model="Model.lstDTM">*@
-        </div>
-    </div>
-
-    <h1>Máy vi tính xách tay mới nhất </h1>
-    <div class="grid-in">
-        <div class="container">
-            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstLT)*@
-            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.laptops)
-            @*<partial name="SanPhamStyle1Partial" model="Model.lstLT">*@
-        </div>
-    </div>
-
-    <h1>Máy tính bảng mới nhất</h1>
-    <div class="grid-in">
-        @*Máy tính bảng*@
-        <div class="container">
-            @*@Html.Partial("~/Views/SanPham/SanPhamStyle1Partial.cshtml", Model.lstMTB)*@
-            @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.tablets)
-            @*<partial name="SanPhamStyle1Partial" model="Model.lstMTB">*@
-        </div>
+@*<link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/css/client/home-site.css" rel="stylesheet" />*@
+<!--banner-->
+<div class="banner">
+    <div class="container" style="font-family:'Times New Roman'">
+        <section class="rw-wrapper">
+            <h1 class="rw-sentence">
+                <span>Uy tín &amp; Chất lượng</span>
+                <div class="rw-words rw-words-1">
+                    <span>Sed ut perspiciatis</span>
+                    <span> Totam rem aperiam</span>
+                    <span>Temporibus autem</span>
+                </div>
+                <div class="rw-words rw-words-2">
+                    <span>Mua ngay hôm nay</span>
+                    <span>Rinh đầy quà may</span>
+                    <span>Giá cực sốc</span>
+                </div>
+            </h1>
+        </section>
     </div>
 </div>
+<!--content-->
+<div class="content">
+    <div class="container">
+        <!--Products-->
+        <!--content-top-->
+        <div class="content-top">
+            <div class="col-md-6 col-md">
+                <div class="col-1">
+                    <a href="~/Product/Index?searchstring=apple#" class="b-link-stroke b-animate-go  thickbox">
+                        <img src="~/images/client/home/apple-bannertop.jpg" class="img-responsive" alt="" />
+                        <div class="b-wrapper1 long-img">
+                            <p class="b-animate b-from-right    b-delay03 ">Thương hiệu hàng đầu thế giới</p><label class="b-animate b-from-right    b-delay03 "></label>
+                            <h3 class="b-animate b-from-left    b-delay03 ">APPLE</h3>
+                        </div>
+                    </a>
+
+                    <!---<a href="single.html"><img src="images/pi.jpg" class="img-responsive" alt=""></a>-->
+                </div>
+                <div class="col-2">
+                    <span>Hot Deal</span>
+                    <h2><a href="single.html">Luxurious &amp; Trendy</a></h2>
+                    <p>
+                        Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
+                        Latin literature from 45 BC, making it over 2000 years
+                    </p>
+                    <a href="single.html" class="buy-now">Buy Now</a>
+                </div>
+            </div>
+            <div class="col-md-6 col-md1">
+                <div class="col-3">
+                    <a href="~/Product/Index?searchstring=samsung#">
+                        <img src="~/images/client/home/samsung-bannertop.jpg" class="img-responsive" alt="">
+                        <div class="col-pic">
+                            <p>Hãy tưởng tượng!</p>
+                            <label></label>
+                            <h5>SAMSUNG</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="~/Product/Index?searchstring=huawei#">
+                        <img src="~/images/client/home/huawei-bannertop.jpg" class="img-responsive" alt="">
+                        <div class="col-pic">
+                            <p>Biến mọi thứ thành có thể!</p>
+                            <label></label>
+                            <h5>HUAWEI</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a href="~/Product/Index?searchstring=xiaomi#">
+                        <img src="~/images/client/home/xiaomi-bannertopjpg.jpg" class="img-responsive" alt="">
+                        <div class="col-pic">
+                            <p>Của rẻ là của ngon</p>
+                            <label></label>
+                            <h5>XIAOMI</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--/content-top-->
+        <div class="content-mid">
+            <h3>Điện thoại bán chạy nhất</h3>
+            <label class="line"></label>
+            <br />
+            <div class="grid-in">
+                <div class="container">
+                    @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.Phones)
+                </div>
+            </div>
+
+            <h3>Laptop bán chạy nhất</h3>
+            <label class="line"></label>
+            <br />
+            <div class="grid-in">
+                <div class="container">
+                    @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.Laptops)
+                </div>
+            </div>
+
+            <h3>Máy tính bảng bán chạy nhất</h3>
+            <br />
+            <div class="grid-in">
+                @*Máy tính bảng*@
+                <div class="container">
+                    @await Html.PartialAsync("~/Pages/Shared/_SanPhamStyle_Home_Partial.cshtml", Model.Tablets)
+                </div>
+            </div>
+        </div>
+
+        <!--//Products-->
+        <!--cuộn sản phẩm-->
+        @*<div class="container">
+            <h2 align="center">Hướng dẫn tạo trang cuộn sản phẩm mới bằng Bootstrap</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="Carousel" class="carousel slide">
+                        <ol class="carousel-indicators">
+                            <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#Carousel" data-slide-to="1"></li>
+                            <li data-target="#Carousel" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <a data-slide="prev" class="left carousel-control">‹</a> <a data-slide="next" class="right carousel-control">›</a>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+        <!--cuộn sản phẩm-->
+        <!--brand-->
+        <div class="brand">
+            <div class="col-md-3 brand-grid">
+                <img src="/home-site/images/ic.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="/home-site/images/ic1.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="/home-site/images/ic2.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="/home-site/images/ic3.png" class="img-responsive" alt="">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!--//brand-->
+    </div>
+
+</div>
+<!--//content-->
+@*<script src="~/js/client/home-site.js"></script>
+<script src="~/node_modules/jquery/dist/jquery.min.js"></script>*@
