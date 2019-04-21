@@ -43,6 +43,8 @@ namespace DAL.Repositories
             {
                 RoleId = new Guid(CommonConstants.CustomerId),
                 UserId = userId,
+                DateCreated = DateTime.UtcNow,
+                DateModified = DateTime.UtcNow,
                 Status = Status.Active
             };
             _userRoletable.Add(userRole);
