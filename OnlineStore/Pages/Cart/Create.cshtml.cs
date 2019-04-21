@@ -3,8 +3,8 @@ using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Commons;
 using OnlineStore.Extensions;
+using Utilities.Commons;
 
 namespace OnlineStore.Pages.Cart
 {
