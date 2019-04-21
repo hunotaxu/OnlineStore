@@ -55,7 +55,7 @@ namespace OnlineStore.Pages.Product
                 {
                     sumEvaluation += comment.Evaluation;
 
-                    var cus = _userRepository.Find(c =>c.Id == comment.CustomerId);
+                    var cus = _userRepository.FindUser(c => c.Id == comment.CustomerId);
 
                     Customers.Add(new CustomerCommentViewModel()
                     {
