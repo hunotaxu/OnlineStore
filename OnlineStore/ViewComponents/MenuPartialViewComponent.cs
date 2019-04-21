@@ -26,7 +26,6 @@ namespace OnlineStore.ViewComponents
             //var lstSP = _itemRepository. db.SANPHAMs;
             //return View("Default", lstSP);
             return Task.FromResult<IViewComponentResult>(View("Default", categories));
-
         }
     }
 }

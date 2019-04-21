@@ -44,13 +44,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <!---//End-rate---->
 
 </head>
-<body>
+<body id="layout_style">
     <!--header-->
     <div class="header">
         <div class="container">
             <div class="head">
                 <div class=" logo">
-                    <a href="index.html"><img src="~/home-site/images/logo.png" alt=""></a>
+                    <a href="_Home/Index"><img src="~/home-site/images/logo.png" alt=""></a>
                 </div>
             </div>
         </div>
@@ -85,7 +85,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                 <div class="col-sm-8 col-md-offset-2 h_menu4">
                     <nav class="navbar nav_bottom" role="navigation">
-
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <div class="navbar-header nav_2">
                             <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
@@ -96,12 +95,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             </button>
 
                         </div>
-                        <!-- Collect the nav links, forms, and other content for toggling -->
-                        @await Component.InvokeAsync("MenuPartial")
 
-                        <!-- /.navbar-collapse -->
+                        <div class="collapse navbar-collapse" id="bs-megadropdown-tabs" style="display:inline">
+                            <div>
+                                @await Component.InvokeAsync("MenuPartial")
+                            </div>
+                            <div>
+                                @await Component.InvokeAsync("SearchPartial")
+                            </div>
 
+                        </div>
                     </nav>
+
                 </div>
                 <div class="col-sm-2 search-right">
                     <ul class="heart">

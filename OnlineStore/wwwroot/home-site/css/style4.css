@@ -207,7 +207,7 @@ font-family:'Oxygen-Regular';
     padding: 8em 0 0;
 }
 }
-@media(max-width: 480px){
+@m.img-responsiveedia(max-width: 480px){
 .rw-wrapper {
     padding: 6em 0 0;
 }
@@ -215,15 +215,17 @@ font-family:'Oxygen-Regular';
     font-size: 23px;
 }
 }
-@media screen and (max-width: 320px){
-.rw-sentence {
-    font-size: 13px;
-}	
-.rw-words {
-    height: 41px;
-}
-.rw-wrapper {
-    padding: 4.5em 0 0;
+@media screen and (max-width: 320px) {
+    .rw-sentence {
+        font-size: 13px;
+    }
+
+    .rw-words {
+        height: 41px;
+    }
+
+    .rw-wrapper {
+        padding: 4.5em 0 0;
+    }
 }
 
-}

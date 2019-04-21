@@ -9,7 +9,7 @@
 
 @{
     ViewData["Title"] = "Detail";
-    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
+    Layout = "~/Pages/Layout/_Layout.cshtml";
 }
 
 @{
@@ -21,289 +21,416 @@
     var cus = HttpContext.Session.Get<ApplicationUser>("UserSession");
 }
 <input type="hidden" value="@cus" id="sessionCustomer" />
-<div class="product">
+
+<title>Shopin A Ecommerce Category</title>
+<link href="~/home-site/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- Custom Theme files -->
+<!--theme-style-->
+<link href="~/home-site/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Shopin Responsive web template, Bootstrap Web Templates, Flat Web Templates, AndroId Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--theme-style-->
+<link href="~/home-site/css/style4.css" rel="stylesheet" type="text/css" media="all" />
+<!--//theme-style-->
+<script src="~/home-site/js/jquery.min.js"></script>
+<!--- start-rate---->
+<script src="~/home-site/js/jstarbox.js"></script>
+<link rel="stylesheet" href="~/home-site/css/jstarbox.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery('.starbox').each(function () {
+            var starbox = jQuery(this);
+            starbox.starbox({
+                average: starbox.attr('data-start-value'),
+                changeable: starbox.hasClass('unchangeable') ? false : starbox.hasClass('clickonce') ? 'once' : true,
+                ghosting: starbox.hasClass('ghosting'),
+                autoUpdateAverage: starbox.hasClass('autoupdate'),
+                buttons: starbox.hasClass('smooth') ? false : starbox.attr('data-button-count') || 5,
+                stars: starbox.attr('data-star-count') || 5
+            }).bind('starbox-value-changed', function (event, value) {
+                if (starbox.hasClass('random')) {
+                    var val = Math.random();
+                    starbox.next().text(' ' + val);
+                    return val;
+                }
+            })
+        });
+    });
+</script>
+
+<!---//End-rate---->
+<!--banner-->
+<div class="banner-top">
     <div class="container">
-        @*<div class="col-md-9 product-price1">*@
-        <div class="col-md-4 single-top">
-            <div class="flexslider">
-                <ul class="slides">
-                    <li data-thumb="@Url.Content("~/images/ProductImages/"+Model.Item.Image)">
-                        <img class="img-responsive" src="@Url.Content("~/images/ProductImages/"+Model.Item.Image)" style="width: 400px; height: 400px;" />
-                    </li>
-                    @*<li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh1)">
-                            <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh1)" />
-                        </li>
-                        <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh2)">
-                            <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh2)" />
-                        </li>
-                        <li data-thumb="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh3)">
-                            <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh3)" />*@
-                    @*</li>*@
-                </ul>
-            </div>
-            <!-- FlexSlider -->
-            <script defer src="~/Content/ProductLayout/js/jquery.flexslider.js"></script>
-            <link rel="stylesheet" href="~/Content/ProductLayout/css/flexslider.css" type="text/css" media="screen" />
-            @*<script src="~/Content/js/jquery.min.js"></script>*@
-            <script src="~/Content/ProductLayout/js/review.js"></script>
-            <link href="~/Content/CssFont/css/font-awesome.min.css" rel="stylesheet" />
-            @*<link href="~/Content/ProductLayout/css/bootstrap-rating.css" rel="stylesheet" />*@
-
-            <script src="~/Content/ProductLayout/js/bootstrap-rating.min.js"></script>
-            @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-                <link href="~/Content/ProductLayout/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />*@
-            <script>
-                // Can also be used with $(document).ready()
-                $(window).load(function () {
-                    $('.flexslider').flexslider({
-                        animation: "slide",
-                        controlNav: "thumbnails"
-                    });
-                });
-            </script>
-        </div>
-        <div class="col-md-8 single-top-in simpleCart_shelfItem">
-            <div class="single-para ">
-                <h4>@Model.Item.Name</h4>
-                <div class="star-on">
-                    @if (numberOfComments == 0)
-                    {
-                        <label>Chưa có đánh giá nào</label>
-                    }
-                    else
-                    {
-                        <ul class="star-footer">
-                            <input type="hidden" value="@ViewBag.DiemTrungBinh" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" disabled />
-                            @*<li><a href="#"><i> </i></a></li>
-                                <li><a href="#"><i> </i></a></li>
-                                <li><a href="#"><i> </i></a></li>
-                                <li><a href="#"><i> </i></a></li>
-                                <li><a href="#"><i> </i></a></li>*@
-                        </ul>
-                    }
-                    @*<div class="review">
-                          <a href="#"> Lượt xem: @Model.LuotXem</a>
-                        </div>*@
-                    <div class="clearfix"> </div>
-                </div>
-                <hr />
-                <h5 class="item_price">Giá: @Model.Item.Price.ToString("#,##") VNĐ</h5>
-                <p>
-                    @*@Html.Raw(Model.CauHinh)*@
-                </p>
-                @*@Ajax.ActionLink("Thêm vào giỏ hàng", "ThemGioHangAjax", "GioHang", new { @MaSP = Model.Item.Id }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "divGioHang", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-primary center-block" })*@
-                @*<form asp-page="/Cart/Create" data-ajax-method="POST" data-ajax="true" data-ajax-update="divGioHang"
-                          data-ajax-mode="replace" asp-route-itemId="@item.Id" asp-route-strUrl="@Request.GetEncodedUrl()" class="btn btn-primary center-block">
-                        Thêm vào giỏ hàng
-                    </form>*@
-                <a class="add-cart item_add" id="addCart">Thêm vào giỏ hàng</a>
-                @*<a href="#" class="add-cart item_add">Thêm vào giỏ hàng</a>*@
-            </div>
-            <hr />
-        </div>
-        <div class="clearfix"> </div>
-        <div class="cd-tabs">
-            <nav>
-                <ul class="cd-tabs-navigation">
-                    <li><a data-content="Information" class="selected" href="#0">Thông tin sản phẩm</a></li>
-                    @*<li><a data-content="Comment" href="#0">Nhận xét từ khách hàng (@numberOfComments)</a></li>*@
-                </ul>
-            </nav>
-            <ul class="cd-tabs-content">
-                <li data-content="Information" class="selected">
-                    <div class="facts">
-                        @Html.Raw(Model.Item.Description)
-                    </div>
-                </li>
-                @*<li data-content="Comment">
-                    <div class="comments-top-top">
-                        @*<div class="top-comment-left">
-                              <img class="img-responsive" src="images/co.png" alt="">
-                            </div>*@
-                @*if (ViewBag.thongTinNguoiDung == null)
-                    {
-                    }
-                    else
-                    {
-                        foreach (var itemDanhGia in ViewBag.thongTinNguoiDung)
-                        {*@
-                @*<div class="top-comment-right">
-                    <h6><a href="#">@itemDanhGia.HoTen</a></h6><br />
-                    <div>@itemDanhGia.ThoiDiem</div>
-                    <ul class="star-footer">
-                        <input type="hidden" value="@itemDanhGia.DiemDanhGia" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" disabled />*@
-                @*<li><a href="#"><i> </i></a></li>
-                    <li><a href="#"><i> </i></a></li>
-                    <li><a href="#"><i> </i></a></li>
-                    <li><a href="#"><i> </i></a></li>
-                    <li><a href="#"><i> </i></a></li>*@
-                @*</ul>
-                    <p>@itemDanhGia.NoiDungBL</p>*@
-                @*</div>
-                        }
-                    }*@
-                @*<div class="clearfix"> </div>
-                    @if (HttpContext.Session.Get<Customer>("Customer") == null)
-                    {
-                        <a id="btnDangNhap" class="add-re" href="#">Đăng nhập để đánh giá</a>
-                    }
-                    else
-                    {
-                        <a class="add-re" href="#reviews-anchor" id="open-review-box">Thêm nhận xét</a>
-                        <div class="row" id="post-review-box" style="display:none;">*@
-                @*<div class="col-md-12">
-                    @*<form accept-charset="UTF-8" action="" method="post">*@
-                @*<form asp-page="/Product/SendFeedBack" data-ajax="true" data-ajax-method="GET" asp-route-itemId="@Model.Item.Id" asp-route-url="@Request.GetEncodedUrl()" data-ajax-success="onSuccess">*@
-                @*@using (Ajax.BeginForm("GuiDanhGia", "SanPham", new { @maSP = Model.MaSP, @url = Request.Url.ToString() }, new AjaxOptions { OnSuccess = "onSuccess" }))
-                    {*@
-                @*<input id="ratings-hidden" name="rating" type="hidden">*@
-                @*<input name="rating" type="hidden"/>*@
-                @*<label>Đánh giá của bạn về sản phẩm này</label>
-                    <input type="hidden" class="rating" data-filled="fa fa-star fa-3x" data-empty="fa fa-star-o fa-3x" name="rating" />
-                    <textarea class="form-control animated" cols="50" id="new-review" name="comment"
-                              placeholder="Viết nhận xét của bạn" rows="5"></textarea>
-                    <div class="text-right">
-                        <button class="btn btn-danger" type="button" id="close-review-box">Hủy</button>
-                        <button class="btn btn-success" type="submit">Lưu</button>
-                    </div>*@
-                @*}*@
-                @*</form>*@
-                @*</form>*@
-                @*</div>
-                            </div>
-                        }
-                    </div>*@
-                @*</li>*@
-            </ul>
-        </div>
-        <!---->
-    </div>
-    <div class="col-md-3">
-
-    </div>
-    <div id="popup_login">
-        <div class="login-form" id="login-form">
-            <div style="clear:both;text-align:right;margin-bottom:0;">
-                <span id="close-form" class="btn btn-danger">X</span>
-            </div>
-            <h2>Đăng nhập</h2>
-            <div class="form-info">
-                @*<form asp-page="/Account/Login" data-ajax-method="POST" data-ajax="true" data-ajax-update="ThongBao">*@
-                <form asp-page="/Account/Login" method="post">
-                    <input type="hidden" name="url" value="@HttpContext.Request.Path" />
-                    <input type="hidden" name="itemId" value="@Model.Item.Id" />
-                    <input class="email TaiKhoan" name="username" placeholder="Email hoặc số điện thoại" required="" type="text">
-                    <input class="password MatKhau" name="password" placeholder="Mật khẩu" required="" type="password">
-                    <p><a href="#">Quên mật khẩu?</a></p>
-                    <p>Chưa có tài khoản? <a asp-page="/Account/Register">Đăng ký ngay</a></p>
-                    <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"> </h3>
-                    <ul class="login-buttons">
-                        <li><input value="Đăng nhập" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>
-                        @*<li><input value="Đăng ký" class="hvr-sweep-to-left" type="submit" id="btnDangNhap1"></li>*@
-                        @*<li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>*@
-                    </ul>
-                </form>
-                @*}*@
-
-            </div>
-        </div>
+        <h1>Single</h1>
+        <em></em>
+        <h2><a href="index.html">Trang chủ</a><label>/Sản phẩm/Chi tiết</label></h2>
     </div>
 </div>
+<div class="single">
 
-<style>
-    #close-form {
-        color: white;
-    }
+    <div class="container">
+        <div class="col-md-9">
+            <div class="col-md-5 grid">
+                <div class="flexslider">
+                    <ul class="slides">
+                        <li data-thumb="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)">
+                            <div class="thumb-image">
+                                <img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" data-imagezoom="true"
+                                     class="img-responsive">
+                            </div>
+                        </li>
+                        <li data-thumb="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)">
+                            <div class="thumb-image">
+                                <img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" data-imagezoom="true"
+                                     class="img-responsive">
+                            </div>
+                        </li>
+                        <li data-thumb="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)">
+                            <div class="thumb-image">
+                                <img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" data-imagezoom="true"
+                                     class="img-responsive">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-7 single-top-in">
+                <div class="span_2_of_a1 simpleCart_shelfItem">
+                    <h3>@Html.Raw(Model.Item.Name)</h3>
 
-    #login-form {
-        background: #3a3a46;
-        cursor: pointer;
-    }
-    /*css cho phần div popup_login*/
-    #popup_login {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,.5);
-        z-index: 9999;
-        display: none;
-    }
+                    <div class="block" style="float:left"  >
+                        <div class="starbox small ghosting"> </div>
+                    </div>
+                    <p class="in-para">
+                        Đánh giá sản phẩm
 
-    ul {
-        text-align: left;
-    }
-</style>
+                    </p>
+                    <div class="mid-2">
+                        <p><label style="font-style:italic">@Html.Raw(Model.Item.Price)&#8363;</label><em class="item_price" style="color:red; font-size: 20px">@Html.Raw(Model.Item.Price)&#8363;</em></p>
+                        <br />
 
-@section Scripts{
-    <script>
-        $('#addCart').click(function () {
-            if ($('#sessionCustomer').val() !== "") {
-                $.ajax({
-                        type: 'GET',
-                        url: "/Cart/Create?handler=AddItem&itemId=@Model.Item.Id"
-                    })
-                    .done(function (result) {
-                        debugger;
-                        toastr.success("Thêm sản phẩm vào giỏ hàng thành công");
-                    }).fail(function (result) {
-                        debugger;
-                        //debugger;
-                        toastr.error("Thêm sản phẩm vào giỏ hàng thất bại");
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="price_single">
+                        <span class="reducedfrom item_price"></span>
+                        <a href="#">click for offer</a>
+                        <div class="clearfix"></div>
+                    </div>
+                    <h4 class="quick">Quick Overview:</h4>
+                    <p class="quick_desc">
+                        Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet
+                        doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; es
+                    </p>
+                    <div class="wish-list">
+                        <ul>
+                            <li class="wish">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-check"
+                                          aria-hidden="true"></span>Add to Wishlist
+                                </a>
+                            </li>
+                            <li class="compare">
+                                <a href="#">
+                                    <span class="glyphicon glyphicon-resize-horizontal"
+                                          aria-hidden="true"></span>Add to Compare
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="quantity">
+                        <div class="quantity-select">
+                            <div class="entry value-minus">&nbsp;</div>
+                            <div class="entry value"><span>1</span></div>
+                            <div class="entry value-plus active">&nbsp;</div>
+                        </div>
+                    </div>
+                    <!--quantity-->
+                    <script>
+                        $('.value-plus').on('click', function () {
+                            var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) + 1;
+                            divUpd.text(newVal);
+                        });
+
+                        $('.value-minus').on('click', function () {
+                            var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10) - 1;
+                            if (newVal >= 1) divUpd.text(newVal);
+                        });
+                    </script>
+                    <!--quantity-->
+                    @*<a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>*@
+                    <div class="img item_add">
+                        <a href="#" class="add-to item_add hvr-skew-backward">Thêm vào giỏ<img src="~/home-site/images/ca.png" alt=""></a>
+                    </div>
+                    <div class="clearfix"> </div>
+                </div>
+
+            </div>
+            <div class="clearfix"> </div>
+            <!---->
+            <div class="tab-head">
+                <nav class="nav-sidebar">
+                    <ul class="nav tabs">
+                        <li class="active"><a href="#tab1" data-toggle="tab">Thông số cấu hình</a></li>
+                        <li class=""><a href="#tab2" data-toggle="tab">Mô tả sản phẩm</a></li>
+                        <li class=""><a href="#tab3" data-toggle="tab">Bình luận, đánh giá</a></li>
+                    </ul>
+                </nav>
+                <div class="tab-content one">
+
+                    <div class="tab-pane text-style" id="tab2">
+
+                        <div class="facts">
+                            <p>
+                                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                                piece of classical Latin literature from 45 BC, making it over 2000 years old.
+                                Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked
+                                up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+                                going through the cites of the word in classical literature, discovered the
+                                undoubtable source. Lorem Ipsum comes from sections
+                            </p>
+                            <ul>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Multimedia
+                                    Systems
+                                </li>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Digital media
+                                    adapters
+                                </li>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Set top boxes for
+                                    HDTV and IPTV Player
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="tab-pane active text-style" id="tab1">
+                        <div class="facts">
+                            @Html.Raw(Model.Item.Description)
+                        </div>
+
+                    </div>
+                    <div class="tab-pane text-style" id="tab3">
+
+                        <div class="facts">
+                            <ul>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
+                                </li>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
+                                </li>
+                                <li>
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <!---->
+        </div>
+        <!----->
+
+        <div class="col-md-3 product-bottom product-at">
+            <!--categories-->
+            <div class=" rsidebar span_1_of_left">
+                <h4 class="cate">Categories</h4>
+                <ul class="menu-drop">
+                    <li class="item1">
+                        <a href="#">Men </a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
+                    <li class="item2">
+                        <a href="#">Women </a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
+                    <li class="item3">
+                        <a href="#">Kids</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails</a></li>
+                        </ul>
+                    </li>
+                    <li class="item4">
+                        <a href="#">Accessories</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="item4">
+                        <a href="#">Shoes</a>
+                        <ul class="cute">
+                            <li class="subitem1"><a href="product.html">Cute Kittens </a></li>
+                            <li class="subitem2"><a href="product.html">Strange Stuff </a></li>
+                            <li class="subitem3"><a href="product.html">Automatic Fails </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            @*<!--initiate accordion-->
+                <script type="text/javascript">
+                    $(function () {
+                        var menu_ul = $('.menu-drop > li > ul'),
+                            menu_a = $('.menu-drop > li > a');
+                        menu_ul.hide();
+                        menu_a.click(function (e) {
+                            e.preventDefault();
+                            if (!$(this).hasClass('active')) {
+                                menu_a.removeClass('active');
+                                menu_ul.filter(':visible').slideUp('normal');
+                                $(this).addClass('active').next().stop(true, true).slideDown('normal');
+                            } else {
+                                $(this).removeClass('active');
+                                $(this).next().stop(true, true).slideUp('normal');
+                            }
+                        });
+
                     });
-            } else {
-                $("#popup_login").show();
-            }
+                </script>
+                <!--//menu-->
+                <section class="sky-form">
+                    <h4 class="cate">Discounts</h4>
+                    <div class="row row1 scroll-pane">
+                        <div class="col col-4">
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox" checked=""><i></i>Upto - 10%
+                                (20)
+                            </label>
+                        </div>
+                        <div class="col col-4">
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>40% - 50% (5)</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>30% - 20% (7)</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>10% - 5% (2)</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Other(50)</label>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!---->
+                <section class="sky-form">
+                    <h4 class="cate">Type</h4>
+                    <div class="row row1 scroll-pane">
+                        <div class="col col-4">
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox" checked=""><i></i>Sofa Cum
+                                Beds (30)
+                            </label>
+                        </div>
+                        <div class="col col-4">
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Bags (30)</label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox"><i></i>Caps & Hats
+                                (30)
+                            </label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox"><i></i>Jackets & Coats
+                                (30)
+                            </label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Jeans (30)</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Shirts (30)</label>
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox"><i></i>Sunglasses
+                                (30)
+                            </label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Swimwear (30)</label>
+                        </div>
+                    </div>
+                </section>
+                <section class="sky-form">
+                    <h4 class="cate">Brand</h4>
+                    <div class="row row1 scroll-pane">
+                        <div class="col col-4">
+                            <label class="checkbox">
+                                <input type="checkbox" name="checkbox"
+                                       checked=""><i></i>Roadstar
+                            </label>
+                        </div>
+                        <div class="col col-4">
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Levis</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Persol</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Nike</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Edwin</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>New Balance</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Paul Smith</label>
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>Ray-Ban</label>
+                        </div>
+                    </div>
+                </section>*@
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+
+    <!--brand-->
+    <div class="container">
+        <div class="brand">
+            <div class="col-md-3 brand-grid">
+                <img src="~/home-site/images/ic.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="~/home-site/images/ic1.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="~/home-site/images/ic2.png" class="img-responsive" alt="">
+            </div>
+            <div class="col-md-3 brand-grid">
+                <img src="~/home-site/images/ic3.png" class="img-responsive" alt="">
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!--//brand-->
+</div>
+
+<!--//content-->
+
+<script src="~/home-site/js/imagezoom.js"></script>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script defer src="~/home-site/js/jquery.flexslider.js"></script>
+<link rel="stylesheet" href="~/home-site/css/flexslider.css" type="text/css" media="screen" />
+
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
         });
-
-        $("#btnDangNhap1").click(function () {
-            console.log("Đã click vào hàm đăng nhập");
-            $.ajax({
-                type: 'POST',
-                url: "/Account/Login"
-            })
-                .done(function (result) {
-                    console.log("Đã done trong hàm đăng nhập");
-                    console.log(result);
-                    debugger;
-                    toastr.success("Thêm sản phẩm vào giỏ hàng thành công");
-                })
-                .fail(function (result) {
-                    debugger;
-                    console.log("Đã fail trong hàm đăng nhập");
-                    console.log(result);
-                    toastr.error("Thêm sản phẩm vào giỏ hàng thất bại");
-                });
-        });
-
-        ////Hiển thị popup_login
-        //$("#btnDangNhap").click(function() {
-        //    $("#popup_login").show();
-        //});
-        ////Ẩn đi popup_login
-        //$("#close-form").click(AnForm);
-
-        ////Định nghĩa function ẩn form
-        //function AnForm() {
-        //    $("#popup_login").hide();
-        //}
-
-        ////Ví dụ về lấy giá trị từ textbox
-        //$("#btnDangNhap1").click(function() {
-        //    var TaiKhoan = $(".TaiKhoan").val();
-        //    var MatKhau = $(".MatKhau").val();
-        //    if (TaiKhoan == "") {
-        //        toastr.error("Đã có lỗi xãy ra");
-        //        return;
-        //    }
-        //});
-        //var onSuccess = function(result) {
-        //    if (result.url) {
-        //        // if the server returned a JSON object containing an url
-        //        // property we redirect the browser to that url
-        //        window.location.href = result.url;
-        //    }
-        //}
-    </script>
-}
+    });
+</script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="~/home-site/js/simpleCart.min.js"></script>
+<!-- slide -->
+<script src="~/home-site/js/bootstrap.min.js"></script>
+<!--light-box-files -->
+<script src="~/home-site/js/jquery.chocolat.js"></script>
+<link rel="stylesheet" href="~/home-site/css/chocolat.css" type="text/css" media="screen" charset="utf-8">
+<!--light-box-files -->
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        $('a.picture').Chocolat();
+    });
+</script>

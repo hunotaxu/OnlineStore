@@ -30,9 +30,7 @@
                     </a>
                 </div>
                 <p class="tun">@item.Name</p>
-                @*Thẻ a nút thêm*@
-                @*<a href="@Url.Action("ThemGioHang", "GioHang", new { @MaSP = item.MaSP, @strURL = Request.Url.ToString() })" class="item_add"><p class="number item_price"><i> </i>@item.DonGia.Value.ToString("#,##")</p></a>*@
-                @*@Ajax.ActionLink("Thêm giỏ hàng Ajax", "ThemGioHangAjax", "GioHang", new { @MaSP = item.MaSP, @strURL = Request.Url.ToString() }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "divGioHang", InsertionMode = InsertionMode.Replace }, null)*@
+               
                 <a href="#" data-masp="@item.Id" class="item_add btnThemGioHang"><p class="number item_price"><i> </i>@item.Price.ToString("#,##")</p></a>
 
             </div>
@@ -46,7 +44,6 @@
         {
             <a class="linkTrang" data-sotrang="@Url.Content("Trang"+i) " href="#">@i</a>
         }
-
     </div>
 </div>
 @*Bước 2: Cho tất cả các trang ẩn hết và chỉ cho item nào thuộc trang 1 hiển thỉ*@

@@ -17,6 +17,8 @@
     "jquery-ajax-unobtrusive": "^3.2.6",
     "gentelella": "~1.4.0",
     "bootbox": "4.4.0",
+    "Microsoft.AspNet.Identity.EntityFramework": "3.0.0-rc1-final"
+  
     "parsleyjs": "2.8.2"
   }
 }

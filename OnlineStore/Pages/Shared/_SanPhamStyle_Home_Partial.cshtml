@@ -1,11 +1,23 @@
-﻿@using Microsoft.AspNetCore.Http.Extensions
-@model PaginatedList<DAL.Data.Entities.Item>
+﻿@model IEnumerable<DAL.Data.Entities.Item>
+
+
+@*@foreach (var item in Model.Take(3))
+    {
+        <div class="col-md-4 grid-top">
+            <a href="@Url.RouteUrl("XemChiTiet", new { @id = item.Id, @tensp=item.Name})" class="b-link-stripe b-animate-go  thickbox">
+                <img class="img-responsive" src="~/images/client/ProductImages/@item.Image" alt="Hình ảnh không thể hiển thị">
+
+            </a>
+            <p><a href="single.html">@item.Name</a></p>
+        </div>
+    }
+    <div class="clearfix"> </div>*@
 
 
 
 @foreach (var item in Model.Take(9))
 {
-    <div class="col-md-3 item-grid1 simpleCart_shelfItem">
+    <div class="col-md-2 item-grid1 simpleCart_shelfItem">
         <div class=" mid-pop">
             <div class="pro-img">
                 <a href="~/Product/Detail?id=@item.Id">
@@ -18,13 +30,17 @@
             </div>
             <div class="mid-1">
                 <div class="women" style="height:60px">
+
                     <div class="women-top">
                         <span>@item.BrandName</span>
                         <br />
                         <a href="~/Product/Detail?id=@item.Id">@item.Name</a>
+                        
                         @*<a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})"><h6 style="font-size:13px">@item.Name</h6></a>*@
-                        @*<a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})" style="font-size:13px">@item.Name</a>*@
+                        @*<a href="@Url.RouteUrl("~/Product/Detail", new { @id = item.Id, @tensp=item.Name})" style="font-size:13px">@item.Name</a>*@
                         @*<a asp-page="~/Pages/Product/Detail?id=12" asp-route-id="@item.Id" style="font-size:13px">@item.Name</a>*@
+
+
                     </div>
 
 
@@ -34,9 +50,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="mid-2">
-                    <p><label style="font-style:italic">@item.Price.ToString("#,##")&#8363;</label><em class="item_price" style="color:red">@item.Price.ToString("#,##")&#8363;</em></p>
+                    <p><label style="font-style:italic">@item.Price&#8363;</label><em class="item_price" style="color:red">@item.Price&#8363;</em></p>
                     <div class="block">
-                        <div class="starbox small ghosting" > </div>
+                        <div class="starbox small ghosting"> </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -45,34 +61,3 @@
     </div>
 }
 
-
-<div class="clearfix"></div>
-<nav class="in">
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var startIndex = Math.Max(Model.PageIndex - 5, 1);
-        var finishIndex = Math.Min(Model.PageIndex + 5, Model.TotalPages);
-    }
-    <ul class="pagination">
-        <li>
-            <a id="btnPrevious" class="btn btn-default @prevDisabled">«</a>
-        </li>
-        @{
-            for (var i = startIndex; i <= finishIndex; i++)
-            {
-                if (i == Model.PageIndex)
-                {
-                    <li class="active"><a>@i<span class="sr-only">(current)</span></a></li>
-                }
-                else
-                {
-                    <li><a onClick="loadPage(@i);">@i<span class="sr-only"></span></a></li>
-                }
-            }
-        }
-        <li>
-            <a id="btnNext" class="btn btn-default @nextDisabled">»</a>
-        </li>
-    </ul>
-</nav>

@@ -1,7 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http.Extensions
-@model PaginatedList<DAL.Data.Entities.Item>
-
-
+﻿@model IEnumerable<DAL.Data.Entities.Item>
 
 @foreach (var item in Model.Take(9))
 {
@@ -34,9 +31,9 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="mid-2">
-                    <p><label style="font-style:italic">@item.Price.ToString("#,##")&#8363;</label><em class="item_price" style="color:red">@item.Price.ToString("#,##")&#8363;</em></p>
+                    <p><label style="font-style:italic">@item.Price&#8363;</label><em class="item_price" style="color:red">@item.Price&#8363;</em></p>
                     <div class="block">
-                        <div class="starbox small ghosting" > </div>
+                        <div class="starbox small ghosting"> </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
@@ -45,34 +42,3 @@
     </div>
 }
 
-
-<div class="clearfix"></div>
-<nav class="in">
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        var startIndex = Math.Max(Model.PageIndex - 5, 1);
-        var finishIndex = Math.Min(Model.PageIndex + 5, Model.TotalPages);
-    }
-    <ul class="pagination">
-        <li>
-            <a id="btnPrevious" class="btn btn-default @prevDisabled">«</a>
-        </li>
-        @{
-            for (var i = startIndex; i <= finishIndex; i++)
-            {
-                if (i == Model.PageIndex)
-                {
-                    <li class="active"><a>@i<span class="sr-only">(current)</span></a></li>
-                }
-                else
-                {
-                    <li><a onClick="loadPage(@i);">@i<span class="sr-only"></span></a></li>
-                }
-            }
-        }
-        <li>
-            <a id="btnNext" class="btn btn-default @nextDisabled">»</a>
-        </li>
-    </ul>
-</nav>

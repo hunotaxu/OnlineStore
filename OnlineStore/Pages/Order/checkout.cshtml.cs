@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace OnlineStore.Pages.Product
+namespace OnlineStore.Pages.Order
 {
-    public class _DetailModel : PageModel
+    public class checkoutModel : PageModel
     {
         public void OnGet()
         {
