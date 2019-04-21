@@ -41,7 +41,7 @@ namespace DAL.Repositories
         {
             var userRole = new ApplicationUserRole
             {
-                RoleId = new Guid(CommonConstants.CustomerId),
+                RoleId = new Guid(CommonConstants.CustomerRoleId),
                 UserId = userId,
                 DateCreated = DateTime.UtcNow,
                 DateModified = DateTime.UtcNow,
