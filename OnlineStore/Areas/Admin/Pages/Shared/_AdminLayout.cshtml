@@ -21,10 +21,9 @@
     <!-- bootstrap-daterangepicker -->
     @*<link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">*@
     <link href="~/node_modules/gentelella/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-    <link href="~/node_modules/notifyjs/dist/styles/metro/notify-metro.css" rel="stylesheet" />
+    <link href="~/lib/notifyjs/styles/metro/notify-metro.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
-    @*<link href="../build/css/custom.min.css" rel="stylesheet">*@
-    <link href="~/admin-site/css/custom.min.css" rel="stylesheet" />
+    <link href="~/node_modules/gentelella/build/css/custom.min.css" rel="stylesheet" />
 </head>
 
 <body class="nav-md">
@@ -41,7 +40,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="~/admin-site/images/img.jpg" alt="..." class="img-circle profile_img">
+                            <img src="~/images/admin/img.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -199,8 +198,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    @*<img src="images/img.jpg" alt="">John Doe*@
-                                    <img src="~/admin-site/images/img.jpg" alt="">John Doe
+                                    <img src="~/images/admin/img.jpg" alt="">John Doe
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -224,7 +222,7 @@
                                 <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                     <li>
                                         <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span class="image"><img src="~/images/admin/img.jpg" alt="Profile Image" /></span>
                                             <span>
                                                 <span>John Smith</span>
                                                 <span class="time">3 mins ago</span>
@@ -236,7 +234,7 @@
                                     </li>
                                     <li>
                                         <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span class="image"><img src="~/images/admin/img.jpg" alt="Profile Image" /></span>
                                             <span>
                                                 <span>John Smith</span>
                                                 <span class="time">3 mins ago</span>
@@ -248,7 +246,7 @@
                                     </li>
                                     <li>
                                         <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span class="image"><img src="~/images/admin/img.jpg" alt="Profile Image" /></span>
                                             <span>
                                                 <span>John Smith</span>
                                                 <span class="time">3 mins ago</span>
@@ -260,7 +258,7 @@
                                     </li>
                                     <li>
                                         <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                            <span class="image"><img src="~/images/admin/img.jpg" alt="Profile Image" /></span>
                                             <span>
                                                 <span>John Smith</span>
                                                 <span class="time">3 mins ago</span>
@@ -347,11 +345,10 @@
     <script src="~/node_modules/gentelella/production/js/moment/moment.min.js"></script>
     @*<script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>*@
     <script src="~/node_modules/gentelella/production/js/datepicker/daterangepicker.js"></script>
-    <script src="~/node_modules/notifyjs/dist/notify.js"></script>
-    <script src="~/node_modules/notifyjs/dist/styles/metro/notify-metro.js"></script>
+    <script src="~/lib/notifyjs/notify.js"></script>
+    <script src="~/lib/notifyjs/styles/metro/notify-metro.js"></script>
     <script src="~/node_modules/bootbox/bootbox.min.js"></script>
     <!-- Custom Theme Scripts -->
-    @*<script src="../build/js/custom.min.js"></script>*@
-    <script src="~/admin-site/js/custom.min.js"></script>
+    <script src="~/node_modules/gentelella/build/js/custom.min.js"></script>
 </body>
 </html>
