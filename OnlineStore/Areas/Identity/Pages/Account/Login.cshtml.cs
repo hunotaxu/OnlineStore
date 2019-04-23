@@ -79,37 +79,39 @@ namespace OnlineStore.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                //var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    var appUser = await _userManager.FindByNameAsync(Input.UserName);
-                    HttpContext.Session.Set(CommonConstants.UserSession, appUser);
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
-                }
+                return Page();
+            }
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+            var user = await _userManager.FindByEmailAsync(Input.UserName) ?? await _userManager.FindByNameAsync(Input.UserName);
+            if (user == null)
+            {
+                return Page();
+            }
+            var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+            //var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+            if (result.Succeeded)
+            {
+                HttpContext.Session.Set(CommonConstants.UserSession, user);
+                _logger.LogInformation("User logged in.");
+                return LocalRedirect(returnUrl);
+            }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+            }
+            if (result.IsLockedOut)
+            {
+                _logger.LogWarning("User account locked out.");
+                return RedirectToPage("./Lockout");
             }
 
-            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return Page();
+
+            // If we got this far, something failed, redisplay form
         }
     }
 }
