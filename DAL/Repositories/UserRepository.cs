@@ -12,13 +12,13 @@ namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private DbSet<ApplicationUser> _userTable;
-        private DbSet<ApplicationUserRole> _userRoletable;
+        private readonly DbSet<ApplicationUser> _userTable;
+        private readonly DbSet<ApplicationUserRole> _userRoletable;
         protected readonly OnlineStoreDbContext Db;
 
         public UserRepository(DbContextOptions<OnlineStoreDbContext> options)
         {
-            
+
             Db = new OnlineStoreDbContext(options);
             _userRoletable = Db.Set<ApplicationUserRole>(); ;
             _userTable = Db.Set<ApplicationUser>();
@@ -26,6 +26,13 @@ namespace DAL.Repositories
 
         public ApplicationUser FindUser(Expression<Func<ApplicationUser, bool>> where)
             => _userTable.FirstOrDefault(where);
+
+        public ApplicationUser FindUserByUserName(string userName)
+        {
+            return FindUser(u =>
+                string.Equals(u.UserName, userName, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(u.Email, userName, StringComparison.OrdinalIgnoreCase));
+        }
 
         public bool IsDuplicatePhoneNumber(string phoneNumber)
         {
@@ -37,11 +44,18 @@ namespace DAL.Repositories
             return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)) != null;
         }
 
+        public bool IsAdmin(string userName)
+        {
+            var user = FindUserByUserName(userName);
+            return _userRoletable.Where(u => u.UserId == user.Id)
+                .Any(a => a.RoleId != CommonConstants.CustomerRoleId);
+        }
+
         public int AddUserRole(Guid userId)
         {
             var userRole = new ApplicationUserRole
             {
-                RoleId = new Guid(CommonConstants.CustomerRoleId),
+                RoleId = CommonConstants.CustomerRoleId,
                 UserId = userId,
                 DateCreated = DateTime.UtcNow,
                 DateModified = DateTime.UtcNow,

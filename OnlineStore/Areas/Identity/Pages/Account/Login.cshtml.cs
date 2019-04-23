@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Data.Entities;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -18,12 +19,14 @@ namespace OnlineStore.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly IUserRepository _userRepository;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginModel> logger, UserManager<ApplicationUser> userManager, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _signInManager = signInManager;
             _logger = logger;
             _userManager = userManager;
@@ -96,6 +99,10 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             {
                 HttpContext.Session.Set(CommonConstants.UserSession, user);
                 _logger.LogInformation("User logged in.");
+                if (_userRepository.IsAdmin(Input.UserName))
+                {
+                    return RedirectToPage("/Home/Index", new { area = "Admin" });
+                }
                 return LocalRedirect(returnUrl);
             }
             if (result.RequiresTwoFactor)
