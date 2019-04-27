@@ -67,12 +67,12 @@
         var hh = newDate.getHours();
         var mm = newDate.getMinutes();
         if (month < 10)
-            month = "0" + day;
+            month = `0${day}`;
         if (hh < 10)
-            hh = "0" + hh;
+            hh = `0${hh}`;
         if (mm < 10)
-            mm = "0" + mm;
-        return day + "/" + month + "/" + year;
+            mm = `0${mm}`;
+        return `${day}/${month}/${year}`;
     },
     dateTimeFormatJson: function (datetime) {
         if (datetime === null || datetime === '')
@@ -85,16 +85,16 @@
         var mm = newdate.getMinutes();
         var ss = newdate.getSeconds();
         if (month < 10)
-            month = "0" + month;
+            month = `0${month}`;
         if (day < 10)
-            day = "0" + day;
+            day = `0${day}`;
         if (hh < 10)
-            hh = "0" + hh;
+            hh = `0${hh}`;
         if (mm < 10)
-            mm = "0" + mm;
+            mm = `0${mm}`;
         if (ss < 10)
-            ss = "0" + ss;
-        return day + "/" + month + "/" + year + " " + hh + ":" + mm + ":" + ss;
+            ss = `0${ss}`;
+        return `${day}/${month}/${year} ${hh}:${mm}:${ss}`;
     },
     startLoading: function () {
         if ($('.dv-loading').length > 0) {
@@ -112,13 +112,15 @@
         else {
             return '<span class="badge bg-red">Khóa</span>';
         }
-    }, 
+    },
     formatNumber: function (number, precision) {
         if (!isFinite(number)) {
             return number.toString();
         }
+
         var a = number.toFixed(precision).split('.');
-        a[0] = a[0].replace(/\d/g, );
+        a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&,');
+        return a.join('.');
     },
 
     //
