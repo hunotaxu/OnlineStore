@@ -40,13 +40,15 @@ namespace OnlineStore.Pages.Product
             //SANPHAM sp = db.SANPHAMs.SingleOrDefault(n => n.MaSP == id && n.DaXoa == false);
 
             Item = _itemRepository.Find(n => n.Id == id && n.IsDeleted == false);
-
+            
             if (Item == null)
             {
                 //Thông báo nếu như không có sản phẩm đó
                 return NotFound();
             }
 
+            Item.View++;
+            _itemRepository.Update(Item);
             List<Comment> comments = _commentRepository.GetSome(n => n.ItemId == id).ToList();
 
             if (comments.Any())
