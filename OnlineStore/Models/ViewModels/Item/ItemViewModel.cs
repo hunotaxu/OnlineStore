@@ -40,6 +40,6 @@ namespace OnlineStore.Models.ViewModels.Item
 
         public DateTime DateModified { set; get; }
 
-        public Status Status { set; get; }
+        public byte? Status { set; get; }
     }
 }

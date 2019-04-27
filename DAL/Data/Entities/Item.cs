@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
+using DAL.Data.Enums;
 
 namespace DAL.Data.Entities
 {
@@ -48,7 +50,12 @@ namespace DAL.Data.Entities
         public decimal? AverageEvaluation { get; set; }
 
         public int? EventId { get; set; }
-        //public byte[] Timestamp { get; set; }
+
+        public byte? Status { get; set; }
+
+        public DateTime? DateCreated { get; set; }
+
+        public DateTime? DateModified { get; set; }
 
         [Display(Name = "Loại mặt hàng")]
         public virtual Category Category { get; set; }
