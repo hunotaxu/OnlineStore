@@ -1,7 +1,7 @@
 ﻿using DAL.Repositories.Base;
-using DAL.Models;
 using System.Collections.Generic;
 using DAL.Data.Entities;
+using Utilities.DTOs;
 
 namespace DAL.Repositories
 {
@@ -10,5 +10,6 @@ namespace DAL.Repositories
         IEnumerable<Item> GetByCategory(int categoryId);
         Item GetItem(int? id);
         IEnumerable<Item> GetItemByName(string name);
+        PagedResult<Item> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
     }
 }

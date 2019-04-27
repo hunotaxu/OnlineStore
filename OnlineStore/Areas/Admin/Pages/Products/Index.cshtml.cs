@@ -5,6 +5,7 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
+using Utilities.DTOs;
 
 namespace OnlineStore.Areas.Admin.Pages.Products
 {
@@ -25,27 +26,25 @@ namespace OnlineStore.Areas.Admin.Pages.Products
 
         public IEnumerable<ItemViewModel> Items { get; set; }
 
+        public PagedResult<ItemViewModel> ItemsPagination { get; set; }
+
         public void OnGet()
         {
 
         }
 
-        //public IActionResult OnGet()
-        //{
-        //    Items = _mapperConfiguration.CreateMapper().Map<IEnumerable<ItemViewModel>>(_itemRepository.GetAll(i => i.Category));
-        //    return new OkObjectResult(Items);
-        //}
-
-        public IActionResult OnGetLoadAll()
+        public IActionResult OnGetAll()
         {
             var model = _itemRepository.GetAll(i => i.Category);
             Items = _mapperConfiguration.CreateMapper().Map<IEnumerable<ItemViewModel>>(model);
             return new OkObjectResult(Items);
         }
 
-        //public IActionResult GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
-        //{
-        //    var model=_itemRepository.
-        //}
+        public IActionResult OnGetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
+        {
+            var model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
+            ItemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
+            return new OkObjectResult(ItemsPagination);
+        }
     }
 }
