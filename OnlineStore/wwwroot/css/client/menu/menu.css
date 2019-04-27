@@ -38,7 +38,6 @@
     display: inline-block;
 }
 
-
-/*Search bar*/
-
-/*Search bar*/
+.dropdown-content-single {
+    display:block;
+}

@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<DAL.Data.Entities.Item>
-
+@using Utilities.Commons
 
 @*@foreach (var item in Model.Take(3))
     {
@@ -35,7 +35,7 @@
                         <span>@item.BrandName</span>
                         <br />
                         <a href="~/Product/Detail?id=@item.Id">@item.Name</a>
-                        
+
                         @*<a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})"><h6 style="font-size:13px">@item.Name</h6></a>*@
                         @*<a href="@Url.RouteUrl("~/Product/Detail", new { @id = item.Id, @tensp=item.Name})" style="font-size:13px">@item.Name</a>*@
                         @*<a asp-page="~/Pages/Product/Detail?id=12" asp-route-id="@item.Id" style="font-size:13px">@item.Name</a>*@
@@ -50,7 +50,10 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="mid-2">
-                    <p><label style="font-style:italic">@item.Price&#8363;</label><em class="item_price" style="color:red">@item.Price&#8363;</em></p>
+                    <p>
+                        <label style="font-style:italic">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</label>
+                        <em class="item_price" style="color:red">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</em>
+                    </p>
                     <div class="block">
                         <div class="starbox small ghosting"> </div>
                     </div>

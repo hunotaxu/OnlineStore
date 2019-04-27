@@ -22,8 +22,8 @@ namespace OnlineStore.Pages.Product
         public IEnumerable<Item> phones { get; set; }
         public IEnumerable<Item> laptops { get; set; }
         public IEnumerable<Item> tablets { get; set; }
-        public int CurrentPage { get; set; }
 
+        public int CurrentPage { get; set; }
         public SortType CurrentSort { get; set; }
         public string CurrentSearchString { get; set; }
         public PaginatedList<Item> Items { get; set; }
@@ -54,9 +54,7 @@ namespace OnlineStore.Pages.Product
         {
             List<Item> items = _itemRepository.GetSome(i => i.CategoryId == categoryId).OrderByDescending(s => s.View).ToList();
             CurrentPage = 1;
-            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);
-
-
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);            
         }
         public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
             decimal currentMaxPrice, string currentRating, string currentSearchString, int? currentPage)

@@ -1,7 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
+@using Utilities.Commons
 @model PaginatedList<DAL.Data.Entities.Item>
-
-
 
 @foreach (var item in Model.Take(9))
 {
@@ -34,9 +33,12 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="mid-2">
-                    <p><label style="font-style:italic">@item.Price.ToString("#,##")&#8363;</label><em class="item_price" style="color:red">@item.Price.ToString("#,##")&#8363;</em></p>
+                    <p>
+                        <label style="font-style:italic">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</label>
+                        <em class="item_price" style="color:red">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</em>
+                    </p>
                     <div class="block">
-                        <div class="starbox small ghosting" > </div>
+                        <div class="starbox small ghosting"> </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>

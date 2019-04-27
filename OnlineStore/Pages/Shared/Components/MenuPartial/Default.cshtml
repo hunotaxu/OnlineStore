@@ -18,10 +18,10 @@
             Danh mục<span class="caret"></span>
         </a>
         <div class="dropdown-content">
-            <ul>
+            <ul >
                 @foreach (Category item in Model)
                 {
-                    <li style="display:block;">
+                    <li class="dropdown-content-single" >
                         <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
                     </li>
                 }

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<DAL.Data.Entities.Item>
+@using Utilities.Commons
 
 @foreach (var item in Model.Take(9))
 {
@@ -31,7 +32,11 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="mid-2">
-                    <p><label style="font-style:italic">@item.Price&#8363;</label><em class="item_price" style="color:red">@item.Price&#8363;</em></p>
+                    <p>
+                        <label style="font-style:italic">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</label>
+                        <em class="item_price" style="color:red">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</em>
+                    </p>
+
                     <div class="block">
                         <div class="starbox small ghosting"> </div>
                     </div>
@@ -41,4 +46,4 @@
         </div>
     </div>
 }
-
+<script src="~/js/shared/commons.js"></script>

@@ -11,13 +11,14 @@
     "rimraf": "2.6.1"
   },
   "dependencies": {
+    "bootbox": "4.4.0",
     "bootstrap": "3.3.7",
     "font-awesome": "4.7.0",
+    "gentelella": "~1.4.0",
     "jquery": "3.3.1",
     "jquery-ajax-unobtrusive": "^3.2.6",
-    "gentelella": "~1.4.0",
-    "bootbox": "4.4.0",
+    "mustache": "^3.0.1",
     "parsleyjs": "2.9.0",
-    "mustache": "3.0.1"
+    "flexslider": "2.7.2"
   }
 }
