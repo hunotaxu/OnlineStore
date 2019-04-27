@@ -1,27 +1,51 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using AutoMapper;
 using DAL.Data.Entities;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using OnlineStore.Models.ViewModels.Item;
 
 namespace OnlineStore.Areas.Admin.Pages.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly DAL.EF.OnlineStoreDbContext _context;
+        private readonly IItemRepository _itemRepository;
+        private readonly MapperConfiguration _mapperConfiguration;
 
-        public IndexModel(DAL.EF.OnlineStoreDbContext context)
+        public IndexModel(IItemRepository itemRepository)
         {
-            _context = context;
+            _itemRepository = itemRepository;
+            _mapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Item, ItemViewModel>();
+                cfg.CreateMap<Category, CategoryViewModel>();
+            });
         }
 
-        public IList<Item> Item { get;set; }
+        public IEnumerable<ItemViewModel> Items { get; set; }
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            Item = await _context.Item
-                .Include(i => i.Category)
-                .Include(i => i.Event).ToListAsync();
+
         }
+
+        //public IActionResult OnGet()
+        //{
+        //    Items = _mapperConfiguration.CreateMapper().Map<IEnumerable<ItemViewModel>>(_itemRepository.GetAll(i => i.Category));
+        //    return new OkObjectResult(Items);
+        //}
+
+        public IActionResult OnGetLoadAll()
+        {
+            var model = _itemRepository.GetAll(i => i.Category);
+            Items = _mapperConfiguration.CreateMapper().Map<IEnumerable<ItemViewModel>>(model);
+            return new OkObjectResult(Items);
+        }
+
+        //public IActionResult GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
+        //{
+        //    var model=_itemRepository.
+        //}
     }
 }

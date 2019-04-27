@@ -24,6 +24,7 @@
     <link href="~/lib/notifyjs/styles/metro/notify-metro.css" rel="stylesheet" />
     <!-- Custom Theme Style -->
     <link href="~/node_modules/gentelella/build/css/custom.min.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
 </head>
 
 <body class="nav-md">
@@ -311,14 +312,12 @@
     @*<script src="../vendors/fastclick/lib/fastclick.js"></script>*@
     <script src="~/node_modules/gentelella/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    @*<script src="../vendors/nprogress/nprogress.js"></script>*@
     <script src="~/node_modules/gentelella/vendors/nprogress/nprogress.js"></script>
+    <script src="~/node_modules/mustache/mustache.min.js"></script>
     <!-- Chart.js -->
-    @*<script src="../vendors/Chart.js/dist/Chart.min.js"></script>*@
-    @*<script src="~/node_modules/gentelella/vendors/Chart.js/dist/Chart.min.js"></script>*@
+    <script src="~/node_modules/gentelella/vendors/Chart.js/dist/Chart.min.js"></script>
     <script src="~/node_modules/gentelella/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
     <!-- jQuery Sparklines -->
-    @*<script src="../vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>*@
     <script src="~/node_modules/gentelella/vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
     <!-- Flot -->
     @*<script src="../vendors/Flot/jquery.flot.js"></script>*@
@@ -350,5 +349,7 @@
     <script src="~/node_modules/bootbox/bootbox.min.js"></script>
     <!-- Custom Theme Scripts -->
     <script src="~/node_modules/gentelella/build/js/custom.min.js"></script>
+    <script src="~/js/shared/commons.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

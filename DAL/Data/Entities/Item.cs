@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
-using DAL.Models;
 
 namespace DAL.Data.Entities
 {
@@ -17,7 +16,6 @@ namespace DAL.Data.Entities
             LineItems = new HashSet<LineItem>();
         }
 
-        //public int Id { get; set; }
         [DisplayName("Tên sản phẩm")]
         [Required]
         [Column(TypeName="nvarchar(100)")]
@@ -45,9 +43,6 @@ namespace DAL.Data.Entities
 
         [Display(Name = "Thương hiệu")]
         public string BrandName { get; set; }
-
-        //[Display(Name = "Gỡ khỏi web")]
-        public bool IsDeleted { get; set; }
 
         [Display(Name = "Đánh giá")]
         public decimal? AverageEvaluation { get; set; }
