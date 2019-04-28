@@ -14,9 +14,11 @@ namespace DAL.Repositories
 
         bool IsDuplicateEmail(string email);
 
-        bool IsAdmin(string userName);
+        bool IsAdmin(ApplicationUser user);
 
-        int AddUserRole(Guid userId);
+        bool IsProductManager(string userName);
+
+        int AddUserRole(Guid userId, Guid roleId);
 
         int SaveChanges();
     }

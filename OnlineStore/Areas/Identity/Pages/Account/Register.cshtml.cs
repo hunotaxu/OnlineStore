@@ -114,7 +114,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             var result = await _userManager.CreateAsync(user, Input.Password);
             if (result.Succeeded)
             {
-                _userRepository.AddUserRole(user.Id);
+                _userRepository.AddUserRole(user.Id, CommonConstants.CustomerRoleId);
                 _logger.LogInformation("User created a new account with password.");
 
                 //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -1,4 +1,5 @@
-﻿using DAL.Repositories.Base;
+﻿using System;
+using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,28 +32,28 @@ namespace DAL.Repositories
             return Table.Where(s => s.Name.Contains(name));
         }
 
-        public PagedResult<Item> GetAllPaging(int? categoryId, string keyword, int page, int pageSize)
+        public PagedResult<Item> GetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
             if (!string.IsNullOrEmpty(keyword))
             {
-                query.Where(i => i.Name.Contains(keyword));
+                query = query.Where(i => i.Name.Contains(keyword, StringComparison.OrdinalIgnoreCase));
             }
 
             if (categoryId.HasValue)
             {
-                query.Where(x => x.CategoryId == categoryId.Value);
+                query = query.Where(x => x.CategoryId == categoryId.Value);
             }
 
-            var totalRow = query.Count();
+            var rowCount = query.ToList().Count;
 
-            query = query.OrderByDescending(x => x.DateCreated).Skip((page - 1) * pageSize).Take(pageSize);
+            query = query.OrderByDescending(x => x.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             var paginationSet = new PagedResult<Item>
             {
                 Results = query.ToList(),
-                CurrentPage = page,
-                RowCount = totalRow,
+                CurrentPage = pageIndex,
+                RowCount = rowCount,
                 PageSize = pageSize
             };
 

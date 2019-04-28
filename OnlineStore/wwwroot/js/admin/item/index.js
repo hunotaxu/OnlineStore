@@ -1,9 +1,25 @@
 ﻿var itemPage = (function () {
     var init = function () {
         $(document).ready(function () {
+            loadCategories();
             loadData();
             registerEvents();
+            onSearchEvents();
         });
+    };
+
+    var onSearchEvents = function() {
+        $('#btnSearch').on('click',
+            function () {
+                loadData();
+            });
+
+        $('#txtKeyword').on('keypress',
+            function(e) {
+                if (e.which === 13) {
+                    loadData();
+                }
+            });
     };
 
     var registerEvents = function () {
@@ -14,6 +30,24 @@
                     commons.configs.pageIndex = 1;
                     loadData(true);
                 });
+        });
+    };
+
+    var loadCategories = function () {
+        $.ajax({
+            type: 'GET',
+            dataType: 'JSON',
+            url: '/Admin/Products/Index?handler=AllCategories',
+            success: function (response) {
+                var render = `<option value=''>Chọn loại sản phẩm</option>`;
+                $.each(response, function (i, item) {
+                    render += `<option value='${item.id}'>${item.name}</option>`;
+                });
+                $('#ddlCategorySearch').html(render);
+            },
+            error: function (response) {
+                commons.notify('Không thể tải dữ liệu', 'error');
+            }
         });
     };
 
@@ -31,6 +65,10 @@
             dataType: 'JSON',
             url: '/Admin/Products/Index?handler=AllPaging',
             success: function (response) {
+                if (response.authenticate === false) {
+                    window.location.href = "/Identity/Account/AccessDenied";
+                }
+                $('#tbl-content').empty();
                 $.each(response.results, function (i, item) {
                     render += Mustache.render(template,
                         {
@@ -75,7 +113,6 @@
             next: 'Tiếp',
             last: 'Cuối',
             onPageClick: function (event, p) {
-                debugger;
                 commons.configs.pageIndex = p;
                 setTimeout(callBack(), 200);
             }

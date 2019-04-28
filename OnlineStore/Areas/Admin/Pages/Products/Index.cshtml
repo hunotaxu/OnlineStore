@@ -13,22 +13,21 @@
     <div class="title_right">
         <div class="col-md-3 col-sm-5 col-xs-12 form-group pull-right">
             <div class="input-group">
-                <input type="text" id="txtKeyword" class="form-control" placeholder="Search for...">
+                <input type="text" id="txtKeyword" class="form-control" placeholder="Tên sản phẩm">
                 <span class="input-group-btn">
-                    <button class="btn btn-primary" id="btnSearch" type="button">Go!</button>
+                    <button class="btn btn-primary" id="btnSearch" type="button">Tìm</button>
                 </span>
             </div>
         </div>
-        <div class="col-md-3 col-sm-12  form-group pull-right">
+        <div class="col-md-4 col-sm-12  form-group pull-right">
             <select class="form-control" id="ddlCategorySearch">
-                <option>--Chọn loại sản phẩm--</option>
             </select>
         </div>
-        <div class="col-md-6 col-sm-12  form-group pull-right">
+        <div class="col-md-5 col-sm-12  form-group pull-right">
             <button id="btnCreate" class="btn btn-success">Tạo</button>
             <a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Template</a>
             <button class="btn btn-primary" id="btn-import" type="button"><i class="fa fa-file-excel-o"></i></button>
-            <button class="btn btn-default" id="btn-export" type="button"><i class="fa fa-forward"></i></button>
+            @*<button class="btn btn-default" id="btn-export" type="button"><i class="fa fa-forward"></i></button>*@
         </div>
     </div>
 </div>
@@ -100,7 +99,6 @@
 @section Scripts{
     <script src="~/js/admin/item/index.js"></script>
     <script>
-        itemPage.loadData();
-        itemPage.registerEvents();
+        itemPage.init();
     </script>
 }

@@ -99,7 +99,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             {
                 HttpContext.Session.Set(CommonConstants.UserSession, user);
                 _logger.LogInformation("User logged in.");
-                if (_userRepository.IsAdmin(Input.UserName))
+                if (_userRepository.IsAdmin(user))
                 {
                     return RedirectToPage("/Home/Index", new { area = "Admin" });
                 }
