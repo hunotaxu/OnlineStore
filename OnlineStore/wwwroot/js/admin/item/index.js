@@ -31,6 +31,9 @@
             dataType: 'JSON',
             url: '/Admin/Products/Index?handler=AllPaging',
             success: function (response) {
+                if (response.authenticate === false) {
+                    window.location.href = "/Identity/Account/AccessDenied";
+                }
                 $.each(response.results, function (i, item) {
                     render += Mustache.render(template,
                         {

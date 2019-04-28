@@ -4,7 +4,9 @@ using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Extensions;
 using OnlineStore.Models.ViewModels.Item;
+using Utilities.Commons;
 using Utilities.DTOs;
 
 namespace OnlineStore.Areas.Admin.Pages.Products
@@ -12,11 +14,13 @@ namespace OnlineStore.Areas.Admin.Pages.Products
     public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
+        private readonly IUserRepository _userRepository;
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public IndexModel(IItemRepository itemRepository)
+        public IndexModel(IItemRepository itemRepository, IUserRepository userRepository)
         {
             _itemRepository = itemRepository;
+            _userRepository = userRepository;
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
@@ -42,6 +46,11 @@ namespace OnlineStore.Areas.Admin.Pages.Products
 
         public IActionResult OnGetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
         {
+            //var admin = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
+            //if (admin == null || !_userRepository.IsProductManager(admin.UserName))
+            //{
+            //    return new JsonResult(new { authenticate = false });
+            //}
             var model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
             ItemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(ItemsPagination);

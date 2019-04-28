@@ -29,6 +29,7 @@ namespace DAL.Repositories
 
         public ApplicationUser FindUserByUserName(string userName)
         {
+            if (string.IsNullOrEmpty(userName)) return null;
             return FindUser(u =>
                 string.Equals(u.UserName, userName, StringComparison.OrdinalIgnoreCase) ||
                 string.Equals(u.Email, userName, StringComparison.OrdinalIgnoreCase));
@@ -36,26 +37,36 @@ namespace DAL.Repositories
 
         public bool IsDuplicatePhoneNumber(string phoneNumber)
         {
+            if (string.IsNullOrEmpty(phoneNumber)) return false;
             return FindUser(u => string.Equals(u.PhoneNumber, phoneNumber)) != null;
         }
 
         public bool IsDuplicateEmail(string email)
         {
+            if (string.IsNullOrEmpty(email)) return false;
             return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)) != null;
         }
 
-        public bool IsAdmin(string userName)
+        public bool IsProductManager(string userName)
         {
+            if (string.IsNullOrEmpty(userName)) return false;
             var user = FindUserByUserName(userName);
-            return _userRoletable.Where(u => u.UserId == user.Id)
-                .Any(a => a.RoleId != CommonConstants.CustomerRoleId);
+            return !_userRoletable.Where(u => u.UserId == user.Id).Any(x => x.RoleId != CommonConstants.ProductManagerRoleId);
+
         }
 
-        public int AddUserRole(Guid userId)
+        public bool IsAdmin(ApplicationUser user)
+        {
+            if (user == null) return false;
+            return !_userRoletable.Where(u => u.UserId == user.Id)
+                .Any(a => a.RoleId == CommonConstants.CustomerRoleId);
+        }
+
+        public int AddUserRole(Guid userId, Guid roleId)
         {
             var userRole = new ApplicationUserRole
             {
-                RoleId = CommonConstants.CustomerRoleId,
+                RoleId = roleId,
                 UserId = userId,
                 DateCreated = DateTime.UtcNow,
                 DateModified = DateTime.UtcNow,
