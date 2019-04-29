@@ -17,7 +17,12 @@ namespace DAL.Data.Entities
 
         public Guid CustomerId { get; set; }
 
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateModified { get; set; }
+
         public virtual ApplicationUser Customer { get; set; }
         public virtual Item Item { get; set; }
+
     }
 }

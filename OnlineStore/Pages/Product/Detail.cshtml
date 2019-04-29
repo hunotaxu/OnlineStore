@@ -2,7 +2,6 @@
 @using System.Web
 @using DAL.Data.Entities
 @using DAL.Models
-@using Microsoft.AspNetCore.Html
 @using Utilities.Commons
 @using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Identity
@@ -31,8 +30,7 @@
 <link href="~/node_modules/flexslider/flexslider.css" rel="stylesheet" />
 @*<link href="~/css/client/product/flexslider.css" rel="stylesheet" type="text/css" media="screen" />*@
 <link href="~/css/client/home/jstarbox.css" rel="stylesheet" />
-
-
+<link href="~/css/client/product/detail.css" rel="stylesheet" />
 <input type="hidden" value="@cus" id="sessionCustomer" />
 
 <!--banner-->
@@ -40,12 +38,12 @@
     <div class="container">
         <h1>Single</h1>
         <em></em>
-        <h2><a href="#">Trang chủ</a><label>/Sản phẩm/Chi tiết</label></h2>
+        <h2><a href="/Home/Index">Trang chủ</a><label>/Sản phẩm/Chi tiết</label></h2>
     </div>
 </div>
 <div class="single">
     <div class="container">
-        <div class="col-md-9">
+        <div class="col-md-10">
             <div class="col-md-5 grid">
                 <div class="flexslider">
                     <ul class="slides">
@@ -81,14 +79,16 @@
             <div class="col-md-7 single-top-in">
                 <div class="span_2_of_a1 simpleCart_shelfItem">
                     <h3>@Html.Raw(Model.Item.Name)</h3>
-                    <div class="block" style="float:left">
+                    <div class="block">
                         <div class="starbox small ghosting"> </div>
                     </div>
-                    <p class="in-para">
-                        Số lượt xem: @Html.Raw(Model.Item.View)
-                    </p>
+                    <div class="view-comment">
+                        <p class="in-para">
+                            <i class='fa fa-eye'></i> Số lượt xem: @Html.Raw(Model.Item.View) ||  <i class='fa fa-comment'></i> Số lượt bình luận: @Html.Raw(Model._countComment)
+                        </p>
+                    </div>
                     <div class="mid-2">
-                        <p><label style="font-style:italic">@CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363;</label><em class="item_price" style="color:red; font-size: 20px">@CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363;</em></p>
+                        <p><label>@CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363;</label><em class="item_price">@CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363;</em></p>
                         <br />
 
                         <div class="clearfix"></div>
@@ -149,14 +149,14 @@
             <div class="clearfix"> </div>
             <!---->
             <div class="tab-head">
-                <nav class="nav-sidebar">
+                <nav class="nav-sidebar col-md-2">
                     <ul class="nav tabs">
                         <li class="active"><a href="#tab1" data-toggle="tab">Thông số cấu hình</a></li>
                         <li class=""><a href="#tab2" data-toggle="tab">Mô tả sản phẩm</a></li>
                         <li class=""><a href="#tab3" data-toggle="tab">Bình luận, đánh giá</a></li>
                     </ul>
                 </nav>
-                <div class="tab-content one">
+                <div class="tab-content one col-md-10">
 
                     <div class="tab-pane text-style" id="tab2">
 
@@ -192,23 +192,63 @@
                         </div>
 
                     </div>
-                    <div class="tab-pane text-style" id="tab3">
 
+                   
+                    <div class="tab-pane text-style" id="tab3">
                         <div class="facts">
+                            <div class="count-comment">@Html.Raw(Model._countComment) Bình luận</div>
+                            <br /><br />
+
+                            @*<img class="avatar" src="@Url.Content("~/images/shared/avatar/"+ cus.Avatar)">  cus.CustomerName*@
+
+                            <!--comment-box-->
+                            <div class="evaluation-star">
+                                <div class="label-evaluation">
+                                    <p>Đánh giá của bạn về sản phẩm này: &nbsp;</p>
+                                </div>  
+                                
+                                <div class="block">
+                                    <div class="starbox small ghosting"> </div>
+                                </div>
+                            </div>
+                            <div class="label-comment">
+                                <p>Nhận xét:</p>
+                            </div>
+                            <div class="comment-box">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="widget-area no-padding blank">
+                                            <div class="status-upload">
+                                                <form>
+                                                    <textarea placeholder="What are you doing right now?"></textarea>
+                                                    <ul>
+                                                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
+                                                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
+                                                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
+                                                        <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
+                                                    </ul>
+                                                    <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Send</button>
+                                                </form>
+                                            </div><!-- Status Upload  -->
+                                        </div><!-- Widget Area -->
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--//comment-box-->
                             <ul>
-                                <li>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
-                                </li>
-                                <li>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
-                                </li>
-                                <li>
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Sản phẩm tuyệt vời
-                                </li>
+                                @foreach (var item in Model.CustomerCommentViewModel)
+                                {
+
+                                    <li class="customer-comment">                                      
+                                        <img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName
+                                        <p class="in-para">@item.Content)</p>
+                                    </li>
+                                }
                             </ul>
                         </div>
-
                     </div>
+                    <!--//Comment-->
 
                 </div>
                 <div class="clearfix"></div>
@@ -217,7 +257,7 @@
         </div>
         <!----->
 
-        <div class="col-md-3 product-bottom product-at">
+        <div class="col-md-2 product-bottom product-at">
             <!--categories-->
             <div class=" rsidebar span_1_of_left">
                 <h4 class="cate">Categories</h4>
@@ -380,3 +420,4 @@
 <!-- slide -->
 @*<script src="~/temp/js/bootstrap.min.js"></script>*@
 <script src="~/js/client/home/simpleCart.min.js"></script>
+<script src="~/js/client/product/detail-script.js"></script>

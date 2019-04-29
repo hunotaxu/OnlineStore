@@ -10,6 +10,9 @@ namespace OnlineStore.Models.ViewModels
         public string Content;
         public int ItemId;
         public int Evaluation;
-        public DateTime Time;
+        public DateTime DateCreated;
+        public DateTime DateModified;
+        public string CustomerAvatar;
+        
     }
 }

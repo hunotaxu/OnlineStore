@@ -1,12 +1,8 @@
-﻿body {
-}
-
-.input-group {
+﻿.input-group {
     margin-top: 15px;
     width: 80%;
     align-content: center;
 }
-
     /*.input-group.fix {
         left: 0;
         max-width: 100%;

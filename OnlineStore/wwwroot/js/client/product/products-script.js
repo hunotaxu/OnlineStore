@@ -62,3 +62,9 @@ function sortProduct() {
         console.log(result);
     });
 }
+
+/*comment-box*/
+$(document).ready(function () {
+    $("[data-toggle=tooltip]").tooltip();
+});
+/*comment-box*/

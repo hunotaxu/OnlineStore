@@ -1,0 +1,15 @@
+﻿@*@using DAL.Data.Entities
+@using DAL.Models
+@model IEnumerable<DAL.Data.Entities.Comment>
+
+<div class="facts">
+    <ul>
+        @foreach (Comment item in Model)
+        {
+            <li class="dropdown-content-single">
+                <br />
+                <p class="in-para">@item.Content)</p>
+            </li>
+        }
+    </ul>
+</div>*@

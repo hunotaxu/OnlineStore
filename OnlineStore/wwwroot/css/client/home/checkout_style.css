@@ -5,7 +5,7 @@
 .products {
     list-style: none;
     float: left;
-    display: inline-block;
+    /*display: inline-block;*/
 }
 
 .product {

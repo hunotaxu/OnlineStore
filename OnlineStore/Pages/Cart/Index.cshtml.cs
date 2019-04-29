@@ -52,9 +52,6 @@ namespace OnlineStore.Pages.Cart
             return Page();
         }
 
-        //public IActionResult OnPost()
-        //{
-
-        //}
+        
     }
 }
