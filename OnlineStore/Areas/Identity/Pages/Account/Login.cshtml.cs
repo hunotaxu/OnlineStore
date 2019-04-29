@@ -11,8 +11,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using OnlineStore.Extensions;
-using Utilities.Commons;
 
 namespace OnlineStore.Areas.Identity.Pages.Account
 {
@@ -97,7 +95,6 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             //var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                HttpContext.Session.Set(CommonConstants.UserSession, user);
                 _logger.LogInformation("User logged in.");
                 if (_userRepository.IsAdmin(user))
                 {

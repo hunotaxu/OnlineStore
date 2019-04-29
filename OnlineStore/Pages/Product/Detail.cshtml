@@ -5,8 +5,10 @@
 @using Microsoft.AspNetCore.Html
 @using Utilities.Commons
 @using Microsoft.AspNetCore.Http.Extensions
+@using Microsoft.AspNetCore.Identity
 @model OnlineStore.Pages.Product.DetailModel
 @using OnlineStore.Extensions
+@inject UserManager<ApplicationUser> UserManager
 
 @{
     ViewData["Title"] = "Detail";
@@ -19,7 +21,7 @@
     {
         numberOfComments = ViewBag.thongTinNguoiDung.Count;
     }
-    var cus = HttpContext.Session.Get<ApplicationUser>("UserSession");
+    var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
 
 

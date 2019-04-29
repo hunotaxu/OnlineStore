@@ -73,7 +73,6 @@ namespace OnlineStore.ViewComponents
         public Cart GetCart(Guid customerId)
         {
             var cart = _cartRepository.GetCartByCustomerId(customerId);
-            //HttpContext.Session.Set("Cart", cart);
             return cart;
         }
     }
