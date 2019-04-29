@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using DAL.Data.Entities;
 using DAL.Data.Enums;
-using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Extensions;
 using OnlineStore.Models.ViewModels;
@@ -18,16 +18,18 @@ namespace OnlineStore.Pages.Order
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
         private ILineItemRepository _lineItemRepository;
 
         public IList<CustomerCartViewModel> CustomerCartViewModel { get; set; }
         public decimal ShippingFee { get; set; }
         public int AddressId { get; set; }
 
-        public PaymentModel(IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, ILineItemRepository lineItemRepository)
+        public PaymentModel(UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, ILineItemRepository lineItemRepository)
         {
             _cartDetailRepository = cartDetailRepository;
             _orderRepository = orderRepository;
+            _userManager = userManager;
             _itemRepository = itemRepository;
             _cartRepository = cartRepository;
             _lineItemRepository = lineItemRepository;
@@ -36,7 +38,7 @@ namespace OnlineStore.Pages.Order
 
         public IActionResult OnGet(decimal shippingFee, int addressId)
         {
-            ApplicationUser cus = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
+            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
             if (cus == null)
             {
                 return RedirectToPage("/Home/Index");

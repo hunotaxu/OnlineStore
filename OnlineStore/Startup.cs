@@ -40,6 +40,8 @@ namespace OnlineStore
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(69);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
             services.AddMemoryCache();
             // using Microsoft.AspNetCore.Identity.UI.Services;
