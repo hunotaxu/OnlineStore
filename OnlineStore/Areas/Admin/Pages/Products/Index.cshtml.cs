@@ -24,7 +24,7 @@ namespace OnlineStore.Areas.Admin.Pages.Products
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
-                cfg.CreateMap<Category, CategoryViewModel>();
+                cfg.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
             });
         }
 
