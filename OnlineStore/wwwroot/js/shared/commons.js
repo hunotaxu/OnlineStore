@@ -127,11 +127,11 @@
     unflattern: function (arr) {
         var map = {};
         var roots = [];
-        for (var i = 0; i < arr.length; i += 1) {
+        for (var i = 0; i < arr.length; i++) {
             var node = arr[i];
             node.children = [];
             map[node.id] = i; // use map to look-up the parents
-            if (node.parentId !== null) {
+            if (node.parentId !== null && node.parentId !== undefined) {
                 arr[map[node.parentId]].children.push(node);
             } else {
                 roots.push(node);

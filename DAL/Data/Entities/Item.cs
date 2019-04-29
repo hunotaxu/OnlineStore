@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
-using DAL.Data.Enums;
 
 namespace DAL.Data.Entities
 {
