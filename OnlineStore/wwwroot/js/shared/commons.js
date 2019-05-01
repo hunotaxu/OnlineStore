@@ -123,24 +123,37 @@
         return a.join('.');
     },
 
-    //
     unflattern: function (arr) {
         var map = {};
-        var roots = [];
-        for (var i = 0; i < arr.length; i++) {
-            var node = arr[i];
-            node.children = [];
+        var roots = arr;
+        for (var i = 0; i < roots.length; i++) {
+            var node = roots[i];
             map[node.id] = i; // use map to look-up the parents
             if (node.parentId !== null && node.parentId !== undefined) {
-                arr[map[node.parentId]].children.push(node);
-            } else {
-                roots.push(node);
-            }
+                if (map[node.parentId] !== null && map[node.parentId] !== undefined) {
+                    if (roots[map[node.parentId]].children === undefined) {
+                        roots[map[node.parentId]].children = [];
+                    }
+                    roots[map[node.parentId]].children.push(node);
+                    roots.splice(i, 1);
+                    i--;
+                } else {
+                    for (let j = roots.length - 1; j > i; j--) {
+                        if (roots[j].id === node.parentId) {
+                            if (roots[j].children === undefined) {
+                                roots[j].children = [];
+                            }
+                            roots[j].children.push(node);
+                            roots.splice(i, 1);
+                        }
+                    }
+                    i--;
+                }
+            } 
         }
         return roots;
     }
 };
-
 $(document).ajaxSend(function (e, xhr, options) {
     if (options.type.toUpperCase() === "POST" || options.type.toUpperCase() === "PUT") {
         var token = $('form').find("input[name='__RequestVerificationToken']").val();
