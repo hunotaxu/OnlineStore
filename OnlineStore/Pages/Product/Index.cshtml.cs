@@ -22,6 +22,7 @@ namespace OnlineStore.Pages.Product
         public IEnumerable<Item> phones { get; set; }
         public IEnumerable<Item> laptops { get; set; }
         public IEnumerable<Item> tablets { get; set; }
+        public IEnumerable<Item> accessories { get; set; }
 
         public int CurrentPage { get; set; }
         public SortType CurrentSort { get; set; }
@@ -42,6 +43,7 @@ namespace OnlineStore.Pages.Product
             laptops = _itemRepository.GetByCategory(2);
             
             tablets = _itemRepository.GetByCategory(3);
+            accessories = _itemRepository.GetByCategory(4);
 
             List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString)))
                 .OrderByDescending(s => s.View).ToList();
