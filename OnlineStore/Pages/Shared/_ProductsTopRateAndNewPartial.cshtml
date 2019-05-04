@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<DAL.Data.Entities.Item>
 @using Utilities.Commons
 
-@foreach (var item in Model.Take(2))
+@foreach (var item in Model.Take(9))
 {
     <li class="item">
         <div class="item-inner">
-            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img class="hover-img" alt="Hình ảnh không thể hiển thị" src="~/images/client/ProductImages/@item.Image"> </a> </div>
+            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="~/Product/Detail1?id=@item.Id"> <img class="hover-img" alt="Hình ảnh không thể hiển thị" src="~/images/client/ProductImages/@item.Image"> </a> </div>
             <div class="item-info">
                 <div class="info-inner">
-                    <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
+                    <div class="item-title"> <a title=@item.Name href="~/Product/Detail1?id=@item.Id">@item.Name </a> </div>
 
                     <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                     <div class="item-price">
@@ -18,8 +18,8 @@
                         <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
                     </div>
                     <div class="pr-button-hover">
-                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
+                        <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart-o"></i> </a> </div>
+                        <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-link"></i> </a> </div>
                     </div>
                 </div>
             </div>

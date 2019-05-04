@@ -529,7 +529,7 @@ label {
 
 .main-container {
     min-height: 350px;
-    padding: 25px 0 0px;
+    padding: 5px 0 0px;
 }
 /******************************************
 4. Header
@@ -5175,7 +5175,7 @@ a.ads1 {
 ******************************************/
 
 .toolbar {
-    margin: 10px 0px 0px;
+    margin: 1px 0px 0px;
     overflow: hidden;
     border-top: 1px #e8e8e8 solid
 }
@@ -7579,7 +7579,7 @@ p.note {
 
     .page-content .page-title,
     .page-title {
-        margin: 0 0 5px;
+        margin: 0 0 1px;
         padding: 0 0 8px;
         border-bottom: 1px solid #e5e5e5;
         position: relative;
@@ -9607,3 +9607,19 @@ a.jtv-m-logo-img {
 .manufacturers-box {
     margin-top: 15px;
 }
+
+
+.textarea-comment{
+    width: 100%;
+}
+.searchstringtitile {
+    font-size: 14px;
+    color: #777777;
+    margin-top: 10px;
+    font-weight: 300;
+    line-height: 30px;
+}
+/*.searchstringtitile .container{
+    display:inline;
+
+}*/

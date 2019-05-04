@@ -3,27 +3,64 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
+<link href="~/css/loginpartial.css" rel="stylesheet" />
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <div class="dropdown nav navbar-nav navbar-right">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown-user">
-            Tài khoản @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Name
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a></li>
-            <li>
-                <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new {area = ""})" title="Logout">Đăng xuất</a>
-            </li>
-        </ul>
-    </div>
+
+    @*<li>
+
+            <img class="avartar-customer" src="@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Avatar">
+        </li>*@
+    <li>
+        <div class="dropdown">
+
+            <a class="current-open"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                <span>
+                    <i class="fa fa-angle-down"></i>
+                    @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Name
+                    &nbsp;<img class="my-avatar" src="@Url.Content("~/images/shared/avatar/"+@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Avatar)">
+                </span> 
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Account</a></li>
+                <li><a href="#">Wishlist</a></li>
+                <li><a href="#">Order Tracking</a></li>
+                <li><a href="#">Giới thiệu</a></li>
+                <li class="divider"></li>
+                <li>
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a>
+                </li>
+                <li>
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("~/Pages/Home/Index1", new {area = ""})" title="Logout">Đăng xuất</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+
+    @*<div class="dropdown nav navbar-nav navbar-right">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown-user">
+                Tài khoản @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Name
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a></li>
+                <li>
+                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new {area = ""})" title="Logout">Đăng xuất</a>
+                </li>
+            </ul>
+        </div>*@
 }
 else
 {
-    <div class="header-login">
-        <ul class="col-sm-2 col-md-offset-2 navbar-right">
-            <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
-            <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
-        </ul>
-    </div>
+    @*<div class="header-login">
+            <ul class="col-sm-2 col-md-offset-2 navbar-right">
+                <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
+                <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+            </ul>
+        </div>*@
+    <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
+    <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
 }

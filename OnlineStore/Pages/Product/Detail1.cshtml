@@ -71,7 +71,16 @@
                         <div class="ratings">
                             <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                             <p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>
-                            <p class="availability in-stock pull-right"><span>Còn hàng</span></p>
+                            @if (Model.Item.Inventory == 0)
+                            {
+                                <p class="availability out-of-stock pull-right"><span>Hết hàng</span></p>
+
+                            }
+                            else
+                            {
+                                <p class="availability in-stock pull-right"><span>Còn hàng</span></p>
+
+                            }
                         </div>
                         <div class="short-description">
                             <h2>Quick Overview</h2>
@@ -191,18 +200,26 @@
                                         <!--//Đánh giá của khách hàng-->
 
                                         <ul>
-                                            @foreach (var item in Model.CustomerCommentViewModel)
+                                            @if (Model.CustomerCommentViewModel != null)
                                             {
+                                                @foreach (var item in Model.CustomerCommentViewModel)
+                                                {
 
-                                                <li class="customer-comment">
-                                                    <img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName
-                                                    <p class="in-para">@item.Content)</p>
-                                                </li>
+                                                    <li class="customer-comment">
+                                                        <img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName
+                                                        <p class="in-para">@item.Content)</p>
+                                                    </li>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw("Hãy trở thành người đầu tiên đánh giá về sản phẩm này. <br />")
                                             }
                                         </ul>
                                         <!--Đánh giá của bạn-->
+                                        <br />
                                         <h2>Viết đánh giá của bạn về sản phẩm</h2>
-                                        <form>
+                                        <form>                                           
                                             <div class="table-responsive reviews-table">
                                                 <table>
                                                     <tbody>
@@ -215,20 +232,22 @@
                                                             <th>5 sao</th>
                                                         </tr>
                                                         <tr>
-                                                            <td>Hài lòng</td>
-                                                            <td><input type="radio"></td>
-                                                            <td><input type="radio"></td>
-                                                            <td><input type="radio"></td>
-                                                            <td><input type="radio"></td>
-                                                            <td><input type="radio"></td>
+
+                                                            <td>Mức độ hài lòng</td>
+                                                            <td><input type="radio" value="1"></td>
+                                                            <td><input type="radio" value="2"></td>
+                                                            <td><input type="radio" value="3"></td>
+                                                            <td><input type="radio" value="4"></td>
+                                                            <td><input type="radio" value="5"></td>
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div class="form-area">
                                                 <div class="form-element">
-                                                    <label>Review <em>*</em></label>
-                                                    <textarea></textarea>
+                                                    <label><em>*</em></label>
+                                                    <textarea class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
                                                 </div>
                                                 <div class="buttons-set">
                                                     <button class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>

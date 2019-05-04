@@ -1,8 +1,41 @@
-﻿
-<link href="~/css/client/home/search_style.css" rel="stylesheet" />
-<div class="input-group">
-    <form asp-page="/product/index" method="get">
-        <input type="text" name="searchstring" class="form-control" placeholder="Nhập tên sản phẩm">
-    </form>
+﻿@using DAL.Data.Entities
+@using DAL.Models
+@model IEnumerable<DAL.Data.Entities.Category>
+
+<!-- Search -->
+
+<div class="top-search">
+    <div id="search">
+        <form asp-page="/product/index1" method="get">
+            <div class="input-group">
+                <select class="cate-dropdown hidden-xs hidden-sm" name="category_id">
+                    <option>Tất cả sản phẩm</option>
+
+                    @*@foreach (Category item in Model)
+                    {
+                        <option>
+                            @item.Name
+                        </option>
+                    }*@
+
+                    <option></option>
+                    <option>women</option>
+                    <option>&nbsp;&nbsp;&nbsp;Chair </option>
+                    <option>&nbsp;&nbsp;&nbsp;Decoration</option>
+                    <option>&nbsp;&nbsp;&nbsp;Lamp</option>
+                    <option>&nbsp;&nbsp;&nbsp;Handbags </option>
+                    <option>&nbsp;&nbsp;&nbsp;Sofas </option>
+                    <option>&nbsp;&nbsp;&nbsp;Essential </option>
+                    <option>Men</option>
+                    <option>Electronics</option>
+                    <option>&nbsp;&nbsp;&nbsp;Mobiles </option>
+                    <option>&nbsp;&nbsp;&nbsp;Music &amp; Audio </option>
+                </select>
+                <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?..." name="searchstring">
+                <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </form>
+    </div>
 </div>
-<script src="~/js/client/home/search-script.js"></script>
+
+<!-- End Search -->
