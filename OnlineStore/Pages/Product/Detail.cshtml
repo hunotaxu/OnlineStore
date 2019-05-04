@@ -205,8 +205,7 @@
                             <div class="evaluation-star">
                                 <div class="label-evaluation">
                                     <p>Đánh giá của bạn về sản phẩm này: &nbsp;</p>
-                                </div>  
-                                
+                                </div>                                
                                 <div class="block">
                                     <div class="starbox small ghosting"> </div>
                                 </div>
@@ -227,6 +226,9 @@
                                                         <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
                                                         <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
                                                     </ul>
+                                                    @Html.Raw(cus.Name)
+                                                    <img class="my-avatar" src="@Url.Content("~/images/shared/avatar/"+cus.Avatar)">
+
                                                     <button type="submit" class="btn btn-success green"><i class="fa fa-share"></i> Send</button>
                                                 </form>
                                             </div><!-- Status Upload  -->

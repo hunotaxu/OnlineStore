@@ -2,54 +2,48 @@
 @using Utilities.Commons
 @model PaginatedList<DAL.Data.Entities.Item>
 
-@foreach (var item in Model.Take(9))
+@foreach (var item in Model.Take(16))
 {
-    <div class="col-md-3 item-grid1 simpleCart_shelfItem">
-        <div class=" mid-pop">
-            <div class="pro-img">
-                <a href="~/Product/Detail?id=@item.Id">
-                    <img src="~/images/client/ProductImages/@item.Image" class="img-responsive" alt="Hình ảnh không thể hiển thị">
-                </a>
-                @*<div class="zoom-icon ">
-                        <a class="picture" href="~/images/client/ProductImages/@item.Image" rel="title" class="b-link-stripe b-animate-go  thickbox"><i class="glyphicon glyphicon-search icon "></i></a>
-                        <a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})"><i class="glyphicon glyphicon-menu-right icon"></i></a>
-                    </div>*@
-            </div>
-            <div class="mid-1">
-                <div class="women" style="height:60px">
-                    <div class="women-top">
-                        <span>@item.BrandName</span>
-                        <br />
-                        <a href="~/Product/Detail?id=@item.Id">@item.Name</a>
-                        @*<a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})"><h6 style="font-size:13px">@item.Name</h6></a>*@
-                        @*<a href="@Url.RouteUrl("~/Product/_Detail", new { @id = item.Id, @tensp=item.Name})" style="font-size:13px">@item.Name</a>*@
-                        @*<a asp-page="~/Pages/Product/Detail?id=12" asp-route-id="@item.Id" style="font-size:13px">@item.Name</a>*@
-                    </div>
-
-
-                    @*<div class="img item_add">
-                            <a href="#"><img src="~/home-site/images/ca.png" alt=""></a>
-                        </div>*@
-                    <div class="clearfix"></div>
+<li class="item col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
+    <div class="product-item">
+        <div class="item-inner">
+            <div class="product-thumbnail">
+                <div class="pr-img-area">
+                        <a title=@item.Name href="~/Product/Detail1?id=@item.Id">
+                            <figure> <img class="first-img" src="~/images/client/ProductImages/@item.Image" alt="Hình ảnh không thể hiển thị"> <img class="hover-img" src="~/images/client/ProductImages/@item.Image" alt="Hình ảnh không thể hiển thị"></figure>
+                        </a>
                 </div>
-                <div class="mid-2">
-                    <p>
-                        <label style="font-style:italic">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</label>
-                        <em class="item_price" style="color:red">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</em>
-                    </p>
-                    <div class="block">
-                        <div class="starbox small ghosting"> </div>
+                <div class="pr-info-area">
+                    <div class="pr-button">
+                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
+                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
+                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
                     </div>
-                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="item-info">
+                <div class="info-inner">
+                    <div class="item-title"> <a title=@item.Name href="~/Product/Detail1?id=@item.Id">@item.Name </a> </div>
+                    <div class="item-content">
+                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
+                        <div class="item-price">
+                            <div class="price-box">
+                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363; </span> </p>
+                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> @CommonFunctions.FormatNumber(item.Price * 150/100, 0)&#8363;</span> </p>
+                            </div>
+                        </div>
+                        <div class="pro-action">
+                            <button type="button" class="add-to-cart"><span> Thêm vào giỏ</span> </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</li>
 }
-
-
 <div class="clearfix"></div>
-<nav class="in">
+@*<nav class="in">
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -77,4 +71,4 @@
             <a id="btnNext" class="btn btn-default @nextDisabled">»</a>
         </li>
     </ul>
-</nav>
+</nav>*@
