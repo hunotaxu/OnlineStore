@@ -1,3 +1,7 @@
 .parsley-errors-list {
     margin: 2px 0 20px;
 }
+
+.context-menu-category {
+    width: 120px;
+}

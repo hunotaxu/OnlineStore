@@ -16,10 +16,10 @@
             // arrow size in pixels
             arrowSize: 5,
             // position defines the notification position though uses the defaults below
-            position: '...',
+            position: 'top center',
             // default positions
             elementPosition: 'top right',
-            globalPosition: 'top right',
+            globalPosition: 'top center',
             // default style
             style: 'bootstrap',
             // default class (string or [string])
@@ -125,32 +125,29 @@
 
     unflattern: function (arr) {
         var map = {};
-        var roots = arr;
-        for (var i = 0; i < roots.length; i++) {
-            var node = roots[i];
+        var roots = [];
+        for (var i = 0; i < arr.length; i += 1) {
+            var node = arr[i];
+            if (node.children === undefined) {
+                node.children = [];
+            };
             map[node.id] = i; // use map to look-up the parents
-            if (node.parentId !== null && node.parentId !== undefined) {
-                if (map[node.parentId] !== null && map[node.parentId] !== undefined) {
-                    if (roots[map[node.parentId]].children === undefined) {
-                        roots[map[node.parentId]].children = [];
-                    }
-                    roots[map[node.parentId]].children.push(node);
-                    roots.splice(i, 1);
-                    i--;
-                } else {
-                    for (let j = roots.length - 1; j > i; j--) {
-                        if (roots[j].id === node.parentId) {
-                            if (roots[j].children === undefined) {
-                                roots[j].children = [];
-                            }
-                            roots[j].children.push(node);
-                            roots.splice(i, 1);
+            if (node.parentId !== null) {
+                if (map[node.parentId] === undefined) {
+                    for (var j = i + 1; j < arr.length; j++) {
+                        var nodeJ = arr[j];
+                        nodeJ.children = [];
+                        if (nodeJ.id === node.parentId) {
+                            arr[j].children.push(node);
                         }
                     }
-                    i--;
+                } else {
+                    arr[map[node.parentId]].children.push(node);
                 }
-            } 
-        }
+            } else {
+                roots.push(node);
+            }
+        } 
         return roots;
     }
 };

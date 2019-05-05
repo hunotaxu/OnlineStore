@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
+using DAL.Data.Entities;
 
 namespace OnlineStore.Areas.Admin.Pages.Category
 {
@@ -23,6 +26,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             _mapperConfiguration = new MapperConfiguration(config =>
             {
                 config.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
+                config.CreateMap<CategoryViewModel, DAL.Data.Entities.Category>();
             });
         }
 
@@ -31,6 +35,44 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             var categories = _categoryRepository.GetAll();
             var model = _mapperConfiguration.CreateMapper().Map<IEnumerable<CategoryViewModel>>(categories);
             return new OkObjectResult(model);
+        }
+
+        public IActionResult OnGetById(int id)
+        {
+            var model = _mapperConfiguration.CreateMapper().Map<CategoryViewModel>(_categoryRepository.Find(id));
+            return new OkObjectResult(model);
+        }
+
+        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Category category)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(allErrors);
+            }
+
+            if (category.Id == 0)
+            {
+                _categoryRepository.Add(category);
+            }
+            else
+            {
+                _categoryRepository.Update(category);
+            }
+
+            return new OkObjectResult(category);
+        }
+
+        public IActionResult OnPostDeleteCategory(int categoryId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
+
+            var category = _categoryRepository.Find(categoryId);
+            _categoryRepository.Delete(category);
+            return new OkResult();
         }
 
         public IActionResult OnPostReOrder([FromBody]InputModel input)

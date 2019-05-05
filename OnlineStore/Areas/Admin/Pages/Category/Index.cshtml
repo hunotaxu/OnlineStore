@@ -14,7 +14,7 @@
     <!--Đối với các file có khả năng thay đổi, nên thêm vào asp-append-version=true để bypass cache các file này-->
     <script src="~/js/admin/category.js" asp-append-version="true"></script>
     <script>
-        category.loadData();
+        category.init();
     </script>
 }
 
@@ -36,8 +36,13 @@
             <div class="x_panel">
                 <div class="x_content">
                     <ul id="treeProductCategory"></ul>
+                    <div id="contextMenu" class="easyui-menu context-menu-category">
+                        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>
+                        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
+<partial name="_CategoryManagementModal" />
