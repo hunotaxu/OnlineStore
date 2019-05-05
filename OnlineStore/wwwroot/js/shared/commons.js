@@ -41,11 +41,11 @@
             message: message,
             buttons: {
                 confirm: {
-                    label: 'Confirm',
+                    label: 'Xác nhận',
                     className: 'btn-success'
                 },
                 cancel: {
-                    label: 'Cancel',
+                    label: 'Hủy bỏ',
                     className: 'btn-danger'
                 }
             },
