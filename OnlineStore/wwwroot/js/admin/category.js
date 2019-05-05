@@ -191,7 +191,9 @@
                     });
                 var arr = commons.unflattern(data);
                 $('#ddlCategoryIdM').combotree({
-                    data: arr
+                    data: arr,
+                    'panelWidth': 'auto',
+                    'panelHeight': 'auto'
                 });
 
                 // trường hợp edit
