@@ -20,6 +20,8 @@ namespace DAL.Data.Entities
 
         public int? SortOrder { set; get; }
 
+        public int? ParentId { set; get; }
+
         public byte? Status { get; set; }
 
         public DateTime? DateCreated { get; set; }

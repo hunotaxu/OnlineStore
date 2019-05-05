@@ -16,10 +16,10 @@
             // arrow size in pixels
             arrowSize: 5,
             // position defines the notification position though uses the defaults below
-            position: '...',
+            position: 'top center',
             // default positions
             elementPosition: 'top right',
-            globalPosition: 'top right',
+            globalPosition: 'top center',
             // default style
             style: 'bootstrap',
             // default class (string or [string])
@@ -123,24 +123,34 @@
         return a.join('.');
     },
 
-    //
     unflattern: function (arr) {
         var map = {};
         var roots = [];
-        for (var i = 0; i < arr.length; i++) {
+        for (var i = 0; i < arr.length; i += 1) {
             var node = arr[i];
-            node.children = [];
+            if (node.children === undefined) {
+                node.children = [];
+            };
             map[node.id] = i; // use map to look-up the parents
-            if (node.parentId !== null && node.parentId !== undefined) {
-                arr[map[node.parentId]].children.push(node);
+            if (node.parentId !== null) {
+                if (map[node.parentId] === undefined) {
+                    for (var j = i + 1; j < arr.length; j++) {
+                        var nodeJ = arr[j];
+                        nodeJ.children = [];
+                        if (nodeJ.id === node.parentId) {
+                            arr[j].children.push(node);
+                        }
+                    }
+                } else {
+                    arr[map[node.parentId]].children.push(node);
+                }
             } else {
                 roots.push(node);
             }
-        }
+        } 
         return roots;
     }
 };
-
 $(document).ajaxSend(function (e, xhr, options) {
     if (options.type.toUpperCase() === "POST" || options.type.toUpperCase() === "PUT") {
         var token = $('form').find("input[name='__RequestVerificationToken']").val();

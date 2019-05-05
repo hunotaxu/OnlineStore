@@ -14,6 +14,8 @@ namespace OnlineStore.Models.ViewModels.Item
 
         public int? SortOrder { set; get; }
 
+        public int? ParentId { set; get; }
+
         public DateTime DateCreated { set; get; }
 
         public DateTime DateModified { set; get; }
