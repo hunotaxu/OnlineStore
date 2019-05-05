@@ -96,16 +96,14 @@
             ss = `0${ss}`;
         return `${day}/${month}/${year} ${hh}:${mm}:${ss}`;
     },
+
     startLoading: function () {
-        if ($('.dv-loading').length > 0) {
-            $('.dv-loading').addClass('hide');
-        }
+        $(".dv-bg-loading").show();
     },
     stopLoading: function () {
-        if ($('.dv-loading').length < 0) {
-            $('.dv-loading').removeClass('hide');
-        }
+        $('.dv-bg-loading').hide();
     },
+
     getStatus: function (status) {
         if (status === 1)
             return '<span class="badge bg-green">Kích hoạt</span>';
@@ -147,13 +145,15 @@
             } else {
                 roots.push(node);
             }
-        } 
+        }
         return roots;
     }
 };
+
+
 $(document).ajaxSend(function (e, xhr, options) {
     if (options.type.toUpperCase() === "POST" || options.type.toUpperCase() === "PUT") {
-        var token = $('form').find("input[name='__RequestVerificationToken']").val();
-        xhr.setRequestHeader("RequestVerificationToken", token);
+        xhr.setRequestHeader("XSRF-TOKEN",
+            $('input:hidden[name="__RequestVerificationToken"]').val());
     }
 });

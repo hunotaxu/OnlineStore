@@ -41,7 +41,7 @@ namespace DAL.Repositories.Base
         public T Find<TIncludeField>(Expression<Func<T, bool>> where,Expression<Func<T,TIncludeField>> include ) 
             => Table.Where(where).Include(include).FirstOrDefault();
 
-        public virtual IEnumerable<T> GetAll() => Table;
+        public virtual IEnumerable<T> GetAll() => Table.Where(x => x.IsDeleted == false);
         public IEnumerable<T> GetAll<TIncludeField>(Expression<Func<T, ICollection<TIncludeField>>> include)
             => Table.Include(include);
         public IEnumerable<T> GetAll<TIncludeField>(Expression<Func<T, TIncludeField>> include)

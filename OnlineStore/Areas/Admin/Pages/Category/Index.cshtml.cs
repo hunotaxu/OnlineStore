@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
-using DAL.Data.Entities;
+using System;
 
 namespace OnlineStore.Areas.Admin.Pages.Category
 {
@@ -43,7 +43,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             return new OkObjectResult(model);
         }
 
-        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Category category)
+        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Category model)
         {
             if (!ModelState.IsValid)
             {
@@ -51,26 +51,26 @@ namespace OnlineStore.Areas.Admin.Pages.Category
                 return new BadRequestObjectResult(allErrors);
             }
 
-            if (category.Id == 0)
+            if (model.Id == 0)
             {
-                _categoryRepository.Add(category);
+                model.DateCreated = DateTime.Now;
+                model.DateModified = DateTime.Now;
+                _categoryRepository.Add(model);
+                return new OkObjectResult(model);
             }
-            else
-            {
-                _categoryRepository.Update(category);
-            }
+
+            var category = _categoryRepository.Find(model.Id);
+            category.Name = model.Name;
+            category.ParentId = model.ParentId;
+            category.DateModified = DateTime.Now;
+            _categoryRepository.Update(category);
 
             return new OkObjectResult(category);
         }
 
-        public IActionResult OnPostDeleteCategory(int categoryId)
+        public IActionResult OnGetDelete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return new BadRequestResult();
-            }
-
-            var category = _categoryRepository.Find(categoryId);
+            var category = _categoryRepository.Find(id);
             _categoryRepository.Delete(category);
             return new OkResult();
         }
