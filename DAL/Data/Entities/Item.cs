@@ -26,6 +26,10 @@ namespace DAL.Data.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Giá khuyến mãi")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal? PromotionPrice { get; set; }
+
         [Display(Name = "Mô tả")]
         [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }
@@ -64,5 +68,6 @@ namespace DAL.Data.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual ICollection<LineItem> LineItems { get; set; }
+        public virtual ICollection<ProductImages> ProductImages { get; set; }
     }
 }

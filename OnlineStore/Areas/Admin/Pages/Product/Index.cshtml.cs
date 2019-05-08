@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
 using Utilities.DTOs;
 
-namespace OnlineStore.Areas.Admin.Pages.Products
+namespace OnlineStore.Areas.Admin.Pages.Product
 {
     public class IndexModel : PageModel
     {
@@ -42,6 +45,12 @@ namespace OnlineStore.Areas.Admin.Pages.Products
             return new OkObjectResult(Items);
         }
 
+        public IActionResult OnGetById(int id)
+        {
+            var model = _mapperConfiguration.CreateMapper().Map<ItemViewModel>(_itemRepository.Find(id));
+            return new OkObjectResult(model);
+        }
+
         public IActionResult OnGetAllCategories()
         {
             var categories = _mapperConfiguration.CreateMapper()
@@ -59,6 +68,41 @@ namespace OnlineStore.Areas.Admin.Pages.Products
             var model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
             var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);
+        }
+
+        public IActionResult OnPostSaveEntity([FromBody] Item model)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(allErrors);
+            }
+
+            if (model.Id == 0)
+            {
+                model.DateCreated = DateTime.Now;
+                //model.DateModified = DateTime.Now;
+                _itemRepository.Add(model);
+                return new OkObjectResult(model);
+            }
+
+            var item = _itemRepository.Find(model.Id);
+            item.Name = model.Name;
+            item.CategoryId = model.CategoryId;
+            item.Description = model.Description;
+            item.Price = model.Price;
+            item.PromotionPrice = model.PromotionPrice;
+            item.DateModified = DateTime.Now;
+            _itemRepository.Update(item);
+
+            return new OkObjectResult(item);
+        }
+
+        public IActionResult OnGetDelete(int id)
+        {
+            var item = _itemRepository.Find(id);
+            _itemRepository.Delete(item);
+            return new OkResult();
         }
     }
 }

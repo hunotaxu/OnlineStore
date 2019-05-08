@@ -2,9 +2,11 @@
 
 namespace DAL.Data.Entities
 {
-    public class ImageProduct : EntityBase
+    public class ProductImages : EntityBase
     {
         public string Url { get; set; }
+
+        public string Caption { get; set; }
 
         public int ItemId { get; set; }
 
