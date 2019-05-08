@@ -190,7 +190,6 @@ var category = (function () {
                             // Update to database
                             $.ajax({
                                 type: 'POST',
-                                //traditional: true,
                                 contentType: 'application/json; charset=utf-8',
                                 url: "/Admin/Category/Index?handler=UpdateParentId",
                                 data: JSON.stringify({
@@ -200,7 +199,7 @@ var category = (function () {
                                 }),
                                 dataType: "json",
                                 success: function () {
-                                    commons.notify('Cập nhật thành công', 'success');
+                                    commons.notify('Thành công', 'success');
                                     loadData();
                                 },
                                 failure: function (res) {
@@ -216,7 +215,6 @@ var category = (function () {
                                         $('input:hidden[name="__RequestVerificationToken"]').val());
                                 },
                                 type: 'POST',
-                                //traditional: true,
                                 contentType: 'application/json; charset=utf-8',
                                 dataType: 'json',
                                 data: JSON.stringify({
@@ -224,7 +222,7 @@ var category = (function () {
                                     "targetId": targetNode.id
                                 }),
                                 success: function () {
-                                    commons.notify('Cập nhật thành công', 'success');
+                                    commons.notify('Thành công', 'success');
                                     loadData();
                                 },
                                 failure: function (res) {

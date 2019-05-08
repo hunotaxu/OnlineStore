@@ -54,7 +54,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             if (model.Id == 0)
             {
                 model.DateCreated = DateTime.Now;
-                model.DateModified = DateTime.Now;
+                //model.DateModified = DateTime.Now;
                 _categoryRepository.Add(model);
                 return new OkObjectResult(model);
             }

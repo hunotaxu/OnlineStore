@@ -27,6 +27,10 @@ namespace OnlineStore.Models.ViewModels.Item
         [DefaultValue(0)]
         public decimal Price { get; set; }
 
+        [Required]
+        [DefaultValue(0)]
+        public decimal PromotionPrice { get; set; }
+
         [StringLength(255)]
         public string Description { get; set; }
 
