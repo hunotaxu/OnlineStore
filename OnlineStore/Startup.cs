@@ -66,7 +66,8 @@ namespace OnlineStore
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                 }).
-                AddJsonOptions(options => {
+                AddJsonOptions(options =>
+                {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }); ;
 
@@ -155,7 +156,13 @@ namespace OnlineStore
             app.UseNodeModules(env.ContentRootPath);
             //app.UseCookiePolicy();
             app.UseSession();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "MyArea",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

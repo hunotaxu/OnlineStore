@@ -85,11 +85,11 @@ var itemPage = (function () {
                     data: data,
                     success: function (path) {
                         $('#txtImage').val(path);
-                        commons.notify('Upload image succesful!', 'success');
+                        commons.notify('Tải ảnh thành công!', 'success');
 
                     },
                     error: function () {
-                        commons.notify('There was error uploading files!', 'error');
+                        commons.notify('Đã có lỗi xãy ra', 'error');
                     }
                 });
             });
@@ -214,7 +214,7 @@ var itemPage = (function () {
             //var originalPrice = $('#txtOriginalPriceM').val();
             var promotionPrice = $('#txtPromotionPriceM').val();
 
-            //var image = $('#txtImageM').val();
+            var image = $('#txtImage').val();
 
             //var tags = $('#txtTagM').val();
             //var seoKeyword = $('#txtMetakeywordM').val();
@@ -234,7 +234,7 @@ var itemPage = (function () {
                     Id: id,
                     Name: name,
                     CategoryId: categoryId,
-                    //Image: '',
+                    Image: image,
                     Price: price,
                     //OriginalPrice: originalPrice,
                     PromotionPrice: promotionPrice,
@@ -293,7 +293,7 @@ var itemPage = (function () {
                 //$('#txtOriginalPriceM').val(data.OriginalPrice);
                 $('#txtPromotionPriceM').val(data.promotionPrice);
 
-                // $('#txtImageM').val(data.ThumbnailImage);
+                // $('#txtImage').val(data.ThumbnailImage);
 
                 //$('#txtTagM').val(data.Tags);
                 //$('#txtMetakeywordM').val(data.SeoKeywords);
@@ -363,7 +363,7 @@ var itemPage = (function () {
         //$('#txtOriginalPriceM').val('');
         $('#txtPromotionPriceM').val('0');
 
-        //$('#txtImageM').val('');
+        $('#txtImage').val('');
 
         //$('#txtTagM').val('');
         //$('#txtMetakeywordM').val('');
