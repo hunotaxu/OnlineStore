@@ -1,9 +1,10 @@
-﻿var itemPage = (function () {
+var itemPage = (function () {
     var init = function () {
         $(document).ready(function () {
             loadCategories();
             loadData();
             registerEvents();
+            registerControls();
             onSearchEvents();
         });
     };
@@ -32,7 +33,6 @@
                 rules: {
                     txtNameM: { required: true },
                     ddlCategoryIdM: { required: true },
-                    txtDescM: { required: true },
                     txtPriceM: {
                         required: true,
                         number: true
@@ -64,7 +64,6 @@
                 resetFormMaintainance();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
-
             });
 
             $('#btnSelectImg').on('click', function () {
@@ -104,7 +103,25 @@
             $('body').on('click', '.btn-delete', function (e) {
                 e.preventDefault();
                 var that = $(this).data('id');
-                deleteProduct(that);
+                commons.confirm('Bạn có chắc chắn muốn xóa?', function () {
+                    $.ajax({
+                        type: "GET",
+                        url: "/Admin/Product/Index?handler=Delete",
+                        data: { id: that },
+                        beforeSend: function () {
+                            commons.startLoading();
+                        },
+                        success: function (response) {
+                            commons.notify('Thành công', 'success');
+                            commons.stopLoading();
+                            loadData();
+                        },
+                        error: function (status) {
+                            commons.notify('Đã có lỗi xãy ra', 'error');
+                            commons.stopLoading();
+                        }
+                    });
+                });
             });
 
             $('#btnSave').on('click', function (e) {
@@ -164,7 +181,7 @@
     };
 
     function registerControls() {
-        CKEDITOR.replace('txtContent', {});
+        CKEDITOR.replace('txtDescM', {});
 
         //Fix: cannot click on element ck in modal
         $.fn.modal.Constructor.prototype.enforceFocus = function () {
@@ -190,7 +207,7 @@
             var name = $('#txtNameM').val();
             var categoryId = $('#ddlCategoryIdM').combotree('getValue');
 
-            var description = $('#txtDescM').val();
+            var description = CKEDITOR.instances.txtDescM.getData();
             //var unit = $('#txtUnitM').val();
 
             var price = $('#txtPriceM').val();
@@ -205,7 +222,7 @@
             //var seoPageTitle = $('#txtSeoPageTitleM').val();
             //var seoAlias = $('#txtSeoAliasM').val();
 
-            //var content = CKEDITOR.instances.txtContent.getData();
+            //var content = CKEDITOR.instances.txtDescM.getData();
             //var status = $('#ckStatusM').prop('checked') === true ? 1 : 0;
             //var hot = $('#ckHotM').prop('checked');
             //var showHome = $('#ckShowHomeM').prop('checked');
@@ -235,11 +252,10 @@
                 }),
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
-                beforeSend: function (xhr) {
+                beforeSend: function () {
                     commons.startLoading();
                 },
                 success: function (response) {
-                    debugger;
                     commons.notify('Thành công', 'success');
                     $('#modal-add-edit').modal('hide');
                     resetFormMaintainance();
@@ -247,36 +263,12 @@
                     loadData(true);
                 },
                 error: function (response) {
-                    debugger;
                     commons.notify('Đã có lỗi xãy ra', 'error');
                     commons.stopLoading();
                 }
             });
             return false;
         }
-    }
-
-    function deleteProduct(id) {
-        commons.confirm('Bạn có chắc chắn muốn xóa?', function () {
-            $.ajax({
-                type: "GET",
-                url: "/Admin/Product/Index?handler=Delete",
-                data: { id: id },
-                dataType: "json",
-                beforeSend: function () {
-                    commons.startLoading();
-                },
-                success: function (response) {
-                    commons.notify('Thành công', 'success');
-                    commons.stopLoading();
-                    loadData();
-                },
-                error: function (status) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
-                    commons.stopLoading();
-                }
-            });
-        });
     }
 
     function loadDetails(that) {
@@ -294,7 +286,7 @@
                 $('#txtNameM').val(data.name);
                 initTreeDropDownCategory(data.categoryId);
 
-                $('#txtDescM').val(data.description);
+                //$('#txtDescM').val(data.description);
                 //$('#txtUnitM').val(data.Unit);
 
                 $('#txtPriceM').val(data.price);
@@ -309,7 +301,7 @@
                 //$('#txtSeoPageTitleM').val(data.SeoPageTitle);
                 //$('#txtSeoAliasM').val(data.SeoAlias);
 
-                //CKEDITOR.instances.txtContent.setData(data.Content);
+                CKEDITOR.instances.txtDescM.setData(data.description);
                 //$('#ckStatusM').prop('checked', data.status === 1);
                 //$('#ckHotM').prop('checked', data.HotFlag);
                 //$('#ckShowHomeM').prop('checked', data.HomeFlag);
@@ -364,7 +356,7 @@
         $('#txtNameM').val('');
         initTreeDropDownCategory('');
 
-        $('#txtDescM').val('');
+        //$('#txtDescM').val('');
         //$('#txtUnitM').val('');
 
         $('#txtPriceM').val('0');
@@ -379,7 +371,7 @@
         //$('#txtSeoPageTitleM').val('');
         //$('#txtSeoAliasM').val('');
 
-        //CKEDITOR.instances.txtContentM.setData('');
+        CKEDITOR.instances.txtDescM.setData('');
         //$('#ckStatusM').prop('checked', true);
         //$('#ckHotM').prop('checked', false);
         //$('#ckShowHomeM').prop('checked', false);

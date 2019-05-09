@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
@@ -27,7 +27,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
-                cfg.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
+                _ = cfg.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
             });
         }
 
