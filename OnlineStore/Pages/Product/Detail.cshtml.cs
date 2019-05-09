@@ -7,9 +7,6 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels;
-using Microsoft.EntityFrameworkCore;
-using DAL.EF;
-using DAL.Models;
 
 namespace OnlineStore.Pages.Product
 {
@@ -60,8 +57,10 @@ namespace OnlineStore.Pages.Product
             Item.View++;
             _itemRepository.Update(Item);
 
-            List<Comment> comments = _commentRepository.GetSome(y => y.ItemId == id).ToList();
 
+            
+            List<Comment> comments = _commentRepository.GetSome(y => y.ItemId == id).ToList();
+            
             if (comments.Any())
             {
                 foreach (Comment comment in comments.ToList())
@@ -97,7 +96,7 @@ namespace OnlineStore.Pages.Product
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-           
+
             //var comment = new Comment
             //{
             //    Name = Input.Name,

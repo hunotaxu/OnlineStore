@@ -18,7 +18,6 @@ namespace OnlineStore.Pages.Product
     {
         private readonly IItemRepository _itemRepository;
 
-
         public IEnumerable<Item> phones { get; set; }
         public IEnumerable<Item> laptops { get; set; }
         public IEnumerable<Item> tablets { get; set; }
@@ -39,10 +38,11 @@ namespace OnlineStore.Pages.Product
         {
 
             phones = _itemRepository.GetByCategory(1);
-           
+
             laptops = _itemRepository.GetByCategory(2);
-            
+
             tablets = _itemRepository.GetByCategory(3);
+
             accessories = _itemRepository.GetByCategory(4);
 
             List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((searchString)))
@@ -56,7 +56,7 @@ namespace OnlineStore.Pages.Product
         {
             List<Item> items = _itemRepository.GetSome(i => i.CategoryId == categoryId).OrderByDescending(s => s.View).ToList();
             CurrentPage = 1;
-            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);            
+            Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);
         }
         public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
             decimal currentMaxPrice, string currentRating, string currentSearchString, int? currentPage)

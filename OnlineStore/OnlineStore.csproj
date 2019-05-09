@@ -45,19 +45,8 @@
     <Content Update="Pages\Shared\Error.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Pages\Shared\_Layout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Pages\Shared\Components\MenuPartial\Default.cshtml">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Pages\Shared\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="wwwroot\css\client\home\style.css">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
     <Content Update="wwwroot\favicon.ico">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -81,7 +70,6 @@
     <None Include="wwwroot\fonts\simple-line-icons\Simple-Line-Icons.dev.svg" />
     <None Include="wwwroot\fonts\simple-line-icons\Simple-Line-Icons.svg" />
     <None Include="wwwroot\fonts\simple-line-icons\Simple-Line-Icons.woff2" />
-    <None Include="wwwroot\images\client\logo.png" />
     <None Include="wwwroot\images\client\ProductImages\0201_Sonyvaiopro13-1.jpg" />
     <None Include="wwwroot\images\client\ProductImages\1-141023232635.jpg" />
     <None Include="wwwroot\images\client\ProductImages\1.jpg" />

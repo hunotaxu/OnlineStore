@@ -25,7 +25,7 @@ namespace OnlineStore.ViewComponents
             IEnumerable<Category> categories = _categoryRepository.GetAll();
             //var lstSP = _itemRepository. db.SANPHAMs;
             //return View("Default", lstSP);
-            return Task.FromResult<IViewComponentResult>(View("Menubar", categories));
+            return Task.FromResult<IViewComponentResult>(View("Default", categories));
         }
     }
 }
