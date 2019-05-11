@@ -7,12 +7,15 @@ using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using System.IO;
 using TeduCoreApp.Areas.Admin.Controllers;
+using TTL.Solution.Areas.Exams.Models;
 
 namespace OnlineStore.Controllers
 {
     public class UploadController : BaseController
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+
+        private const string ATTACHMENTS = "attachments";
         public UploadController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -55,39 +58,76 @@ namespace OnlineStore.Controllers
         /// Upload image for form
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
-        public IActionResult UploadImage()
+        //[HttpPost]
+        //public IActionResult UploadImage()
+        //{
+        //    DateTime now = DateTime.Now;
+        //    var files = Request.Form.Files;
+        //    if (files.Count == 0)
+        //    {
+        //        return new BadRequestObjectResult(files);
+        //    }
+        //    else
+        //    {
+        //        var file = files[0];
+        //        var filename = ContentDispositionHeaderValue
+        //                            .Parse(file.ContentDisposition)
+        //                            .FileName
+        //                            .Trim('"');
+
+        //        var imageFolder = $@"\uploaded\images\{now.ToString("yyyyMMdd")}";
+
+        //        string folder = _hostingEnvironment.WebRootPath + imageFolder;
+
+        //        if (!Directory.Exists(folder))
+        //        {
+        //            Directory.CreateDirectory(folder);
+        //        }
+        //        string filePath = Path.Combine(folder, filename);
+        //        using (FileStream fs = System.IO.File.Create(filePath))
+        //        {
+        //            file.CopyTo(fs);
+        //            fs.Flush();
+        //        }
+        //        return new OkObjectResult(Path.Combine(imageFolder, filename).Replace(@"\", @"/"));
+        //    }
+        //}
+
+        public ActionResult TemporaryStoreAttachment(IFormFile file)
         {
-            DateTime now = DateTime.Now;
-            var files = Request.Form.Files;
-            if (files.Count == 0)
+            if (file != null && file.Length > 0)
             {
-                return new BadRequestObjectResult(files);
+                var listAttachment = TempData.Peek(ATTACHMENTS) != null ? TempData.Peek(ATTACHMENTS) as List<AttachmentModel> : new List<AttachmentModel>();
+
+                if (listAttachment.Exists(x => x.Name == file.FileName))
+                {
+                    return Json("duplicated");
+                }
+
+                BinaryReader b = new BinaryReader(file.OpenReadStream());
+                byte[] binData = b.ReadBytes((int)file.Length);
+                listAttachment.Add(new AttachmentModel
+                {
+                    Name = file.FileName,
+                    ContentType = file.ContentType,
+                    Contents = binData
+                });
             }
-            else
+
+            return Json("success");
+        }
+
+        public ActionResult TemporaryRemoveAttachment(string fileName)
+        {
+            var listAttachment = TempData.Peek(ATTACHMENTS) as List<AttachmentModel>;
+
+            if (listAttachment == null)
             {
-                var file = files[0];
-                var filename = ContentDispositionHeaderValue
-                                    .Parse(file.ContentDisposition)
-                                    .FileName
-                                    .Trim('"');
-
-                var imageFolder = $@"\uploaded\images\{now.ToString("yyyyMMdd")}";
-
-                string folder = _hostingEnvironment.WebRootPath + imageFolder;
-
-                if (!Directory.Exists(folder))
-                {
-                    Directory.CreateDirectory(folder);
-                }
-                string filePath = Path.Combine(folder, filename);
-                using (FileStream fs = System.IO.File.Create(filePath))
-                {
-                    file.CopyTo(fs);
-                    fs.Flush();
-                }
-                return new OkObjectResult(Path.Combine(imageFolder, filename).Replace(@"\", @"/"));
+                return Json("success");
             }
+
+            listAttachment.Remove(listAttachment.Find(x => x.Name == fileName));
+            return Json("success");
         }
     }
 }

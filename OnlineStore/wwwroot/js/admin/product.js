@@ -6,7 +6,60 @@ var itemPage = (function () {
             registerEvents();
             registerControls();
             onSearchEvents();
+            initDropzone();
         });
+    };
+
+    var initDropzone = function () {
+        // required dropzone.js
+        Dropzone.autoDiscover = false;
+        $("#dzUpload").dropzone({
+            url: "/Admin/Upload/TemporaryStoreAttachment",
+            maxFiles: 5,
+            maxFilesize: 10, //MB
+            thumbnailWidth: 80,
+            thumbnailHeight: 80,
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            success: function (file, response) {
+                if (response === "duplicated") {
+                    var _ref = file.previewElement;
+                    if (_ref) {
+                        removeThumbnail(file);
+                    }
+                } else {
+                    file.previewElement.classList.add("dz-success");
+                }
+            },
+            removedfile: function (file) { removeAttachment(file); },
+            error: function (file, response) {
+                removeThumbnail(file);
+                $(generalError).text(response);
+            }
+        });
+    };
+
+    var removeAttachment = function (file) {
+        if (file) {
+            $.ajax({
+                url: '/Admin/Upload/TemporaryRemoveAttachment',
+                data: { fileName: file.name },
+                success: function () {
+                    removeThumbnail(file);
+                    $(generalError).text("");
+                },
+                error: function (file, response) {
+                    $(generalError).text(response);
+                }
+            });
+        }
+    };
+
+    var removeThumbnail = function (file) {
+        var _ref = file.previewElement;
+        if (_ref) {
+            _ref.parentNode.removeChild(file.previewElement);
+        }
     };
 
     var onSearchEvents = function () {
@@ -66,33 +119,33 @@ var itemPage = (function () {
                 $('#modal-add-edit').modal('show');
             });
 
-            $('#btnSelectImg').on('click', function () {
-                $('#fileInputImage').click();
-            });
+            //$('#btnSelectImg').on('click', function () {
+            //    $('#fileInputImage').click();
+            //});
 
-            $("#fileInputImage").on('change', function () {
-                var fileUpload = $(this).get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/Admin/Upload/UploadImage",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (path) {
-                        $('#txtImage').val(path);
-                        commons.notify('Tải ảnh thành công!', 'success');
+            //$("#fileInputImage").on('change', function () {
+            //    var fileUpload = $(this).get(0);
+            //    var files = fileUpload.files;
+            //    var data = new FormData();
+            //    for (var i = 0; i < files.length; i++) {
+            //        data.append(files[i].name, files[i]);
+            //    }
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "/Admin/Upload/UploadImage",
+            //        contentType: false,
+            //        processData: false,
+            //        data: data,
+            //        success: function (path) {
+            //            $('#txtImage').val(path);
+            //            commons.notify('Tải ảnh thành công!', 'success');
 
-                    },
-                    error: function () {
-                        commons.notify('Đã có lỗi xãy ra', 'error');
-                    }
-                });
-            });
+            //        },
+            //        error: function () {
+            //            commons.notify('Đã có lỗi xãy ra', 'error');
+            //        }
+            //    });
+            //});
 
             $('body').on('click', '.btn-edit', function (e) {
                 e.preventDefault();
@@ -466,7 +519,6 @@ var itemPage = (function () {
 
     return {
         init,
-        loadData,
-        registerEvents
+        initDropzone
     };
 })();
