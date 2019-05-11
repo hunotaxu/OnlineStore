@@ -26,3 +26,36 @@
     z-index: 100000000;
     width: 100%;
 }
+
+.dropzone {
+    background: white;
+    border-radius: 5px;
+    border: 2px dashed #5d9aec;
+    border-image: none;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 120px;
+}
+
+#dzUpload {
+    padding: 5px 20px !important;
+}
+
+.dropzone .dz-preview {
+    margin-top: unset !important;
+    margin-bottom: unset !important;
+}
+
+    .dropzone .dz-preview .dz-image {
+        width: 80px !important;
+        height: 80px !important;
+    }
+
+    .dropzone .dz-preview .dz-details {
+        height: 80px !important;
+    }
+
+    .dropzone .dz-preview .dz-size {
+        margin-bottom: unset !important;
+        font-size: unset !important;
+    }

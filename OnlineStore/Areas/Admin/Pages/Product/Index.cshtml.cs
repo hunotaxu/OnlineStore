@@ -1,13 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using AutoMapper;
 using DAL.Data.Entities;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Logging;
+using OnlineStore.Extensions;
+using OnlineStore.Models;
 using OnlineStore.Models.ViewModels.Item;
+using Utilities.Commons;
 using Utilities.DTOs;
 
 namespace OnlineStore.Areas.Admin.Pages.Product
@@ -15,15 +21,21 @@ namespace OnlineStore.Areas.Admin.Pages.Product
     public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
+        private readonly IProductImagesRepository _productImagesRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUserRepository _userRepository;
         private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(IItemRepository itemRepository, IUserRepository userRepository, ICategoryRepository categoryRepository)
+        public IndexModel(IHostingEnvironment hostingEnvironment, ILogger<IndexModel> logger, IItemRepository itemRepository, IUserRepository userRepository, ICategoryRepository categoryRepository, IProductImagesRepository productImagesRepository)
         {
+            _logger = logger;
+            _hostingEnvironment = hostingEnvironment;
             _itemRepository = itemRepository;
             _userRepository = userRepository;
             _categoryRepository = categoryRepository;
+            _productImagesRepository = productImagesRepository;
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
@@ -53,6 +65,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public IActionResult OnGetAllCategories()
         {
+            var a = TempData.Peek("attachments");
             var categories = _mapperConfiguration.CreateMapper()
                 .Map<IEnumerable<CategoryViewModel>>(_categoryRepository.GetAll());
             return new OkObjectResult(categories);
@@ -83,6 +96,23 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                 model.DateCreated = DateTime.Now;
                 //model.DateModified = DateTime.Now;
                 _itemRepository.Add(model);
+                var listAttachment = TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments);
+                if (listAttachment.Any())
+                {
+                    foreach (var attachment in listAttachment)
+                    {
+                        string fileName = SaveAttachment(attachment);
+
+                        if (!string.IsNullOrEmpty(fileName))
+                        {
+                            _productImagesRepository.Add(new ProductImages()
+                            {
+                                ItemId = model.Id,
+                                Url = fileName
+                            });
+                        }
+                    }
+                }
                 return new OkObjectResult(model);
             }
 
@@ -103,6 +133,36 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             var item = _itemRepository.Find(id);
             _itemRepository.Delete(item);
             return new OkResult();
+        }
+
+        public string SaveAttachment(AttachmentModel data, string prefix = "")
+        {
+            //var fileName = prefix + Path.GetExtension(data.Name);
+
+            try
+            {
+                var imageFolder = $@"\images\admin\ProductImages\{DateTime.Now.ToString("yyyymmdd")}";
+                var dir = _hostingEnvironment.WebRootPath + imageFolder;
+
+                //if (Config.ImgUploadEndpoint.StartsWith("~/"))
+                //{
+                //    dir = Server.MapPath(Config.ImgUploadEndpoint);
+                //}
+
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+
+                System.IO.File.WriteAllBytes(Path.Combine(dir, data.Name), data.Contents);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Cannot save attachment", ex.Message);
+                data.Name = string.Empty;
+            }
+
+            return data.Name;
         }
     }
 }

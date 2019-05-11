@@ -13,6 +13,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
     public class IndexModel : PageModel
     {
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IItemRepository _itemRepository;
         private readonly MapperConfiguration _mapperConfiguration;
         public class InputModel
         {
@@ -20,9 +21,10 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             public int targetId { get; set; }
             public List<string> items { get; set; }
         }
-        public IndexModel(ICategoryRepository categoryRepository)
+        public IndexModel(ICategoryRepository categoryRepository, IItemRepository itemRepository)
         {
             _categoryRepository = categoryRepository;
+            _itemRepository = itemRepository;
             _mapperConfiguration = new MapperConfiguration(config =>
             {
                 config.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
@@ -72,6 +74,8 @@ namespace OnlineStore.Areas.Admin.Pages.Category
         {
             var category = _categoryRepository.Find(id);
             _categoryRepository.Delete(category);
+            var items = _itemRepository.GetSome(x => x.CategoryId == id);
+            _itemRepository.DeleteRange(items);
             return new OkResult();
         }
 

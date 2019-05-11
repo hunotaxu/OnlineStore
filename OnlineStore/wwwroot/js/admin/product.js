@@ -6,7 +6,60 @@ var itemPage = (function () {
             registerEvents();
             registerControls();
             onSearchEvents();
+            initDropzone();
         });
+    };
+
+    var initDropzone = function () {
+        // required dropzone.js
+        Dropzone.autoDiscover = false;
+        $("#dzUpload").dropzone({
+            url: "/Admin/Upload/TemporaryStoreAttachment",
+            maxFiles: 5,
+            maxFilesize: 10, //MB
+            thumbnailWidth: 80,
+            thumbnailHeight: 80,
+            acceptedFiles: "image/*",
+            addRemoveLinks: true,
+            success: function (file, response) {
+                if (response === "duplicated") {
+                    var _ref = file.previewElement;
+                    if (_ref) {
+                        removeThumbnail(file);
+                    }
+                } else {
+                    file.previewElement.classList.add("dz-success");
+                }
+            },
+            removedfile: function (file) { removeAttachment(file); },
+            error: function (file, response) {
+                removeThumbnail(file);
+                $(generalError).text(response);
+            }
+        });
+    };
+
+    var removeAttachment = function (file) {
+        if (file) {
+            $.ajax({
+                url: '/Admin/Upload/TemporaryRemoveAttachment',
+                data: { fileName: file.name },
+                success: function () {
+                    removeThumbnail(file);
+                    $(generalError).text("");
+                },
+                error: function (file, response) {
+                    $(generalError).text(response);
+                }
+            });
+        }
+    };
+
+    var removeThumbnail = function (file) {
+        var _ref = file.previewElement;
+        if (_ref) {
+            _ref.parentNode.removeChild(file.previewElement);
+        }
     };
 
     var onSearchEvents = function () {
@@ -66,33 +119,33 @@ var itemPage = (function () {
                 $('#modal-add-edit').modal('show');
             });
 
-            $('#btnSelectImg').on('click', function () {
-                $('#fileInputImage').click();
-            });
+            //$('#btnSelectImg').on('click', function () {
+            //    $('#fileInputImage').click();
+            //});
 
-            $("#fileInputImage").on('change', function () {
-                var fileUpload = $(this).get(0);
-                var files = fileUpload.files;
-                var data = new FormData();
-                for (var i = 0; i < files.length; i++) {
-                    data.append(files[i].name, files[i]);
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "/Admin/Upload/UploadImage",
-                    contentType: false,
-                    processData: false,
-                    data: data,
-                    success: function (path) {
-                        $('#txtImage').val(path);
-                        commons.notify('Upload image succesful!', 'success');
+            //$("#fileInputImage").on('change', function () {
+            //    var fileUpload = $(this).get(0);
+            //    var files = fileUpload.files;
+            //    var data = new FormData();
+            //    for (var i = 0; i < files.length; i++) {
+            //        data.append(files[i].name, files[i]);
+            //    }
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "/Admin/Upload/UploadImage",
+            //        contentType: false,
+            //        processData: false,
+            //        data: data,
+            //        success: function (path) {
+            //            $('#txtImage').val(path);
+            //            commons.notify('Tải ảnh thành công!', 'success');
 
-                    },
-                    error: function () {
-                        commons.notify('There was error uploading files!', 'error');
-                    }
-                });
-            });
+            //        },
+            //        error: function () {
+            //            commons.notify('Đã có lỗi xãy ra', 'error');
+            //        }
+            //    });
+            //});
 
             $('body').on('click', '.btn-edit', function (e) {
                 e.preventDefault();
@@ -214,7 +267,7 @@ var itemPage = (function () {
             //var originalPrice = $('#txtOriginalPriceM').val();
             var promotionPrice = $('#txtPromotionPriceM').val();
 
-            //var image = $('#txtImageM').val();
+            var image = $('#txtImage').val();
 
             //var tags = $('#txtTagM').val();
             //var seoKeyword = $('#txtMetakeywordM').val();
@@ -234,7 +287,7 @@ var itemPage = (function () {
                     Id: id,
                     Name: name,
                     CategoryId: categoryId,
-                    //Image: '',
+                    Image: image,
                     Price: price,
                     //OriginalPrice: originalPrice,
                     PromotionPrice: promotionPrice,
@@ -293,7 +346,7 @@ var itemPage = (function () {
                 //$('#txtOriginalPriceM').val(data.OriginalPrice);
                 $('#txtPromotionPriceM').val(data.promotionPrice);
 
-                // $('#txtImageM').val(data.ThumbnailImage);
+                // $('#txtImage').val(data.ThumbnailImage);
 
                 //$('#txtTagM').val(data.Tags);
                 //$('#txtMetakeywordM').val(data.SeoKeywords);
@@ -363,7 +416,7 @@ var itemPage = (function () {
         //$('#txtOriginalPriceM').val('');
         $('#txtPromotionPriceM').val('0');
 
-        //$('#txtImageM').val('');
+        $('#txtImage').val('');
 
         //$('#txtTagM').val('');
         //$('#txtMetakeywordM').val('');
@@ -419,7 +472,7 @@ var itemPage = (function () {
                         {
                             Id: item.id,
                             Name: item.name,
-                            Image: item.image ? `<img src='/images/client/ProductImages/${item.image}' width=25 />` : `<img src='/images/admin/user.png' width=25 />`,
+                            //Image: item.image ? `<img src='/images/client/ProductImages/${item.image}' width=25 />` : `<img src='/images/admin/user.png' width=25 />`,
                             CategoryName: item.category.name,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
@@ -466,7 +519,6 @@ var itemPage = (function () {
 
     return {
         init,
-        loadData,
-        registerEvents
+        initDropzone
     };
 })();
