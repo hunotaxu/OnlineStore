@@ -472,7 +472,7 @@ var itemPage = (function () {
                         {
                             Id: item.id,
                             Name: item.name,
-                            Image: item.image ? `<img src='/images/client/ProductImages/${item.image}' width=25 />` : `<img src='/images/admin/user.png' width=25 />`,
+                            //Image: item.image ? `<img src='/images/client/ProductImages/${item.image}' width=25 />` : `<img src='/images/admin/user.png' width=25 />`,
                             CategoryName: item.category.name,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             CreatedDate: commons.dateTimeFormatJson(item.dateCreated)

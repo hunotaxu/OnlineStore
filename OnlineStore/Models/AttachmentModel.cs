@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace TTL.Solution.Areas.Exams.Models
+﻿namespace OnlineStore.Models
 {
     public class AttachmentModel
     {

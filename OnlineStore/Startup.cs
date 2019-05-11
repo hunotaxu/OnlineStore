@@ -33,16 +33,16 @@ namespace OnlineStore
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddSession(options =>
+            services.Configure<CookieTempDataProviderOptions>(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(69);
-                options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+
             services.AddMemoryCache();
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
@@ -59,6 +59,7 @@ namespace OnlineStore
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddSessionStateTempDataProvider()
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AddPageRoute("/Home/Index", "");
@@ -70,6 +71,14 @@ namespace OnlineStore
                 {
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }); ;
+
+            services.AddSession();
+            //services.AddSession(options =>
+            //{
+            //    options.IdleTimeout = TimeSpan.FromMinutes(69);
+            //    options.Cookie.HttpOnly = true;
+            //    options.Cookie.IsEssential = true;
+            //});
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -129,6 +138,7 @@ namespace OnlineStore
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<ILineItemRepository, LineItemRepository>();
+            services.AddScoped<IProductImagesRepository, ProductImagesRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
@@ -150,11 +160,11 @@ namespace OnlineStore
             app.UseHttpsRedirection();
             //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            
             app.UseAuthentication();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
-            //app.UseCookiePolicy();
+            app.UseCookiePolicy();
             app.UseSession();
             app.UseMvc(routes =>
             {

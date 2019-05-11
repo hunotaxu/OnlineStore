@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using System.IO;
 using TeduCoreApp.Areas.Admin.Controllers;
-using TTL.Solution.Areas.Exams.Models;
+using Utilities.Commons;
+using OnlineStore.Models;
+using OnlineStore.Extensions;
 
 namespace OnlineStore.Controllers
 {
@@ -15,7 +17,6 @@ namespace OnlineStore.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        private const string ATTACHMENTS = "attachments";
         public UploadController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -97,13 +98,16 @@ namespace OnlineStore.Controllers
         {
             if (file != null && file.Length > 0)
             {
-                var listAttachment = TempData.Peek(ATTACHMENTS) != null ? TempData.Peek(ATTACHMENTS) as List<AttachmentModel> : new List<AttachmentModel>();
-
+                if (TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments) == null)
+                {
+                    TempData.Set(CommonConstants.Attachments, new List<AttachmentModel>());
+                }
+                var listAttachment = TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments);
+                TempData.Keep();
                 if (listAttachment.Exists(x => x.Name == file.FileName))
                 {
                     return Json("duplicated");
                 }
-
                 BinaryReader b = new BinaryReader(file.OpenReadStream());
                 byte[] binData = b.ReadBytes((int)file.Length);
                 listAttachment.Add(new AttachmentModel
@@ -112,6 +116,8 @@ namespace OnlineStore.Controllers
                     ContentType = file.ContentType,
                     Contents = binData
                 });
+                TempData.Set(CommonConstants.Attachments, listAttachment);
+                TempData.Keep();
             }
 
             return Json("success");
@@ -119,7 +125,7 @@ namespace OnlineStore.Controllers
 
         public ActionResult TemporaryRemoveAttachment(string fileName)
         {
-            var listAttachment = TempData.Peek(ATTACHMENTS) as List<AttachmentModel>;
+            var listAttachment = TempData.Peek(CommonConstants.Attachments) as List<AttachmentModel>;
 
             if (listAttachment == null)
             {
