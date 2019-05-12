@@ -151,6 +151,8 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         {
             var item = _itemRepository.Find(id);
             _itemRepository.Delete(item);
+            var images = _productImagesRepository.GetSome(x => x.ItemId == id && x.IsDeleted == false);
+            _productImagesRepository.DeleteRange(images);
             return new OkResult();
         }
 
