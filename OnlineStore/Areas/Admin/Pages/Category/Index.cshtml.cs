@@ -74,7 +74,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
         {
             var category = _categoryRepository.Find(id);
             _categoryRepository.Delete(category);
-            var items = _itemRepository.GetSome(x => x.CategoryId == id);
+            var items = _itemRepository.GetSome(x => x.CategoryId == id && x.IsDeleted == false);
             _itemRepository.DeleteRange(items);
             return new OkResult();
         }

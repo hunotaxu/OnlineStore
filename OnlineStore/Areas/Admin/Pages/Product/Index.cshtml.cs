@@ -50,6 +50,20 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         }
 
+        public ActionResult OnGetLoadAttachments(int productId)
+        {
+            //TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
+            TempData.Remove(CommonConstants.Attachments);
+            var attachmentsList = _productImagesRepository.GetSome(x => x.ItemId == productId && x.IsDeleted == false);
+            if (attachmentsList != null)
+            {
+                List<ProductImages> list = attachmentsList.ToList();
+                TempData.Set(CommonConstants.Attachments, list);
+                TempData.Keep();
+            }
+            return new JsonResult(new { attachmentsList = attachmentsList });
+        }
+
         public IActionResult OnGetAll()
         {
             var model = _itemRepository.GetAll(i => i.Category);
@@ -65,7 +79,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public IActionResult OnGetAllCategories()
         {
-            var a = TempData.Peek("attachments");
             var categories = _mapperConfiguration.CreateMapper()
                 .Map<IEnumerable<CategoryViewModel>>(_categoryRepository.GetAll());
             return new OkObjectResult(categories);
@@ -96,52 +109,58 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                 model.DateCreated = DateTime.Now;
                 //model.DateModified = DateTime.Now;
                 _itemRepository.Add(model);
-                var listAttachment = TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments);
-                if (listAttachment.Any())
+            }
+            else
+            {
+                var item = _itemRepository.Find(model.Id);
+                item.Name = model.Name;
+                item.CategoryId = model.CategoryId;
+                item.Description = model.Description;
+                item.Price = model.Price;
+                item.PromotionPrice = model.PromotionPrice;
+                item.DateModified = DateTime.Now;
+                _itemRepository.Update(item);
+            }
+            var listImages = _productImagesRepository.GetSome(x => x.ItemId == model.Id);
+            _productImagesRepository.DeleteRange(listImages);
+            var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments);
+            if (listAttachment != null && listAttachment.Count > 0)
+            {
+                foreach (var attachment in listAttachment)
                 {
-                    foreach (var attachment in listAttachment)
-                    {
-                        string fileName = SaveAttachment(attachment);
+                    string fileName = SaveAttachment(attachment);
 
-                        if (!string.IsNullOrEmpty(fileName))
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        _productImagesRepository.Add(new ProductImages()
                         {
-                            _productImagesRepository.Add(new ProductImages()
-                            {
-                                ItemId = model.Id,
-                                Url = fileName
-                            });
-                        }
+                            ItemId = model.Id,
+                            Name = fileName,
+                            Path = attachment.Path,
+                            Contents = attachment.Contents
+
+                        });
                     }
                 }
-                return new OkObjectResult(model);
             }
 
-            var item = _itemRepository.Find(model.Id);
-            item.Name = model.Name;
-            item.CategoryId = model.CategoryId;
-            item.Description = model.Description;
-            item.Price = model.Price;
-            item.PromotionPrice = model.PromotionPrice;
-            item.DateModified = DateTime.Now;
-            _itemRepository.Update(item);
-
-            return new OkObjectResult(item);
+            return new OkObjectResult(model);
         }
 
         public IActionResult OnGetDelete(int id)
         {
             var item = _itemRepository.Find(id);
             _itemRepository.Delete(item);
+            var images = _productImagesRepository.GetSome(x => x.ItemId == id && x.IsDeleted == false);
+            _productImagesRepository.DeleteRange(images);
             return new OkResult();
         }
 
-        public string SaveAttachment(AttachmentModel data, string prefix = "")
+        public string SaveAttachment(ProductImages data)
         {
-            //var fileName = prefix + Path.GetExtension(data.Name);
-
             try
             {
-                var imageFolder = $@"\images\admin\ProductImages\{DateTime.Now.ToString("yyyymmdd")}";
+                var imageFolder = $@"\images\admin\ProductImages\";
                 var dir = _hostingEnvironment.WebRootPath + imageFolder;
 
                 //if (Config.ImgUploadEndpoint.StartsWith("~/"))

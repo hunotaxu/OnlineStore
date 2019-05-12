@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
+using Newtonsoft.Json;
 
 namespace DAL.Data.Entities
 {
@@ -68,6 +69,7 @@ namespace DAL.Data.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual ICollection<LineItem> LineItems { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ProductImages> ProductImages { get; set; }
     }
 }
