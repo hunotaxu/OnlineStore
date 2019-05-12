@@ -50,6 +50,12 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         }
 
+        public ActionResult OnGetLoadAttachments(int productId)
+        {
+            var attachmentsList = _productImagesRepository.GetSome(x => x.ItemId == productId);
+            return new JsonResult(new { attachmentsList = attachmentsList });
+        }
+
         public IActionResult OnGetAll()
         {
             var model = _itemRepository.GetAll(i => i.Category);
@@ -65,7 +71,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public IActionResult OnGetAllCategories()
         {
-            var a = TempData.Peek("attachments");
             var categories = _mapperConfiguration.CreateMapper()
                 .Map<IEnumerable<CategoryViewModel>>(_categoryRepository.GetAll());
             return new OkObjectResult(categories);
@@ -108,7 +113,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                             _productImagesRepository.Add(new ProductImages()
                             {
                                 ItemId = model.Id,
-                                Url = fileName
+                                Name = fileName
                             });
                         }
                     }
@@ -135,13 +140,11 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             return new OkResult();
         }
 
-        public string SaveAttachment(AttachmentModel data, string prefix = "")
+        public string SaveAttachment(AttachmentModel data)
         {
-            //var fileName = prefix + Path.GetExtension(data.Name);
-
             try
             {
-                var imageFolder = $@"\images\admin\ProductImages\{DateTime.Now.ToString("yyyymmdd")}";
+                var imageFolder = $@"\images\admin\ProductImages\";
                 var dir = _hostingEnvironment.WebRootPath + imageFolder;
 
                 //if (Config.ImgUploadEndpoint.StartsWith("~/"))

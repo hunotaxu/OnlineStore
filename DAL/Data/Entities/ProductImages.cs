@@ -4,9 +4,9 @@ namespace DAL.Data.Entities
 {
     public class ProductImages : EntityBase
     {
-        public string Url { get; set; }
+        public string Name { get; set; }
 
-        public string Caption { get; set; }
+        public string Path { get; set; }
 
         public int ItemId { get; set; }
 

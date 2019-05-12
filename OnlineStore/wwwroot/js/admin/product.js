@@ -1,22 +1,102 @@
 var itemPage = (function () {
     var init = function () {
+        Dropzone.autoDiscover = false;
         $(document).ready(function () {
+            initDropzone();
             loadCategories();
             loadData();
             registerEvents();
             registerControls();
             onSearchEvents();
-            initDropzone();
         });
     };
 
-    var initDropzone = function () {
-        // required dropzone.js
+    //var loadImage = function (productId) {
+    //    Dropzone.autoDiscover = false;
+    //    Dropzone.options.myDropzone = {
+    //        acceptedFiles: "image/*",
+    //        init: function () {
+    //            console.log('init roi');
+    //            var thisDropzone = this;
+    //            $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
+    //                console.log('vao dc get roi');
+    //                if (data.attachmentsList !== '' && data.attachmentsList !== undefined) {
+    //                    $.each(data.attachmentsList, function (index, item) {
+    //                        //// Create the mock file:
+    //                        var mockFile = {
+    //                            name: item.name
+    //                        };
+    //                        // Call the default addedfile event handler
+    //                        thisDropzone.emit("addedfile", mockFile);
+    //                        // And optionally show the thumbnail of the file:
+    //                        thisDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
+    //                        thisDropzone.on("thumbnail", function () {
+    //                            $('.dz-image').find('img').attr({ width: '100%', height: '100%' });
+    //                            $('.dz-progress').removeClass();
+    //                        });
+    //                    });
+    //                }
+    //            });
+    //        }
+    //    };
+    //};
+
+    var clearDropzone = function () {
+        $('.dropzone').each(function () {
+            let dropzoneControl = $(this)[0].dropzone;
+            if (dropzoneControl) {
+                dropzoneControl.destroy();
+            }
+        });
+    };
+
+    var initDropzone = function (productId) {
+        debugger;
         Dropzone.autoDiscover = false;
+        var existDropzone = $("#dzUpload")[0].dropzone;
+        if (existDropzone) {
+            clearDropzone();
+        }
         $("#dzUpload").dropzone({
+            init: function () {
+                var myDropzone = this;
+                //Call the action method to load the images from the server
+                if (productId !== 0 && productId !== null && productId !== undefined) {
+                    $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
+                        debugger;
+                        if (data.attachmentsList !== undefined && data.attachmentsList.length > 0) {
+                            $.each(data.attachmentsList, function (index, item) {
+                                debugger;
+                                //// Create the mock file:
+                                var mockFile = {
+                                    name: item.name
+                                };
+                                // Call the default addedfile event handler
+                                myDropzone.emit("addedfile", mockFile);
+                                // And optionally show the thumbnail of the file:
+                                //thisDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
+                                myDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
+                                myDropzone.on("thumbnail", function () {
+                                    $('.dz-image').find('img').attr({ width: '100%', height: '100%' });
+                                    $('.dz-progress').removeClass();
+                                });
+                                myDropzone.files.push(mockFile);
+                                
+                                // If you use the maxFiles option, make sure you adjust it to the
+                                // correct amount:
+                                //var existingFileCount = index + 1; // The number of files already uploaded
+                                //dzUpload.options.maxFiles = dzUpload.options.maxFiles - existingFileCount;
+                            });
+                        }
+                    });
+                }
+                myDropzone.on("complete", function (file) {
+                    this.removeAllFiles(true);
+                });
+            },
             url: "/Admin/Upload/TemporaryStoreAttachment",
             maxFiles: 5,
-            maxFilesize: 10, //MB
+            maxFilesize: 10, // MB
             thumbnailWidth: 80,
             thumbnailHeight: 80,
             acceptedFiles: "image/*",
@@ -114,6 +194,7 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
+                initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
@@ -235,7 +316,6 @@ var itemPage = (function () {
 
     function registerControls() {
         CKEDITOR.replace('txtDescM', {});
-
         //Fix: cannot click on element ck in modal
         $.fn.modal.Constructor.prototype.enforceFocus = function () {
             $(document)
@@ -259,26 +339,10 @@ var itemPage = (function () {
             var id = $('#hidIdM').val();
             var name = $('#txtNameM').val();
             var categoryId = $('#ddlCategoryIdM').combotree('getValue');
-
             var description = CKEDITOR.instances.txtDescM.getData();
-            //var unit = $('#txtUnitM').val();
-
             var price = $('#txtPriceM').val();
-            //var originalPrice = $('#txtOriginalPriceM').val();
             var promotionPrice = $('#txtPromotionPriceM').val();
-
             var image = $('#txtImage').val();
-
-            //var tags = $('#txtTagM').val();
-            //var seoKeyword = $('#txtMetakeywordM').val();
-            //var seoMetaDescription = $('#txtMetaDescriptionM').val();
-            //var seoPageTitle = $('#txtSeoPageTitleM').val();
-            //var seoAlias = $('#txtSeoAliasM').val();
-
-            //var content = CKEDITOR.instances.txtDescM.getData();
-            //var status = $('#ckStatusM').prop('checked') === true ? 1 : 0;
-            //var hot = $('#ckHotM').prop('checked');
-            //var showHome = $('#ckShowHomeM').prop('checked');
 
             $.ajax({
                 type: "POST",
@@ -289,19 +353,8 @@ var itemPage = (function () {
                     CategoryId: categoryId,
                     Image: image,
                     Price: price,
-                    //OriginalPrice: originalPrice,
                     PromotionPrice: promotionPrice,
                     Description: description
-                    //Content: content,
-                    //HomeFlag: showHome,
-                    //HotFlag: hot,
-                    //Tags: tags,
-                    //Unit: unit,
-                    //Status: status,
-                    //SeoPageTitle: seoPageTitle,
-                    //SeoAlias: seoAlias,
-                    //SeoKeywords: seoKeyword,
-                    //SeoDescription: seoMetaDescription
                 }),
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
@@ -334,31 +387,14 @@ var itemPage = (function () {
                 commons.startLoading();
             },
             success: function (response) {
+                initDropzone(that);
                 var data = response;
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
                 initTreeDropDownCategory(data.categoryId);
-
-                //$('#txtDescM').val(data.description);
-                //$('#txtUnitM').val(data.Unit);
-
                 $('#txtPriceM').val(data.price);
-                //$('#txtOriginalPriceM').val(data.OriginalPrice);
                 $('#txtPromotionPriceM').val(data.promotionPrice);
-
-                // $('#txtImage').val(data.ThumbnailImage);
-
-                //$('#txtTagM').val(data.Tags);
-                //$('#txtMetakeywordM').val(data.SeoKeywords);
-                //$('#txtMetaDescriptionM').val(data.SeoDescription);
-                //$('#txtSeoPageTitleM').val(data.SeoPageTitle);
-                //$('#txtSeoAliasM').val(data.SeoAlias);
-
                 CKEDITOR.instances.txtDescM.setData(data.description);
-                //$('#ckStatusM').prop('checked', data.status === 1);
-                //$('#ckHotM').prop('checked', data.HotFlag);
-                //$('#ckShowHomeM').prop('checked', data.HomeFlag);
-
                 $('#modal-add-edit').modal('show');
                 commons.stopLoading();
             },
@@ -518,7 +554,6 @@ var itemPage = (function () {
     };
 
     return {
-        init,
-        initDropzone
+        init
     };
 })();
