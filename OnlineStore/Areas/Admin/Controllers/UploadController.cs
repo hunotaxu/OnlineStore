@@ -10,6 +10,7 @@ using TeduCoreApp.Areas.Admin.Controllers;
 using Utilities.Commons;
 using OnlineStore.Models;
 using OnlineStore.Extensions;
+using DAL.Data.Entities;
 
 namespace OnlineStore.Controllers
 {
@@ -98,11 +99,11 @@ namespace OnlineStore.Controllers
         {
             if (file != null && file.Length > 0)
             {
-                if (TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments) == null)
+                if (TempData.Get<List<ProductImages>>(CommonConstants.Attachments) == null)
                 {
-                    TempData.Set(CommonConstants.Attachments, new List<AttachmentModel>());
+                    TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
                 }
-                var listAttachment = TempData.Get<List<AttachmentModel>>(CommonConstants.Attachments);
+                var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments);
                 TempData.Keep();
                 if (listAttachment.Exists(x => x.Name == file.FileName))
                 {
@@ -110,7 +111,7 @@ namespace OnlineStore.Controllers
                 }
                 BinaryReader b = new BinaryReader(file.OpenReadStream());
                 byte[] binData = b.ReadBytes((int)file.Length);
-                listAttachment.Add(new AttachmentModel
+                listAttachment.Add(new ProductImages
                 {
                     Name = file.FileName,
                     ContentType = file.ContentType,
@@ -125,14 +126,16 @@ namespace OnlineStore.Controllers
 
         public ActionResult TemporaryRemoveAttachment(string fileName)
         {
-            var listAttachment = TempData.Peek(CommonConstants.Attachments) as List<AttachmentModel>;
-
+            //var listAttachment = TempData.Peek(CommonConstants.Attachments) as List<ProductImages>;
+            var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments) as List<ProductImages>;
             if (listAttachment == null)
             {
                 return Json("success");
             }
 
             listAttachment.Remove(listAttachment.Find(x => x.Name == fileName));
+            TempData.Set(CommonConstants.Attachments, listAttachment);
+            TempData.Keep();
             return Json("success");
         }
     }

@@ -74,25 +74,14 @@ var itemPage = (function () {
                                 // Call the default addedfile event handler
                                 myDropzone.emit("addedfile", mockFile);
                                 // And optionally show the thumbnail of the file:
-                                //thisDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
                                 myDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
-                                myDropzone.on("thumbnail", function () {
-                                    $('.dz-image').find('img').attr({ width: '100%', height: '100%' });
-                                    $('.dz-progress').removeClass();
-                                });
+                                $(".dz-size").remove();
+                                $('.dz-progress').remove();
                                 myDropzone.files.push(mockFile);
-                                
-                                // If you use the maxFiles option, make sure you adjust it to the
-                                // correct amount:
-                                //var existingFileCount = index + 1; // The number of files already uploaded
-                                //dzUpload.options.maxFiles = dzUpload.options.maxFiles - existingFileCount;
                             });
                         }
                     });
                 }
-                myDropzone.on("complete", function (file) {
-                    this.removeAllFiles(true);
-                });
             },
             url: "/Admin/Upload/TemporaryStoreAttachment",
             maxFiles: 5,
