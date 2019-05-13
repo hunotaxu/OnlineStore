@@ -83,6 +83,10 @@ var category = (function () {
                 var id = parseInt($('#hidIdM').val());
                 var name = $('#txtNameM').val();
                 var parentId = $('#ddlCategoryIdM').combotree('getValue');
+                if (parseInt(parentId) === parseInt(id)) {
+                    commons.notify('Không được chọn danh mục cha là chính nó', 'error');
+                    return false;
+                }
                 $.ajax({
                     type: "POST",
                     url: "/Admin/Category/Index?handler=SaveEntity",
