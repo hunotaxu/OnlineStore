@@ -198,8 +198,15 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                     Directory.CreateDirectory(folder);
                 }
                 string filePath = Path.Combine(folder, fileName);
-                using
+                using (FileStream fs = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(fs); // Copy the contents of the uploaded file to the FileStream object
+                    fs.Flush(); // clears buffer
+                }
+                _itemRepository.ImportExcel(filePath, categoryId);
+                return new OkObjectResult(filePath);
             }
+            return new NoContentResult();
         }
     }
 }

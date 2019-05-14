@@ -79,7 +79,7 @@ namespace DAL.Repositories
                     item.Price = price;
                     decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var promotionPrice);
                     item.PromotionPrice = promotionPrice;
-                    Table.Add(item);
+                    Add(item);
                 }
             }
         }
