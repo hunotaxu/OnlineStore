@@ -7,6 +7,8 @@ using DAL.Data.Entities;
 using DAL.Data.Enums;
 using DAL.EF;
 using Utilities.DTOs;
+using OfficeOpenXml;
+using System.IO;
 
 namespace DAL.Repositories
 {
@@ -58,6 +60,28 @@ namespace DAL.Repositories
             };
 
             return paginationSet;
+        }
+
+        public void ImportExcel(string filePath, int categoryId)
+        {
+            // sau khi using kết thúc thì sẽ tự động dispose cái vùng nhớ
+            using (var package = new ExcelPackage(new FileInfo(filePath)))
+            {
+                ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
+                Item item;
+                for (int i = workSheet.Dimension.Start.Row + 1; i < workSheet.Dimension.End.Row; i++)
+                {
+                    item = new Item();
+                    item.CategoryId = categoryId;
+                    item.Name = workSheet.Cells[i, 1].Value.ToString();
+                    item.Description = workSheet.Cells[i, 2].Value.ToString();
+                    decimal.TryParse(workSheet.Cells[i, 3].Value.ToString(), out var price); // Trong C# 7 không cần khai báo trước price
+                    item.Price = price;
+                    decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var promotionPrice);
+                    item.PromotionPrice = promotionPrice;
+                    Table.Add(item);
+                }
+            }
         }
     }
 }
