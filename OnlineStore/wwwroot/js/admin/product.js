@@ -193,7 +193,7 @@ var itemPage = (function () {
                     },
                     data: fileData,
                     processData: false, // default is true, 
-                    contentType: false, // not set content type
+                    contentType: false, // not set content type, nếu không có dòng này sẽ xãy ra lỗi error 500
                     success: function (data) {
                         $('#modal-import-excel').modal('hide');
                         commons.notify('Nhập sản phẩm thành công', 'success');
@@ -216,7 +216,7 @@ var itemPage = (function () {
                         commons.stopLoading();
                     },
                     error: function () {
-                        commons.notify('Has an error in progress', 'error');
+                        commons.notify('Đã xãy ra lỗi', 'error');
                         commons.stopLoading();
                     }
                 });

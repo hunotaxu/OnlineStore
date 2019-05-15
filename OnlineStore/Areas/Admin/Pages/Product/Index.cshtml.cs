@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OfficeOpenXml;
 using OnlineStore.Extensions;
 using OnlineStore.Models;
 using OnlineStore.Models.ViewModels.Item;
@@ -205,6 +206,35 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                 return new OkObjectResult(filePath);
             }
             return new NoContentResult();
+        }
+
+        public IActionResult OnPostExportExcel()
+        {
+            string sWebRootFolder = _hostingEnvironment.WebRootPath;
+            string directory = Path.Combine(sWebRootFolder, "export-files");
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            string sFileName = $"SanPham_{DateTime.Now:yyyyMMddhhmmss}.xlxs";
+
+            // http://localhost:4800/account/login Thì http là scheme, localhost là Host, còn /account/login là path
+            string fileUrl = $"{Request.Scheme}://{Request.Host}/export-files/{sFileName}";
+            FileInfo file = new FileInfo(Path.Combine(directory, sFileName));
+            if (file.Exists)
+            {
+                file.Delete();
+                file = new FileInfo(Path.Combine(directory, sFileName));
+            }
+            var products = _itemRepository.GetAll();
+            using (ExcelPackage package = new ExcelPackage(file))
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Danh sách sản phẩm");
+                worksheet.Cells["A1"].LoadFromCollection(products, true, OfficeOpenXml.Table.TableStyles.Light1);
+                worksheet.Cells.AutoFitColumns();
+                package.Save();
+            }
+            return new OkObjectResult(fileUrl);
         }
     }
 }

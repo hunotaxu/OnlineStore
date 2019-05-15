@@ -64,3 +64,11 @@
         margin-bottom: unset !important;
         font-size: unset !important;
     }
+
+.page-title .title_left {
+    width: auto;
+}
+
+.page-title .title_right {
+    width: auto;
+}
