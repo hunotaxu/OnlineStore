@@ -42,7 +42,7 @@ var itemPage = (function () {
                                 // Call the default addedfile event handler
                                 myDropzone.emit("addedfile", mockFile);
                                 // And optionally show the thumbnail of the file:
-                                myDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
+                                myDropzone.emit("thumbnail", mockFile, `/images/client/ProductImages/${item.name}`);
                                 $(".dz-size").remove();
                                 $('.dz-progress').remove();
                                 myDropzone.files.push(mockFile);
@@ -275,7 +275,7 @@ var itemPage = (function () {
             var price = $('#txtPriceM').val();
             var promotionPrice = $('#txtPromotionPriceM').val();
             var image = $('#txtImage').val();
-
+            var brandName = $('#txtBrandName').val();
             $.ajax({
                 type: "POST",
                 url: "/Admin/Product/Index?handler=SaveEntity",
@@ -284,6 +284,7 @@ var itemPage = (function () {
                     Name: name,
                     CategoryId: categoryId,
                     Image: image,
+                    BrandName: brandName,
                     Price: price,
                     PromotionPrice: promotionPrice,
                     Description: description
@@ -323,6 +324,7 @@ var itemPage = (function () {
                 var data = response;
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
+                $('#txtBrandName').val(data.brandName);
                 initTreeDropDownCategory(data.categoryId);
                 $('#txtPriceM').val(data.price);
                 $('#txtPromotionPriceM').val(data.promotionPrice);
@@ -441,6 +443,7 @@ var itemPage = (function () {
                             Id: item.id,
                             Name: item.name,
                             CategoryName: item.category.name,
+                            BrandName: item.brandName,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
                         });

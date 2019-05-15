@@ -58,6 +58,7 @@
     <Folder Include="Logs\" />
     <Folder Include="Pages\Shared\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\images\admin\ProductImages\" />
     <Folder Include="wwwroot\js\client\shared\" />
     <Folder Include="wwwroot\js\client\order\" />
     <Folder Include="wwwroot\js\client\order\" />

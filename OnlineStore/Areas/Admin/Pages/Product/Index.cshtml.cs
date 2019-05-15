@@ -116,6 +116,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             {
                 var item = _itemRepository.Find(model.Id);
                 item.Name = model.Name;
+                item.BrandName = model.BrandName;
                 item.CategoryId = model.CategoryId;
                 item.Description = model.Description;
                 item.Price = model.Price;
@@ -161,14 +162,8 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         {
             try
             {
-                var imageFolder = $@"\images\admin\ProductImages\";
+                var imageFolder = $@"\images\client\ProductImages\";
                 var dir = _hostingEnvironment.WebRootPath + imageFolder;
-
-                //if (Config.ImgUploadEndpoint.StartsWith("~/"))
-                //{
-                //    dir = Server.MapPath(Config.ImgUploadEndpoint);
-                //}
-
                 if (!Directory.Exists(dir))
                 {
                     Directory.CreateDirectory(dir);

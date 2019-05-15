@@ -47,15 +47,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            @*
-                                <th>#</th>*@
                             <th>Tên</th>
                             <th>Loại sản phẩm</th>
+                            <th>Thương hiệu</th>
                             <th>Giá</th>
-                            @*<th>Hình ảnh</th>*@
                             <th>Ngày tạo</th>
-                            @*
-                                <th>Trạng thái</th>*@
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -89,21 +85,17 @@
 
     <script id="table-template" type="x-tmpl-mustache">
         <tr>
-            @*
-                <td></td>*@
             <td>{{Name}}</td>
             <td>{{CategoryName}}</td>
+            <td>{{BrandName}}</td>
             <td>{{Price}}</td>
-            @*<td>{{{Image}}}</td>*@
             <td>{{CreatedDate}}</td>
-            @*
-                <td>{{{Status}}}</td>*@
             <th>
                 <a class="btn btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></a>
                 @*<a href="#" data-id="{{Id}}" class="btn btn-xs btn-images"><i class="fa fa-image"></i></a>
-                    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-quantity"><i class="fa fa-hourglass-start"></i></a>
-                    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-whole-price"><i class="fa fa-money"></i></a>*@
+            <a href="#" data-id="{{Id}}" class="btn btn-xs btn-quantity"><i class="fa fa-hourglass-start"></i></a>
+            <a href="#" data-id="{{Id}}" class="btn btn-xs btn-whole-price"><i class="fa fa-money"></i></a>*@
             </th>
         </tr>
     </script>
