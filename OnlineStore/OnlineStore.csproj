@@ -472,5 +472,7 @@
     <None Include="wwwroot\lib\jquery-easyui-1.7.6\themes\material-teal\images\Thumbs.db" />
     <None Include="wwwroot\lib\jquery-easyui-1.7.6\themes\material\images\Thumbs.db" />
     <None Include="wwwroot\lib\notifyjs\styles\metro\notify-metro.js" />
+    <None Include="wwwroot\templates\BillTemplate.xlsx" />
+    <None Include="wwwroot\templates\ProductImportTemplate.xlsx" />
   </ItemGroup>
 </Project>
