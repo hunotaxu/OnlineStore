@@ -109,7 +109,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             if (model.Id == 0)
             {
                 model.DateCreated = DateTime.Now;
-                //model.DateModified = DateTime.Now;
                 _itemRepository.Add(model);
             }
             else
@@ -140,7 +139,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                             Name = fileName,
                             Path = attachment.Path,
                             Contents = attachment.Contents
-
                         });
                     }
                 }
@@ -186,7 +184,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             return data.Name;
         }
 
-        public IActionResult ImportExcel(IList<IFormFile> files, int categoryId)
+        public IActionResult OnPostImportExcel(IList<IFormFile> files, int categoryId)
         {
             if (files != null && files.Count > 0)
             {

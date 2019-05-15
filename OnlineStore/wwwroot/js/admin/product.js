@@ -1,4 +1,5 @@
 var itemPage = (function () {
+
     var init = function () {
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
@@ -11,36 +12,6 @@ var itemPage = (function () {
         });
     };
 
-    //var loadImage = function (productId) {
-    //    Dropzone.autoDiscover = false;
-    //    Dropzone.options.myDropzone = {
-    //        acceptedFiles: "image/*",
-    //        init: function () {
-    //            console.log('init roi');
-    //            var thisDropzone = this;
-    //            $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
-    //                console.log('vao dc get roi');
-    //                if (data.attachmentsList !== '' && data.attachmentsList !== undefined) {
-    //                    $.each(data.attachmentsList, function (index, item) {
-    //                        //// Create the mock file:
-    //                        var mockFile = {
-    //                            name: item.name
-    //                        };
-    //                        // Call the default addedfile event handler
-    //                        thisDropzone.emit("addedfile", mockFile);
-    //                        // And optionally show the thumbnail of the file:
-    //                        thisDropzone.emit("thumbnail", mockFile, `/images/admin/ProductImages/${item.name}`);
-    //                        thisDropzone.on("thumbnail", function () {
-    //                            $('.dz-image').find('img').attr({ width: '100%', height: '100%' });
-    //                            $('.dz-progress').removeClass();
-    //                        });
-    //                    });
-    //                }
-    //            });
-    //        }
-    //    };
-    //};
-
     var clearDropzone = function () {
         $('.dropzone').each(function () {
             let dropzoneControl = $(this)[0].dropzone;
@@ -51,7 +22,6 @@ var itemPage = (function () {
     };
 
     var initDropzone = function (productId) {
-        debugger;
         Dropzone.autoDiscover = false;
         var existDropzone = $("#dzUpload")[0].dropzone;
         if (existDropzone) {
@@ -63,10 +33,8 @@ var itemPage = (function () {
                 //Call the action method to load the images from the server
                 if (productId !== 0 && productId !== null && productId !== undefined) {
                     $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
-                        debugger;
                         if (data.attachmentsList !== undefined && data.attachmentsList.length > 0) {
                             $.each(data.attachmentsList, function (index, item) {
-                                debugger;
                                 //// Create the mock file:
                                 var mockFile = {
                                     name: item.name
@@ -189,34 +157,6 @@ var itemPage = (function () {
                 $('#modal-add-edit').modal('show');
             });
 
-            //$('#btnSelectImg').on('click', function () {
-            //    $('#fileInputImage').click();
-            //});
-
-            //$("#fileInputImage").on('change', function () {
-            //    var fileUpload = $(this).get(0);
-            //    var files = fileUpload.files;
-            //    var data = new FormData();
-            //    for (var i = 0; i < files.length; i++) {
-            //        data.append(files[i].name, files[i]);
-            //    }
-            //    $.ajax({
-            //        type: "POST",
-            //        url: "/Admin/Upload/UploadImage",
-            //        contentType: false,
-            //        processData: false,
-            //        data: data,
-            //        success: function (path) {
-            //            $('#txtImage').val(path);
-            //            commons.notify('Tải ảnh thành công!', 'success');
-
-            //        },
-            //        error: function () {
-            //            commons.notify('Đã có lỗi xãy ra', 'error');
-            //        }
-            //    });
-            //});
-
             $('body').on('click', '.btn-edit', function (e) {
                 e.preventDefault();
                 var that = $(this).data('id');
@@ -226,25 +166,7 @@ var itemPage = (function () {
             $('body').on('click', '.btn-delete', function (e) {
                 e.preventDefault();
                 var that = $(this).data('id');
-                commons.confirm('Bạn có chắc chắn muốn xóa?', function () {
-                    $.ajax({
-                        type: "GET",
-                        url: "/Admin/Product/Index?handler=Delete",
-                        data: { id: that },
-                        beforeSend: function () {
-                            commons.startLoading();
-                        },
-                        success: function (response) {
-                            commons.notify('Thành công', 'success');
-                            commons.stopLoading();
-                            loadData();
-                        },
-                        error: function (status) {
-                            commons.notify('Đã có lỗi xãy ra', 'error');
-                            commons.stopLoading();
-                        }
-                    });
-                });
+                deleteProduct(that);
             });
 
             $('#btnSave').on('click', function (e) {
@@ -257,27 +179,26 @@ var itemPage = (function () {
             });
 
             $('#btnImportExcel').on('click', function () {
-                var fileUpload = $("#fileInputExcel").get(0);
-                var files = fileUpload.files;
-
-                // Create FormData object  
+                var files = $('#fileInputExcel').get(0).files;
                 var fileData = new FormData();
-                // Looping over all files and add it to FormData object  
                 for (var i = 0; i < files.length; i++) {
-                    fileData.append("files", files[i]);
+                    fileData.append('files', files[i]);
                 }
-                // Adding one more key to FormData object  
                 fileData.append('categoryId', $('#ddlCategoryIdImportExcel').combotree('getValue'));
                 $.ajax({
-                    url: '/Admin/Product/ImportExcel',
-                    type: 'POST',
+                    url: '/Admin/Product/Index?handler=ImportExcel',
+                    type: 'post',
+                    beforeSend: function () {
+                        commons.startLoading();
+                    },
                     data: fileData,
-                    processData: false,  // tell jQuery not to process the data
-                    contentType: false,  // tell jQuery not to set contentType
+                    processData: false, // default is true, 
+                    contentType: false, // not set content type
                     success: function (data) {
                         $('#modal-import-excel').modal('hide');
-                        loadData();
-
+                        commons.notify('Nhập sản phẩm thành công', 'success');
+                        commons.stopLoading();
+                        loadData(true);
                     }
                 });
                 return false;
@@ -302,6 +223,28 @@ var itemPage = (function () {
             });
         });
     };
+
+    function deleteProduct(that) {
+        commons.confirm('Bạn có chắc chắn muốn xóa?', function () {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Product/Index?handler=Delete",
+                data: { id: that },
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                success: function (response) {
+                    commons.notify('Thành công', 'success');
+                    commons.stopLoading();
+                    loadData();
+                },
+                error: function (status) {
+                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.stopLoading();
+                }
+            });
+        });
+    }
 
     function registerControls() {
         CKEDITOR.replace('txtDescM', {});
@@ -497,11 +440,9 @@ var itemPage = (function () {
                         {
                             Id: item.id,
                             Name: item.name,
-                            //Image: item.image ? `<img src='/images/client/ProductImages/${item.image}' width=25 />` : `<img src='/images/admin/user.png' width=25 />`,
                             CategoryName: item.category.name,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
-                            //Status: commons.getStatus(item.status)
                         });
                 });
                 $('#lblTotalRecords').text(response.rowCount);

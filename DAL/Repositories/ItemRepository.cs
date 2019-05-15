@@ -69,7 +69,7 @@ namespace DAL.Repositories
             {
                 ExcelWorksheet workSheet = package.Workbook.Worksheets[1];
                 Item item;
-                for (int i = workSheet.Dimension.Start.Row + 1; i < workSheet.Dimension.End.Row; i++)
+                for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
                 {
                     item = new Item();
                     item.CategoryId = categoryId;
@@ -79,6 +79,7 @@ namespace DAL.Repositories
                     item.Price = price;
                     decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var promotionPrice);
                     item.PromotionPrice = promotionPrice;
+                    item.DateCreated = DateTime.Now;
                     Add(item);
                 }
             }
