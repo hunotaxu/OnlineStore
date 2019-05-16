@@ -49,7 +49,7 @@
     <Content Update="Pages\Shared\Components\SearchResult\Default.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="wwwroot\favicon.ico">
+    <Content Update="wwwroot\favicontimi.ico">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>

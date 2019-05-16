@@ -14,9 +14,10 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace OnlineStore.Pages.Product
 {
-    public class _IndexModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public IEnumerable<Item> phones { get; set; }
         public IEnumerable<Item> laptops { get; set; }
@@ -28,7 +29,9 @@ namespace OnlineStore.Pages.Product
         public string CurrentSearchString { get; set; }
         public PaginatedList<Item> Items { get; set; }
 
-        public _IndexModel(IItemRepository itemRepository)
+        
+
+        public IndexModel(IItemRepository itemRepository)
         {
             _itemRepository = itemRepository;
         }
