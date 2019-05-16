@@ -127,6 +127,10 @@ var itemPage = (function () {
                         required: true,
                         number: true
                     },
+                    txtQuantity: {
+                        required: true,
+                        number: true
+                    },
                     txtPromotionPriceM: {
                         required: true,
                         number: true
@@ -276,6 +280,7 @@ var itemPage = (function () {
             var promotionPrice = $('#txtPromotionPriceM').val();
             var image = $('#txtImage').val();
             var brandName = $('#txtBrandName').val();
+            var quantity = $('#txtQuantity').val();
             $.ajax({
                 type: "POST",
                 url: "/Admin/Product/Index?handler=SaveEntity",
@@ -285,6 +290,7 @@ var itemPage = (function () {
                     CategoryId: categoryId,
                     Image: image,
                     BrandName: brandName,
+                    Quantity: quantity,
                     Price: price,
                     PromotionPrice: promotionPrice,
                     Description: description
@@ -325,6 +331,7 @@ var itemPage = (function () {
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
                 $('#txtBrandName').val(data.brandName);
+                $('#txtQuantity').val(data.quantity);
                 initTreeDropDownCategory(data.categoryId);
                 $('#txtPriceM').val(data.price);
                 $('#txtPromotionPriceM').val(data.promotionPrice);
@@ -377,28 +384,12 @@ var itemPage = (function () {
     function resetFormMaintainance() {
         $('#hidIdM').val(0);
         $('#txtNameM').val('');
+        $('#txtBrandName').val('');
+        $('#txtQuantity').val('');
         initTreeDropDownCategory('');
-
-        //$('#txtDescM').val('');
-        //$('#txtUnitM').val('');
-
         $('#txtPriceM').val('0');
-        //$('#txtOriginalPriceM').val('');
         $('#txtPromotionPriceM').val('0');
-
-        $('#txtImage').val('');
-
-        //$('#txtTagM').val('');
-        //$('#txtMetakeywordM').val('');
-        //$('#txtMetaDescriptionM').val('');
-        //$('#txtSeoPageTitleM').val('');
-        //$('#txtSeoAliasM').val('');
-
         CKEDITOR.instances.txtDescM.setData('');
-        //$('#ckStatusM').prop('checked', true);
-        //$('#ckHotM').prop('checked', false);
-        //$('#ckShowHomeM').prop('checked', false);
-
     }
 
     var loadCategories = function () {
@@ -444,6 +435,7 @@ var itemPage = (function () {
                             Name: item.name,
                             CategoryName: item.category.name,
                             BrandName: item.brandName,
+                            Quantity: item.quantity,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
                         });
