@@ -76,7 +76,7 @@
 
                             @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
                             @*<p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>*@
-                            @if (Model.Item.Inventory == 0)
+                            @if (Model.Item.Quantity == 0)
                             {
                                 <p class="availability out-of-stock pull-right"><span>Hết hàng</span></p>
 

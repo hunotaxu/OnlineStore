@@ -117,6 +117,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                 var item = _itemRepository.Find(model.Id);
                 item.Name = model.Name;
                 item.BrandName = model.BrandName;
+                item.Quantity = model.Quantity;
                 item.CategoryId = model.CategoryId;
                 item.Description = model.Description;
                 item.Price = model.Price;

@@ -16,7 +16,7 @@ namespace OnlineStore.Models.ViewModels.Item
         [Required]
         public int CategoryId { get; set; }
 
-        public int Inventory { get; set; }
+        public int Quantity { get; set; }
 
         public decimal? AverageEvaluation { get; set; }
 

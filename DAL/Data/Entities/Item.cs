@@ -38,8 +38,8 @@ namespace DAL.Data.Entities
         [Display(Name = "Hình ảnh")]
         public string Image { get; set; }
 
-        [Display(Name = "Số lượng tồn")]
-        public int Inventory { get; set; }
+        [Display(Name = "Số lượng")]
+        public int Quantity { get; set; }
 
         [Display(Name = "Số lượt xem")]
         public int View { get; set; }

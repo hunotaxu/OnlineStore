@@ -75,9 +75,12 @@ namespace DAL.Repositories
                     item.CategoryId = categoryId;
                     item.Name = workSheet.Cells[i, 1].Value.ToString();
                     item.Description = workSheet.Cells[i, 2].Value.ToString();
-                    decimal.TryParse(workSheet.Cells[i, 3].Value.ToString(), out var price); // Trong C# 7 không cần khai báo trước price
+                    item.BrandName = workSheet.Cells[i, 3].Value.ToString();
+                    decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var quantity);
+                    item.Quantity = Convert.ToInt32(quantity);
+                    decimal.TryParse(workSheet.Cells[i, 5].Value.ToString(), out var price); // Trong C# 7 không cần khai báo trước price
                     item.Price = price;
-                    decimal.TryParse(workSheet.Cells[i, 4].Value.ToString(), out var promotionPrice);
+                    decimal.TryParse(workSheet.Cells[i, 6].Value.ToString(), out var promotionPrice);
                     item.PromotionPrice = promotionPrice;
                     item.DateCreated = DateTime.Now;
                     Add(item);
