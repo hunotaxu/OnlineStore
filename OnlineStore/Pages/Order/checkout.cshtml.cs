@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace OnlineStore.Pages.Order
 {
-    public class checkoutModel : PageModel
+    public class CheckoutModel : PageModel
     {
         public void OnGet()
         {

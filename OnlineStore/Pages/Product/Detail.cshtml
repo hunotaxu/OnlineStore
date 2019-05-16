@@ -15,11 +15,11 @@
 }
 
 @{
-    int numberOfComments = 0;
-    if (@ViewBag.thongTinNguoiDung != null)
-    {
-        numberOfComments = ViewBag.thongTinNguoiDung.Count;
-    }
+    //int numberOfComments = 0;
+    //if (@ViewBag.thongTinNguoiDung != null)
+    //{
+    //    numberOfComments = ViewBag.thongTinNguoiDung.Count;
+    //}
     var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
 
@@ -73,6 +73,7 @@
                             <!--Đánh giá sao-->
                             <div class="rateit" data-rateit-value=@Html.Raw(Model.Average) data-rateit-readonly="true"> </div>
                             <!--Đánh giá sao-->
+
                             @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
                             @*<p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>*@
                             @if (Model.Item.Inventory == 0)

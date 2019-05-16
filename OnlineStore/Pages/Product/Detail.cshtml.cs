@@ -43,7 +43,6 @@ namespace OnlineStore.Pages.Product
             }
 
             //Nếu không thì truy xuất csdl lấy ra sản phẩm tương ứng
-            //SANPHAM sp = db.SANPHAMs.SingleOrDefault(n => n.MaSP == id && n.DaXoa == false);
 
             Item = _itemRepository.Find(n => n.Id == id && n.IsDeleted == false);
             //Comment = _commentRepository.Find(n => n.Id == id && n.IsDeleted == false);
