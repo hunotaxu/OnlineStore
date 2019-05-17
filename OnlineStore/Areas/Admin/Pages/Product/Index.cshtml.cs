@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
 using OnlineStore.Extensions;
-using OnlineStore.Models;
 using OnlineStore.Models.ViewModels.Item;
 using Utilities.Commons;
 using Utilities.DTOs;
@@ -55,7 +54,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public ActionResult OnGetLoadAttachments(int productId)
         {
-            //TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
             TempData.Remove(CommonConstants.Attachments);
             var attachmentsList = _productImagesRepository.GetSome(x => x.ItemId == productId && x.IsDeleted == false);
             if (attachmentsList != null)

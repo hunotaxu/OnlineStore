@@ -61,7 +61,7 @@ namespace OnlineStore.Pages.Admin.Orders
 
             Order = _orderRepository.Find(Id);
             _context.Attach(Order).State = EntityState.Modified;
-            Order.Status = StatusOrder.ReadyToShip;
+            Order.Status = OrderStatus.ReadyToShip;
             try
             {
                 _orderRepository.Update(Order);

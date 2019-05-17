@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using DAL.Data.Entities;
-using DAL.Data.Enums;
 using DAL.EF;
 using Utilities.DTOs;
 using OfficeOpenXml;

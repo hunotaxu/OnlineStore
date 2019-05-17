@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label asp-for="Order.Status" class="control-label"></label>
                 @*<input asp-for="Order.Status" class="form-control" />*@
-                <select asp-for="Order.Status" asp-items="Html.GetEnumSelectList<StatusOrder>()"></select>
+                <select asp-for="Order.Status" asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
                 <span asp-validation-for="Order.Status" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Order.Id" />

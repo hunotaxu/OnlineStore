@@ -2,7 +2,7 @@
 
 namespace Utilities.DTOs
 {
-    public class PagedResult<T> : PagedResultBase where T:class
+    public class PagedResult<T> : PagedResultBase where T : class
     {
         public PagedResult()
         {
