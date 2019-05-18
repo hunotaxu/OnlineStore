@@ -433,7 +433,7 @@ var order = (function () {
                         {
                             Id: item.id,
                             OrderDate: item.orderDate,
-                            IsSelfReceive: item.isSelfReceive,
+                            DeliveryType: item.deliveryType,
                             Status: item.status
                             //Quantity: item.quantity,
                             //Price: `${commons.formatNumber(item.price, 0)}đ`,

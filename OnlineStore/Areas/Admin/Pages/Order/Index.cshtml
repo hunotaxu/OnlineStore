@@ -34,19 +34,11 @@
                 </div>
             </div>
             <div class="col-md-3 col-sm-12  form-group pull-right">
-                @*<select class="form-control" id="ddlCategorySearch"></select>*@
                 <select class="form-control" id="ddlOrderStatus" asp-for="Order.Status" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.OrderStatus>()"></select>
             </div>
             <div class="col-md-3 col-sm-12  form-group pull-right">
-                @*<select class="form-control" id="ddlCategorySearch"></select>*@
                 <select class="form-control" id="ddlDeliveryType" asp-for="Order.DeliveryType" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.DeliveryType>()"></select>
             </div>
-            @*<div class="col-md-6 col-sm-12  form-group pull-right">
-            <button id="btnCreate" type="button" class="btn btn-success">Tạo</button>
-            <a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Tải mẫu nhập</a>
-            <button class="btn btn-primary" id="btn-import" type="button">Nhập sản phẩm từ file</button>
-            <button class="btn btn-default" id="btn-export" type="button">Xuất sản phẩm ra file</button>
-        </div>*@
         </div>
     </div>
     <div class="clearfix"></div>
@@ -59,8 +51,8 @@
                         <tr>
                             <th>Mã đơn hàng</th>
                             <th>Ngày đặt hàng</th>
-                            <th>Nhận hàng tại showroom</th>
-                            <th>Trạng thái</th>
+                            <th>Phương thức giao hàng</th>
+                            <th>Trạng thái đơn hàng</th>
                             <th width="10%"></th>
                         </tr>
                     </thead>
@@ -96,7 +88,7 @@
         <tr>
             <td>{{Id}}</td>
             <td>{{OrderDate}}</td>
-            <td>{{IsSelfReceive}}</td>
+            <td>{{DeliveryType}}</td>
             <td>{{Status}}</td>
             @*<td>{{Price}}</td>
                 <td>{{CreatedDate}}</td>*@
@@ -111,75 +103,3 @@
     </script>
 </form>
 <partial name="_OrderDetailModal" />
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Mã đơn hàng
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Orders[0].DeliveryDate)
-            </th>
-            <th>
-                Ngày đặt hàng
-            </th>
-            @*<th>
-            @Html.DisplayNameFor(model => model.Order[0].Bonus)
-        </th>*@
-@*<th>
-        @Html.DisplayNameFor(model => model.Order[0].EmployeeId)
-    </th>*@
-@*<th>
-        @Html.DisplayNameFor(model => model.Order[0].ShippingFee)
-    </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Orders[0].Status)
-        </th>
-        @*<th>
-        @Html.DisplayNameFor(model => model.Order[0].Customer)
-    </th>*@
-@*<th>
-                @Html.DisplayNameFor(model => model.Order[0].Timestamp)
-            </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model.Orders) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DeliveryDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OrderDate)
-                </td>
-                @*<td>
-                @Html.DisplayFor(modelItem => item.Bonus)
-            </td>*@
-@*<td>
-                @Html.DisplayFor(modelItem => item.EmployeeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShippingFee)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                @*<td>
-                @Html.DisplayFor(modelItem => item.Customer.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Sửa</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Chi tiết</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Xóa</a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>*@
