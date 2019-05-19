@@ -33,7 +33,7 @@ namespace DAL.Repositories
 
             var rowCount = query.ToList().Count;
 
-            query = query.OrderByDescending(x => x.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            query = query.OrderBy(x => x.OrderDate).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             var paginationSet = new PagedResult<Order>
             {
