@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
-using DAL.Data.Enums;
-using DAL.Models;
 
 namespace DAL.Data.Entities
 {
@@ -18,29 +16,29 @@ namespace DAL.Data.Entities
         //public int Id { get; set; }
         [Display(Name = "Ngày giao dự kiến")]
         [DataType(DataType.Date)]
-        public DateTime DeliveryDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Bonus { get; set; }
+        public decimal? Bonus { get; set; }
 
         [Display(Name = "Người duyệt")]
-        public Guid EmployeeId { get; set; }
+        public Guid? EmployeeId { get; set; }
 
         [Display(Name = "Mã khách hàng")]
         public Guid CustomerId { get; set; }
 
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal ShippingFee { get; set; }
+        public decimal? ShippingFee { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public OrderStatus Status { get; set; }
+        public byte Status { get; set; }
 
-        public DeliveryType DeliveryType { get; set; }
+        public byte? DeliveryType { get; set; }
 
         public DateTime? DateCreated { get; set; }
 

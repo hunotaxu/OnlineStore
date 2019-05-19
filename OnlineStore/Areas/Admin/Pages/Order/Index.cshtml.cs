@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using DAL.Repositories;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
 namespace OnlineStore.Pages.Admin.Orders
@@ -20,17 +18,12 @@ namespace OnlineStore.Pages.Admin.Orders
 
         public void OnGet()
         {
+
         }
 
-        public IActionResult OnGetAllPaging(int pageIndex, int pageSize)
+        public IActionResult OnGetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
-            //var admin = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
-            //if (admin == null || !_userRepository.IsProductManager(admin.UserName))
-            //{
-            //    return new JsonResult(new { authenticate = false });
-            //}
-            var model = _orderRepository.GetAllPaging(pageIndex, pageSize);
-            //var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
+            var model = _orderRepository.GetAllPaging(deliveryType, orderStatus, keyword, pageIndex, pageSize);
             return new OkObjectResult(model);
         }
     }

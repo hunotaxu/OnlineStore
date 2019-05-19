@@ -68,9 +68,9 @@ namespace DAL.Repositories
             {
                 RoleId = roleId,
                 UserId = userId,
-                DateCreated = DateTime.UtcNow,
-                DateModified = DateTime.UtcNow,
-                Status = Status.Active
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                Status = (byte)Status.Active
             };
             _userRoletable.Add(userRole);
             return SaveChanges();

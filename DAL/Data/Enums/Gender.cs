@@ -1,6 +1,6 @@
 ﻿namespace DAL.Data.Enums
 {
-    public enum Gender
+    public enum Gender : byte
     {
         Nam,
         Nữ

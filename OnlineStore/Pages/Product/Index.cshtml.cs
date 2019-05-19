@@ -25,7 +25,7 @@ namespace OnlineStore.Pages.Product
         public IEnumerable<Item> accessories { get; set; }
 
         public int CurrentPage { get; set; }
-        public SortType CurrentSort { get; set; }
+        public byte CurrentSort { get; set; }
         public string CurrentSearchString { get; set; }
         public PaginatedList<Item> Items { get; set; }
 
@@ -61,7 +61,7 @@ namespace OnlineStore.Pages.Product
             CurrentPage = 1;
             Items = PaginatedList<Item>.CreateAsync(items, CurrentPage, 6);
         }
-        public async Task<ActionResult> OnGetSearchAsync(SortType currentSort, List<string> currentBrand, decimal currentMinPrice,
+        public async Task<ActionResult> OnGetSearchAsync(byte currentSort, List<string> currentBrand, decimal currentMinPrice,
             decimal currentMaxPrice, string currentRating, string currentSearchString, int? currentPage)
         {
             List<Item> items = _itemRepository.GetSome(i => i.Name.Contains((currentSearchString))).ToList();
@@ -83,10 +83,10 @@ namespace OnlineStore.Pages.Product
 
             switch (currentSort)
             {
-                case SortType.PriceLowToHigh:
+                case (byte)SortType.PriceLowToHigh:
                     items = new List<Item>(items.OrderBy(s => s.Price));
                     break;
-                case SortType.PriceHighToLow:
+                case (byte)SortType.PriceHighToLow:
                     items = new List<Item>(items.OrderByDescending(s => s.Price));
                     break;
                 default:

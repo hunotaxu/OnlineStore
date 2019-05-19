@@ -2,7 +2,7 @@
 
 namespace DAL.Data.Enums
 {
-    public enum DeliveryType
+    public enum DeliveryType : byte
     {
         [Display(Name = "Chọn phương thức giao hàng")]
         None,

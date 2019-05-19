@@ -1,78 +1,12 @@
 var order = (function () {
 
     var init = function () {
-        //Dropzone.autoDiscover = false;
         $(document).ready(function () {
-            //initDropzone();
             //loadCategories();
             loadData();
             registerEvents();
             //registerControls();
             onSearchEvents();
-        });
-    };
-
-    var clearDropzone = function () {
-        $('.dropzone').each(function () {
-            let dropzoneControl = $(this)[0].dropzone;
-            if (dropzoneControl) {
-                dropzoneControl.destroy();
-            }
-        });
-    };
-
-    var initDropzone = function (productId) {
-        Dropzone.autoDiscover = false;
-        var existDropzone = $("#dzUpload")[0].dropzone;
-        if (existDropzone) {
-            clearDropzone();
-        }
-        $("#dzUpload").dropzone({
-            init: function () {
-                var myDropzone = this;
-                //Call the action method to load the images from the server
-                if (productId !== 0 && productId !== null && productId !== undefined) {
-                    $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
-                        if (data.attachmentsList !== undefined && data.attachmentsList.length > 0) {
-                            $.each(data.attachmentsList, function (index, item) {
-                                //// Create the mock file:
-                                var mockFile = {
-                                    name: item.name
-                                };
-                                // Call the default addedfile event handler
-                                myDropzone.emit("addedfile", mockFile);
-                                // And optionally show the thumbnail of the file:
-                                myDropzone.emit("thumbnail", mockFile, `/images/client/ProductImages/${item.name}`);
-                                $(".dz-size").remove();
-                                $('.dz-progress').remove();
-                                myDropzone.files.push(mockFile);
-                            });
-                        }
-                    });
-                }
-            },
-            url: "/Admin/Upload/TemporaryStoreAttachment",
-            maxFiles: 5,
-            maxFilesize: 10, // MB
-            thumbnailWidth: 80,
-            thumbnailHeight: 80,
-            acceptedFiles: "image/*",
-            addRemoveLinks: true,
-            success: function (file, response) {
-                if (response === "duplicated") {
-                    var _ref = file.previewElement;
-                    if (_ref) {
-                        removeThumbnail(file);
-                    }
-                } else {
-                    file.previewElement.classList.add("dz-success");
-                }
-            },
-            removedfile: function (file) { removeAttachment(file); },
-            error: function (file, response) {
-                removeThumbnail(file);
-                $(generalError).text(response);
-            }
         });
     };
 
@@ -155,7 +89,6 @@ var order = (function () {
             });
 
             $("#btnCreate").on('click', function () {
-                initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
@@ -326,7 +259,6 @@ var order = (function () {
                 commons.startLoading();
             },
             success: function (response) {
-                initDropzone(that);
                 var data = response;
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
@@ -416,8 +348,9 @@ var order = (function () {
         $.ajax({
             type: 'GET',
             data: {
-                //"categoryId": $('#ddlCategorySearch').val(),
-                //"keyword": $('#txtKeyword').val(),
+                "orderStatus": $('#ddlOrderStatus').val(),
+                "deliveryType": $('#ddlDeliveryType').val(),
+                "keyword": $('#txtKeyword').val(),
                 "pageIndex": commons.configs.pageIndex,
                 "pageSize": commons.configs.pageSize
             },
@@ -432,12 +365,9 @@ var order = (function () {
                     render += Mustache.render(template,
                         {
                             Id: item.id,
-                            OrderDate: item.orderDate,
-                            DeliveryType: item.deliveryType,
-                            Status: item.status
-                            //Quantity: item.quantity,
-                            //Price: `${commons.formatNumber(item.price, 0)}đ`,
-                            //CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
+                            OrderDate: commons.dateTimeFormatJson(item.orderDate),
+                            DeliveryType: getDeliveryType(item.deliveryType),
+                            Status: getOrderStatus(item.status)
                         });
                 });
                 $('#lblTotalRecords').text(response.rowCount);
@@ -454,6 +384,32 @@ var order = (function () {
             }
         });
     };
+
+    function getDeliveryType(deliveryType) {
+        switch (deliveryType) {
+            case 1:
+                return `Giao hàng chuẩn`;
+            case 2:
+                return `Giao hàng ưu tiên`;
+            case 3:
+                return `Nhận hàng tại showroom`;
+        }
+    }
+
+    function getOrderStatus(orderStatus) {
+        switch (orderStatus) {
+            case 1:
+                return `<span class='badge bg-orange'>Đang chờ xử lý</span>`;
+            case 2:
+                return `<span class='badge bg-blue'>Sẵn sàng để giao</span>`;
+            case 3:
+                return `<span class='badge bg-sky-blue'>Đang vận chuyển</span>`;
+            case 4:
+                return `<span class='badge bg-green'>Đã giao</span>`;
+            case 5:
+                return `<span class='badge bg-red'>Đã hủy</span>`;
+        }
+    }
 
     function wrapPaging(recordCount, callBack, changePageSize) {
         var totalSize = Math.ceil(recordCount / commons.configs.pageSize);

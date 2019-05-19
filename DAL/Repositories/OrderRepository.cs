@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,24 @@ namespace DAL.Repositories
     {
         public int GetMaxId() => Table.Max(o => o.Id);
 
-        public PagedResult<Order> GetAllPaging(int pageIndex, int pageSize)
+        public PagedResult<Order> GetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
+
+            if (deliveryType != 0)
+            {
+                query = query.Where(x => x.DeliveryType == deliveryType.Value);
+            }
+
+            if (orderStatus != 0)
+            {
+                query = query.Where(x => x.Status == orderStatus.Value);
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(x => x.Id.ToString().Contains(keyword, System.StringComparison.OrdinalIgnoreCase));
+            }
 
             var rowCount = query.ToList().Count;
 

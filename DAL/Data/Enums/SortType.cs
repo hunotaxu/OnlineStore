@@ -2,9 +2,9 @@
 
 namespace DAL.Data.Enums
 {
-    public enum SortType
+    public enum SortType : byte
     {
-        [Display(Name="Phổ biến nhất")]
+        [Display(Name = "Phổ biến nhất")]
         Popularity,
         [Display(Name = "Giá từ thấp lên cao")]
         PriceLowToHigh,

@@ -4,6 +4,6 @@ namespace DAL.Data.Interfaces
 {
     public interface ISwitchable
     {
-        Status Status { set; get; }
+        byte Status { set; get; }
     }
 }

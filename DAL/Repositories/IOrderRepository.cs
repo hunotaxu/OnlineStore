@@ -8,6 +8,6 @@ namespace DAL.Repositories
     {
         int GetMaxId();
 
-        PagedResult<Order> GetAllPaging(int page, int pageSize);
+        PagedResult<Order> GetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize);
     }
 }

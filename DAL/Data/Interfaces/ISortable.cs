@@ -2,6 +2,6 @@
 {
     public interface ISortable
     {
-        int SortOrder { set; get; }
+        byte SortOrder { set; get; }
     }
 }

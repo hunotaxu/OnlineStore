@@ -19,7 +19,7 @@ namespace DAL.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public int? SortOrder { set; get; }
+        public byte? SortOrder { set; get; }
 
         public int? ParentId { set; get; }
 

@@ -1,6 +1,6 @@
 ﻿namespace DAL.Data.Enums
 {
-    enum PaymentType
+    public enum PaymentType : byte
     {
         /// <summary>
         /// The Cash

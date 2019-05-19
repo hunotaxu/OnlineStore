@@ -18,10 +18,10 @@ namespace DAL.Data.Entities
         public string Avatar { get; set; }
         [Required(ErrorMessage = "Giới tính là bắt buộc.Vui lòng chọn")]
         [Display(Name = "Giới tính")]
-        public Gender Gender { get; set; }
+        public byte Gender { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
-        public Status Status { get; set; }
+        public byte Status { get; set; }
 
         public virtual ICollection<ApplicationUserClaim> Claims { get; set; }
         public virtual ICollection<ApplicationUserLogin> Logins { get; set; }

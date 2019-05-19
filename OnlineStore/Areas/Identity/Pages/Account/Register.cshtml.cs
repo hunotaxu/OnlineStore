@@ -73,7 +73,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
 
             [Required(ErrorMessage = "Vui lòng chọn giới tính.")]
             [Display(Name = "Giới tính")]
-            public Gender Gender { get; set; }
+            public byte Gender { get; set; }
 
             //[DataType(DataType.Password)]
             //[Display(Name = "Confirm password")]
@@ -108,7 +108,9 @@ namespace OnlineStore.Areas.Identity.Pages.Account
                 UserName = Input.PhoneNumber,
                 Email = Input.Email,
                 PhoneNumber = Input.PhoneNumber,
-                Gender = Input.Gender
+                Gender = (byte)Input.Gender,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

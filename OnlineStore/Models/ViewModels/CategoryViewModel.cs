@@ -12,7 +12,7 @@ namespace OnlineStore.Models.ViewModels.Item
 
         public byte? Status { set; get; }
 
-        public int? SortOrder { set; get; }
+        public byte? SortOrder { set; get; }
 
         public int? ParentId { set; get; }
 

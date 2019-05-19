@@ -88,7 +88,7 @@ namespace OnlineStore.Pages.Order
         //    {
         //        CustomerId = Customer.Id,
         //        OrderDate = DateTime.Now,
-        //        Status = (int)StatusOrder.Pending
+        //        Status = (byte)StatusOrder.Pending
         //    };
         //    _orderRepository.Add(order);
         //    int MaxId = _orderRepository.GetMaxId();
