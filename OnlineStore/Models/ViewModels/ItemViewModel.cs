@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using DAL.Data.Enums;
 
 namespace OnlineStore.Models.ViewModels.Item
 {

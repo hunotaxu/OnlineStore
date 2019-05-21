@@ -60,6 +60,10 @@ namespace OnlineStore
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                })
                 .AddSessionStateTempDataProvider()
                 .AddRazorPagesOptions(options =>
                 {
@@ -67,10 +71,6 @@ namespace OnlineStore
                     options.AllowAreas = true;
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                }).
-                AddJsonOptions(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
 
             services.AddSession();

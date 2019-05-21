@@ -20,6 +20,8 @@ namespace DAL.Data.Entities
         [Column(TypeName="decimal(18,2)")]
         public decimal Amount { get; set; }
 
+        public decimal SaleOff { get; set; }
+
         public virtual Item Item { get; set; }
         public virtual Order Order { get; set; }
     }

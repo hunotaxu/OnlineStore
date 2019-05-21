@@ -13,7 +13,6 @@ namespace DAL.Data.Entities
             LineItems = new HashSet<LineItem>();
         }
 
-        //public int Id { get; set; }
         [Display(Name = "Ngày giao dự kiến")]
         [DataType(DataType.Date)]
         public DateTime? DeliveryDate { get; set; }
@@ -38,7 +37,7 @@ namespace DAL.Data.Entities
         [Display(Name = "Trạng thái")]
         public byte Status { get; set; }
 
-        public byte? DeliveryType { get; set; }
+        public byte DeliveryType { get; set; }
 
         public DateTime? DateCreated { get; set; }
 

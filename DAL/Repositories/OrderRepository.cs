@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using DAL.Data.Entities;
-using DAL.Data.Enums;
 using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;

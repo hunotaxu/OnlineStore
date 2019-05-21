@@ -3,60 +3,59 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Pages/Layout/_AdminLayout.cshtml";
 }
 
-<h2>Details</h2>
+@section Scripts{
+    <script src="~/js/admin/order/detail.js"></script>
+    <script>
+        orderDetail.init();
+    </script>
+}
 
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.DeliveryDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.DeliveryDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.Bonus)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.Bonus)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.EmployeeId)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.EmployeeId)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.ShippingFee)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.ShippingFee)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.Status)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.Status)
-        </dd>
-        @*<dt>
-            @Html.DisplayNameFor(model => model.Order.Customer)
-        </dt>*@
-        @*<dd>
-            @Html.DisplayFor(model => model.Order.Customer.Password)
-        </dd>*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Order.Timestamp)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Order.Timestamp)
-        </dd>
-    </dl>
+<div class="page-title">
+    <div class="title_left">
+        <h3>Chi tiết đơn hàng</h3>
+    </div>
+    <div class="title_right">
+        <div class="col-md-12 col-sm-12  form-group pull-right">
+            <a class="btn btn-info" asp-page="./Index" asp-route-id="@Model.Order.Id">Quay về danh sách đơn hàng</a>
+            <button type="button" id="btnSaveChangesOrder" class="btn btn-success">Lưu thay đổi</button>
+            <a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Xóa đơn hàng</a>
+            <button class="btn btn-default" id="btn-export" type="button">In thông tin đơn hàng</button>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Order.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+
+<div class="x_content">
+    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#order_info" role="tab" data-toggle="tab" aria-expanded="true">Thông tin đơn hàng</a>
+            </li>
+            <li role="presentation" class="">
+                <a href="#deliver_info" role="tab" data-toggle="tab" aria-expanded="false">Thông tin đặt hàng</a>
+            </li>
+            <li role="presentation" class="">
+                <a href="#product_list" role="tab" data-toggle="tab" aria-expanded="false">Danh sách sản phẩm</a>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="order_info">
+                <p>
+                    @await Component.InvokeAsync("OrderInfo", new { orderId = Model.Order.Id })
+                </p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="deliver_info">
+                <p>
+                    @*@await Component.InvokeAsync("DeliveryInfo", new { orderId = Model.Order.Id })*@
+                </p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="product_list">
+                <p>
+                    xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo
+                    booth letterpress, commodo enim craft beer mlkshk
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
