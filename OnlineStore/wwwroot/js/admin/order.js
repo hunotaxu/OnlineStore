@@ -388,7 +388,7 @@ var order = (function () {
     function getDeliveryType(deliveryType) {
         switch (deliveryType) {
             case 1:
-                return `Giao hàng chuẩn`;
+                return `Giao hàng tiêu chuẩn`;
             case 2:
                 return `Giao hàng ưu tiên`;
             case 3:
