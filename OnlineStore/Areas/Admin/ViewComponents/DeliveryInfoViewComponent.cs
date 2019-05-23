@@ -1,32 +1,45 @@
-﻿//using AutoMapper;
-//using DAL.Repositories;
-//using Microsoft.AspNetCore.Mvc;
-//using OnlineStore.Models.ViewModels;
-//using System.Threading.Tasks;
+﻿using AutoMapper;
+using DAL.Data.Enums;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using OnlineStore.Models.ViewModels;
+using System.Threading.Tasks;
 
-//namespace OnlineStore.Areas.Admin.ViewComponents
-//{
-//    public class DeliveryInfoViewComponent : ViewComponent
-//    {
-//        private readonly MapperConfiguration _mapperConfiguration;
-//        private readonly IOrderRepository _orderRepository;
+namespace OnlineStore.Areas.Admin.ViewComponents
+{
+    public class DeliveryInfoViewComponent : ViewComponent
+    {
+        private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IUserAddressRepository _userAddressRepository;
 
-//        public DeliveryInfoViewComponent(IOrderRepository orderRepository, )
-//        {
-//            _orderRepository = orderRepository;
-//            _mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderDeliveryInfoViewModel>());
-//        }
+        public DeliveryInfoViewComponent(IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
+        {
+            _orderRepository = orderRepository;
+            _userAddressRepository = userAddressRepository;
+            _mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderDeliveryInfoViewModel>());
+        }
 
-//        public Task<IViewComponentResult> InvokeAsync(int orderId)
-//        {
-//            //var deliveryInfoVM = _mapperConfiguration.CreateMapper().Map<OrderDeliveryInfoViewModel>(_orderRepository.Find(orderId));
-//            var order = _orderRepository.Find(orderId);
-
-//            //var deliveryInfoVM = new OrderDeliveryInfoViewModel
-//            //{
-//            //    Address
-//            //};
-//            return Task.FromResult<IViewComponentResult>(View(deliveryInfoVM));
-//        }
-//    }
-//}
+        public Task<IViewComponentResult> InvokeAsync(int orderId)
+        {
+            var order = _orderRepository.Find(orderId);
+            var recipientName = order.Customer?.Name;
+            var emailTest = order.Customer?.Email;
+            var addressTest = order.Address?.Detail;
+            var userAddress = _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value);
+            var deliveryInfoVM = new OrderDeliveryInfoViewModel
+            {
+                RecipientFullName = order.Customer.Name,
+                Email = order.Customer.Email,
+                PhoneNumber = userAddress?.PhoneNumber,
+                DeliveryType = (DeliveryType)order.DeliveryType,
+                PaymentType = (PaymentType)order.PaymentType,
+                DeliveryDate = order.DeliveryDate ?? order.DeliveryDate.Value.AddDays(3),
+                ShippingFee = order.ShippingFee,
+                AddressType = (byte)userAddress?.AddressType,
+                Address = order.Address?.Detail
+            };
+            return Task.FromResult<IViewComponentResult>(View(deliveryInfoVM));
+        }
+    }
+}

@@ -86,7 +86,7 @@ namespace DAL.EF
             //});
 
             modelBuilder.Entity<UserAddress>()
-                .HasKey(c => new { c.AddressId, c.UserId });
+                .HasKey(c => new { c.AddressId, c.CustomerId });
 
             modelBuilder.Entity<CartDetail>()
                 .HasKey(c => new { c.CartId, c.ItemId });

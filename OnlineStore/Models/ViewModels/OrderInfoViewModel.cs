@@ -11,9 +11,6 @@ namespace OnlineStore.Models.ViewModels
         //[DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
         public byte DeliveryType { get; set; }
-        //[DataType(DataType.DateTime)]
-        //[DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy HH:MM}")]
-        public DateTime DeliveryDate { get; set; }
         public byte Status { get; set; }
     }
 }

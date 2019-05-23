@@ -5,9 +5,13 @@
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Logs\**" />
     <Compile Remove="wwwroot\lib\parsley\**" />
+    <Content Remove="Logs\**" />
     <Content Remove="wwwroot\lib\parsley\**" />
+    <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="wwwroot\lib\parsley\**" />
+    <None Remove="Logs\**" />
     <None Remove="wwwroot\lib\parsley\**" />
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Logs\" />
     <Folder Include="Pages\Shared\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\images\admin\ProductImages\" />

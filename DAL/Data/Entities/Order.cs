@@ -39,6 +39,8 @@ namespace DAL.Data.Entities
 
         public byte DeliveryType { get; set; }
 
+        public byte PaymentType { get; set; }
+
         public DateTime? DateCreated { get; set; }
 
         public DateTime? DateModified { get; set; }

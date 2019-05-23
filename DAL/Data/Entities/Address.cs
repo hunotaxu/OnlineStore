@@ -9,6 +9,5 @@ namespace DAL.Data.Entities
         public string District { get; set; }
         public string Province { get; set; }
         public string Detail { get; set; }
-        public string PhoneNumber { get; set; }
     }
 }

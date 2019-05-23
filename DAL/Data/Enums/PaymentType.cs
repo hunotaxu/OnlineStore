@@ -1,20 +1,16 @@
-﻿namespace DAL.Data.Enums
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DAL.Data.Enums
 {
     public enum PaymentType : byte
     {
-        /// <summary>
-        /// The Cash
-        /// </summary>
-        Cash = 0,
-
-        /// <summary>
-        /// The Credit
-        /// </summary>
-        Credit = 1,
-
-        /// <summary>
-        /// The Debit
-        /// </summary>
-        Debit = 2
+        [Display(Name = "Thanh toán khi nhận hàng")]
+        CashOnDelivery,
+        [Display(Name= "Thanh toán bằng thẻ quốc tế")]
+        CreditDebitCard,
+        [Display(Name = "Thanh toán bằng thẻ ATM nội địa")]
+        LocalATM,
+        [Display(Name = "Thanh toán qua momo")]
+        Momo
     }
 }

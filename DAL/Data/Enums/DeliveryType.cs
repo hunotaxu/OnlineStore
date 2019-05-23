@@ -6,7 +6,7 @@ namespace DAL.Data.Enums
     {
         [Display(Name = "Chọn phương thức giao hàng")]
         None,
-        [Display(Name = "Giao hàng chuẩn")]
+        [Display(Name = "Giao hàng tiêu chuẩn")]
         StandardShipping, // Giao trong vòng 2 - 4 ngày
         [Display(Name = "Giao hàng ưu tiên")]
         PriorityShipping, // Giao trong ngày hôm sau

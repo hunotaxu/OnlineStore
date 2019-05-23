@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @model OnlineStore.Pages.Order.AddressModel
 @using DAL.Data.Entities
 @using DAL.Models
@@ -66,7 +66,7 @@
                                             <input type="radio" name="optionShipp" id="optionShipp2" value="option2" checked>
                                             Thêm địa chỉ mới
                                         </label>
-                                    </div>*@
+                                    </div>
                             </div>
                             <div class="col-xs-9">
                                 <form role="form" method="post" id="addressForm" style="display: none" asp-page-handler="Address">
@@ -74,7 +74,7 @@
                                     @*<div class="form-group">
                                             <label for="inputname">Tên người nhận</label>
                                             <input type="text" class="form-control form-control-large" id="inputname" placeholder="Nhập họ tên người nhận">
-                                        </div>*@
+                                        </div>
                                     <div class="form-group">
                                         <label for="inputAddress1">Số điện thoại</label>
                                         <input type="text" class="form-control form-control-large" name="PhoneNumber" id="PhoneNumber" placeholder="Nhập số điện thoại">
@@ -232,4 +232,4 @@
             $("#Province").val($(this).parent().find(".Province").val());
         });
     </script>
-}
+}*@

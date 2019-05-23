@@ -1,22 +1,18 @@
-﻿namespace OnlineStore.Models.ViewModels
+﻿using DAL.Data.Enums;
+using System;
+
+namespace OnlineStore.Models.ViewModels
 {
     public class OrderDeliveryInfoViewModel
     {
-        public OrderDeliveryInfoViewModel(string recipientFullName, string email, byte deliveryType, byte paymentType, byte address, byte shippingFee)
-        {
-            RecipientFullName = recipientFullName;
-            Email = email;
-            DeliveryType = deliveryType;
-            PaymentType = paymentType;
-            Address = address;
-            ShippingFee = shippingFee;
-        }
-
         public string RecipientFullName { get; set; }
         public string Email { get; set; }
-        public byte DeliveryType { get; set; }
-        public byte PaymentType { get; set; }
-        public byte Address { get; set; }
-        public byte ShippingFee { get; set; }
+        public string PhoneNumber { get; set; }
+        public DeliveryType DeliveryType { get; set; }
+        public DateTime DeliveryDate { get; set; }
+        public PaymentType PaymentType { get; set; }
+        public string Address { get; set; }
+        public byte AddressType { get; set; }
+        public decimal? ShippingFee { get; set; }
     }
 }
