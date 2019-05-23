@@ -72,3 +72,7 @@
 .page-title .title_right {
     width: auto;
 }
+
+.order-info {
+    font-weight: normal !important;
+}

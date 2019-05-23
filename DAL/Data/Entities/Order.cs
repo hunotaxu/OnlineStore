@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
+using Newtonsoft.Json;
 
 namespace DAL.Data.Entities
 {
@@ -45,8 +46,11 @@ namespace DAL.Data.Entities
 
         public DateTime? DateModified { get; set; }
 
+        [JsonIgnore]
         public virtual ApplicationUser Customer { get; set; }
+        [JsonIgnore]
         public virtual Address Address { get; set; }
+        [JsonIgnore]
         public virtual ICollection<LineItem> LineItems { get; set; }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Linq;
+using System.Collections.Generic;
+using System;
 
 namespace OnlineStore.Pages.Admin.Orders
 {
@@ -29,6 +33,27 @@ namespace OnlineStore.Pages.Admin.Orders
                 return NotFound();
             }
             return Page();
+        }
+
+        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Order model)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(allErrors);
+            }
+
+            if (model.Id == 0)
+            {
+                return new BadRequestResult();
+            }
+
+            var order = _orderRepository.Find(model.Id);
+            order.Status = model.Status;
+            order.DateModified = DateTime.Now;
+            _orderRepository.Update(order);
+
+            return new OkObjectResult(order);
         }
     }
 }

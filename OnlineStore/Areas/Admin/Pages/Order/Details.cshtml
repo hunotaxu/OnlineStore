@@ -19,13 +19,12 @@
     <div class="title_right">
         <div class="col-md-12 col-sm-12  form-group pull-right">
             <a class="btn btn-info" asp-page="./Index" asp-route-id="@Model.Order.Id">Quay về danh sách đơn hàng</a>
-            <button type="button" id="btnSaveChangesOrder" class="btn btn-success">Lưu thay đổi</button>
+            @*<button type="button" id="btnSaveChangesOrder" class="btn btn-success">Lưu thay đổi</button>*@
             <a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Xóa đơn hàng</a>
             <button class="btn btn-default" id="btn-export" type="button">In thông tin đơn hàng</button>
         </div>
     </div>
 </div>
-
 <div class="x_content">
     <div class="" role="tabpanel" data-example-id="togglable-tabs">
         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">

@@ -2,9 +2,10 @@
     var init = function () {
         onTypeCurrency();
         onDateTimePicker();
-        $("#divOrderDate").on("dp.change", function (e) {
-            console.log($("#divOrderDate").find("input").val());
-        });
+        registerEvents();
+        //$("#divOrderDate").on("dp.change", function (e) {
+        //    console.log($("#divOrderDate").find("input").val());
+        //});
     };
     var onDateTimePicker = function () {
         var orderDate = new Date($('#OrderDate').val());
@@ -21,8 +22,41 @@
         });
     };
 
-    var saveOrder = function () {
+    var registerEvents = function () {
+        $('#btnSaveOrderStatus').click(function (e) {
+            saveOrder(e);
+        });
+    };
 
+    var saveOrder = function (e) {
+        if ($('#frmOrderGeneralInfo').valid()) {
+            e.preventDefault();
+            var id = $('#orderId').text();
+            var status = $("input[name='Status']:checked").val();
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Order/Details?handler=SaveEntity",
+                data: JSON.stringify({
+                    Id: id,
+                    Status: status
+                }),
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                success: function (response) {
+                    commons.notify('Thành công', 'success');
+                    $('#modal-add-edit').modal('hide');
+                    commons.stopLoading();
+                },
+                error: function (response) {
+                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.stopLoading();
+                }
+            });
+            return false;
+        }
     };
 
     var onTypeCurrency = function () {
