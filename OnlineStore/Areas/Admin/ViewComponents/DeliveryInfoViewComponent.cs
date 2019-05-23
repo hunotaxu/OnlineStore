@@ -3,6 +3,7 @@ using DAL.Data.Enums;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using OnlineStore.Models.ViewModels;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace OnlineStore.Areas.Admin.ViewComponents
@@ -23,9 +24,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         public Task<IViewComponentResult> InvokeAsync(int orderId)
         {
             var order = _orderRepository.Find(orderId);
-            var recipientName = order.Customer?.Name;
-            var emailTest = order.Customer?.Email;
-            var addressTest = order.Address?.Detail;
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             var userAddress = _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value);
             var deliveryInfoVM = new OrderDeliveryInfoViewModel
             {
@@ -34,8 +33,9 @@ namespace OnlineStore.Areas.Admin.ViewComponents
                 PhoneNumber = userAddress?.PhoneNumber,
                 DeliveryType = (DeliveryType)order.DeliveryType,
                 PaymentType = (PaymentType)order.PaymentType,
-                DeliveryDate = order.DeliveryDate ?? order.DeliveryDate.Value.AddDays(3),
-                ShippingFee = order.ShippingFee,
+                DeliveryDate = order.DeliveryDate ?? order.OrderDate,
+                //ShippingFee = order.ShippingFee,
+                ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat),
                 AddressType = (byte)userAddress?.AddressType,
                 Address = order.Address?.Detail
             };

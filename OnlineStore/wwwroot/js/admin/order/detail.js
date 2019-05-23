@@ -9,7 +9,7 @@
     };
     var onDateTimePicker = function () {
         var orderDate = new Date($('#OrderDate').val());
-        var defaultOrderDate = new Date(orderDate.getFullYear(), orderDate.getMonth() + 1, orderDate.getDate(), orderDate.getHours(), orderDate.getMinutes());
+        var defaultOrderDate = new Date(orderDate.getFullYear(), orderDate.getMonth(), orderDate.getDate(), orderDate.getHours(), orderDate.getMinutes());
         $('#divOrderDate').datetimepicker({
             format: 'DD/MM/YYYY hh:mm A',
             defaultDate: defaultOrderDate
@@ -24,11 +24,45 @@
 
     var registerEvents = function () {
         $('#btnSaveOrderStatus').click(function (e) {
-            saveOrder(e);
+            saveOrderGeneralInfo(e);
+        });
+        $('#btnSaveOrderDeliveryInfo').click(function (e) {
+            saveOrderDeliveryInfo(e);
         });
     };
 
-    var saveOrder = function (e) {
+    var saveOrderDeliveryInfo = function (e) {
+        if ($('#frmOrderDeliveryInfo').valid()) {
+            e.preventDefault();
+            var id = $('#orderId').text();
+            var deliveryDate = Date.parse($('#divDeliveryDate').data('date'));
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Order/Details?handler=SaveEntity",
+                data: JSON.stringify({
+                    Id: id,
+                    DeliveryDate: deliveryDate
+                }),
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                success: function (response) {
+                    commons.notify('Thành công', 'success');
+                    $('#modal-add-edit').modal('hide');
+                    commons.stopLoading();
+                },
+                error: function (response) {
+                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.stopLoading();
+                }
+            });
+            return false;
+        }
+    };
+
+    var saveOrderGeneralInfo = function (e) {
         if ($('#frmOrderGeneralInfo').valid()) {
             e.preventDefault();
             var id = $('#orderId').text();

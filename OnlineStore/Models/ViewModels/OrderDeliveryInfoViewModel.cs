@@ -13,6 +13,7 @@ namespace OnlineStore.Models.ViewModels
         public PaymentType PaymentType { get; set; }
         public string Address { get; set; }
         public byte AddressType { get; set; }
-        public decimal? ShippingFee { get; set; }
+        //public decimal? ShippingFee { get; set; }
+        public string ShippingFee { get; set; }
     }
 }

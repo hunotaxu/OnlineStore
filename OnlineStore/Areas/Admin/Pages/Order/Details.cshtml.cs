@@ -49,7 +49,14 @@ namespace OnlineStore.Pages.Admin.Orders
             }
 
             var order = _orderRepository.Find(model.Id);
-            order.Status = model.Status;
+            if (model.Status != 0)
+            {
+                order.Status = model.Status;
+            }
+            if (model.DeliveryDate.HasValue)
+            {
+                order.DeliveryDate = model.DeliveryDate.Value;
+            }
             order.DateModified = DateTime.Now;
             _orderRepository.Update(order);
 
