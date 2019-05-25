@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels;
 
@@ -20,6 +21,7 @@ namespace OnlineStore.Pages.Product
         public IList<CustomerCommentViewModel> CustomerCommentViewModel { get; set; }
 
         public double Average { get; set; }
+        public int ItemId;
         public double _countComment = 0;
 
 
@@ -35,7 +37,7 @@ namespace OnlineStore.Pages.Product
         {
             // int TongDiem = 0;
             int sumEvaluation = 0;
-
+            
             //Kiểm tra tham số truyền vào có rỗng hay không
             if (id == null)
             {
@@ -45,6 +47,7 @@ namespace OnlineStore.Pages.Product
             //Nếu không thì truy xuất csdl lấy ra sản phẩm tương ứng
 
             Item = _itemRepository.Find(n => n.Id == id && n.IsDeleted == false);
+            ItemId = Item.Id;
             //Comment = _commentRepository.Find(n => n.Id == id && n.IsDeleted == false);
 
             if (Item == null)
@@ -91,6 +94,34 @@ namespace OnlineStore.Pages.Product
             }
             return Page();
 
+        }
+        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Comment model)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(allErrors);
+            }
+
+            if (model.Id == 0)
+            {
+                model.DateCreated = DateTime.Now;
+                model.Id = model.Id;
+                model.Content = model.Content;
+                model.DateModified = DateTime.Now;
+                model.CustomerId = model.CustomerId;                
+                model.ItemId = model.ItemId;
+                //model.DateModified = DateTime.Now;
+                _commentRepository.Add(model);
+                return new OkObjectResult(model);
+            }
+
+            var comment = _commentRepository.Find(model.Id);
+            comment.Id = model.Id;
+            comment.Content = model.Content;
+            comment.DateModified = DateTime.Now;
+
+            return new OkObjectResult(comment);
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
