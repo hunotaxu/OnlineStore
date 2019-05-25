@@ -23,6 +23,8 @@
     <link href="~/css/client/layout/header.css" rel="stylesheet" />
     <link href="~/css/client/style-layout.css" rel="stylesheet" />
     <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/notifyjs/styles/metro/notify-metro.css" rel="stylesheet" />
+    @RenderSection("Styles", false)
 
 </head>
 
@@ -119,7 +121,7 @@
                                 <div class="top-search">
                                     <div id="search">
                                         <form asp-page="/Product/Index" method="get">
-                                            <div class="input-group">                                                
+                                            <div class="input-group">
                                                 <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?..." name="searchstring">
                                                 <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                             </div>
@@ -602,10 +604,12 @@
     <script type="text/javascript" src="~/js/client/layout/jquery.bxslider.js"></script>
     <script type="text/javascript" src="~/js/client/layout/countdown.js"></script>
     <script type="text/javascript" src="~/js/client/layout/cloud-zoom.js"></script>
-
+    <script src="~/js/shared/commons.js"></script>
+    <script src="~/lib/notifyjs/notify.js"></script>
+    <script src="~/lib/notifyjs/styles/metro/notify-metro.js"></script>
     <!--js đánh giá sản phẩm-->
     <script src="~/node_modules/rateit-npm/src/jquery.rateit.js"></script>
 
-    @RenderSection("scripts", required: false)
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

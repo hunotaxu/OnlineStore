@@ -22,10 +22,27 @@
     //}
     var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
+@*<scripts>
+        <script src="~/js/client/product/detail-script.js"></script>
+    </scripts>*@
 
+@section Scripts{
+    <script src="~/js/client/product/detail-script.js"></script>
+}
 
-<link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
-<link href="~/css/client/layout/style.css" rel="stylesheet" />
+@section Styles{
+    <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
+    <link href="~/css/client/layout/style.css" rel="stylesheet" />
+    <link href="~/css/client/product/detail.css" rel="stylesheet" />
+}
+@*<link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
+    <link href="~/css/client/layout/style.css" rel="stylesheet" />*@
+<div class="dv-bg-loading">
+    <div class='dv-loading'>
+        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+        <span class="sr-only">Đang tải...</span>
+    </div>
+</div>
 <div class="breadcrumbs">
     <div class="container">
         <div class="row">
@@ -48,7 +65,12 @@
                 <div class="product-view-area">
                     <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
                         <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="large-image"> <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="products"> </a> </div>
+                        <div class="large-image">
+                            @*<a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">*@
+                            <a class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
+                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="products">
+                            </a>
+                        </div>
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides">
                                 <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="Thumbnail 2" /></a></li>
@@ -73,7 +95,6 @@
                             <!--Đánh giá sao-->
                             <div class="rateit" data-rateit-value=@Html.Raw(Model.Average) data-rateit-readonly="true"> </div>
                             <!--Đánh giá sao-->
-
                             @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
                             @*<p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>*@
                             @if (Model.Item.Quantity == 0)
@@ -89,7 +110,7 @@
                         </div>
                         <br />
                         <div>
-                            <p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>
+                            <p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a id="gotocomment" href="#review">Thêm bình luận của bạn</a> </p>
 
                         </div>
                         <div class="short-description">
@@ -148,13 +169,13 @@
                 <div class="product-overview-tab">
                     <div class="product-tab-inner">
                         <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                            <li class="active"> <a href="#description" data-toggle="tab"> Mô tả sản phẩm </a> </li>
-                            <li> <a href="#reviews" data-toggle="tab">Đánh giá</a> </li>
-                            <li><a href="#product_tags" data-toggle="tab">Tags</a></li>
-                            <li> <a href="#custom_tabs" data-toggle="tab">Custom Tab</a> </li>
+                            <li id ="description"class="active"> <a href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
+                            <li id="review"> <a href="#reviews" data-toggle="tab">Đánh giá</a> </li>
+                            <li id="product_tag"><a href="#product_tags" data-toggle="tab">Tags</a></li>
+                            <li id="custom_tag"> <a href="#custom_tabs" data-toggle="tab">Custom Tab</a> </li>
                         </ul>
                         <div id="productTabContent" class="tab-content">
-                            <div class="tab-pane fade in active" id="description">
+                            <div class="tab-pane fade in active" id="descriptions">
                                 <div class="std">
                                     <p>
                                         @Html.Raw(Model.Item.Description)
@@ -216,7 +237,7 @@
 
                                                     <li class="customer-comment">
                                                         <img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName
-                                                        <p class="in-para">@item.Content)</p>
+                                                        <p class="in-para">@item.Content</p>
                                                     </li>
                                                 }
                                             }
@@ -225,45 +246,23 @@
                                                 <li>
                                                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> @Html.Raw("Hãy trở thành người đầu tiên đánh giá về sản phẩm này. <br />")
 
-
                                                 </li>
                                             }
                                         </ul>
                                         <!--Đánh giá của bạn-->
                                         <br />
                                         <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Viết đánh giá của bạn:</h2>
-                                        <form>
-                                            <div class="table-responsive reviews-table">
-                                                <table>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>1 sao</th>
-                                                            <th>2 sao</th>
-                                                            <th>3 sao</th>
-                                                            <th>4 sao</th>
-                                                            <th>5 sao</th>
-                                                        </tr>
-                                                        <tr>
-
-                                                            <td>Mức độ hài lòng</td>
-                                                            <td><input type="radio" value="1"></td>
-                                                            <td><input type="radio" value="2"></td>
-                                                            <td><input type="radio" value="3"></td>
-                                                            <td><input type="radio" value="4"></td>
-                                                            <td><input type="radio" value="5"></td>
-
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <form class="frmEvaluation" method="post">
+                                            <!--Đánh giá sao-->
+                                            <div id="rateit_star" class="rateit" data-rateit-value="5" data-rateit-readonly="false" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
+                                            <!--Đánh giá sao-->
                                             <div class="form-area">
                                                 <div class="form-element">
-                                                    <label><em>*</em></label>
-                                                    <textarea class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
+                                                    <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
                                                 </div>
                                                 <div class="buttons-set">
-                                                    <button class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>
+                                                    @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
+                                                    <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -975,4 +974,3 @@
         </div>
     </div>
 </div>
-
