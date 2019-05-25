@@ -35,7 +35,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         {
             var order = _orderRepository.Find(orderId);
             //List<LineItem> lineItems = (List<LineItem>)_lineItemRepository.GetItems(x => x.OrderId == orderId);
-            List<LineItem> lineItems = _lineItemRepository.GetItems(x => x.OrderId == orderId);
+            List<LineItem> lineItems = _lineItemRepository.GetSome(x => x.OrderId == orderId);
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             var userAddress = _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value);
             List<OrderProductInfoViewModel> orderProducts = new List<OrderProductInfoViewModel>();

@@ -25,17 +25,29 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         private readonly IItemRepository _itemRepository;
         private readonly IProductImagesRepository _productImagesRepository;
         private readonly ICategoryRepository _categoryRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly ICartDetailRepository _cartDetailRepository;
+        private readonly IGoodsReceiptDetailRepository _goodsReceiptDetailRepository;
+        private readonly ILineItemRepository _lineItemRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly MapperConfiguration _mapperConfiguration;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(IHostingEnvironment hostingEnvironment, ILogger<IndexModel> logger, IItemRepository itemRepository, IUserRepository userRepository, ICategoryRepository categoryRepository, IProductImagesRepository productImagesRepository)
+        public IndexModel(IHostingEnvironment hostingEnvironment, ILogger<IndexModel> logger,
+                          IItemRepository itemRepository,
+                          ICategoryRepository categoryRepository, IProductImagesRepository productImagesRepository,
+                          ICommentRepository commentRepository,
+                          IGoodsReceiptDetailRepository goodsReceiptDetailRepository,
+                          ICartDetailRepository cartDetailRepository,
+                          ILineItemRepository lineItemRepository)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _itemRepository = itemRepository;
-            _userRepository = userRepository;
+            _cartDetailRepository = cartDetailRepository;
+            _lineItemRepository = lineItemRepository;
+            _commentRepository = commentRepository;
+            _goodsReceiptDetailRepository = goodsReceiptDetailRepository;
             _categoryRepository = categoryRepository;
             _productImagesRepository = productImagesRepository;
             _mapperConfiguration = new MapperConfiguration(cfg =>
@@ -148,12 +160,20 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             return new OkObjectResult(model);
         }
 
-        public IActionResult OnGetDelete(int id)
+        public IActionResult OnPostDelete([FromBody] ItemViewModel model)
         {
-            var item = _itemRepository.Find(id);
+            var item = _itemRepository.Find(model.Id);
             _itemRepository.Delete(item);
-            var images = _productImagesRepository.GetSome(x => x.ItemId == id && x.IsDeleted == false);
-            _productImagesRepository.DeleteRange(images);
+            var productImages = _productImagesRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _productImagesRepository.DeleteRange(productImages);
+            var comments = _commentRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _commentRepository.DeleteRange(comments);
+            var cartDetails = _cartDetailRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _cartDetailRepository.DeleteRange(cartDetails);
+            var lineItems = _lineItemRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _lineItemRepository.DeleteRange(lineItems);
+            var goodsReceiptDetails = _goodsReceiptDetailRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _goodsReceiptDetailRepository.DeleteRange(goodsReceiptDetails);
             return new OkResult();
         }
 

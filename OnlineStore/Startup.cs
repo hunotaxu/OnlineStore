@@ -139,6 +139,7 @@ namespace OnlineStore
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<ILineItemRepository, LineItemRepository>();
+            services.AddScoped<IGoodsReceiptDetailRepository, GoodsReceiptDetailRepository>();
             services.AddScoped<IUserAddressRepository, UserAddressRepository>();
             services.AddScoped<IProductImagesRepository, ProductImagesRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

@@ -28,7 +28,7 @@ namespace DAL.Repositories
         public LineItem Find(Expression<Func<LineItem, bool>> where)
             => Table.FirstOrDefault(where);
 
-        public List<LineItem> GetItems(Expression<Func<LineItem, bool>> where) => Table.Where(where).ToList();
+        public List<LineItem> GetSome(Expression<Func<LineItem, bool>> where) => Table.Where(where).ToList();
 
         public int Add(LineItem entity, bool persist = true)
         {
@@ -62,6 +62,16 @@ namespace DAL.Repositories
             lineItem.IsDeleted = true;
             Table.Update(lineItem);
             //Table.Attach(LineItem).State = EntityState.IsDeleted;
+            return persist ? SaveChanges() : 0;
+        }
+
+        public int DeleteRange(IEnumerable<LineItem> entities, bool persist = true)
+        {
+            foreach(var entity in entities)
+            {
+                entity.IsDeleted = true;
+                Table.Update(entity);
+            }
             return persist ? SaveChanges() : 0;
         }
 

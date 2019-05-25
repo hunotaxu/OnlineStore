@@ -56,11 +56,12 @@ var category = (function () {
             var that = $('#hidIdM').val();
             commons.confirm('Bạn có muốn xóa không?', function () {
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: '/Admin/Category/Index?handler=Delete',
-                    data: {
-                        id: that
-                    },
+                    data: JSON.stringify({
+                        Id: that
+                    }),
+                    contentType: 'application/json;charset=utf-8',
                     beforeSend: function () {
                         commons.startLoading();
                     },

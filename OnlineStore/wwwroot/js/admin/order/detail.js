@@ -29,6 +29,31 @@
         $('#btnSaveOrderDeliveryInfo').click(function (e) {
             saveOrderDeliveryInfo(e);
         });
+        $('body').on('click', '#btnDelete', function (e) {
+            e.preventDefault();
+            commons.confirm('Bạn chắc chắn muốn xóa?', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Admin/Order/Index?handler=Delete',
+                    data: JSON.stringify({
+                        Id: $('#btnDelete').data('order-id')
+                    }),
+                    contentType: 'application/json;charset=utf-8',
+                    beforeSend: function () {
+                        commons.startLoading();
+                    },
+                    success: function () {
+                        commons.notify('Xóa thành công', 'success');
+                        commons.stopLoading();
+                        window.location.href = '/Admin/Order';
+                    },
+                    error: function () {
+                        commons.notify('Đã có lỗi xãy ra');
+                        commons.stopLoading();
+                    }
+                });
+            });
+        });
     };
 
     var saveOrderDeliveryInfo = function (e) {
@@ -103,14 +128,6 @@
             //    formatCurrency($(this), "blur");
             //}
         });
-        //$('#txtShippingFee').keyup(function () {
-        //    var money = $(this).val();
-        //    money = money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        //    debugger;
-        //    $(this).val(money);
-        //});
-        ////money = money.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        ////return money;
     };
 
     function formatNumber(n) {
@@ -186,6 +203,8 @@
         caret_pos = updated_len - original_len + caret_pos;
         input[0].setSelectionRange(caret_pos, caret_pos);
     }
+
+
 
     return {
         init

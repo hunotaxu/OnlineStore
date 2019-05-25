@@ -12,7 +12,7 @@
 
 @section Scripts{
     <script src="~/lib/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
-    <script src="~/js/admin/order.js"></script>
+    <script src="~/js/admin/order/index.js"></script>
     <script>
         order.init();
     </script>
@@ -93,7 +93,7 @@
             <th>
                 <a class="btn btn-sm" data-id="{{Id}}" href="/Admin/Order/Details?id={{Id}}" title="Xem chi tiết"><i class="fa fa-info-circle"></i></a>
                 @*<a class="btn btn-sm" data-id="{{Id}}" title="Xem chi tiết" asp-area="Admin" asp-page="/Order" asp-route-id="{{Id}}"><i class="fa fa-info-circle"></i></a>*@
-                <a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>
+                @*<a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>*@
             </th>
         </tr>
     </script>

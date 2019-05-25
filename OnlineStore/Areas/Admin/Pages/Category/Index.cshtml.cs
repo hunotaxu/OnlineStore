@@ -70,11 +70,11 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             return new OkObjectResult(category);
         }
 
-        public IActionResult OnGetDelete(int id)
+        public IActionResult OnPostDelete([FromBody] DAL.Data.Entities.Category model)
         {
-            var category = _categoryRepository.Find(id);
+            var category = _categoryRepository.Find(model.Id);
             _categoryRepository.Delete(category);
-            var items = _itemRepository.GetSome(x => x.CategoryId == id && x.IsDeleted == false);
+            var items = _itemRepository.GetSome(x => x.CategoryId == model.Id && x.IsDeleted == false);
             _itemRepository.DeleteRange(items);
             return new OkResult();
         }

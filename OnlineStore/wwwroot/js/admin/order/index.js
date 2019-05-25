@@ -1,103 +1,36 @@
-var itemPage = (function () {
+var order = (function () {
     var init = function () {
-        onTypeCurrency();
-        Dropzone.autoDiscover = false;
         $(document).ready(function () {
-            initDropzone();
-            loadCategories();
+            //loadCategories();
             loadData();
             registerEvents();
-            registerControls();
+            //registerControls();
             onSearchEvents();
         });
     };
 
-    var clearDropzone = function () {
-        $('.dropzone').each(function () {
-            let dropzoneControl = $(this)[0].dropzone;
-            if (dropzoneControl) {
-                dropzoneControl.destroy();
-            }
-        });
-    };
+    //var removeAttachment = function (file) {
+    //    if (file) {
+    //        $.ajax({
+    //            url: '/Admin/Upload/TemporaryRemoveAttachment',
+    //            data: { fileName: file.name },
+    //            success: function () {
+    //                removeThumbnail(file);
+    //                $(generalError).text("");
+    //            },
+    //            error: function (file, response) {
+    //                $(generalError).text(response);
+    //            }
+    //        });
+    //    }
+    //};
 
-    var initDropzone = function (productId) {
-        Dropzone.autoDiscover = false;
-        var existDropzone = $("#dzUpload")[0].dropzone;
-        if (existDropzone) {
-            clearDropzone();
-        }
-        $("#dzUpload").dropzone({
-            init: function () {
-                var myDropzone = this;
-                //Call the action method to load the images from the server
-                if (productId !== 0 && productId !== null && productId !== undefined) {
-                    $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
-                        if (data.attachmentsList !== undefined && data.attachmentsList.length > 0) {
-                            $.each(data.attachmentsList, function (index, item) {
-                                //// Create the mock file:
-                                var mockFile = {
-                                    name: item.name
-                                };
-                                // Call the default addedfile event handler
-                                myDropzone.emit("addedfile", mockFile);
-                                // And optionally show the thumbnail of the file:
-                                myDropzone.emit("thumbnail", mockFile, `/images/client/ProductImages/${item.name}`);
-                                $(".dz-size").remove();
-                                $('.dz-progress').remove();
-                                myDropzone.files.push(mockFile);
-                            });
-                        }
-                    });
-                }
-            },
-            url: "/Admin/Upload/TemporaryStoreAttachment",
-            maxFiles: 5,
-            maxFilesize: 10, // MB
-            thumbnailWidth: 80,
-            thumbnailHeight: 80,
-            acceptedFiles: "image/*",
-            addRemoveLinks: true,
-            success: function (file, response) {
-                if (response === "duplicated") {
-                    var _ref = file.previewElement;
-                    if (_ref) {
-                        removeThumbnail(file);
-                    }
-                } else {
-                    file.previewElement.classList.add("dz-success");
-                }
-            },
-            removedfile: function (file) { removeAttachment(file); },
-            error: function (file, response) {
-                removeThumbnail(file);
-                $(generalError).text(response);
-            }
-        });
-    };
-
-    var removeAttachment = function (file) {
-        if (file) {
-            $.ajax({
-                url: '/Admin/Upload/TemporaryRemoveAttachment',
-                data: { fileName: file.name },
-                success: function () {
-                    removeThumbnail(file);
-                    $(generalError).text("");
-                },
-                error: function (file, response) {
-                    $(generalError).text(response);
-                }
-            });
-        }
-    };
-
-    var removeThumbnail = function (file) {
-        var _ref = file.previewElement;
-        if (_ref) {
-            _ref.parentNode.removeChild(file.previewElement);
-        }
-    };
+    //var removeThumbnail = function (file) {
+    //    var _ref = file.previewElement;
+    //    if (_ref) {
+    //        _ref.parentNode.removeChild(file.previewElement);
+    //    }
+    //};
 
     var onSearchEvents = function () {
         $('#btnSearch').on('click',
@@ -155,8 +88,6 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
-                debugger;
-                initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
@@ -235,7 +166,6 @@ var itemPage = (function () {
                 type: "POST",
                 url: "/Admin/Product/Index?handler=Delete",
                 data: JSON.stringify({ Id: that }),
-                contentType: 'application/json; charset=utf-8',
                 beforeSend: function () {
                     commons.startLoading();
                 },
@@ -328,15 +258,14 @@ var itemPage = (function () {
                 commons.startLoading();
             },
             success: function (response) {
-                initDropzone(that);
                 var data = response;
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
                 $('#txtBrandName').val(data.brandName);
                 $('#txtQuantity').val(data.quantity);
                 initTreeDropDownCategory(data.categoryId);
-                $('#txtPriceM').val(`${commons.formatNumber(data.price, 0)}`);
-                $('#txtPromotionPriceM').val(`${commons.formatNumber(data.promotionPrice, 0)}`);
+                $('#txtPriceM').val(data.price);
+                $('#txtPromotionPriceM').val(data.promotionPrice);
                 CKEDITOR.instances.txtDescM.setData(data.description);
                 $('#modal-add-edit').modal('show');
                 commons.stopLoading();
@@ -418,13 +347,14 @@ var itemPage = (function () {
         $.ajax({
             type: 'GET',
             data: {
-                "categoryId": $('#ddlCategorySearch').val(),
+                "orderStatus": $('#ddlOrderStatus').val(),
+                "deliveryType": $('#ddlDeliveryType').val(),
                 "keyword": $('#txtKeyword').val(),
                 "pageIndex": commons.configs.pageIndex,
                 "pageSize": commons.configs.pageSize
             },
             dataType: 'JSON',
-            url: '/Admin/Product/Index?handler=AllPaging',
+            url: '/Admin/Order/Index?handler=AllPaging',
             success: function (response) {
                 if (response.authenticate === false) {
                     window.location.href = "/Identity/Account/AccessDenied";
@@ -434,12 +364,9 @@ var itemPage = (function () {
                     render += Mustache.render(template,
                         {
                             Id: item.id,
-                            Name: item.name,
-                            CategoryName: item.category.name,
-                            BrandName: item.brandName,
-                            Quantity: item.quantity,
-                            Price: `${commons.formatNumber(item.price, 0)}đ`,
-                            CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
+                            OrderDate: commons.dateTimeFormatJson(item.orderDate),
+                            DeliveryType: getDeliveryType(item.deliveryType),
+                            Status: getOrderStatus(item.status)
                         });
                 });
                 $('#lblTotalRecords').text(response.rowCount);
@@ -456,6 +383,32 @@ var itemPage = (function () {
             }
         });
     };
+
+    function getDeliveryType(deliveryType) {
+        switch (deliveryType) {
+            case 1:
+                return `Giao hàng tiêu chuẩn`;
+            case 2:
+                return `Giao hàng ưu tiên`;
+            case 3:
+                return `Nhận hàng tại showroom`;
+        }
+    }
+
+    function getOrderStatus(orderStatus) {
+        switch (orderStatus) {
+            case 1:
+                return `<span class='badge bg-orange'>Đang chờ xử lý</span>`;
+            case 2:
+                return `<span class='badge bg-blue'>Sẵn sàng để giao</span>`;
+            case 3:
+                return `<span class='badge bg-sky-blue'>Đang vận chuyển</span>`;
+            case 4:
+                return `<span class='badge bg-green'>Đã giao</span>`;
+            case 5:
+                return `<span class='badge bg-red'>Đã hủy</span>`;
+        }
+    }
 
     function wrapPaging(recordCount, callBack, changePageSize) {
         var totalSize = Math.ceil(recordCount / commons.configs.pageSize);
@@ -478,102 +431,6 @@ var itemPage = (function () {
                 setTimeout(callBack(), 200);
             }
         });
-    };
-
-    var onTypeCurrency = function () {
-        $("#txtPromotionPriceM").on({
-            keyup: function () {
-                formatCurrency($(this));
-            }
-            //},
-            //blur: function () {
-            //    formatCurrency($(this), "blur");
-            //}
-        });
-
-        $("#txtPriceM").on({
-            keyup: function () {
-                formatCurrency($(this));
-            }
-            //},
-            //blur: function () {
-            //    formatCurrency($(this), "blur");
-            //}
-        });
-    };
-
-    function formatNumber(n) {
-        // format number 1000000 to 1,234,567
-        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-
-    function formatCurrency(input, blur) {
-        // appends $ to value, validates decimal side
-        // and puts cursor back in right position.
-
-        // get input value
-        var input_val = input.val();
-
-        // don't validate empty input
-        if (input_val === "") { return; }
-
-        // original length
-        var original_len = input_val.length;
-
-        // initial caret position 
-        var caret_pos = input.prop("selectionStart");
-
-        // check for decimal
-        if (input_val.indexOf(".") >= 0) {
-
-            // get position of first decimal
-            // this prevents multiple decimals from
-            // being entered
-            var decimal_pos = input_val.indexOf(".");
-
-            // split number by decimal point
-            var left_side = input_val.substring(0, decimal_pos);
-            var right_side = input_val.substring(decimal_pos);
-
-            // add commas to left side of number
-            left_side = formatNumber(left_side);
-
-            // validate right side
-            right_side = formatNumber(right_side);
-
-            // On blur make sure 2 numbers after decimal
-            if (blur === "blur") {
-                right_side += "00";
-            }
-
-            // Limit decimal to only 2 digits
-            right_side = right_side.substring(0, 2);
-
-            // join number by .
-            //input_val = "$" + left_side + "." + right_side;
-            input_val = left_side + "." + right_side;
-
-        } else {
-            // no decimal entered
-            // add commas to number
-            // remove all non-digits
-            input_val = formatNumber(input_val);
-            //input_val = "$" + input_val;
-            input_val = input_val;
-
-            // final formatting
-            if (blur === "blur") {
-                input_val += ".00";
-            }
-        }
-
-        // send updated string to input
-        input.val(input_val);
-
-        // put caret back in the right position
-        var updated_len = input_val.length;
-        caret_pos = updated_len - original_len + caret_pos;
-        input[0].setSelectionRange(caret_pos, caret_pos);
     }
 
     return {

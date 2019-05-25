@@ -1,75 +1,75 @@
-﻿using DAL.EF;
+﻿using DAL.Data.Entities;
+using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using DAL.Data.Entities;
 
 namespace DAL.Repositories
 {
-    public class CartDetailRepository : ICartDetailRepository
+    public class GoodsReceiptDetailRepository : IGoodsReceiptDetailRepository
     {
-        protected DbSet<CartDetail> Table;
+        protected DbSet<GoodsReceiptDetail> Table;
         protected readonly OnlineStoreDbContext Db;
 
-        public CartDetailRepository()
+        public GoodsReceiptDetailRepository()
         {
 
         }
-        public CartDetailRepository(DbContextOptions<OnlineStoreDbContext> options)
+        public GoodsReceiptDetailRepository(DbContextOptions<OnlineStoreDbContext> options)
         {
             Db = new OnlineStoreDbContext(options);
-            Table = Db.Set<CartDetail>();
+            Table = Db.Set<GoodsReceiptDetail>();
         }
 
-        public CartDetail Find(Expression<Func<CartDetail, bool>> where)
+        public GoodsReceiptDetail Find(Expression<Func<GoodsReceiptDetail, bool>> where)
             => Table.FirstOrDefault(where);
 
-        public IEnumerable<CartDetail> GetSome(Expression<Func<CartDetail, bool>> where) => Table.Where(where);
+        public IEnumerable<GoodsReceiptDetail> GetSome(Expression<Func<GoodsReceiptDetail, bool>> where) => Table.Where(where);
 
-        public int Add(CartDetail entity, bool persist = true)
+        public int Add(GoodsReceiptDetail entity, bool persist = true)
         {
             Table.Add(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public virtual int Update(CartDetail entity, bool persist = true)
+        public virtual int Update(GoodsReceiptDetail entity, bool persist = true)
         {
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public int Update(int itemId, int cartId, int newQuantity, bool persist = true)
+        public int Update(int itemId, int GoodsReceiptId, int newQuantity, bool persist = true)
         {
-            CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
-            Table.Attach(cartDetail).State = EntityState.Deleted;
+            GoodsReceiptDetail GoodsReceiptDetail = Find(c => c.GoodsReceiptId == GoodsReceiptId && c.ItemId == itemId);
+            Table.Attach(GoodsReceiptDetail).State = EntityState.Deleted;
             return persist ? SaveChanges() : 0;
         }
 
-        public virtual int Delete(CartDetail entity, bool persist = true)
+        public virtual int Delete(GoodsReceiptDetail entity, bool persist = true)
         {
             entity.IsDeleted = true;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public int Delete(int itemId, int cartId, bool persist = true)
+        public int Delete(int itemId, int GoodsReceiptId, bool persist = true)
         {
-            CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
-            cartDetail.IsDeleted = true;
-            Table.Update(cartDetail);
-            //Table.Attach(cartDetail).State = EntityState.IsDeleted;
+            GoodsReceiptDetail GoodsReceiptDetail = Find(c => c.GoodsReceiptId == GoodsReceiptId && c.ItemId == itemId);
+            GoodsReceiptDetail.IsDeleted = true;
+            Table.Update(GoodsReceiptDetail);
+            //Table.Attach(GoodsReceiptDetail).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
 
-        public int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true)
+        public int DeleteRange(IEnumerable<GoodsReceiptDetail> entities, bool persist = true)
         {
-            foreach (CartDetail cartDetail in entities)
+            foreach (GoodsReceiptDetail GoodsReceiptDetail in entities)
             {
-                cartDetail.IsDeleted = true;
-                Table.Update(cartDetail);
+                GoodsReceiptDetail.IsDeleted = true;
+                Table.Update(GoodsReceiptDetail);
             }
             //Table.RemoveRange(entities);
             return persist ? SaveChanges() : 0;

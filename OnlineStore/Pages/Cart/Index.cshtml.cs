@@ -33,7 +33,7 @@ namespace OnlineStore.Pages.Cart
                 return RedirectToPage("/Home/Index");
             }
             DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
-            IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetItems(c => c.CartId == cart.Id);
+            IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetSome(c => c.CartId == cart.Id);
             foreach (CartDetail itemInCart in cartItems)
             {
                 Item item = _itemRepository.Find(itemInCart.ItemId);

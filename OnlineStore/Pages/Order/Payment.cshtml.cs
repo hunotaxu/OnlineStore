@@ -46,7 +46,7 @@ namespace OnlineStore.Pages.Order
             ShippingFee = shippingFee;
             AddressId = addressId;
             DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
-            IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetItems(c => c.CartId == cart.Id);
+            IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetSome(c => c.CartId == cart.Id);
             foreach (CartDetail itemInCart in cartItems)
             {
                 Item item = _itemRepository.Find(itemInCart.ItemId);
@@ -79,7 +79,7 @@ namespace OnlineStore.Pages.Order
             };
             _orderRepository.Add(order);
             DAL.Data.Entities.Cart cart = _cartRepository.Find(c => c.CustomerId == customerId);
-            IEnumerable<CartDetail> items = _cartDetailRepository.GetItems(i => i.CartId == cart.Id);
+            IEnumerable<CartDetail> items = _cartDetailRepository.GetSome(i => i.CartId == cart.Id);
             foreach (CartDetail item in items)
             {
                 LineItem lineItem = new LineItem
