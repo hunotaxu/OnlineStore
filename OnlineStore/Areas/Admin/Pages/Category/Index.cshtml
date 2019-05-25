@@ -31,18 +31,60 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_content">
-                    <ul id="treeProductCategory"></ul>
-                    <div id="contextMenu" class="easyui-menu context-menu-category">
-                        <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>
-                        <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Loại sản phẩm</th>
+                            <th>Thương hiệu</th>
+                            <th>Số lượng</th>
+                            <th>Giá</th>
+                            <th>Ngày tạo</th>
+                            <th width="10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl-content"></tbody>
+                </table>
+                <!--Pagination-->
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                            <select id="ddlShowPage">
+                                <option value="10" selected="selected">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                            </select>
+                            <span class="item-per-page">
+                                bản ghi/trang.
+                            </span>
+                            Tổng số bản ghi: <strong id="lblTotalRecords"></strong>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                            <ul id="paginationUL"></ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @*<div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <ul id="treeProductCategory"></ul>
+                        <div id="contextMenu" class="easyui-menu context-menu-category">
+                            <div id="btnEdit" data-options="iconCls:'icon-edit'">Sửa</div>
+                            <div id="btnDelete" data-options="iconCls:'icon-remove'">Xoá</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
 </form>
 <partial name="_CategoryManagementModal" />

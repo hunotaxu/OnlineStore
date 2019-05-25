@@ -9,7 +9,7 @@ namespace DAL.Repositories
     public interface ILineItemRepository
     {
         LineItem Find(Expression<Func<LineItem, bool>> where);
-        IEnumerable<LineItem> GetItems(Expression<Func<LineItem, bool>> where);
+        List<LineItem> GetItems(Expression<Func<LineItem, bool>> where);
         int Add(LineItem entity, bool persist = true);
         int Update(LineItem entity, bool persist = true);
         int Update(int itemId, int cartId, int newQuantity, bool persist = true);

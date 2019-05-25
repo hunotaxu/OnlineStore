@@ -1,4 +1,4 @@
-﻿@page
+﻿@*@page
 @using DAL.Data.Enums
 @using DAL.Models
 @model OnlineStore.Pages.Admin.Orders.EditModel
@@ -35,10 +35,10 @@
                     <label asp-for="Order.Bonus" class="control-label"></label>
                     <input asp-for="Order.Bonus" class="form-control" />
                     <span asp-validation-for="Order.Bonus" class="text-danger"></span>
-                </div>*@
+                </div>
             <div class="form-group">
                 <label class="control-label">Địa chỉ giao hàng</label>
-                @*<input asp-for="@Model.Address.Detail" class="form-control" style="height: 200px" disabled/>*@
+                @*<input asp-for="@Model.Address.Detail" class="form-control" style="height: 200px" disabled/>
                 <textarea asp-for="@Model.Address.Detail" class="form-control" disabled></textarea>
                 <span asp-validation-for="Order.Bonus" class="text-danger"></span>
             </div>
@@ -56,10 +56,10 @@
                     <label asp-for="Order.ShippingFee" class="control-label"></label>
                     <input asp-for="Order.ShippingFee" class="form-control" />
                     <span asp-validation-for="Order.ShippingFee" class="text-danger"></span>
-                </div>*@
+                </div>
             <div class="form-group">
                 <label asp-for="Order.Status" class="control-label"></label>
-                @*<input asp-for="Order.Status" class="form-control" />*@
+                @*<input asp-for="Order.Status" class="form-control" />
                 <select asp-for="Order.Status" asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
                 <span asp-validation-for="Order.Status" class="text-danger"></span>
             </div>
@@ -75,5 +75,5 @@
 
 <div>
     <a asp-page="./Index">Back to List</a>
-</div>
+</div>*@
 

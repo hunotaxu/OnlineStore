@@ -10,28 +10,28 @@ var order = (function () {
         });
     };
 
-    var removeAttachment = function (file) {
-        if (file) {
-            $.ajax({
-                url: '/Admin/Upload/TemporaryRemoveAttachment',
-                data: { fileName: file.name },
-                success: function () {
-                    removeThumbnail(file);
-                    $(generalError).text("");
-                },
-                error: function (file, response) {
-                    $(generalError).text(response);
-                }
-            });
-        }
-    };
+    //var removeAttachment = function (file) {
+    //    if (file) {
+    //        $.ajax({
+    //            url: '/Admin/Upload/TemporaryRemoveAttachment',
+    //            data: { fileName: file.name },
+    //            success: function () {
+    //                removeThumbnail(file);
+    //                $(generalError).text("");
+    //            },
+    //            error: function (file, response) {
+    //                $(generalError).text(response);
+    //            }
+    //        });
+    //    }
+    //};
 
-    var removeThumbnail = function (file) {
-        var _ref = file.previewElement;
-        if (_ref) {
-            _ref.parentNode.removeChild(file.previewElement);
-        }
-    };
+    //var removeThumbnail = function (file) {
+    //    var _ref = file.previewElement;
+    //    if (_ref) {
+    //        _ref.parentNode.removeChild(file.previewElement);
+    //    }
+    //};
 
     var onSearchEvents = function () {
         $('#btnSearch').on('click',

@@ -76,3 +76,7 @@
 .order-info {
     font-weight: normal !important;
 }
+
+.div__img--center {
+    text-align: center;
+}

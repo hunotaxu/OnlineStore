@@ -28,7 +28,7 @@ namespace DAL.Repositories
         public LineItem Find(Expression<Func<LineItem, bool>> where)
             => Table.FirstOrDefault(where);
 
-        public IEnumerable<LineItem> GetItems(Expression<Func<LineItem, bool>> where) => Table.Where(where);
+        public List<LineItem> GetItems(Expression<Func<LineItem, bool>> where) => Table.Where(where).ToList();
 
         public int Add(LineItem entity, bool persist = true)
         {
