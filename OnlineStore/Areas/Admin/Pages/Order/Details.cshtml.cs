@@ -64,6 +64,10 @@ namespace OnlineStore.Pages.Admin.Orders
             }
             if (model.DeliveryDate.HasValue)
             {
+                if (DateTime.Compare(model.DeliveryDate.Value, order.OrderDate) < 0)
+                {
+                    return new BadRequestObjectResult("Không thể đặt ngày giao trước ngày đặt hàng");
+                }
                 order.DeliveryDate = model.DeliveryDate.Value;
             }
             order.DateModified = DateTime.Now;

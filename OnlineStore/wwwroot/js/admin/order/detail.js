@@ -87,7 +87,9 @@
         if ($('#frmOrderDeliveryInfo').valid()) {
             e.preventDefault();
             var id = $('#orderId').text();
-            var deliveryDate = Date.parse($('#divDeliveryDate').data('date'));
+            //var deliveryDate = Date.parse($('#divDeliveryDate').data('date'));
+            var parts = $('#divDeliveryDate').data('date').split(" ")[0].split("/");
+            var deliveryDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
             $.ajax({
                 type: "POST",
                 url: "/Admin/Order/Details?handler=SaveEntity",
@@ -106,7 +108,13 @@
                     commons.stopLoading();
                 },
                 error: function (response) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    debugger;
+                    if (response.responseText !== undefined && response.responseText !== '') {
+                        commons.notify(response.responseText, 'error');
+                    }
+                    else {
+                        commons.notify('Đã có lỗi xãy ra', 'error');
+                    }
                     commons.stopLoading();
                 }
             });
