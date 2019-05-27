@@ -26,7 +26,7 @@ namespace DAL.EF
         public virtual DbSet<GoodsReceipt> GoodsReceipt { get; set; }
         public virtual DbSet<GoodsReceiptDetail> GoodsReceiptDetail { get; set; }
         public virtual DbSet<Item> Item { get; set; }
-        public virtual DbSet<LineItem> LineItem { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         //public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
@@ -94,7 +94,7 @@ namespace DAL.EF
             modelBuilder.Entity<GoodsReceiptDetail>()
                 .HasKey(c => new { c.GoodsReceiptId, c.ItemId });
 
-            modelBuilder.Entity<LineItem>()
+            modelBuilder.Entity<OrderItem>()
                 .HasKey(c => new {c.ItemId, c.OrderId});
         }
     }

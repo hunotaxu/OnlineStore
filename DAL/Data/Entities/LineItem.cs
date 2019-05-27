@@ -4,7 +4,7 @@ using DAL.Models;
 
 namespace DAL.Data.Entities
 {
-    public class LineItem
+    public class OrderItem
     {
         public int OrderId { get; set; }
 
@@ -19,6 +19,7 @@ namespace DAL.Data.Entities
 
         [Column(TypeName="decimal(18,2)")]
         public decimal Amount { get; set; }
+        public decimal Price { get; set; }
 
         public decimal? SaleOff { get; set; }
 

@@ -27,7 +27,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly IGoodsReceiptDetailRepository _goodsReceiptDetailRepository;
-        private readonly ILineItemRepository _lineItemRepository;
+        private readonly IOrderItemRepository _lineItemRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly MapperConfiguration _mapperConfiguration;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -39,7 +39,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                           ICommentRepository commentRepository,
                           IGoodsReceiptDetailRepository goodsReceiptDetailRepository,
                           ICartDetailRepository cartDetailRepository,
-                          ILineItemRepository lineItemRepository)
+                          IOrderItemRepository lineItemRepository)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;

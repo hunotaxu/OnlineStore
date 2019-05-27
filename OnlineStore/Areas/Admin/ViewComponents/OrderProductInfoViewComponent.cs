@@ -16,17 +16,17 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         private readonly MapperConfiguration _mapperConfiguration;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductImagesRepository _productImagesRepository;
-        private readonly ILineItemRepository _lineItemRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
         private readonly IUserAddressRepository _userAddressRepository;
         [TempData]
         public decimal TotalAmount { get; set; }
 
-        public OrderProductInfoViewComponent(IProductImagesRepository productImagesRepository, ILineItemRepository lineItemRepository, IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
+        public OrderProductInfoViewComponent(IProductImagesRepository productImagesRepository, IOrderItemRepository orderItemRepository, IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
         {
             _productImagesRepository = productImagesRepository;
             _orderRepository = orderRepository;
             _userAddressRepository = userAddressRepository;
-            _lineItemRepository = lineItemRepository;
+            _orderItemRepository = orderItemRepository;
             _mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderDeliveryInfoViewModel>());
             TotalAmount = 0;
         }
@@ -35,7 +35,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         {
             var order = _orderRepository.Find(orderId);
             //List<LineItem> lineItems = (List<LineItem>)_lineItemRepository.GetItems(x => x.OrderId == orderId);
-            List<LineItem> lineItems = _lineItemRepository.GetSome(x => x.OrderId == orderId);
+            List<OrderItem> lineItems = _orderItemRepository.GetSome(x => x.OrderId == orderId);
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             var userAddress = _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value);
             List<OrderProductInfoViewModel> orderProducts = new List<OrderProductInfoViewModel>();

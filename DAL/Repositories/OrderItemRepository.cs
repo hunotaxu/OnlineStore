@@ -10,33 +10,33 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DAL.Repositories
 {
-    public class LineItemRepository : ILineItemRepository
+    public class OrderItemRepository : IOrderItemRepository
     {
-        protected DbSet<LineItem> Table;
+        protected DbSet<OrderItem> Table;
         protected readonly OnlineStoreDbContext Db;
 
-        public LineItemRepository()
+        public OrderItemRepository()
         {
 
         }
-        public LineItemRepository(DbContextOptions<OnlineStoreDbContext> options)
+        public OrderItemRepository(DbContextOptions<OnlineStoreDbContext> options)
         {
             Db = new OnlineStoreDbContext(options);
-            Table = Db.Set<LineItem>();
+            Table = Db.Set<OrderItem>();
         }
 
-        public LineItem Find(Expression<Func<LineItem, bool>> where)
+        public OrderItem Find(Expression<Func<OrderItem, bool>> where)
             => Table.FirstOrDefault(where);
 
-        public List<LineItem> GetSome(Expression<Func<LineItem, bool>> where) => Table.Where(where).ToList();
+        public List<OrderItem> GetSome(Expression<Func<OrderItem, bool>> where) => Table.Where(where).ToList();
 
-        public int Add(LineItem entity, bool persist = true)
+        public int Add(OrderItem entity, bool persist = true)
         {
             Table.Add(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public virtual int Update(LineItem entity, bool persist = true)
+        public virtual int Update(OrderItem entity, bool persist = true)
         {
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
@@ -44,12 +44,12 @@ namespace DAL.Repositories
 
         public int Update(int itemId, int orderId, int newQuantity, bool persist = true)
         {
-            LineItem LineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
-            Table.Attach(LineItem).State = EntityState.Deleted;
+            OrderItem OrderItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
+            Table.Attach(OrderItem).State = EntityState.Deleted;
             return persist ? SaveChanges() : 0;
         }
 
-        public virtual int Delete(LineItem entity, bool persist = true)
+        public virtual int Delete(OrderItem entity, bool persist = true)
         {
             entity.IsDeleted = true;
             Table.Update(entity);
@@ -58,14 +58,14 @@ namespace DAL.Repositories
 
         public int Delete(int itemId, int orderId, bool persist = true)
         {
-            LineItem lineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
+            OrderItem lineItem = Find(c => c.OrderId == orderId && c.ItemId == itemId);
             lineItem.IsDeleted = true;
             Table.Update(lineItem);
-            //Table.Attach(LineItem).State = EntityState.IsDeleted;
+            //Table.Attach(OrderItem).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
 
-        public int DeleteRange(IEnumerable<LineItem> entities, bool persist = true)
+        public int DeleteRange(IEnumerable<OrderItem> entities, bool persist = true)
         {
             foreach(var entity in entities)
             {

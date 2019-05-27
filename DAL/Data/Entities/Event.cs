@@ -24,7 +24,7 @@ namespace DAL.Data.Entities
 
         [Display(Name="Ưu đãi")]
         [Column(TypeName="decimal(18,2)")]
-        public decimal Bonus { get; set; }
+        public decimal SaleOff { get; set; }
 
         [Display(Name = "Ngày bắt đầu")]
         [DataType(DataType.Date)]

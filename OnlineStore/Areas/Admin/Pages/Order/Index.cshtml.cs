@@ -10,10 +10,10 @@ namespace OnlineStore.Pages.Admin.Orders
     public class IndexModel : PageModel
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly ILineItemRepository _lineItemRepository;
+        private readonly IOrderItemRepository _lineItemRepository;
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public IndexModel(IOrderRepository orderRepository, ILineItemRepository lineItemRepository)
+        public IndexModel(IOrderRepository orderRepository, IOrderItemRepository lineItemRepository)
         {
             _orderRepository = orderRepository;
             _lineItemRepository = lineItemRepository;

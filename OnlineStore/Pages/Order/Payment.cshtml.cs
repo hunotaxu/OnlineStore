@@ -19,20 +19,20 @@ namespace OnlineStore.Pages.Order
         private readonly ICartRepository _cartRepository;
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
-        private ILineItemRepository _lineItemRepository;
+        private IOrderItemRepository _orderItemRepository;
 
         public IList<CustomerCartViewModel> CustomerCartViewModel { get; set; }
         public decimal ShippingFee { get; set; }
         public int AddressId { get; set; }
 
-        public PaymentModel(UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, ILineItemRepository lineItemRepository)
+        public PaymentModel(UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, IOrderItemRepository orderItemRepository)
         {
             _cartDetailRepository = cartDetailRepository;
             _orderRepository = orderRepository;
             _userManager = userManager;
             _itemRepository = itemRepository;
             _cartRepository = cartRepository;
-            _lineItemRepository = lineItemRepository;
+            _orderItemRepository = orderItemRepository;
             CustomerCartViewModel = new List<CustomerCartViewModel>();
         }
 
@@ -71,7 +71,7 @@ namespace OnlineStore.Pages.Order
             DAL.Data.Entities.Order order = new DAL.Data.Entities.Order
             {
                 CustomerId = customerId,
-                Status = (byte)OrderStatus.Pending,
+                Status = OrderStatus.Pending,
                 OrderDate = DateTime.Now,
                 DeliveryDate = DateTime.Now.AddDays(3),
                 ShippingFee = shippingFee,
@@ -82,14 +82,14 @@ namespace OnlineStore.Pages.Order
             IEnumerable<CartDetail> items = _cartDetailRepository.GetSome(i => i.CartId == cart.Id);
             foreach (CartDetail item in items)
             {
-                LineItem lineItem = new LineItem
+                OrderItem OrderItem = new OrderItem
                 {
                     Quantity = item.Quantity,
                     ItemId = item.ItemId,
                     OrderId = order.Id,
                     Amount = _itemRepository.Find(item.ItemId).Price * item.Quantity
                 };
-                _lineItemRepository.Add(lineItem);
+                _orderItemRepository.Add(OrderItem);
             }
             _cartDetailRepository.DeleteRange(items);
             return RedirectToPage("./Success");

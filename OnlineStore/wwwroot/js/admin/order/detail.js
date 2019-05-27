@@ -29,6 +29,33 @@
         $('#btnSaveOrderDeliveryInfo').click(function (e) {
             saveOrderDeliveryInfo(e);
         });
+        $('body').on('click', '#btn-export', function (e) {
+            e.preventDefault();
+            //var that = $('#hidIdM').val();
+            $.ajax({
+                type: 'GET',
+                url: "/Admin/Order/Details?handler=PdfInvoice",
+                data: {
+                    orderId: $('#btn-export').data('order-id')
+                },
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                dataType: "json",
+                success: function (response) {
+                    //var data = response;
+                    //$('#hidIdM').val(data.id);
+                    //$('#txtNameM').val(data.name);
+                    //initTreeDropDownCategory(data.parentId);
+                    //$('#modal-add-edit').modal('show');
+                    commons.stopLoading();
+                },
+                error: function (status) {
+                    //commons.notify('Có lỗi xảy ra', 'error');
+                    commons.stopLoading();
+                }
+            });
+        });
         $('body').on('click', '#btnDelete', function (e) {
             e.preventDefault();
             commons.confirm('Bạn chắc chắn muốn xóa?', function () {

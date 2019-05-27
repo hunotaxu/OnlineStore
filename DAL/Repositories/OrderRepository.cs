@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,12 @@ namespace DAL.Repositories
 
             if (deliveryType != 0)
             {
-                query = query.Where(x => x.DeliveryType == deliveryType.Value);
+                query = query.Where(x => x.DeliveryType == (DeliveryType)deliveryType.Value);
             }
 
             if (orderStatus != 0)
             {
-                query = query.Where(x => x.Status == orderStatus.Value);
+                query = query.Where(x => x.Status == (OrderStatus)orderStatus.Value);
             }
 
             if (!string.IsNullOrEmpty(keyword))

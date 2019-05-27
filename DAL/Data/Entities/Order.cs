@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using DAL.Data.Entities.Base;
+using DAL.Data.Enums;
 using Newtonsoft.Json;
 
 namespace DAL.Data.Entities
@@ -11,7 +12,7 @@ namespace DAL.Data.Entities
     {
         public Order()
         {
-            LineItems = new HashSet<LineItem>();
+            LineItems = new HashSet<OrderItem>();
         }
 
         [Display(Name = "Ngày giao dự kiến")]
@@ -21,8 +22,8 @@ namespace DAL.Data.Entities
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
 
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal? Bonus { get; set; }
+        //[Column(TypeName = "decimal(18,2)")]
+        //public decimal? Bonus { get; set; }
 
         [Display(Name = "Người duyệt")]
         public Guid? EmployeeId { get; set; }
@@ -33,24 +34,30 @@ namespace DAL.Data.Entities
         public int? AddressId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal? ShippingFee { get; set; }
+        public decimal ShippingFee { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public byte Status { get; set; }
+        public OrderStatus Status { get; set; }
 
-        public byte DeliveryType { get; set; }
+        public DeliveryType DeliveryType { get; set; }
 
-        public byte PaymentType { get; set; }
+        public PaymentType PaymentType { get; set; }
 
         public DateTime? DateCreated { get; set; }
 
         public DateTime? DateModified { get; set; }
+
+        public decimal SubTotal { get; set; }
+
+        public decimal Total { get; set; }
+
+        public decimal SaleOff { get; set; }
 
         [JsonIgnore]
         public virtual ApplicationUser Customer { get; set; }
         [JsonIgnore]
         public virtual Address Address { get; set; }
         [JsonIgnore]
-        public virtual ICollection<LineItem> LineItems { get; set; }
+        public virtual ICollection<OrderItem> LineItems { get; set; }
     }
 }
