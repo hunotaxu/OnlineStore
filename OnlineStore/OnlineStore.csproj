@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DAL\DAL.csproj" />
+    <ProjectReference Include="..\TimiApp.Dapper\TimiApp.Dapper.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
   <ItemGroup>

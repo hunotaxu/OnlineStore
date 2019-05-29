@@ -31,6 +31,8 @@ namespace DAL.Data.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal? PromotionPrice { get; set; }
 
+        public decimal? OriginalPrice { get; set; }
+
         [Display(Name = "Mô tả")]
         [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }

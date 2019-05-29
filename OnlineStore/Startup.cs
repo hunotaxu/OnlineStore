@@ -16,6 +16,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OnlineStore.Middleware;
 using OnlineStore.Services;
+using TimiApp.Dapper.Implementation;
+using TimiApp.Dapper.Interfaces;
 
 namespace OnlineStore
 {
@@ -140,6 +142,7 @@ namespace OnlineStore
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IPdfService, PdfService>();
+            services.AddScoped<IReportService, ReportService>();
             //services.AddScoped<ISettings, PdfSettings>();
             services.AddScoped<IPdfSettings, PdfSettings>();
             //services.AddScoped<INopFileProvider, NopFileProvider>();
