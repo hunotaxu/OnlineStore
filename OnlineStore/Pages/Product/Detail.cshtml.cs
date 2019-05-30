@@ -4,15 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OnlineStore.Extensions;
+using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
+using OnlineStore.Models.ViewModels.Item;
+using Utilities.Commons;
 
 namespace OnlineStore.Pages.Product
 {
     public class DetailModel : PageModel
     {
+        //IItemService _itemservice;
         private readonly IItemRepository _itemRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
@@ -25,8 +31,10 @@ namespace OnlineStore.Pages.Product
         public double _countComment = 0;
 
 
-        public DetailModel(IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
+       
+        public DetailModel(/*IItemService itemservice,*/ IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
         {
+            //_itemservice = itemservice;
             _itemRepository = itemRepository;
             _commentRepository = commentRepository;
             _userRepository = userRepository;
@@ -102,7 +110,7 @@ namespace OnlineStore.Pages.Product
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                    
             if (model.Id == 0)
             {
                 model.DateCreated = DateTime.Now;
@@ -124,47 +132,97 @@ namespace OnlineStore.Pages.Product
             return new OkObjectResult(comment);
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-        {
-
-            //var comment = new Comment
-            //{
-            //    Name = Input.Name,
-            //    DOB = Input.DOB,
-            //    UserName = Input.PhoneNumber,
-            //    Email = Input.Email,
-            //    PhoneNumber = Input.PhoneNumber,
-            //    Gender = Input.Gender
-            //};
-
-            //var result = await _userManager.CreateAsync(user, Input.Password);
-            //if (result.Succeeded)
-            //{
-            //    _userRepository.AddUserRole(user.Id);
-            //    _logger.LogInformation("User created a new account with password.");
-
-            //    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            //    //var callbackUrl = Url.Page(
-            //    //    "/Account/ConfirmEmail",
-            //    //    pageHandler: null,
-            //    //    values: new { userId = user.Id, code = code },
-            //    //    protocol: Request.Scheme);
-
-            //    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-            //    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-            //    await _signInManager.SignInAsync(user, isPersistent: false);
-            //    return LocalRedirect(returnUrl);
-            //}
-            //foreach (var error in result.Errors)
-            //{
-            //    ModelState.AddModelError(string.Empty, error.Description);
-            //}
-
-            // If we got this far, something failed, redisplay form
-            return Page();
-        }
 
 
+        
+
+        //#region AJAX Request
+        ///// <summary>
+        ///// Get list item
+        ///// </summary>
+        ///// <returns></returns>
+        //public IActionResult GetCart()
+        //{
+        //    var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
+        //    if (session == null)
+        //        session = new List<ItemCartViewModel>();
+        //    return new OkObjectResult(session);
+        //}
+        ///// <summary>
+        ///// Remove all products in cart
+        ///// </summary>
+        ///// <returns></returns>
+        //public IActionResult ClearCart()
+        //{
+        //    HttpContext.Session.Remove(CommonConstants.CartSession);
+        //    return new OkObjectResult("OK");
+        //}
+
+        ///// <summary>
+        ///// Add product to cart
+        ///// </summary>
+        ///// <param name="productId"></param>
+        ///// <param name="quantity"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public IActionResult AddToCart(int itemId, int quantity)
+        //{
+        //    //Get product detail
+        //    var item = _itemservice.GetById(itemId);
+
+        //    //Get session with item list from cart
+        //    var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
+        //    if (session != null)
+        //    {
+        //        //Convert string to list object
+        //        bool hasChanged = false;
+
+        //        //Check exist with item product id
+        //        if (session.Any(x => x.Item.Id == itemId))
+        //        {
+        //            foreach (var _item in session)
+        //            {
+        //                //Update quantity for product if match product id
+        //                if (_item.Item.Id == itemId)
+        //                {
+        //                    _item.Quantity += quantity;
+        //                    _item.Price = item.PromotionPrice ?? item.Price;
+        //                    hasChanged = true;
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            session.Add(new ItemCartViewModel()
+        //            {
+        //                Item = item,
+        //                Quantity = quantity,
+        //                Price = item.PromotionPrice ?? item.Price
+        //            });
+        //            hasChanged = true;
+        //        }
+
+        //        //Update back to cart
+        //        if (hasChanged)
+        //        {
+        //            HttpContext.Session.Set(CommonConstants.CartSession, session);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Add new cart
+        //        var cart = new List<ItemCartViewModel>();
+        //        cart.Add(new ItemCartViewModel()
+        //        {
+        //            Item = item,
+        //            Quantity = quantity,
+        //            Price = item.PromotionPrice ?? item.Price
+        //        });
+        //        HttpContext.Session.Set(CommonConstants.CartSession, cart);
+        //    }
+        //    return new OkObjectResult(itemId);
+
+        //    #endregion
+        //}
     }
 }
