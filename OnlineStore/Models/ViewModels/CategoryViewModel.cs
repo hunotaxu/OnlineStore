@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using DAL.Data.Enums;
+using OnlineStore.Models.ViewModels.Item;
 
-namespace OnlineStore.Models.ViewModels.Item
-{
+namespace OnlineStore.Models.ViewModels
+{ 
     public class CategoryViewModel
     {
         public int Id { get; set; }

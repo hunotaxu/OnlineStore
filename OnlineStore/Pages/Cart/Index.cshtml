@@ -1,143 +1,77 @@
 ﻿@page
-@model OnlineStore.Pages.Cart.IndexModel
-
+@model OnlineStore.Pages.Order.IndexModel
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Pages/Layout/_HomeLayout.cshtml";
+    ViewData["Title"] = "MyCart";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<div class="container">
-    <table id="cart" class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th style="width:50%">Thông tin sản phẩm</th>
-                <th style="width:10%">Giá</th>
-                <th style="width:8%">Số lượng</th>
-                <th style="width:22%" class="text-center">Thành tiền</th>
-                <th style="width:10%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.CustomerCartViewModel)
-            {
-                <tr>
-                    <td data-th="Product">
-                        <div class="row">
-                            <input type="hidden" class="itemId" value="@item.ItemId" />
-                            <input type="hidden" class="cartId" value="@item.CartId" />
-                            <div class="col-sm-2 hidden-xs"><img src="~/images/ProductImages/@item.Image" alt="..." class="img-responsive" /></div>
-                            <div class="col-sm-10">
-                                <h4 class="nomargin">@item.ItemName</h4>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-th="Price" class="price">@item.Price</td>
-                    <td data-th="Quantity">
-                        <input type="number" class="form-control text-center UpdateQuantity" value="@item.Quantity" min="1">
-                    </td>
-                    <td data-th="Subtotal" class="text-center subtotal">@item.Subtotal</td>
-                    <td class="actions" data-th="">
-                        @*<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>*@
-                        <button class="btn btn-danger btn-sm deleteItem"><i class="fa fa-trash-o"></i></button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr class="visible-xs">
-                <td class="text-center"><strong></strong></td>
-            </tr>
-            <tr>
-                <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a></td>
-                <td colspan="2" class="hidden-xs"></td>
-                <td id="total" class="hidden-xs text-center"><strong></strong></td>
-                <td><a asp-page="/Order/Address" class="btn btn-success btn-block">Đặt hàng <i class="fa fa-angle-right"></i></a></td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
 
 @section Scripts{
+    <script src="~/css/client/cart/mycart.js" asp-append-version="true"></script>
     <script>
-        var subtotal;
-        var total = 0;
-        $(".subtotal").each(function() {
-            total += parseInt($(this).html());
-        });
-        $("#total").html("Tổng: "+total);
-
-        $(".UpdateQuantity").click(function () {
-            var quantity = $(this).closest("tr").find('input[type=number]').val();
-            console.log(quantity);
-            var price = $(this).closest("tr").find(".price").text();
-            subtotal = parseInt(quantity, 10) * parseInt(price, 10);
-            $(this).closest("tr").find(".subtotal").html(subtotal);
-            total = 0;
-            $(".subtotal").each(function () {
-                total += parseInt($(this).html());
-            });
-            $("#total").html("Tổng: " + total);
-            $.ajax({
-                    type: "GET",
-                    url: "/Cart/Edit?handler=UpdateQuantity",
-                    data: {
-                        "itemId": $(this).closest("tr").find('.itemId').val(),
-                        "cartId": $(this).closest("tr").find('.cartId').val(),
-                        "newQuantity": $(this).closest("tr").find('input[type=number]').val()
-                    }
-                })
-                .done(function () {
-                    
-                })
-                .fail(function () {
-                    toastr.success("Xóa sản phẩm khỏi giỏ hàng thất bại");
-                });
-        });
-
-
-        //function UpdateQuantity() {
-
-        //    //$.ajax({
-        //    //    type: "GET",
-        //    //    url: "/Cart/Edit?handler=UpdateQuantity",
-        //    //    data: {
-        //    //        "itemId": $(this).closest("tr").find('.itemId').val(),
-        //    //        "cartId": $(this).closest("tr").find('.cartId').val(),
-        //    //        "newQuantity": $(this).closest("tr").find('input[type=number]').val()
-        //    //    }
-        //    //    })
-        //    //    .done(function () {
-        //    //        console.log(parseInt($(this).closest("tr").find('input[type=number]').val(), 10));
-        //    //        console.log(parseInt($(".price").text(), 10));
-        //    //        subtotal = parseInt($("input[type=number]").val(), 10) * parseInt($(".price").text(), 10);
-        //    //        $(".subtotal").html(subtotal);
-        //    //        total = 0;
-        //    //        $(".subtotal").each(function() {
-        //    //            total += parseInt($(this).html());
-        //    //        });
-        //    //        $("#total").html("Tổng: "+total);
-        //    //    })
-        //    //    .fail(function () {
-        //    //        toastr.success("Xóa sản phẩm khỏi giỏ hàng thất bại");
-        //    //    });
-        //}
-
-        $(".deleteItem").click(function () {
-            $.ajax({
-                    type: "GET",
-                    url: "/Cart/Delete?handler=Delete",
-                    data: {
-                        "itemId": $(this).closest("tr").find('.itemId').val(),
-                        "cartId": $(this).closest("tr").find('.cartId').val()
-                    }
-                })
-                .done(function () {
-                    location.reload();
-                    toastr.success("Xóa sản phẩm khỏi giỏ hàng thành công");
-                })
-                .fail(function () {
-                    toastr.success("Xóa sản phẩm khỏi giỏ hàng thất bại");
-                });
-        });
+        var cartObj = new Cart();
+        cartObj.initialize();
     </script>
 }
+
+
+<!-- Main Container -->
+<section class="main-container col1-layout">
+    <div class="main container">
+        <div class="col-main">
+            <div class="cart">
+
+                <div class="page-content page-order">
+                    <div class="page-title">
+                        <h2>MyCart</h2>
+                    </div>
+                    <div class="order-detail-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered cart_summary">
+                                <thead>
+                                    <tr>
+                                        <th class="cart_product">Product</th>
+                                        <th>Description</th>
+                                        <th>Unit price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                        <th class="action"><i class="fa fa-trash-o"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-cart-content"></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"><strong>Total</strong></td>
+                                        <td colspan="3"><strong><span id="lblTotalAmount"></span> </strong></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            <script id="template-cart" type="x-tmpl-mustache">
+                                <tr data-id="{{ProductId}}">
+                                    <td class="cart_product">
+                                        <a href="{{Url}}">
+                                            <img src="{{Image}}" alt="{{ProductName}}">
+                                        </a>
+                                    </td>
+                                    <td class="cart_description">
+                                        <p class="product-name"><a href="#">{{ProductName}}</a></p>
+                                        @*<small><a href="#">Color : {{{Colors}}}</a></small>
+                                        <small><a href="#">Size : {{{Sizes}}}</a></small>*@
+                                    </td>
+                                    <td class="price"><span>{{Price}}</span></td>
+                                    <td class="qty"><input class="form-control input-sm txtQuantity" data-id="{{ProductId}}" type="text" value="{{Quantity}}"></td>
+                                    <td class="price"><span>{{Amount}}</span></td>
+                                    <td class="action"><a href="#" data-id="{{ProductId}}" class="btn-delete"><i class="icon-close"></i></a></td>
+                                </tr>
+                            </script>
+                        </div>
+                        <div class="cart_navigation">
+                            <a class="continue-btn" href="#"><i class="fa fa-arrow-left"> </i>&nbsp; Continue shopping</a>
+                            <a id="btnClearAll" href="#"><i class="fa fa-remove"> </i>&nbsp; Clear cart</a>
+                            <a class="checkout-btn" href="#"><i class="fa fa-check"></i> Proceed to checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

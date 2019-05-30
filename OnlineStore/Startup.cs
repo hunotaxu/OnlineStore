@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using OnlineStore.Interfaces;
 using OnlineStore.Middleware;
 using OnlineStore.Services;
 
@@ -31,6 +32,7 @@ namespace OnlineStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -47,6 +49,8 @@ namespace OnlineStore
             services.AddMemoryCache();
             // using Microsoft.AspNetCore.Identity.UI.Services;
             services.AddSingleton<IEmailSender, EmailSender>();
+            //services.AddSingleton<IItemService, ItemService>();
+
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
@@ -73,13 +77,13 @@ namespace OnlineStore
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                 });
 
-            services.AddSession();
-            //services.AddSession(options =>
-            //{
-            //    options.IdleTimeout = TimeSpan.FromMinutes(69);
-            //    options.Cookie.HttpOnly = true;
-            //    options.Cookie.IsEssential = true;
-            //});
+            //services.AddSession();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(2);
+                options.Cookie.HttpOnly = true;
+               // options.cookie.isessential = true;
+            });
 
             services.Configure<IdentityOptions>(options =>
             {

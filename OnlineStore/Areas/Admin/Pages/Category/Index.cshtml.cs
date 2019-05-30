@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
 using System;
+using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Areas.Admin.Pages.Category
 {
