@@ -108,6 +108,7 @@ var itemPage = (function () {
         $('#txtKeyword').on('keypress',
             function (e) {
                 if (e.which === 13) {
+                    e.preventDefault();
                     loadData();
                 }
             });
@@ -163,6 +164,7 @@ var itemPage = (function () {
             });
 
             $('body').on('click', '.btn-edit', function (e) {
+                debugger;
                 e.preventDefault();
                 var that = $(this).data('id');
                 loadDetails(that);

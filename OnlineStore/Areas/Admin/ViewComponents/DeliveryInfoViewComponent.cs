@@ -25,20 +25,22 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         {
             var order = _orderRepository.Find(orderId);
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
-            var userAddress = _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value);
+
+            var userAddress = order.AddressId.HasValue == true ? _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value) : null;
+
             var deliveryInfoVM = new OrderDeliveryInfoViewModel
             {
                 RecipientFullName = order.Customer.Name,
                 Email = order.Customer.Email,
-                PhoneNumber = userAddress?.PhoneNumber,
-                DeliveryType = (DeliveryType)order.DeliveryType,
-                PaymentType = (PaymentType)order.PaymentType,
+                DeliveryType = order.DeliveryType,
+                PaymentType = order.PaymentType,
+                Status = order.Status,
                 DeliveryDate = order.DeliveryDate ?? order.OrderDate,
-                //ShippingFee = order.ShippingFee,
-                ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat),
-                AddressType = (byte)userAddress?.AddressType,
-                Address = order.Address?.Detail
+                ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat)
             };
+            deliveryInfoVM.PhoneNumber = userAddress == null ? string.Empty : userAddress.PhoneNumber;
+            deliveryInfoVM.AddressType = userAddress == null ? (byte)0 : userAddress.AddressType;
+            deliveryInfoVM.Address = userAddress == null ? string.Empty : order.Address?.Detail;
             return Task.FromResult<IViewComponentResult>(View(deliveryInfoVM));
         }
     }

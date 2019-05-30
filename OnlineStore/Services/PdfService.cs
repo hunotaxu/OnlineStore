@@ -824,7 +824,7 @@ namespace OnlineStore.Services
             //if (_addressSettings.StreetAddressEnabled)
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address", indent, lang, font, order.BillingAddress.Address1));
             //billingAddress.AddCell(GetParagraph("Địa chỉ: {0}", indent, font, order.Address.Detail));
-            cellBilling.Phrase.Add(GetParagraph("Địa chỉ: {0}", string.Empty, font, order.Address.Detail));
+            cellBilling.Phrase.Add(GetParagraph("Địa chỉ: {0}", string.Empty, font, order.Address != null ? order.Address.Detail : string.Empty));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             //if (_addressSettings.StreetAddress2Enabled && !string.IsNullOrEmpty(order.BillingAddress.Address2))
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address2", indent, lang, font, order.BillingAddress.Address2));
