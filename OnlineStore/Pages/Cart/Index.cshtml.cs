@@ -1,116 +1,126 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DAL.Data.Entities;
-using DAL.Models;
+﻿using DAL.Data.Entities;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Extensions;
-using OnlineStore.Models.ViewModels;
 using OnlineStore.Models.ViewModels.Item;
-using OnlineStore.Interfaces;
-
+using System.Collections.Generic;
 using Utilities.Commons;
 
 namespace OnlineStore.Pages.Order
 {
     public class IndexModel : PageModel
     {
-        IItemService _itemservice;
         private readonly IItemRepository _itemRepository;
+        private readonly ICartRepository _cartRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-
-        public IndexModel(IItemService itemservice)
+        public IndexModel(IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
+            ICartRepository cartRepository)
         {
-            _itemservice = itemservice;
+            _itemRepository = itemRepository;
+            _cartRepository = cartRepository;
+            _userManager = userManager;
         }
 
-        #region AJAX Request
-        /// <summary>
-        /// Get list item
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult GetCart()
-        {
-            var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
-            if (session == null)
-                session = new List<ItemCartViewModel>();
-            return new OkObjectResult(session);
-        }
-        /// <summary>
-        /// Remove all products in cart
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult ClearCart()
-        {
-            HttpContext.Session.Remove(CommonConstants.CartSession);
-            return new OkObjectResult("OK");
-        }
+        [BindProperty]
+        public List<ItemCartViewModel> ItemInCarts { get; set; }
 
-        /// <summary>
-        /// Add product to cart
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult AddToCart(int itemId, int quantity)
+        public IActionResult OnGetLoadCart()
         {
-            //Get product detail
-            var item = _itemservice.GetById(itemId);
-
-            //Get session with item list from cart
-            var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
-            if (session != null)
+            var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+            if (cart != null)
             {
-                //Convert string to list object
-                bool hasChanged = false; 
-
-                //Check exist with item product id
-                if (session.Any(x => x.Item.Id == itemId))
+                ItemInCarts = new List<ItemCartViewModel>();
+                foreach (var item in cart.CartDetails)
                 {
-                    foreach (var _item in session)
+                    var itemCartViewModel = new ItemCartViewModel
                     {
-                        //Update quantity for product if match product id
-                        if (_item.Item.Id == itemId)
-                        {
-                            _item.Quantity += quantity;
-                            _item.Price = item.PromotionPrice ?? item.Price;
-                            hasChanged = true;
-                        }
-                    }
-                }
-                else
-                {
-                    session.Add(new ItemCartViewModel()
-                    {
-                        Item = item,
-                        Quantity = quantity,
-                        Price = item.PromotionPrice ?? item.Price
-                    });
-                    hasChanged = true;
-                }
-
-                //Update back to cart
-                if (hasChanged)
-                {
-                    HttpContext.Session.Set(CommonConstants.CartSession, session);
+                        Image = item.Item.Image,
+                        Price = CommonFunctions.FormatPrice(item.Item.Price),
+                        ProductName = item.Item.Name,
+                        Quantity = item.Quantity,
+                    };
+                    itemCartViewModel.Subtotal = CommonFunctions.FormatPrice(item.Item.Price * itemCartViewModel.Quantity);
+                    ItemInCarts.Add(itemCartViewModel);
                 }
             }
-            else
-            {
-                //Add new cart
-                var cart = new List<ItemCartViewModel>();
-                cart.Add(new ItemCartViewModel()
-                {
-                    Item = item,
-                    Quantity = quantity,                    
-                    Price = item.PromotionPrice ?? item.Price
-                });
-                HttpContext.Session.Set(CommonConstants.CartSession, cart);
-            }
-            return new OkObjectResult(itemId);
+            return new OkObjectResult(ItemInCarts);
         }
+        ///// <summary>
+        ///// Remove all products in cart
+        ///// </summary>
+        ///// <returns></returns>
+        //public IActionResult ClearCart()
+        //{
+        //    HttpContext.Session.Remove(CommonConstants.CartSession);
+        //    return new OkObjectResult("OK");
+        //}
+
+        ///// <summary>
+        ///// Add product to cart
+        ///// </summary>
+        ///// <param name="productId"></param>
+        ///// <param name="quantity"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //public IActionResult AddToCart(int itemId, int quantity)
+        //{
+        //    //Get product detail
+        //    var item = _itemservice.GetById(itemId);
+
+        //    //Get session with item list from cart
+        //    var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
+        //    if (session != null)
+        //    {
+        //        //Convert string to list object
+        //        bool hasChanged = false;
+
+        //        //Check exist with item product id
+        //        if (session.Any(x => x.Item.Id == itemId))
+        //        {
+        //            foreach (var _item in session)
+        //            {
+        //                //Update quantity for product if match product id
+        //                if (_item.Item.Id == itemId)
+        //                {
+        //                    _item.Quantity += quantity;
+        //                    _item.Price = item.PromotionPrice ?? item.Price;
+        //                    hasChanged = true;
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            session.Add(new ItemCartViewModel()
+        //            {
+        //                Item = item,
+        //                Quantity = quantity,
+        //                Price = item.PromotionPrice ?? item.Price
+        //            });
+        //            hasChanged = true;
+        //        }
+
+        //        //Update back to cart
+        //        if (hasChanged)
+        //        {
+        //            HttpContext.Session.Set(CommonConstants.CartSession, session);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Add new cart
+        //        var cart = new List<ItemCartViewModel>();
+        //        cart.Add(new ItemCartViewModel()
+        //        {
+        //            Item = item,
+        //            Quantity = quantity,
+        //            Price = item.PromotionPrice ?? item.Price
+        //        });
+        //        HttpContext.Session.Set(CommonConstants.CartSession, cart);
+        //    }
+        //    return new OkObjectResult(itemId);
+        //}
 
         ///// <summary>
         ///// Remove a product
@@ -173,8 +183,6 @@ namespace OnlineStore.Pages.Order
         //        return new OkObjectResult(productId);
         //    }
         //    return new EmptyResult();
-
-        #endregion
         //}
     }
 }
