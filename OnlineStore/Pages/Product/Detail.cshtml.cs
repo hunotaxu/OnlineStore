@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Extensions;
-using OnlineStore.Interfaces;
 using OnlineStore.Models.ViewModels;
-using OnlineStore.Models.ViewModels.Item;
-using Utilities.Commons;
 
 namespace OnlineStore.Pages.Product
 {
@@ -32,7 +26,7 @@ namespace OnlineStore.Pages.Product
 
 
        
-        public DetailModel(/*IItemService itemservice,*/ IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
+        public DetailModel(IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
         {
             //_itemservice = itemservice;
             _itemRepository = itemRepository;

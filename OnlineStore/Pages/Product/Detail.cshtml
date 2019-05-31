@@ -3,7 +3,6 @@
 @using DAL.Data.Entities
 @using DAL.Models
 @using Utilities.Commons
-@using Microsoft.AspNetCore.Http.Extensions
 @using Microsoft.AspNetCore.Identity
 @model OnlineStore.Pages.Product.DetailModel
 @using OnlineStore.Extensions
@@ -235,9 +234,9 @@
                                             {
                                                 @foreach (var item in Model.CustomerCommentViewModel)
                                                 {
-
                                                     <li class="customer-comment">
-                                                        <img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName
+                                                        @*<img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName*@
+                                                        <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"~/images/shared/avatar/{item.CustomerAvatar}" : "/images/admin/user.png")">  @item.CustomerName
                                                         <p class="in-para">@item.Content</p>
                                                     </li>
                                                 }
@@ -245,7 +244,7 @@
                                             else
                                             {
                                                 <li>
-                                                    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i> @Html.Raw("Hãy trở thành người đầu tiên đánh giá về sản phẩm này. <br />")
+                                                    @*<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> @Html.Raw("Hãy trở thành người đầu tiên đánh giá về sản phẩm này. <br />")*@
 
                                                 </li>
                                             }
@@ -272,7 +271,9 @@
                                         }
                                         else
                                         {
-                                            <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Vui lòng đăng nhập để đánh giá sản phẩm này:</h2>
+                                    <h2>
+                                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@($"{HttpContext.Request.Path}{HttpContext.Request.QueryString}")" type="button" class="btn btn-danger">Đăng nhập để đánh giá sản phẩm này</a>
+                                    </h2>
                                         }
 
                                         <!--//Đánh giá của bạn-->
