@@ -164,13 +164,6 @@ namespace OnlineStore.Pages.Product
             return new OkObjectResult("OK");
         }
 
-        /// <summary>
-        /// Add product to cart
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <param name="quantity"></param>
-        /// <returns></returns>
-        [HttpPost]
         //public IActionResult OnPostAddToCart(int itemId, int quantity, [FromBody] DAL.Data.Entities.Cart model)
         public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
         {
