@@ -26,6 +26,16 @@ namespace OnlineStore.Pages.Order
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
 
+        public ActionResult OnGet()
+        {
+            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (cus == null)
+            {
+                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
+            }
+            return Page();
+        }
+
         public IActionResult OnGetLoadCart()
         {
             var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
@@ -36,12 +46,12 @@ namespace OnlineStore.Pages.Order
                 {
                     var itemCartViewModel = new ItemCartViewModel
                     {
-                        Image = item.Item.Image,
-                        Price = CommonFunctions.FormatPrice(item.Item.Price),
+                        ItemId = item.ItemId,
+                        Image = $"/images/client/ProductImages/{item.Item.Image}",
+                        Price = item.Item.Price,
                         ProductName = item.Item.Name,
                         Quantity = item.Quantity,
                     };
-                    itemCartViewModel.Subtotal = CommonFunctions.FormatPrice(item.Item.Price * itemCartViewModel.Quantity);
                     ItemInCarts.Add(itemCartViewModel);
                 }
             }

@@ -1,15 +1,13 @@
-﻿//using OnlineStore.Models.ViewModels;
-using DAL.Data.Entities;
-
-namespace OnlineStore.Models.ViewModels.Item
+﻿namespace OnlineStore.Models.ViewModels.Item
 {
     public class ItemCartViewModel
     {
+        public int ItemId { get; set; }
         public string ProductName { get; set; }
         public string Image { get; set; }
-        public string Price { get; set; } // Dùng hàm CommonFunctions.FormatPrice(truyền vào decimal)
+        public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public string Subtotal { get; set; }
-        public string Total { get; set; }
+        public decimal Subtotal { get; set; }
+        public decimal Total { get; set; }
     }
 }
