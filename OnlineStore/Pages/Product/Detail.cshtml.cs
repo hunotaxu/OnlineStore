@@ -220,6 +220,7 @@ namespace OnlineStore.Pages.Product
                     });
                 }
             }
+            return new OkObjectResult(model);
             //if (model.CartId == 0)
             //{
 
@@ -229,7 +230,7 @@ namespace OnlineStore.Pages.Product
 
             //model.DateModified = DateTime.Now;
             //var cartId = _cartRepository.Add(model);
-            return new OkObjectResult(model);
+
         }
 
         //var comment = _commentRepository.Find(model.Id);

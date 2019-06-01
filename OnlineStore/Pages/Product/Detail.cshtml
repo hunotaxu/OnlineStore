@@ -14,7 +14,7 @@
 }
 
 @{
-   var cus = await UserManager.GetUserAsync(HttpContext.User);    
+    var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
 
 @section Scripts{
@@ -263,9 +263,9 @@
                                         }
                                         else
                                         {
-                                    <h2>
-                                        <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@($"{HttpContext.Request.Path}{HttpContext.Request.QueryString}")" type="button" class="btn btn-danger">Đăng nhập để đánh giá sản phẩm này</a>
-                                    </h2>
+                                            <h2>
+                                                <a asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@($"{HttpContext.Request.Path}{HttpContext.Request.QueryString}")" type="button" class="btn btn-danger">Đăng nhập để đánh giá sản phẩm này</a>
+                                            </h2>
                                         }
 
                                         <!--//Đánh giá của bạn-->
