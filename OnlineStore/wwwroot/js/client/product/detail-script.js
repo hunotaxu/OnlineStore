@@ -45,6 +45,7 @@ $('#gotocomment').on('click', function (e) {
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 $('#btnAddToCart').on('click', function (e) {
     e.preventDefault();
@@ -86,6 +87,11 @@ $('#btnAddToCart').on('click', function (e) {
     e.preventDefault();
     var id = parseInt($(this).data('id'));
 >>>>>>> Stashed changes
+=======
+$('#btnAddToCart').on('click', function (e) {    
+    e.preventDefault();
+    var id = parseInt($(this).data('id'));
+>>>>>>> Stashed changes
 
     $.ajax({
         url: "/Product/Detail?handler=AddToCart",
@@ -111,6 +117,9 @@ $('#btnAddToCart').on('click', function (e) {
     loadNumberItemCart();
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
