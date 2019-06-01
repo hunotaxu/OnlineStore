@@ -9623,3 +9623,24 @@ a.jtv-m-logo-img {
     display:inline;
 
 }*/
+
+.dv-bg-loading {
+    background-color: #FFFFFF;
+    height: 100%;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100000000;
+    width: 100%;
+    display: none;
+}
+
+.dv-loading {
+    width: 100%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 100000000;
+    width: 100%;
+}
