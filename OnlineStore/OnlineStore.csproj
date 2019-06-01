@@ -6,12 +6,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Logs\**" />
+    <Compile Remove="Pages\Shared\Components\BannerPartial\**" />
     <Compile Remove="wwwroot\lib\parsley\**" />
     <Content Remove="Logs\**" />
+    <Content Remove="Pages\Shared\Components\BannerPartial\**" />
     <Content Remove="wwwroot\lib\parsley\**" />
     <EmbeddedResource Remove="Logs\**" />
+    <EmbeddedResource Remove="Pages\Shared\Components\BannerPartial\**" />
     <EmbeddedResource Remove="wwwroot\lib\parsley\**" />
     <None Remove="Logs\**" />
+    <None Remove="Pages\Shared\Components\BannerPartial\**" />
     <None Remove="wwwroot\lib\parsley\**" />
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="ckeditor-full" Version="4.11.4" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="iTextSharp" Version="5.5.13" />
     <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.1.0" />
@@ -62,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Pages\Shared\Components\BannerPartial\" />
     <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\images\admin\ProductImages\" />
     <Folder Include="wwwroot\js\client\shared\" />

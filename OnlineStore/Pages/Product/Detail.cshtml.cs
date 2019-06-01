@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,7 @@ namespace OnlineStore.Pages.Product
         public double Average { get; set; }
         public int ItemId;
         public double _countComment = 0;
+        public int _countItemCart = 0;
 
 
 
@@ -188,10 +190,10 @@ namespace OnlineStore.Pages.Product
                     ItemId = model.ItemId,
                     Quantity = model.Quantity
                 });
+                _countItemCart = 1;
             }
             else
             {
-                //var cartDetails = _cartDetailRepository.GetSome(x => x.CartId == cart.Id);
                 var cartDetails = cart.CartDetails;
                 bool isMatch = false;
                 foreach (var item in cart.CartDetails)
@@ -202,6 +204,7 @@ namespace OnlineStore.Pages.Product
                         _cartDetailRepository.Update(item);
                         isMatch = true;
                     }
+                    _countItemCart ++;
                 }
                 if (!isMatch)
                 {
@@ -213,79 +216,14 @@ namespace OnlineStore.Pages.Product
                     });
                 }
             }
-            return new OkObjectResult(model);
-            //if (model.CartId == 0)
-            //{
-
-            //    cartRepos
-            //model.Id = model.Id;
-            //model.CartDetails. = model.CartDetails.
-
-            //model.DateModified = DateTime.Now;
-            //var cartId = _cartRepository.Add(model);
-
+            return new OkObjectResult(model);  
         }
 
-        //var comment = _commentRepository.Find(model.Id);
-        //comment.Id = model.Id;
-        //comment.DateModified = DateTime.Now;
-
-        //return new OkObjectResult(comment);
-
-        //var item = _itemRepository.GetItem(itemId);
-
-        ////Get session with item list from cart
-        //var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
-        //if (session != null)
-        //{
-        //    //Convert string to list object
-        //    bool hasChanged = false;
-
-        //    //Check exist with item product id
-        //    if (session.Any(x => x.Item.Id == itemId))
-        //    {
-        //        foreach (var _item in session)
-        //        {
-        //            //Update quantity for product if match product id
-        //            if (_item.Item.Id == itemId)
-        //            {
-        //                _item.Quantity += quantity;
-        //                _item.Price = item.PromotionPrice ?? item.Price;
-        //                hasChanged = true;
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        session.Add(new ItemCartViewModel()
-        //        {
-        //            Item = item,
-        //            Quantity = quantity,
-        //            Price = item.PromotionPrice ?? item.Price
-        //        });
-        //        hasChanged = true;
-        //    }
-
-        //    //Update back to cart
-        //    if (hasChanged)
-        //    {
-        //        HttpContext.Session.Set(CommonConstants.CartSession, session);
-        //    }
-        //}
-        //else
-        //{
-        //    //Add new cart
-        //    var cart = new List<ItemCartViewModel>();
-        //    cart.Add(new ItemCartViewModel()
-        //    {
-        //        Item = item,
-        //        Quantity = quantity,
-        //        Price = item.PromotionPrice ?? item.Price
-        //    });
-        //    HttpContext.Session.Set(CommonConstants.CartSession, cart);
-        //}
-        //return new OkObjectResult(Cart);
-
+        public IActionResult OnGetNumberItemCart()
+        {           
+            return new OkObjectResult(_countItemCart);
+        }
         #endregion
+
     }
 }
