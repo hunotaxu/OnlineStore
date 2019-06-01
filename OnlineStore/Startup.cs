@@ -14,7 +14,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OnlineStore.Interfaces;
 using OnlineStore.Middleware;
 using OnlineStore.Services;
 using TimiApp.Dapper.Implementation;

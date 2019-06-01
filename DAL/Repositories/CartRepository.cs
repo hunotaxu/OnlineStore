@@ -15,6 +15,13 @@ namespace DAL.Repositories
 
         }
 
+        public int Add(Cart cart)
+        {
+            Table.Add(cart);
+            SaveChanges();
+            return cart.Id;
+        }
+
         public Cart GetCartByCustomerId(Guid customerId)
         {
             return Table.FirstOrDefault(c => c.CustomerId == customerId);

@@ -1,4 +1,6 @@
-﻿function loadData() {
+﻿
+
+function loadData() {
     $.ajax({
         url: '/Cart/GetCart',
         type: 'GET',
@@ -14,9 +16,7 @@
                         ProductName: item.Product.Name,
                         Image: item.Product.Image,
                         Price: tedu.formatNumber(item.Price, 0),
-                        Quantity: item.Quantity,
-                        Colors: getColorOptions(item.Color === null ? 0 : item.Color.Id),
-                        Sizes: getSizeOptions(item.Size === null ? "" : item.Size.Id),
+                        Quantity: item.Quantity,                        
                         Amount: tedu.formatNumber(item.Price * item.Quantity, 0),
                         Url: '/' + item.Product.SeoAlias + "-p." + item.Product.Id + ".html"
                     });

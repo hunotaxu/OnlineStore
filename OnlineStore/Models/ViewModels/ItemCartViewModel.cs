@@ -1,4 +1,5 @@
-﻿using OnlineStore.Models.ViewModels;
+﻿//using OnlineStore.Models.ViewModels;
+using DAL.Data.Entities;
 
 namespace OnlineStore.Models.ViewModels.Item
 {
