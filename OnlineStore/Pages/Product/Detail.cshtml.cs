@@ -199,6 +199,7 @@ namespace OnlineStore.Pages.Product
                     if (item.ItemId == model.ItemId)
                     {
                         item.Quantity += model.Quantity;
+                        item.IsDeleted = false;
                         _cartDetailRepository.Update(item);
                         isMatch = true;
                     }
