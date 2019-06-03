@@ -151,16 +151,17 @@
                         fillColor: "#fff"
                     }
                 },
-                {
-                    label: "Lợi nhuận",
-                    data: arrProfit,
-                    lines: {
-                        fillColor: "rgba(140, 232, 289, 0.12)"
-                    },
-                    points: {
-                        fillColor: "#fff"
-                    }
-                }], chart_plot_02_settings);
+                    //{
+                    //    label: "Lợi nhuận",
+                    //    data: arrProfit,
+                    //    lines: {
+                    //        fillColor: "rgba(140, 232, 289, 0.12)"
+                    //    },
+                    //    points: {
+                    //        fillColor: "#fff"
+                    //    }
+                    //}
+                ], chart_plot_02_settings);
         }
     }
 

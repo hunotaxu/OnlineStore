@@ -147,22 +147,22 @@ namespace OnlineStore.Pages.Product
         /// Get list item
         /// </summary>
         /// <returns></returns>
-        public IActionResult GetCart()
-        {
-            var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
-            if (session == null)
-                session = new List<ItemCartViewModel>();
-            return new OkObjectResult(session);
-        }
+        //public IActionResult GetCart()
+        //{
+        //    var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
+        //    if (session == null)
+        //        session = new List<ItemCartViewModel>();
+        //    return new OkObjectResult(session);
+        //}
         /// <summary>
         /// Remove all products in cart
         /// </summary>
         /// <returns></returns>
-        public IActionResult ClearCart()
-        {
-            HttpContext.Session.Remove(CommonConstants.CartSession);
-            return new OkObjectResult("OK");
-        }
+        //public IActionResult ClearCart()
+        //{
+        //    HttpContext.Session.Remove(CommonConstants.CartSession);
+        //    return new OkObjectResult("OK");
+        //}
 
         //public IActionResult OnPostAddToCart(int itemId, int quantity, [FromBody] DAL.Data.Entities.Cart model)
         public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)

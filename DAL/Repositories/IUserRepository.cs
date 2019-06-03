@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using DAL.Data.Entities;
 
@@ -21,5 +22,7 @@ namespace DAL.Repositories
         int AddUserRole(Guid userId, Guid roleId);
 
         int SaveChanges();
+        List<ApplicationUser> GetUsersByRole(Guid roleId);
+        List<ApplicationUser> GetEmployees();
     }
 }

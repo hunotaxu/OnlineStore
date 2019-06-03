@@ -13,6 +13,6 @@ namespace Utilities.Commons
         public static Guid CustomerRoleId = new Guid("681E4026-6248-4C17-B4A2-8533ACC2D0BB");
         public static Guid ProductManagerRoleId = new Guid("F1870140-A28B-41B0-A036-9CBAFCD13685");
         public static string Attachments = "attachments";
-        public const string CartSession = "CartSession";
+        //public const string CartSession = "CartSession";
     }
 }
