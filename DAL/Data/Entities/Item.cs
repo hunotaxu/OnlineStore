@@ -15,7 +15,7 @@ namespace DAL.Data.Entities
             CartDetails = new HashSet<CartDetail>();
             Comments = new HashSet<Comment>();
             GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
-            LineItems = new HashSet<OrderItem>();
+            OrderItems = new HashSet<OrderItem>();
         }
 
         [DisplayName("Tên sản phẩm")]
@@ -70,7 +70,7 @@ namespace DAL.Data.Entities
         public virtual ICollection<CartDetail> CartDetails { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
-        public virtual ICollection<OrderItem> LineItems { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
         [JsonIgnore]
         public virtual ICollection<ProductImages> ProductImages { get; set; }
     }

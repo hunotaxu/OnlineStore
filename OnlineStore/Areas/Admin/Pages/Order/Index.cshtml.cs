@@ -10,13 +10,13 @@ namespace OnlineStore.Pages.Admin.Orders
     public class IndexModel : PageModel
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrderItemRepository _lineItemRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public IndexModel(IOrderRepository orderRepository, IOrderItemRepository lineItemRepository)
+        public IndexModel(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
         {
             _orderRepository = orderRepository;
-            _lineItemRepository = lineItemRepository;
+            _orderItemRepository = orderItemRepository;
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<DAL.Data.Entities.Order, OrderInfoViewModel>();
@@ -42,8 +42,8 @@ namespace OnlineStore.Pages.Admin.Orders
         {
             var order = _orderRepository.Find(model.Id);
             _orderRepository.Delete(order);
-            var lineItem = _lineItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
-            _lineItemRepository.DeleteRange(lineItem);
+            var lineItem = _orderItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
+            _orderItemRepository.DeleteRange(lineItem);
             return new OkResult();
         }
     }

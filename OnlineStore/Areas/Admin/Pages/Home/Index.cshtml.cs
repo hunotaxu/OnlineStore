@@ -1,9 +1,11 @@
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TimiApp.Dapper.Interfaces;
+using TimiApp.Dapper.ViewModels;
 using Utilities.Commons;
 
 namespace OnlineStore.Areas.Admin.Pages.Home
@@ -27,7 +29,10 @@ namespace OnlineStore.Areas.Admin.Pages.Home
         public long NumberOfEmployees { get; set; }
         public long NumberOfProducts { get; set; }
         public long NumberOfOrders { get; set; }
-        public void OnGet()
+        public IEnumerable<BestSellerOfCategoryViewModel> BestSoldCategories { get; set; }
+        public long NumberOfDeliveredItem { get; set; }
+        public long NumberOfOtherDeliveredItem { get; set; }
+        public async Task OnGetAsync()
         {
             NumberOfUsers = _userRepository.GetUsersByRole(CommonConstants.CustomerRoleId).Count;
             NumberOfEmployees = _userRepository.GetEmployees().Count;
@@ -36,10 +41,13 @@ namespace OnlineStore.Areas.Admin.Pages.Home
             var listOrderDelivered = _orderRepository.GetSome(x => x.Status == DAL.Data.Enums.OrderStatus.Delivered).SelectMany(o => o.LineItems);
             var items = _itemRepository.GetSome(c => (listOrderDelivered.Any(x => x.ItemId == c.Id)));
             //var category = _categoryRepository.GetSome(c=>c.Item.Id)
+            BestSoldCategories = await _reportService.GetBestSellerOfCategory();
+            NumberOfDeliveredItem = BestSoldCategories.Sum(x => x.NumberOfDeliverdItems);
+            NumberOfOtherDeliveredItem = NumberOfDeliveredItem - BestSoldCategories.Take(3).Sum(x => x.NumberOfDeliverdItems);
         }
         public async Task<IActionResult> OnGetRevenue(string fromDate, string toDate)
         {
-            return new OkObjectResult(await _reportService.GetReportAsync(fromDate, toDate));
+            return new OkObjectResult(await _reportService.GetRevenueReportAsync(fromDate, toDate));
         }
     }
 }

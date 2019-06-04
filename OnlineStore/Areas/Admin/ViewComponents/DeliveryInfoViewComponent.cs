@@ -38,7 +38,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
                 DeliveryDate = order.DeliveryDate ?? order.OrderDate,
                 ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat)
             };
-            deliveryInfoVM.PhoneNumber = userAddress == null ? string.Empty : userAddress.PhoneNumber;
+            deliveryInfoVM.PhoneNumber = userAddress == null ? string.Empty : userAddress.Address.PhoneNumber;
             deliveryInfoVM.AddressType = userAddress == null ? (byte)0 : userAddress.AddressType;
             deliveryInfoVM.Address = userAddress == null ? string.Empty : order.Address?.Detail;
             return Task.FromResult<IViewComponentResult>(View(deliveryInfoVM));

@@ -28,7 +28,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly IGoodsReceiptDetailRepository _goodsReceiptDetailRepository;
-        private readonly IOrderItemRepository _lineItemRepository;
+        private readonly IOrderItemRepository _orderItemRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly MapperConfiguration _mapperConfiguration;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -40,13 +40,13 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                           ICommentRepository commentRepository,
                           IGoodsReceiptDetailRepository goodsReceiptDetailRepository,
                           ICartDetailRepository cartDetailRepository,
-                          IOrderItemRepository lineItemRepository)
+                          IOrderItemRepository orderItemRepository)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
-            _lineItemRepository = lineItemRepository;
+            _orderItemRepository = orderItemRepository;
             _commentRepository = commentRepository;
             _goodsReceiptDetailRepository = goodsReceiptDetailRepository;
             _categoryRepository = categoryRepository;
@@ -171,8 +171,8 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             _commentRepository.DeleteRange(comments);
             var cartDetails = _cartDetailRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
             _cartDetailRepository.DeleteRange(cartDetails);
-            var lineItems = _lineItemRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
-            _lineItemRepository.DeleteRange(lineItems);
+            var lineItems = _orderItemRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
+            _orderItemRepository.DeleteRange(lineItems);
             var goodsReceiptDetails = _goodsReceiptDetailRepository.GetSome(x => x.ItemId == model.Id && x.IsDeleted == false);
             _goodsReceiptDetailRepository.DeleteRange(goodsReceiptDetails);
             return new OkResult();

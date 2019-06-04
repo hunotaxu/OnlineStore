@@ -18,7 +18,24 @@ namespace TimiApp.Dapper.Implementation
         {
             _configuration = configuration;
         }
-        public async Task<IEnumerable<RevenueReportViewModel>> GetReportAsync(string fromDate, string toDate)
+
+        public async Task<IEnumerable<BestSellerOfCategoryViewModel>> GetBestSellerOfCategory()
+        {
+            using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
+            {
+                await sqlConnection.OpenAsync();
+                try
+                {
+                    return await sqlConnection.QueryAsync<BestSellerOfCategoryViewModel>("GetBestSellerOfCategory", commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task<IEnumerable<RevenueReportViewModel>> GetRevenueReportAsync(string fromDate, string toDate)
         {
             using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
             {
@@ -40,7 +57,7 @@ namespace TimiApp.Dapper.Implementation
                     return await sqlConnection.QueryAsync<RevenueReportViewModel>(
                         "GetRevenueDaily", dynamicParameters, commandType: CommandType.StoredProcedure);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }
