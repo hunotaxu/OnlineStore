@@ -7270,12 +7270,12 @@ button.button.pro-add-to-cart {
     border-bottom: 1px solid #fff;
     border-right: 0px solid #eee;
     padding: 10px 0px;
-    background: #fff;
+    background: #fafafa;
     text-transform: uppercase;
 }
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-    background: #fff;
+    background: #fafafa;
     border: none;
     border-bottom: 2px solid #e83f33;
     border-right: 0px solid #eee;
@@ -7283,7 +7283,7 @@ button.button.pro-add-to-cart {
 }
 
 .nav-tabs > li > a:hover {
-    background: #fff;
+    background: #fafafa;
     color: #e83f33;
     border: none;
     border-bottom: 2px solid #e83f33;
@@ -8550,7 +8550,7 @@ label[for="rememberme"] {
 }
 
 .avatar {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     object-fit: cover;
     max-height: 30px;
     overflow: hidden;

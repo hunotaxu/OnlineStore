@@ -76,9 +76,9 @@
                         </div>
                         <div class="ratings">
 
-                            <!--Đánh giá sao-->
+                            <!--Đánh giá sao trung bình-->
                             <div class="rateit" data-rateit-value=@Html.Raw(Model.Average) data-rateit-readonly="true"> </div>
-                            <!--Đánh giá sao-->
+                            <!--Đánh giá sao trung bình-->
                             @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
                             @*<p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>*@
                             @if (Model.Item.Quantity == 0)
@@ -95,7 +95,7 @@
                         </div>
                         <br />
                         <div>
-                            <p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a id="gotocomment" href="#review">Thêm bình luận của bạn</a> </p>
+                            <p id="gotocomment1"class="rating-links"> <a href="#review">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a id="gotocomment" href="#review">Thêm bình luận của bạn</a> </p>
 
                         </div>
                         <div class="short-description">
@@ -135,9 +135,10 @@
                                 <div class="cart-plus-minus">
                                     <label for="qty">Quantity:</label>
                                     <div class="numbers-row">
-                                        <div onClick="var result = document.getElementById('txtQuantity'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="dec qtybutton"><i class="fa fa-minus">&nbsp;</i></div>
-                                        <input type="text" class="qty" title="Qty" value="1" id="txtQuantity" name="txtQuantity">
-                                        <div onClick="var result = document.getElementById('txtQuantity'); var qty = result.value; if (!isNaN(qty) && result.value < @Model.Item.Quantity) result.value++; return false;" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
+                                        <div  onClick="var result = document.getElementById('txtQuantity'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) result.value--;return false;" class="dec qtybutton"><i class="fa fa-minus">&nbsp;</i></div>
+                                        <input class="qty" title="Qty" value="1" id="txtQuantity" name="txtQuantity">
+                                        <input id="itemQty" name="itemQty" type="hidden" value=@Model.Item.Quantity>
+                                        <div  onClick="var result = document.getElementById('txtQuantity'); var qty = result.value; if (!isNaN(qty) && result.value < @Model.Item.Quantity) result.value++; return false;" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
                                     </div>
                                 </div>
                                 <button class="button pro-add-to-cart" id="btnAddToCart" data-id="@Model.ItemId" title="Add to Cart" type="button"><span><i class="fa fa-shopping-basket"></i> Add to Cart</span></button>
@@ -154,10 +155,10 @@
                 <div class="product-overview-tab">
                     <div class="product-tab-inner">
                         <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                            <li id="description" class="active"> <a href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
-                            <li id="review"> <a href="#reviews" data-toggle="tab">Đánh giá</a> </li>
-                            <li id="product_tag"><a href="#product_tags" data-toggle="tab">Tags</a></li>
-                            <li id="custom_tag"> <a href="#custom_tabs" data-toggle="tab">Custom Tab</a> </li>
+                            <li  id="description" class="active"> <a class="tabproduct" href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
+                            <li  id="review"> <a class="tabproduct" href="#reviews" data-toggle="tab">Đánh giá</a> </li>
+                            <li  id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Tags</a></li>
+                            <li  id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Custom Tab</a> </li>
                         </ul>
                         <div id="productTabContent" class="tab-content">
                             <div class="tab-pane fade in active" id="descriptions">
@@ -170,7 +171,7 @@
                             <div id="reviews" class="tab-pane fade">
                                 <div class="col-sm-5 col-lg-5 col-md-5">
                                     <div class="reviews-content-left">
-                                        <h2>Đánh giá khách hàng</h2>
+                                        @*<h2>Đánh giá khách hàng</h2>
                                         <div class="review-ratting">
                                             <p><a href="#">Chất lượng tuyệt vời</a> Đánh giá bởi Công</p>
                                             <table>
@@ -206,34 +207,46 @@
                                                 </tbody>
                                             </table>
                                             <p class="author"> Jone Deo<small> (Posted on 25/12/2015)</small> </p>
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 <div class="col-sm-7 col-lg-7 col-md-7">
-                                    <div class="reviews-content-right">
+                                    <div class="reviews-content-left">
                                         <!--Đánh giá của khách hàng-->
                                         <!--//Đánh giá của khách hàng-->
 
-                                        <ul>
+                                       
                                             @if (Model.CustomerCommentViewModel != null)
                                             {
                                                 @foreach (var item in Model.CustomerCommentViewModel)
                                                 {
-                                                    <li class="customer-comment">
-                                                        @*<img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName*@
-                                                        <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"~/images/shared/avatar/{item.CustomerAvatar}" : "/images/admin/user.png")">  @item.CustomerName
-                                                        <p class="in-para">@item.Content</p>
-                                                    </li>
+                                                    //<li class="customer-comment">
+                                                     //   @*<img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName*@
+                                                     //   <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"~/images/shared/avatar/{item.CustomerAvatar}" : "~/images/admin/user.png")">  @item.CustomerName
+                                                     //   <p class="in-para">@item.Content</p>
+                                                    //</li>
+                                                    <div class="review-ratting">
+                                                        <p>@item.Content</p>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th>Hài lòng:</th>
+                                                                    <td>
+                                                                        <div class="rateit" data-rateit-value=@Html.Raw(item.Evaluation) data-rateit-readonly="true"> </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <p class="author">
+                                                            @*<img class="avatar" src="@Url.Content("~/images/shared/avatar/"+item.CustomerAvatar)">  @item.CustomerName*@
+                                                            <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"/images/shared/avatar/{item.CustomerAvatar}" : "  /images/admin/user.png")">  @item.CustomerName
+                                                            <small> (Posted on @item.DateCreated)</small>
+                                                        </p>
+                                                        <hr/>
+                                                    </div>
                                                 }
-                                            }
-                                            else
-                                            {
-                                                <li>
-                                                    @*<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> @Html.Raw("Hãy trở thành người đầu tiên đánh giá về sản phẩm này. <br />")*@
-
-                                                </li>
-                                            }
-                                        </ul>
+                                            }                                            
+                                        
                                         <!--Đánh giá của bạn-->
                                         <br />
                                         @if (cus != null)

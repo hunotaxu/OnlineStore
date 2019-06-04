@@ -36,8 +36,6 @@ namespace OnlineStore.Pages.Product
         public double _countComment = 0;
         public int _countItemCart = 0;
 
-
-
         public DetailModel(UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
         {
             _cartRepository = cartRepository;
@@ -101,7 +99,7 @@ namespace OnlineStore.Pages.Product
 
                     });
                 }
-                Average = sumEvaluation / comments.Count;
+                Average = sumEvaluation / _countComment;
             }
             else
             {
@@ -109,7 +107,6 @@ namespace OnlineStore.Pages.Product
                 Average = 0;
             }
             return Page();
-
         }
         public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Comment model)
         {
@@ -168,7 +165,7 @@ namespace OnlineStore.Pages.Product
 
         //public IActionResult OnPostAddToCart(int itemId, int quantity, [FromBody] DAL.Data.Entities.Cart model)
         public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
-        {
+        {      
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -215,16 +212,16 @@ namespace OnlineStore.Pages.Product
                         ItemId = model.ItemId,
                         Quantity = model.Quantity
                     });
+                    _countItemCart++;
                 }
             }
             return new OkObjectResult(model);  
         }
 
         public IActionResult OnGetNumberItemCart()
-        {           
+        {
             return new OkObjectResult(_countItemCart);
         }
         #endregion
-
     }
 }
