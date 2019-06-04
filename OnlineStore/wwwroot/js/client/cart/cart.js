@@ -6,15 +6,16 @@
     };
 
     var deleteItem = function () {
-        console.log('da vao day');
-        $('body').on('click', '#btnDeleteItem', function () {
+        $('body').on('click', '#btnDeleteItem', function (e) {
+            console.log($(this).data("itemid"));
+            e.preventDefault();
             commons.confirm("Bạn có chắc chắn muốn xóa sản phẩm này ra khỏi giỏ hàng", function () {
                 $.ajax({
+                    type: 'post',
                     url: "/Cart/Index?handler=DeleteItem",
-                    type: 'POST',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({
-                        itemId: $("#itemId").val()
+                        ItemId: $(this).data("itemid")
                     }),
                     beforeSend: function () {
                         commons.startLoading();
@@ -49,7 +50,7 @@
                     url: '/Cart/Index?handler=UpdateQuantity',
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({
-                        ItemId: $('#itemId').val(),
+                        ItemId: $(this).data("itemid"),
                         Quantity: $(this).val()
                     }),
                     beforeSend: function () {
