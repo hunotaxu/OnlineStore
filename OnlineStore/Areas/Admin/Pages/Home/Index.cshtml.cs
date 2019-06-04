@@ -14,8 +14,10 @@ namespace OnlineStore.Areas.Admin.Pages.Home
         private readonly IUserRepository _userRepository;
         private readonly IItemRepository _itemRepository;
         private readonly IOrderRepository _orderRepository;
-        public IndexModel(IReportService reportService, IOrderRepository orderRepository, IUserRepository userRepository, IItemRepository itemRepository)
+        private readonly ICategoryRepository _categoryRepository;
+        public IndexModel(IReportService reportService, IOrderRepository orderRepository, IUserRepository userRepository, IItemRepository itemRepository, ICategoryRepository categoryRepository)
         {
+            _categoryRepository = categoryRepository;
             _reportService = reportService;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
@@ -31,6 +33,9 @@ namespace OnlineStore.Areas.Admin.Pages.Home
             NumberOfEmployees = _userRepository.GetEmployees().Count;
             NumberOfProducts = _itemRepository.GetSome(i => i.IsDeleted == false).Count();
             NumberOfOrders = _orderRepository.GetSome(i => i.IsDeleted == false).Count();
+            var listOrderDelivered = _orderRepository.GetSome(x => x.Status == DAL.Data.Enums.OrderStatus.Delivered).SelectMany(o => o.LineItems);
+            var items = _itemRepository.GetSome(c => (listOrderDelivered.Any(x => x.ItemId == c.Id)));
+            //var category = _categoryRepository.GetSome(c=>c.Item.Id)
         }
         public async Task<IActionResult> OnGetRevenue(string fromDate, string toDate)
         {

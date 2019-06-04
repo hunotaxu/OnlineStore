@@ -6,16 +6,15 @@
     };
 
     var deleteItem = function () {
-        $('body').on('click', '#btnDeleteItem', function (e) {
-            console.log($(this).data("itemid"));
-            e.preventDefault();
+        $('body').on('click', '#btnDeleteItem', function () {
+            var itemId = $(this).data("itemid");
             commons.confirm("Bạn có chắc chắn muốn xóa sản phẩm này ra khỏi giỏ hàng", function () {
                 $.ajax({
                     type: 'post',
                     url: "/Cart/Index?handler=DeleteItem",
                     contentType: 'application/json; charset=utf-8',
                     data: JSON.stringify({
-                        ItemId: $(this).data("itemid")
+                        ItemId: itemId
                     }),
                     beforeSend: function () {
                         commons.startLoading();

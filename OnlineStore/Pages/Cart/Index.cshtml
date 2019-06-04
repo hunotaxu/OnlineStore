@@ -64,7 +64,7 @@
                         <script id="template-cart" type="x-tmpl-mustache">
                             <tr>
                                 <td>
-                                    @*<input type="hidden" id="itemId" value="{{ItemId}}" />*@
+                                    <input type="hidden" id="itemId" value="{{ItemId}}" />
                                     <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="200" class="img-responsive" />
                                 </td>
                                 <td>
@@ -78,8 +78,7 @@
                                     <input type="number" data-itemId="{{ItemId}}" id="btnQuantity" {{IsOutOfStock}} class="form-control text-center" value="{{Quantity}}" min="1" max="{{MaxQuantity}}">
                                 </td>
                                 <td class="actions" data-th="">
-                                    <input type="button" class="btn btn-danger btn-sm" data-itemId="{{ItemId}}" id="btnDeleteItem" /><i class="fa fa-trash-o"></i>
-                                    @*<button type="button" class="btn btn-danger btn-sm deleteItem" data-itemId="{{ItemId}}" id="btnDeleteItem"><i class="fa fa-trash-o"></i></button>*@
+                                    <button type="button" class="btn btn-danger btn-sm deleteItem" data-itemId="{{ItemId}}" id="btnDeleteItem"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             </tr>
                         </script>
