@@ -39,7 +39,6 @@ namespace OnlineStore.Areas.Admin.Pages.Home
         }
         public async Task<IActionResult> OnGetRevenue(string fromDate, string toDate)
         {
-            var b = await _reportService.GetReportAsync(fromDate, toDate);
             return new OkObjectResult(await _reportService.GetReportAsync(fromDate, toDate));
         }
     }
