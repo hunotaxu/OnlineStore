@@ -51,6 +51,7 @@ namespace DAL.Repositories
         public virtual int Delete(CartDetail entity, bool persist = true)
         {
             entity.IsDeleted = true;
+            entity.Quantity = 0;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
