@@ -7,6 +7,7 @@
         public string Image { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
+        public int MaxQuantity { get; set; }
         public decimal Subtotal { get; set; }
         public decimal Total { get; set; }
     }

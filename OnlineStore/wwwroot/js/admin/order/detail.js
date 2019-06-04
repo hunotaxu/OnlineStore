@@ -108,7 +108,6 @@
                     commons.stopLoading();
                 },
                 error: function (response) {
-                    debugger;
                     if (response.responseText !== undefined && response.responseText !== '') {
                         commons.notify(response.responseText, 'error');
                     }

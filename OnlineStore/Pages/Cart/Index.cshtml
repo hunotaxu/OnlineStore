@@ -1,5 +1,5 @@
 ﻿@page
-@model OnlineStore.Pages.Order.IndexModel
+@model OnlineStore.Pages.Cart.IndexModel
 @{
     ViewData["Title"] = "Giỏ hàng";
 }
@@ -14,76 +14,77 @@
         cart.init();
     </script>
 }
-
 <!-- Main Container -->
-<section class="main-container col1-layout">
-    <div class="main container">
-        <div class="col-main">
-            <div class="cart">
-                <div class="page-content page-order">
-                    <div class="page-title">
-                        <h2>Giỏ hàng của tôi</h2>
-                    </div>
-                    <div class="container">
-                        <div class="row container__row--center">
-                            <div class="col-md-9">
-                                <table id="cart" class="table table-hover table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th style="width:10%">Hình ảnh</th>
-                                            <th style="width:40%">Thông tin sản phẩm</th>
-                                            <th style="width:10%">Giá</th>
-                                            <th style="width:8%">Số lượng</th>
-                                            <th style="width:10%"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="container-cart"></tbody>
-                                </table>
-                            </div>
-                            <div class="col-md-3">
-                                <table class="table table-hover table-condensed">
-                                    <thead>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <strong>
-                                                    Tạm tính:
-                                                </strong>
-                                            </td>
-                                            <td id="subTotal">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="text-center">
-                                    <a class="btn btn-success" href="#"> Tiến hành đặt hàng</a>
+<form method="post">
+    <section class="main-container col1-layout">
+        <div class="main container">
+            <div class="col-main">
+                <div class="cart">
+                    <div class="page-content page-order">
+                        <div class="page-title">
+                            <h2>Giỏ hàng của tôi</h2>
+                        </div>
+                        <div class="container">
+                            <div class="row container__row--center">
+                                <div class="col-md-9">
+                                    <table id="cart" class="table table-hover table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:10%">Hình ảnh</th>
+                                                <th style="width:40%">Thông tin sản phẩm</th>
+                                                <th style="width:10%">Giá</th>
+                                                <th style="width:8%">Số lượng</th>
+                                                <th style="width:10%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="container-cart"></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-3">
+                                    <table class="table table-hover table-condensed">
+                                        <thead>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <strong>
+                                                        Tạm tính:
+                                                    </strong>
+                                                </td>
+                                                <td id="subTotal"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="text-center">
+                                        <a class="btn btn-success" href="#"> Tiến hành đặt hàng</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <script id="template-cart" type="x-tmpl-mustache">
+                            <tr>
+                                <td>
+                                    <input type="hidden" id="itemId" value="{{ItemId}}" />
+                                    <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="200" class="img-responsive" />
+                                </td>
+                                <td>
+                                    <a href="/Product/Detail?id={{ItemId}}">
+                                        <h4 class="nomargin">{{ProductName}}</h4>
+                                    </a>
+                                    <span class="text-danger">{{OutOfStockNotifyCation}}</span>
+                                </td>
+                                <td data-th="Price" class="price">{{Price}}</td>
+                                <td data-th="Quantity">
+                                    <input type="number" id="btnQuantity" {{IsOutOfStock}} class="form-control text-center" value="{{Quantity}}" min="1" max="{{MaxQuantity}}">
+                                </td>
+                                <td class="actions" data-th="">
+                                    <button type="button" class="btn btn-danger btn-sm deleteItem" id="btnDeleteItem"><i class="fa fa-trash-o"></i></button>
+                                </td>
+                            </tr>
+                        </script>
                     </div>
-                    <script id="template-cart" type="x-tmpl-mustache">
-                        <tr>
-                            <td>
-                                <input type="hidden" class="itemId" value="{{ItemId}}" />
-                                <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="200" class="img-responsive" />
-                            </td>
-                            <td>
-                                <a href="/Product/Detail?id={{ItemId}}">
-                                    <h4 class="nomargin">{{ProductName}}</h4>
-                                </a>
-                            </td>
-                            <td data-th="Price" class="price">{{Price}}</td>
-                            <td data-th="Quantity">
-                                <input type="number" class="form-control text-center UpdateQuantity" value="{{Quantity}}" min="1">
-                            </td>
-                            <td class="actions" data-th="">
-                                <button class="btn btn-danger btn-sm deleteItem"><i class="fa fa-trash-o"></i></button>
-                            </td>
-                        </tr>
-                    </script>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>

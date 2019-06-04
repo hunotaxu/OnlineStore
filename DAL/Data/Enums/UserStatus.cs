@@ -1,6 +1,6 @@
 ﻿namespace DAL.Data.Enums
 {
-    public enum Status : byte
+    public enum UserStatus : byte
     {
         Inactive = 0,
         Active = 1

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using DAL.Data.Entities;
@@ -26,6 +27,18 @@ namespace DAL.Repositories
 
         public ApplicationUser FindUser(Expression<Func<ApplicationUser, bool>> where)
             => _userTable.FirstOrDefault(where);
+
+        public List<ApplicationUser> GetUsersByRole(Guid roleId)
+        {
+            var userIds = _userRoletable.Where(ur => ur.RoleId == roleId).Select(ur => ur.UserId);
+            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte) UserStatus.Active).ToList();
+        }
+
+        public List<ApplicationUser> GetEmployees()
+        {
+            var userIds = _userRoletable.Where(ur => ur.RoleId != CommonConstants.StoreOwnerRoleId && ur.RoleId != CommonConstants.CustomerRoleId).Select(ur => ur.UserId);
+            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte) UserStatus.Active).ToList();
+        }
 
         public ApplicationUser FindUserByUserName(string userName)
         {
@@ -70,7 +83,7 @@ namespace DAL.Repositories
                 UserId = userId,
                 DateCreated = DateTime.Now,
                 DateModified = DateTime.Now,
-                Status = (byte)Status.Active
+                Status = (byte)UserStatus.Active
             };
             _userRoletable.Add(userRole);
             return SaveChanges();

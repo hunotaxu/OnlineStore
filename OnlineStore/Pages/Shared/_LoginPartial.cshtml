@@ -19,7 +19,19 @@
                 <span>
                     <i class="fa fa-angle-down"></i>
                     @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Name
-                    &nbsp;<img class="my-avatar" src="@Url.Content("~/images/shared/avatar/"+@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Avatar)">
+                    @*&nbsp;<img class="my-avatar" src="@Url.Content("~/images/shared/avatar/"+@UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Avatar)">*@
+                    @{
+                        var avatar = UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Avatar;
+                        if (string.IsNullOrEmpty(avatar))
+                        {
+                            @:&nbsp;<img class="my-avatar" src="/images/admin/user.png">
+                        }
+                        else
+                        {
+                            @:&nbsp;<img class="my-avatar" src=`/images/shared/${avatar}`>
+                        }
+                    }
+                    @*&nbsp;<img class="my-avatar" src="@Url.Content("~/images/shared/avatar/"+@)">*@
                 </span> 
             </a>
             <ul class="dropdown-menu" role="menu">
