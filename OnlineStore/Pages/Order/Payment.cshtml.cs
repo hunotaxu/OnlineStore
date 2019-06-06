@@ -6,7 +6,7 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Extensions;
+using Utilities.Extensions;
 using OnlineStore.Models.ViewModels;
 using Utilities.Commons;
 

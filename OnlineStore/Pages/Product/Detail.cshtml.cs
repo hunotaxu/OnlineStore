@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Extensions;
+using Utilities.Extensions;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models.ViewModels.Item;
 using Utilities.Commons;

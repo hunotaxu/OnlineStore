@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -56,6 +57,23 @@ namespace TimiApp.Dapper.Implementation
                 {
                     return await sqlConnection.QueryAsync<RevenueReportViewModel>(
                         "GetRevenueDaily", dynamicParameters, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public async Task<IEnumerable<MostDeliveryMethodViewModel>> GetTopMostOfCategoryAsync()
+        {
+            using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
+            {
+                await sqlConnection.OpenAsync();
+                try
+                {
+                    IEnumerable<MostDeliveryMethodViewModel> a = await sqlConnection.QueryAsync<MostDeliveryMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
+                    return await sqlConnection.QueryAsync<MostDeliveryMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
                 }
                 catch (Exception)
                 {

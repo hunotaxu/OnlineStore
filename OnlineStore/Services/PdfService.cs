@@ -2,7 +2,7 @@
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Hosting;
-using OnlineStore.Extensions;
+using Utilities.Extensions;
 using System;
 using System.Collections.Generic;
 using System.IO;

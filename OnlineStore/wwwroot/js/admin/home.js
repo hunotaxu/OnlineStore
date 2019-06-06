@@ -3,11 +3,12 @@
         $(document).ready(function () {
             initDateRangePicker();
             loadData();
+            loadBestCategories();
+            loadBestDeliverMethod();
         });
     };
 
     function loadData(from, to) {
-        debugger;
         $.ajax({
             type: "GET",
             url: "/Admin/Home/Index?handler=Revenue",
@@ -20,12 +21,96 @@
                 commons.startLoading();
             },
             success: function (response) {
-                debugger;
                 initChart(response);
                 commons.stopLoading();
             },
             error: function (status) {
                 commons.notify('Có lỗi xảy ra', 'error');
+                commons.stopLoading();
+            }
+        });
+    }
+
+    function loadBestCategories() {
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Home/Index?handler=Categories",
+            //data: {
+            //    fromDate: from,
+            //    toDate: to
+            //},
+            dataType: "json",
+            beforeSend: function () {
+                commons.startLoading();
+            },
+            success: function (response) {
+                var totalDeliveredItems = 0;
+                $.each(response, function (i, item) {
+                    totalDeliveredItems += item.numberOfDeliverdItems;
+                });
+                init_chart_doughnut(response, totalDeliveredItems);
+                commons.stopLoading();
+            },
+            error: function () {
+                commons.notify('Không tải được dữ liệu', 'error');
+                commons.stopLoading();
+            }
+        });
+    }
+
+    function loadBestDeliverMethod() {
+        var template = $('#table-template').html();
+        var render = '';
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Home/Index?handler=DeliverMethod",
+            //data: {
+            //    fromDate: from,
+            //    toDate: to
+            //},
+            dataType: "json",
+            beforeSend: function () {
+                commons.startLoading();
+            },
+            success: function (response) {
+                debugger;
+                $('#listDeliverMethods').empty();
+                var totalOfTop3 = 0;
+                if (response !== undefined && response !== '') {
+                    $.each(response, function (i, item) {
+                        render += Mustache.render(template,
+                            {
+                                Color: item.colors[i],
+                                MethodName: item.deliveryName,
+                                ProportionOfMethod: `${item.proportionOfDeliverdItems}%`
+                                //BrandName: item.brandName,
+                                //Quantity: item.quantity,
+                                //Price: `${commons.formatNumber(item.price, 0)}đ`,
+                                //CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
+                            });
+                        totalOfTop3 += item.proportionOfDeliverdItems;
+                    });
+                    if (totalOfTop3 < 100) {
+                        render += Mustache.render(template,
+                            {
+                                Color: response[0].colors[4],
+                                MethodName: 'Các phương thức khác',
+                                ProportionOfMethod: `${100 - totalOfTop3}%`
+                                //BrandName: item.brandName,
+                                //Quantity: item.quantity,
+                                //Price: `${commons.formatNumber(item.price, 0)}đ`,
+                                //CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
+                            });
+                    }
+                }
+                if (render !== '') {
+                    $('#listDeliverMethods').html(render);
+                    initBestMethodChart(response);
+                }
+                commons.stopLoading();
+            },
+            error: function () {
+                commons.notify('Không tải được dữ liệu', 'error');
                 commons.stopLoading();
             }
         });
@@ -52,8 +137,134 @@
     //    //setData(data);not shown in question
     //}
 
-    function initChart(data) {
+    function initBestMethodChart(data) {
         debugger;
+        if (typeof (Chart) === 'undefined') { return; }
+
+        console.log('init_chart_doughnut');
+
+        if ($('.canvasBestDeliveryMethod').length) {
+            var labels = [];
+            var proportionData = [];
+            var backgroundColors = [];
+            $.each(data, function (i, item) {
+                labels.push(item.deliveryName);
+                proportionData.push(item.proportionOfDeliverdItems);
+                backgroundColors.push(item.colors[i]);
+            });
+
+            var chart_doughnut_settings = {
+                type: 'doughnut',
+                //tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                data: {
+                    labels: labels,
+                    //labels: [
+                    //    "Symbian",
+                    //    "Blackberry",
+                    //    "Other",
+                    //    "Android",
+                    //    "IOS"
+                    //],
+                    datasets: [{
+                        //data: [15, 20, 30, 10, 30],
+                        data: proportionData,
+                        backgroundColor: backgroundColors
+                        //backgroundColor: [
+                        //    "#BDC3C7",
+                        //    "#9B59B6",
+                        //    "#E74C3C"
+                        //    //"#26B99A",
+                        //    //"#3498DB"
+                        //],
+                        //hoverBackgroundColor: [
+                        //    "#CFD4D8",
+                        //    "#B370CF",
+                        //    "#E95E4F",
+                        //    "#36CAAB",
+                        //    "#49A9EA"
+                        //]
+                    }]
+                },
+                toolTip: {
+                    enabled: false
+                },
+                options: {
+                    legend: false,
+                    responsive: false
+                }
+            };
+
+            $('.canvasBestDeliveryMethod').each(function () {
+                var chart_element = $(this);
+                var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+            });
+        }
+
+    }
+
+    function init_chart_doughnut(data, total) {
+
+        if (typeof (Chart) === 'undefined') { return; }
+
+        console.log('init_chart_doughnut');
+
+        if ($('.canvasBestCategories').length) {
+            var labels = [];
+            var proportionData = [];
+            $.each(data, function (idx, item) {
+                labels.push(item.categoryName);
+                proportionData.push((item.numberOfDeliverdItems * 100) / total);
+            });
+
+            var chart_doughnut_settings = {
+                type: 'doughnut',
+                //tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                data: {
+                    labels: labels,
+                    //labels: [
+                    //    "Symbian",
+                    //    "Blackberry",
+                    //    "Other",
+                    //    "Android",
+                    //    "IOS"
+                    //],
+                    datasets: [{
+                        //data: [15, 20, 30, 10, 30],
+                        data: proportionData,
+                        backgroundColor: [
+                            "#BDC3C7",
+                            "#9B59B6",
+                            "#E74C3C"
+                            //"#26B99A",
+                            //"#3498DB"
+                        ],
+                        //hoverBackgroundColor: [
+                        //    "#CFD4D8",
+                        //    "#B370CF",
+                        //    "#E95E4F",
+                        //    "#36CAAB",
+                        //    "#49A9EA"
+                        //]
+                    }]
+                },
+                toolTip: {
+                    enabled: false
+                },
+                options: {
+                    legend: false,
+                    responsive: false
+                }
+            };
+
+            $('.canvasBestCategories').each(function () {
+                var chart_element = $(this);
+                var chart_doughnut = new Chart(chart_element, chart_doughnut_settings);
+            });
+        }
+
+    }
+
+    function initChart(data) {
         var arrRevenue = [];
         var arrProfit = [];
 

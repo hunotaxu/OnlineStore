@@ -8,5 +8,6 @@ namespace TimiApp.Dapper.Interfaces
     {
         Task<IEnumerable<RevenueReportViewModel>> GetRevenueReportAsync(string fromDate, string toDate);
         Task<IEnumerable<BestSellerOfCategoryViewModel>> GetBestSellerOfCategory();
+        Task<IEnumerable<MostDeliveryMethodViewModel>> GetTopMostOfCategoryAsync();
     }
 }

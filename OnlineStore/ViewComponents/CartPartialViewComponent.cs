@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using OnlineStore.Extensions;
+using Utilities.Extensions;
 using Utilities.Commons;
 
 namespace OnlineStore.ViewComponents

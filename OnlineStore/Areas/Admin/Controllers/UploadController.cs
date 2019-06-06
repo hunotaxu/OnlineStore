@@ -8,8 +8,7 @@ using System.Net.Http.Headers;
 using System.IO;
 using TeduCoreApp.Areas.Admin.Controllers;
 using Utilities.Commons;
-using OnlineStore.Models;
-using OnlineStore.Extensions;
+using Utilities.Extensions;
 using DAL.Data.Entities;
 
 namespace OnlineStore.Controllers
