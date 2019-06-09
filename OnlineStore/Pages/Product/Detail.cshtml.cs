@@ -174,6 +174,7 @@ namespace OnlineStore.Pages.Product
 
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
             var cart = _cartRepository.GetCartByCustomerId(cus.Id);
+            var _item = _itemRepository.Find(model.ItemId);
             if (cart == null)
             {
                 var newCart = new DAL.Data.Entities.Cart
@@ -187,7 +188,6 @@ namespace OnlineStore.Pages.Product
                     ItemId = model.ItemId,
                     Quantity = model.Quantity
                 });
-                _countItemCart = 1;
             }
             else
             {
@@ -196,13 +196,14 @@ namespace OnlineStore.Pages.Product
                 foreach (var item in cart.CartDetails)
                 {
                     if (item.ItemId == model.ItemId)
-                    {
+                    {         
                         item.Quantity += model.Quantity;
+                        if(item.Quantity > _item.Quantity)
+                            return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " +  _item.Quantity.ToString());
                         item.IsDeleted = false;
                         _cartDetailRepository.Update(item);
                         isMatch = true;
                     }
-                    _countItemCart ++;
                 }
                 if (!isMatch)
                 {
@@ -212,16 +213,32 @@ namespace OnlineStore.Pages.Product
                         ItemId = model.ItemId,
                         Quantity = model.Quantity
                     });
-                    _countItemCart++;
                 }
             }
             return new OkObjectResult(model);  
         }
+        //public IActionResult OnGetCheckAvailQtyCart()
+        //{
+        //    var avail = 0;
 
-        public IActionResult OnGetNumberItemCart()
-        {
-            return new OkObjectResult(_countItemCart);
-        }
+        //    var cus = _userManager.GetUserAsync(HttpContext.User).Result;
+        //    if (cus != null)
+        //    {
+        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+        //        if (cart != null)
+        //        {
+        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+        //            foreach (var item in items)
+        //            {
+
+        //            };
+        //        }
+        //        return new OkObjectResult(itemnumbercart);
+        //    }
+        //    return new OkObjectResult(itemnumbercart);
+
+        //}
+
         #endregion
     }
 }

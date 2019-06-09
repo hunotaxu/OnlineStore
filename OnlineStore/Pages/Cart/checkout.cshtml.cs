@@ -7,8 +7,8 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Models.ViewModels;
 using OnlineStore.Models.ViewModels.Item;
+using OnlineStore.Models.ViewModels;
 
 namespace OnlineStore.Pages.Order
 {
@@ -88,7 +88,7 @@ namespace OnlineStore.Pages.Order
                             AddressId = item.AddressId,
                             CustomerId = item.CustomerId,
                             PhoneNumber = item.PhoneNumber,
-                            ReceipientName = item.ReceipientName,
+                            RecipientName = item.RecipientName,
                             Province = item.Address.Province,
                             District = item.Address.District,
                             Ward = item.Address.Ward,

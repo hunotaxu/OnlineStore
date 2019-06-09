@@ -90,7 +90,7 @@
                             ItemId: item.itemId,
                             ProductName: item.productName,
                             Image: item.image,
-                            Price: `${commons.formatNumber(item.price, 0)}đ`,
+                            TotalPrice: `${commons.formatNumber(item.price * item.quantity, 0)}đ`,
                             Quantity: item.quantity
                         });
                         if (item.maxQuantity > 0) {
@@ -132,7 +132,7 @@
                     $.each(response, function (i, item) {                        
                         render += Mustache.render($('#script-select-address').html(),
                             {
-                            ReceipientName: item.receipientName,
+                            RecipientName: item.recipientName,
                             Detail: item.detail,
                             Address: item.province + '-' + item.district + '-' + item.ward,
                             PhoneNumber: item.phoneNumber,
