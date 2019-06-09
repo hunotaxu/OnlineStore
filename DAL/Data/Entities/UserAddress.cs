@@ -8,7 +8,7 @@ namespace DAL.Data.Entities
         public int AddressId { get; set; }
         public bool IsDeleted { get; set; }
         public string PhoneNumber { get; set; }
-        public string ReceipientName { get;set; }
+        public string RecipientName { get;set; }
         public virtual ApplicationUser Customer { get; set; }
         public virtual Address Address { get; set; }
     }

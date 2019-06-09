@@ -19,7 +19,7 @@ jQuery(document).ready(function ($) {
     }
 });
 
-var loadItemMyCart = (function () {  
+var loadItemMyCart = (function () {
     var init = function () {
         loadItemCart();       
     };   
@@ -38,6 +38,7 @@ var loadItemMyCart = (function () {
                     $('#cart-itemtotal').html(``);
                 }
                 //commons.stopLoading();
+                document.getElementById("cart-itemtotal").innerHTML.reload;
             },
             error: function () {
                 //commons.stopLoading();
