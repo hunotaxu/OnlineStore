@@ -21,6 +21,8 @@
                     },
                     success: function () {
                         loadData();
+                        loadItemMyCart.init();             
+
                         commons.stopLoading();
                     },
                     error: function () {
@@ -57,6 +59,8 @@
                     },
                     success: function () {
                         loadData();
+                        loadItemMyCart.init();               
+
                     },
                     error: function (response) {
                         if (response.responseText !== undefined && response.responseText !== '') {
