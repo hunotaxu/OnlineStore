@@ -1,0 +1,24 @@
+﻿.none {
+    display: none;
+}
+
+.showDIV {
+    display: block;
+}
+.imgpayment{
+    height: 32px;
+}
+.subcaption{
+    font-style: italic;
+}
+.linkchange {
+    float: right;
+    color: #cb2d22;
+    font-style:italic;
+}
+#productnamecheckout {
+    font-family:'Roboto','Montserrat', sans-serif; 
+    font-size: 13px; 
+    font-weight: 600;
+    color:#333333;
+}

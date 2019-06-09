@@ -7,8 +7,8 @@ namespace DAL.Data.Entities
         public Guid CustomerId { get; set; }
         public int AddressId { get; set; }
         public bool IsDeleted { get; set; }
-        public byte AddressType { get; set; }
-
+        public string PhoneNumber { get; set; }
+        public string ReceipientName { get;set; }
         public virtual ApplicationUser Customer { get; set; }
         public virtual Address Address { get; set; }
     }

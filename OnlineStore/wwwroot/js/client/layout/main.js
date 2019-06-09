@@ -387,8 +387,8 @@ jQuery(document).ready(function() {
                 li.find(' > ul').slideToggle('fast');
                 jQuery(this).toggleClass("close-cat");
             } else {
-                var li = jQuery(this).closest('li');
-                li.find(' > ul').slideToggle('fast');
+                var lin = jQuery(this).closest('li');
+                lin.find(' > ul').slideToggle('fast');
                 jQuery(this).toggleClass("cat-item.cat-parent open-cat");
             }
         });
@@ -450,7 +450,7 @@ jQuery(document).ready(function() {
         slider typist
     --------------------------------------------- */
 
-    if (typeof Typist == 'function') {
+    if (typeof Typist === 'function') {
         new Typist(document.querySelector('.typist-element'), {
             letterInterval: 60,
             textInterval: 3000

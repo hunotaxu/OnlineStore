@@ -716,6 +716,7 @@ label {
         }
 
 .headerlinkmenu {
+    margin-top: 2px;
     line-height: normal;
     display: inline-block;
     text-align: right;

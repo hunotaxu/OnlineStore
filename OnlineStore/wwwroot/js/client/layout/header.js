@@ -1,4 +1,5 @@
-﻿jQuery(document).ready(function ($) {
+﻿
+jQuery(document).ready(function ($) {
     var $filter = $('.header-inner');
     var $filterSpacer = $('<div />', {
         "class": "vnkings-spacer",
@@ -17,3 +18,34 @@
         });
     }
 });
+
+var loadItemMyCart = (function () {  
+    var init = function () {
+        loadItemCart();       
+    };   
+    loadItemCart = function () {       
+        $.ajax({
+            type: "GET",
+            url: "/Home/Index?handler=LoadNumberItemCart",
+            //beforeSend: function () {
+            //    commons.startLoading();
+            //},            
+            success: function (response) {
+                if (response !== '') {
+                    //$('#cart-itemtotal').html(`${commons.formatNumber((response), 0)}đ`);
+                    $('#cart-itemtotal').html(response);
+                } else {
+                    $('#cart-itemtotal').html(``);
+                }
+                //commons.stopLoading();
+            },
+            error: function () {
+                //commons.stopLoading();
+            }
+        });
+    };
+    return {
+        init
+    };
+})();
+

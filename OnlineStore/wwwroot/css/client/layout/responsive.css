@@ -27,6 +27,7 @@
     }
 
     .headerlinkmenu {
+        margin-top: 2px;
         text-align: center;
     }
 
@@ -1020,6 +1021,7 @@
     }
 
     .headerlinkmenu {
+        margin-top: 2px;
         float: right;
         margin-top: -28px;
         text-align: right;

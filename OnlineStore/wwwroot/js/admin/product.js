@@ -156,7 +156,7 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
-                debugger;
+            
                 initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
@@ -164,7 +164,7 @@ var itemPage = (function () {
             });
 
             $('body').on('click', '.btn-edit', function (e) {
-                debugger;
+            
                 e.preventDefault();
                 var that = $(this).data('id');
                 loadDetails(that);

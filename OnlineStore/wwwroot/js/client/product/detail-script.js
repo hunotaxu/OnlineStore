@@ -46,12 +46,13 @@ $('#gotocomment1').on('click', function (e) {
 });
 $('#btnAddToCart').on('click', function (e) {
     e.preventDefault();
+    loadItemMyCart.init();
     var id = parseInt($(this).data('id'));
     if ($('#rateit_star').data('customerid') === '' || $('#rateit_star').data('customerid') === undefined) {
         commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
             window.location.replace(`/Identity/Account/Login?returnUrl=/Product/Detail?id=${id}`);
         });
-    }
+    }  
     else {
         $.ajax({
             url: "/Product/Detail?handler=AddToCart",

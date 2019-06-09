@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using DAL.Data.Entities;
@@ -24,5 +25,14 @@ namespace DAL.Repositories
         {
             return Table.FirstOrDefault(x => x.CustomerId == userId && x.AddressId == addressId);
         }
+        public IEnumerable<UserAddress> GetByUserId(Guid userId)
+        {
+            return Table.Where(x => x.CustomerId == userId);
+        }
+
+        //public IEnumerable<UserAddress> GetAddressByUserId(Guid userId)
+        //{
+        //    return Table.Where(x => x.CustomerId == userId).Select(x => x.Address);
+        //}
     }
 }
