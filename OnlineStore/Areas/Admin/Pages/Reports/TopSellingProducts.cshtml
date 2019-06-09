@@ -1,0 +1,103 @@
+﻿@page
+@model OnlineStore.Areas.Admin.Pages.Reports.TopSellingProductsModel
+@{
+}
+
+@section Styles{
+    @*<link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
+        <link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />*@
+}
+
+@section Scripts{
+    <script src="~/js/admin/reports/top-selling-product.js" asp-append-version="true"></script>
+    <script>
+        topSellingProducts.init();
+    </script>
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Danh sách các sản phẩm được mua nhiều</h3>
+    </div>
+
+    <div class="title_right">
+        <div class="col-md-3 col-sm-5 col-xs-12 form-group pull-right">
+            <div class="input-group">
+                <input type="text" id="txtKeyword" class="form-control" placeholder="Tên sản phẩm">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" id="btnSearch" type="button">Tra cứu</button>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-12  form-group pull-right">
+            <select class="form-control" id="ddlCategorySearch"></select>
+        </div>
+        <div class="filter">
+            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+        @*<div class="col-md-3 col-sm-12  form-group pull-right">
+                @*<select class="form-control" id="ddlOrderStatus" asp-for="Order.Status" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.OrderStatus>()"></select>
+            </div>
+            <div class="col-md-3 col-sm-12  form-group pull-right">
+                @*<select class="form-control" id="ddlDeliveryType" asp-for="Order.DeliveryType" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.DeliveryType>()"></select>
+            </div>*@
+    </div>
+</div>
+<div class="clearfix"></div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_content">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Số lượng bán</th>
+                        <th>Doanh thu</th>
+                        <th width="10%"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbl-content"></tbody>
+            </table>
+            <!--Pagination-->
+            <div class="row">
+                <div class="col-sm-5">
+                    <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                        <select id="ddlShowPage">
+                            <option value="10" selected="selected">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                        </select>
+                        <span class="item-per-page">
+                            bản ghi/trang.
+                        </span>
+                        Tổng số bản ghi: <strong id="lblTotalRecords"></strong>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                        <ul id="paginationUL"></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script id="table-template" type="x-tmpl-mustache">
+    <tr>
+        <td>{{ProductName}}</td>
+        <td>{{CategoryName}}</td>
+        <td>{{QuantityTotal}}</td>
+        <td>{{{AmountTotal}}}</td>
+        <th>
+            <a class="btn btn-sm" data-id="{{Id}}" href="/Admin/Order/Details?id={{Id}}" title="Xem chi tiết"><i class="fa fa-info-circle"></i></a>
+            @*<a class="btn btn-sm" data-id="{{Id}}" title="Xem chi tiết" asp-area="Admin" asp-page="/Order" asp-route-id="{{Id}}"><i class="fa fa-info-circle"></i></a>*@
+            @*<a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>*@
+        </th>
+    </tr>
+</script>

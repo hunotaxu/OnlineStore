@@ -3,6 +3,102 @@
         pageSize: 10,
         pageIndex: 1
     },
+
+    initDateRangePicker: function initDateRangePicker() {
+        if (typeof ($.fn.daterangepicker) === 'undefined') { return; }
+        //console.log('init_daterangepicker');
+
+        var cb = function (start, end, label) {
+            //console.log(start.toISOString(), end.toISOString(), label);
+            //$('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            //if (start._isValid && end._isValid) {
+            //    $('#reportrange span').val(start.format('Do MMM YYYY') + ' - ' + end.format('Do MMM YYYY'));
+            //}
+            //else {
+            //    $('#daterange input').val('');
+            //}
+        };
+
+        var optionSet1 = {
+            startDate: moment().subtract(30, 'days'), // ngày hiện tại trừ cho 30 ngày
+            endDate: moment(), // ngày hiện tại
+            minDate: '01/01/2000',
+            //maxDate: moment().format('MM/DD/YYYY'),
+            maxDate: moment().format('DD/MM/YYYY'),
+            dateLimit: {
+                days: 100000000
+            },
+            showDropdowns: true,
+            showWeekNumbers: true,
+            timePicker: false,
+            timePickerIncrement: 1,
+            timePicker12Hour: true,
+            ranges: {
+                'Hôm nay': [moment(), moment()],
+                'Ngày hôm qua': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '7 ngày qua': [moment().subtract(6, 'days'), moment()],
+                '30 ngày qua': [moment().subtract(30, 'days'), moment()],
+                'Tháng này': [moment().startOf('month'), moment().endOf('month')],
+                'Tháng trước': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            },
+            opens: 'left',
+            buttonClasses: ['btn btn-default'],
+            applyClass: 'btn-small btn-primary',
+            cancelClass: 'btn-small',
+            //format: 'MM/DD/YYYY',
+            //format: 'DD/MM/YYYY',
+            separator: ' - ',
+            locale: {
+                format: 'DD/MM/YYYY',
+                applyLabel: 'Xác nhận',
+                cancelLabel: 'Xóa bỏ',
+                fromLabel: 'Từ',
+                toLabel: 'tới',
+                customRangeLabel: 'Tùy chọn',
+                daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+                monthNames: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
+                firstDay: 1
+            }
+        };
+
+        //$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+        $('#reportrange span').html(moment().subtract(30, 'days').format('DD/MM/YYYY') + ' - ' + moment().format('DD/MM/YYYY'));
+        $('#reportrange').daterangepicker(optionSet1, cb);
+        //$('#reportrange').on('show.daterangepicker', function () {
+        //    console.log("show event fired");
+        //});
+        //$('#reportrange').on('hide.daterangepicker', function () {
+        //    console.log("hide event fired");
+        //});
+        //$('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+        //    //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+        //    //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
+        //    loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
+        //});
+        $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
+            console.log("cancel event fired");
+            $("#reportrange span").html('');
+            //$('#reportrange').data('daterangepicker').remove();
+        });
+        $('#options1').click(function () {
+            $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+        });
+        $('#options2').click(function () {
+            $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
+        });
+        $('#destroy').click(function () {
+            $('#reportrange').data('daterangepicker').remove();
+        });
+    },
+    //applyDateRangePicker: function () {
+    //    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+    //        //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+    //        //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
+    //        loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
+    //    });
+    //},
+
     notify: function (message, type) {
         $.notify(message, {
             // whether to hide the notification on click
@@ -36,6 +132,28 @@
             gap: 2
         });
     },
+    //wrapPaging: function (recordCount, callBack, changePageSize) {
+    //    var totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+    //    // Unbind pagination if it existed or click change page size
+    //    if ($('#paginationUL a').length === 0 || changePageSize === true) {
+    //        $('#paginationUL').empty();
+    //        $('#paginationUL').removeData("twbs-pagination");
+    //        $('#paginationUL').unbind("page");
+    //    }
+    //    // Bind Pagination Event
+    //    $('#paginationUL').twbsPagination({
+    //        totalPages: totalSize,
+    //        visiblePages: 7,
+    //        first: 'Đầu',
+    //        prev: 'Trước',
+    //        next: 'Tiếp',
+    //        last: 'Cuối',
+    //        onPageClick: function (event, p) {
+    //            commons.configs.pageIndex = p;
+    //            setTimeout(callBack(), 200);
+    //        }
+    //    });
+    //},
     confirm: function (message, okCallback) {
         bootbox.confirm({
             message: message,

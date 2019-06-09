@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{1A2BDE20-D890-46BF-BAF7-F326724FB93B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimiApp.Dapper", "TimiApp.Dapper\TimiApp.Dapper.csproj", "{1DD10BFE-F95A-4F94-9350-24B79BC59133}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimiApp.Dapper", "TimiApp.Dapper\TimiApp.Dapper.csproj", "{1DD10BFE-F95A-4F94-9350-24B79BC59133}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

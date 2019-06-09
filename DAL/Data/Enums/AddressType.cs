@@ -1,7 +1,7 @@
-﻿namespace DAL.Data.Enums
-{
-    public enum AddressType : byte
-    {
+﻿//namespace DAL.Data.Enums
+//{
+//    public enum AddressType : byte
+//    {
         
-    }
-}
+//    }
+//}

@@ -36,6 +36,38 @@ namespace TimiApp.Dapper.Implementation
             }
         }
 
+        public async Task<IEnumerable<BestSellerProductViewModel>> GetBestSellerProductsAsync(string fromDate, string toDate, int categoryId, string productName, int pageIndex, int pageSize)
+        {
+            using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
+            {
+                await sqlConnection.OpenAsync();
+                var dynamicParams = new DynamicParameters();
+                //var now = DateTime.Now;
+                //var firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
+                //var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+                fromDate = string.IsNullOrEmpty(fromDate) == true ?
+                    DateTime.MinValue.ToString("MM/dd/yyyy") :
+                    DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                toDate = string.IsNullOrEmpty(toDate) == true ?
+                    DateTime.Now.ToString("MM/dd/yyyy") :
+                    DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                dynamicParams.Add("@fromDate", fromDate);
+                dynamicParams.Add("@toDate", toDate);
+                dynamicParams.Add("@productName", productName);
+                dynamicParams.Add("@categoryId", categoryId);
+                dynamicParams.Add("@pageIndex", pageIndex);
+                dynamicParams.Add("@pageSize", pageSize);
+                try
+                {
+                    return await sqlConnection.QueryAsync<BestSellerProductViewModel>("ListBestSellerProducts", dynamicParams, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+        }
+
         public async Task<IEnumerable<RevenueReportViewModel>> GetRevenueReportAsync(string fromDate, string toDate)
         {
             using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
@@ -43,12 +75,16 @@ namespace TimiApp.Dapper.Implementation
                 await sqlConnection.OpenAsync();
                 var dynamicParameters = new DynamicParameters();
                 var now = DateTime.Now;
-                
+
                 var firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
                 var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-                fromDate = !string.IsNullOrEmpty(fromDate) == true ? DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : firstDayOfMonth.ToString("MM/dd/yyyy");
-                toDate = !string.IsNullOrEmpty(toDate) == true ? DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : lastDayOfMonth.ToString("MM/dd/yyyy");
+                fromDate = !string.IsNullOrEmpty(fromDate) == true ?
+                    DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)
+                    : firstDayOfMonth.ToString("MM/dd/yyyy");
+                toDate = !string.IsNullOrEmpty(toDate) == true ?
+                    DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)
+                    : lastDayOfMonth.ToString("MM/dd/yyyy");
 
                 dynamicParameters.Add("@fromDate", fromDate);
                 dynamicParameters.Add("@toDate", toDate);
@@ -75,7 +111,7 @@ namespace TimiApp.Dapper.Implementation
                     IEnumerable<MostDeliveryMethodViewModel> a = await sqlConnection.QueryAsync<MostDeliveryMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
                     return await sqlConnection.QueryAsync<MostDeliveryMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     throw;
                 }

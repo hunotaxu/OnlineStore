@@ -1,4 +1,6 @@
-﻿create proc GetBestSellerOfCategory
+﻿drop procedure if exists GetBestSellerOfCategory
+go
+create proc GetBestSellerOfCategory
 as
 begin
 	select TOP 3 c.[Name] as CategoryName,COUNT(*) as NumberOfDeliverdItems

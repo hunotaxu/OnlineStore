@@ -9,7 +9,7 @@ namespace DAL.Repositories
     public interface IItemRepository : IRepo<Item>
     {
         IEnumerable<Item> GetByCategory(int categoryId);
-        Item GetItem(int? id);
+        //Item GetItem(int? id);
         IEnumerable<Item> GetItemByName(string name);
 
 

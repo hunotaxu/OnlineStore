@@ -14,7 +14,7 @@ namespace TimiApp.Dapper.ViewModels
             }
             set
             {
-
+                
             }
         }
         public string[] Colors { get; set; } = new string[] { "#BDC3C7", "#9B59B6", "#E74C3C", "#EE204D" };

@@ -1,4 +1,6 @@
-﻿create PROC GetRevenueDaily
+﻿drop procedure if exists GetRevenueDaily
+go
+create PROC GetRevenueDaily
 	@fromDate VARCHAR(10),
 	@toDate VARCHAR(10)
 AS
