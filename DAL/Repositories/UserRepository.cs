@@ -65,12 +65,14 @@ namespace DAL.Repositories
             if (string.IsNullOrEmpty(userName)) return false;
             var user = FindUserByUserName(userName);
             return !_userRoletable.Where(u => u.UserId == user.Id).Any(x => x.RoleId != CommonConstants.ProductManagerRoleId);
-
         }
 
         public bool IsAdmin(ApplicationUser user)
         {
-            if (user == null) return false;
+            if (user == null)
+            { 
+                return false;
+            }
             return !_userRoletable.Where(u => u.UserId == user.Id)
                 .Any(a => a.RoleId == CommonConstants.CustomerRoleId);
         }
