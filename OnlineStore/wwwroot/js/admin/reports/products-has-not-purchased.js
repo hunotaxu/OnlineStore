@@ -121,12 +121,9 @@
     }
 
     function wrapPaging(recordCount, callBack, changePageSize) {
-        var totalSize;
+        var totalSize = 1;
         if (recordCount !== 0) {
             totalSize = Math.ceil(recordCount / commons.configs.pageSize);
-        }
-        else {
-            totalSize = 1;
         }
         
         // Unbind pagination if it existed or click change page size

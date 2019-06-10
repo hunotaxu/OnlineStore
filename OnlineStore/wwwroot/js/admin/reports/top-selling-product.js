@@ -7,20 +7,19 @@
             onChangeCategory();
             onSearch();
             onResetDateRangePicker();
-            loadData();
-            //commons.applyDateRangePicker();
+            loadData(true);
         });
     };
 
     var applyDateRange = function () {
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-            loadData();
+            loadData(true);
         });
     };
 
     var onChangeCategory = function () {
         $('#ddlCategorySearch').on('change', function () {
-            loadData();
+            loadData(true);
         });
     };
 
@@ -51,12 +50,12 @@
 
     var onSearch = function () {
         $('#btnSearch').on('click', function () {
-            loadData();
+            loadData(true);
         });
         $('#txtKeyword').on('keypress', function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                loadData();
+                loadData(true);
             }
         });
     };
@@ -83,23 +82,23 @@
             beforeSend: function () {
                 commons.startLoading();
             },
-            success: function (responses) {
+            success: function (response) {
                 var template = $('#table-template').html();
                 var render = '';
                 $('#tbl-content').empty();
-                $.each(responses, function (i, item) {
+                $.each(response.results, function (i, item) {
                     render += Mustache.render(template, {
                         ProductName: item.productName,
                         CategoryName: item.categoryName,
-                        AmountTotal: `${commons.formatNumber(item.amountTotal, 0)}đ`,
+                        AmountTotal: (item.amountTotal === undefined) ? '0đ' : `${commons.formatNumber(item.amountTotal, 0)}đ`,
                         QuantityTotal: item.quantityTotal
                     });
                 });
                 if (render !== '') {
                     $('#tbl-content').html(render);
                 }
-                $('#lblTotalRecords').text(Object.keys(responses).length);
-                wrapPaging(Object.keys(responses).length,
+                $('#lblTotalRecords').text(response.rowCount);
+                wrapPaging(response.rowCount,
                     function () {
                         loadData();
                     }, isPageChanged);
@@ -112,7 +111,11 @@
         });
     }
     function wrapPaging(recordCount, callBack, changePageSize) {
-        var totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        var totalSize = 1;
+        if (recordCount !== 0) {
+            totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        }
+
         // Unbind pagination if it existed or click change page size
         if ($('#paginationUL a').length === 0 || changePageSize === true) {
             $('#paginationUL').empty();

@@ -37,7 +37,7 @@ namespace TimiApp.Dapper.Implementation
             }
         }
 
-        public async Task<IEnumerable<BestSellerProductViewModel>> GetBestSellerProductsAsync(string fromDate, string toDate, int categoryId, string productName, int pageIndex, int pageSize)
+        public async Task<PagedResult<BestSellerProductViewModel>> GetBestSellerProductsAsync(string fromDate, string toDate, int categoryId, string productName, int pageIndex, int pageSize)
         {
             using (var sqlConnection = new SqlConnection(_configuration.GetConnectionString("OnlineStoreContextConnection")))
             {
@@ -57,7 +57,16 @@ namespace TimiApp.Dapper.Implementation
                 dynamicParams.Add("@pageSize", pageSize);
                 try
                 {
-                    return await sqlConnection.QueryAsync<BestSellerProductViewModel>("ListBestSellerProducts", dynamicParams, commandType: CommandType.StoredProcedure);
+                    IEnumerable<BestSellerProductViewModel> result = await sqlConnection.QueryAsync<BestSellerProductViewModel>("ListBestSellerProducts", dynamicParams, commandType: CommandType.StoredProcedure);
+                    var paginationSet = new PagedResult<BestSellerProductViewModel>
+                    {
+                        Results = result?.Any() == true ? result.ToList() : new List<BestSellerProductViewModel>(),
+                        CurrentPage = pageIndex,
+                        RowCount = result?.Any() == true ? result.First().RowsCount : 0,
+                        PageSize = pageSize
+                    };
+
+                    return paginationSet;
                 }
                 catch (Exception e)
                 {

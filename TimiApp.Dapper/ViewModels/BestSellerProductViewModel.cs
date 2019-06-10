@@ -6,5 +6,6 @@
         public string ProductName { get; set; }
         public decimal AmountTotal { get; set; }
         public decimal QuantityTotal { get; set; }
+        public int RowsCount { get; set; }
     }
 }

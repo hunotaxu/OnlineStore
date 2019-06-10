@@ -8,7 +8,7 @@ var itemPage = (function () {
             loadData();
             registerEvents();
             registerControls();
-            onSearchEvents();
+            //onSearchEvents();
         });
     };
 
@@ -99,20 +99,20 @@ var itemPage = (function () {
         }
     };
 
-    var onSearchEvents = function () {
-        $('#btnSearch').on('click',
-            function () {
-                loadData();
-            });
+    //var onSearchEvents = function () {
+    //    $('#btnSearch').on('click',
+    //        function () {
+    //            loadData();
+    //        });
 
-        $('#txtKeyword').on('keypress',
-            function (e) {
-                if (e.which === 13) {
-                    e.preventDefault();
-                    loadData();
-                }
-            });
-    };
+    //    $('#txtKeyword').on('keypress',
+    //        function (e) {
+    //            if (e.which === 13) {
+    //                e.preventDefault();
+    //                loadData();
+    //            }
+    //        });
+    //};
 
     var registerEvents = function () {
         $(document).ready(function () {
@@ -146,12 +146,12 @@ var itemPage = (function () {
             });
 
             $('#btnSearch').on('click', function () {
-                loadData();
+                loadData(true);
             });
 
             $('#txtKeyword').on('keypress', function (e) {
                 if (e.which === 13) {
-                    loadData();
+                    loadData(true);
                 }
             });
 
@@ -244,7 +244,7 @@ var itemPage = (function () {
                 success: function (response) {
                     commons.notify('Thành công', 'success');
                     commons.stopLoading();
-                    loadData();
+                    loadData(true);
                 },
                 error: function (status) {
                     commons.notify('Đã có lỗi xãy ra', 'error');
@@ -460,7 +460,10 @@ var itemPage = (function () {
     };
 
     function wrapPaging(recordCount, callBack, changePageSize) {
-        var totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        var totalSize = 1;
+        if (recordCount !== 0) {
+            totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        }
         // Unbind pagination if it existed or click change page size
         if ($('#paginationUL a').length === 0 || changePageSize === true) {
             $('#paginationUL').empty();
