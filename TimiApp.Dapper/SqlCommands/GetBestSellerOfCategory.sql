@@ -14,5 +14,5 @@ begin
 	group by c.[Name]
 	order by NumberOfDeliverdItems DESC
 end
-
+GO
 exec GetBestSellerOfCategory
