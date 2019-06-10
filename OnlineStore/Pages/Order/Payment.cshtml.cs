@@ -18,6 +18,7 @@ namespace OnlineStore.Pages.Order
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private IOrderItemRepository _orderItemRepository;
 
@@ -25,9 +26,10 @@ namespace OnlineStore.Pages.Order
         public decimal ShippingFee { get; set; }
         public int AddressId { get; set; }
 
-        public PaymentModel(UserManager<ApplicationUser> userManager, IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, IOrderItemRepository orderItemRepository)
+        public PaymentModel(UserManager<ApplicationUser> userManager, IUserRepository userRepository, IOrderRepository orderRepository, ICartDetailRepository cartDetailRepository, ICartRepository cartRepository, IItemRepository itemRepository, IOrderItemRepository orderItemRepository)
         {
             _cartDetailRepository = cartDetailRepository;
+            _userRepository = userRepository;
             _orderRepository = orderRepository;
             _userManager = userManager;
             _itemRepository = itemRepository;
@@ -38,14 +40,14 @@ namespace OnlineStore.Pages.Order
 
         public IActionResult OnGet(decimal shippingFee, int addressId)
         {
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (cus == null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user == null || _userRepository.IsAdmin(user))
             {
-                return RedirectToPage("/Home/Index");
+                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
             }
             ShippingFee = shippingFee;
             AddressId = addressId;
-            DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(cus.Id);
+            DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(user.Id);
             IEnumerable<CartDetail> cartItems = _cartDetailRepository.GetSome(c => c.CartId == cart.Id);
             foreach (CartDetail itemInCart in cartItems)
             {

@@ -17,13 +17,16 @@ namespace OnlineStore.Pages.Order
         private readonly IUserAddressRepository _userAddressRepository;
         private readonly IItemRepository _itemRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public CheckoutModel(IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
-            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IUserAddressRepository userAddressRepository)
+            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IUserAddressRepository userAddressRepository
+            , IUserRepository userRepository)
         {
             _itemRepository = itemRepository;
+            _userRepository = userRepository;
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
             _userManager = userManager;
@@ -38,8 +41,8 @@ namespace OnlineStore.Pages.Order
 
         public ActionResult OnGet()
         {
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (cus == null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user == null || _userRepository.IsAdmin(user))
             {
                 return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
             }

@@ -165,57 +165,60 @@ namespace OnlineStore.Pages.Product
 
         //public IActionResult OnPostAddToCart(int itemId, int quantity, [FromBody] DAL.Data.Entities.Cart model)
         public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
-        {      
+        {
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
                 return new BadRequestObjectResult(allErrors);
             }
 
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            var cart = _cartRepository.GetCartByCustomerId(cus.Id);
-            var _item = _itemRepository.Find(model.ItemId);
-            if (cart == null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user != null && !_userRepository.IsAdmin(user))
             {
-                var newCart = new DAL.Data.Entities.Cart
+                var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                var _item = _itemRepository.Find(model.ItemId);
+                if (cart == null)
                 {
-                    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-                };
-                _cartRepository.Add(newCart);
-                _cartDetailRepository.Add(new CartDetail
-                {
-                    CartId = newCart.Id,
-                    ItemId = model.ItemId,
-                    Quantity = model.Quantity
-                });
-            }
-            else
-            {
-                var cartDetails = cart.CartDetails;
-                bool isMatch = false;
-                foreach (var item in cart.CartDetails)
-                {
-                    if (item.ItemId == model.ItemId)
-                    {         
-                        item.Quantity += model.Quantity;
-                        if(item.Quantity > _item.Quantity)
-                            return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " +  _item.Quantity.ToString());
-                        item.IsDeleted = false;
-                        _cartDetailRepository.Update(item);
-                        isMatch = true;
-                    }
-                }
-                if (!isMatch)
-                {
+                    var newCart = new DAL.Data.Entities.Cart
+                    {
+                        CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
+                    };
+                    _cartRepository.Add(newCart);
                     _cartDetailRepository.Add(new CartDetail
                     {
-                        CartId = cart.Id,
+                        CartId = newCart.Id,
                         ItemId = model.ItemId,
                         Quantity = model.Quantity
                     });
                 }
+                else
+                {
+                    var cartDetails = cart.CartDetails;
+                    bool isMatch = false;
+                    foreach (var item in cart.CartDetails)
+                    {
+                        if (item.ItemId == model.ItemId)
+                        {
+                            item.Quantity += model.Quantity;
+                            if (item.Quantity > _item.Quantity)
+                                return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
+                            item.IsDeleted = false;
+                            _cartDetailRepository.Update(item);
+                            isMatch = true;
+                        }
+                    }
+                    if (!isMatch)
+                    {
+                        _cartDetailRepository.Add(new CartDetail
+                        {
+                            CartId = cart.Id,
+                            ItemId = model.ItemId,
+                            Quantity = model.Quantity
+                        });
+                    }
+                }
             }
-            return new OkObjectResult(model);  
+            return new OkObjectResult(model);
         }
         //public IActionResult OnGetCheckAvailQtyCart()
         //{

@@ -15,12 +15,14 @@ namespace OnlineStore.Pages.Cart
     {
         private readonly IItemRepository _itemRepository;
         private readonly ICartRepository _cartRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public IndexModel(IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
-            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository)
+            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
@@ -32,8 +34,8 @@ namespace OnlineStore.Pages.Cart
 
         public ActionResult OnGet()
         {
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (cus == null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user == null || _userRepository.IsAdmin(user))
             {
                 return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
             }
@@ -42,25 +44,29 @@ namespace OnlineStore.Pages.Cart
 
         public IActionResult OnGetLoadCart()
         {
-            var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-            if (cart != null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (!_userRepository.IsAdmin(user))
             {
-                ItemInCarts = new List<ItemCartViewModel>();
-                var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                if (items.Count > 0)
+                var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                if (cart != null)
                 {
-                    foreach (var item in items)
+                    ItemInCarts = new List<ItemCartViewModel>();
+                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                    if (items.Count > 0)
                     {
-                        var itemCartViewModel = new ItemCartViewModel
+                        foreach (var item in items)
                         {
-                            ItemId = item.ItemId,
-                            Image = $"/images/client/ProductImages/{item.Item.Image}",
-                            Price = item.Item.Price,
-                            ProductName = item.Item.Name,
-                            Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
-                            MaxQuantity = item.Item.Quantity
-                        };
-                        ItemInCarts.Add(itemCartViewModel);
+                            var itemCartViewModel = new ItemCartViewModel
+                            {
+                                ItemId = item.ItemId,
+                                Image = $"/images/client/ProductImages/{item.Item.Image}",
+                                Price = item.Item.Price,
+                                ProductName = item.Item.Name,
+                                Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
+                                MaxQuantity = item.Item.Quantity
+                            };
+                            ItemInCarts.Add(itemCartViewModel);
+                        }
                     }
                 }
             }

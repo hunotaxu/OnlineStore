@@ -7,70 +7,60 @@
 <link href="~/css/loginpartial.css" rel="stylesheet" />
 
 @{
-    var user = UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result;
-}
-@if (user != null && !UserRepository.IsAdmin(user))
-{
-    <li>
-        <div class="dropdown">
+    var userName = UserManager.GetUserName(User);
+    if (userName != null)
+    {
+        var user = UserManager.FindByNameAsync(userName).Result;
+        @if (user != null && !UserRepository.IsAdmin(user))
+        {
+            <li>
+                <div class="dropdown">
 
-            <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
-                <span>
-                    <i class="fa fa-angle-down"></i>
-                    @{
-                        @:@user.Name
-                        var avatar = user.Avatar;
-                        if (string.IsNullOrEmpty(avatar))
-                        {
-                            @:&nbsp;<img class="my-avatar" src="/images/admin/user.png">
-                        }
-                        else
-                        {
-                            @:&nbsp;<img class="my-avatar" src=@($"/images/shared/avatar/{avatar}")>
-                        }
-                    }
-                </span>
-            </a>
-            <ul class="dropdown-menu" role="menu">
-                @*<li><a href="#">Account</a></li>
-                    <li><a href="#">Wishlist</a></li>
-                    <li><a href="#">Order Tracking</a></li>
-                    <li><a href="#">Giới thiệu</a></li>*@
-                <li><a href="#">Đơn hàng của tôi</a></li>
-                @*<li class="divider"></li>*@
-                <li>
-                    @*<i class="fa fa-cog" aria-hidden="true"></i>*@
-                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a>
-                </li>
-                <li>
-                    @*<i class="fa fa-sign-out" aria-hidden="true"></i>*@
-                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("~/Pages/Home/Index", new {area = ""})" title="Logout">Đăng xuất</a>
-                </li>
-            </ul>
-        </div>
-    </li>
-
-    @*<div class="dropdown nav navbar-nav navbar-right">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="dropdown-user">
-                Tài khoản @UserManager.FindByNameAsync(UserManager.GetUserName(User)).Result.Name
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a></li>
-                <li>
-                    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new {area = ""})" title="Logout">Đăng xuất</a>
-                </li>
-            </ul>
-        </div>*@
-}
-else
-{
-    @*<div class="header-login">
-            <ul class="col-sm-2 col-md-offset-2 navbar-right">
-                <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
-                <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
-            </ul>
-        </div>*@
-    <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
-    <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+                    <a class="current-open" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">
+                        <span>
+                            <i class="fa fa-angle-down"></i>
+                            @{
+                                @:@user.Name
+                                var avatar = user.Avatar;
+                                if (string.IsNullOrEmpty(avatar))
+                                {
+                                    @:&nbsp;<img class="my-avatar" src="/images/admin/user.png">
+                                }
+                                else
+                                {
+                                    @:&nbsp;<img class="my-avatar" src=@($"/images/shared/avatar/{avatar}")>
+                                }
+                            }
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        @*<li><a href="#">Account</a></li>
+                            <li><a href="#">Wishlist</a></li>
+                            <li><a href="#">Order Tracking</a></li>
+                            <li><a href="#">Giới thiệu</a></li>*@
+                        <li><a href="#">Đơn hàng của tôi</a></li>
+                        @*<li class="divider"></li>*@
+                        <li>
+                            @*<i class="fa fa-cog" aria-hidden="true"></i>*@
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Quản lý tài khoản</a>
+                        </li>
+                        <li>
+                            @*<i class="fa fa-sign-out" aria-hidden="true"></i>*@
+                            <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("~/Pages/Home/Index", new { area = "" })" title="Logout">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        }
+        else
+        {
+            <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
+            <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+        }
+    }
+    else
+    {
+        <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+    }
 }

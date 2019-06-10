@@ -15,6 +15,7 @@ namespace OnlineStore.Pages.Home
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ICartRepository _cartRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         public int _numbercartitem;
 
@@ -26,9 +27,10 @@ namespace OnlineStore.Pages.Home
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
 
-        public IndexModel(ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
+        public IndexModel(ICartRepository cartRepository, IUserRepository userRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
+            _userRepository = userRepository;
             _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
@@ -58,8 +60,8 @@ namespace OnlineStore.Pages.Home
         {
             var itemnumbercart = 0;
 
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            if(cus != null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if(user != null && !_userRepository.IsAdmin(user))
             {
                 var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
                 if (cart != null)
