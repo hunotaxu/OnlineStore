@@ -27,7 +27,7 @@ begin
 	ROUND(CAST(TopPopularDeliveryMethods.NumberOfDeliveredOrder*100 as float)/(CAST(@total as float)), 2) as ProportionOfDeliverdItems
 	from (select TOP 3 DeliveryType, COUNT(*) as NumberOfDeliveredOrder
 	from dbo.[Order]
-	where Status = 4 
+	where Status = 4 and IsDeleted = 0
 	group by DeliveryType
 	order by NumberOfDeliveredOrder DESC) as TopPopularDeliveryMethods
 end

@@ -9,6 +9,8 @@ begin
 	and l.ItemId = i.Id
 	and i.CategoryId = c.Id
 	and o.Status = 4
+	and o.IsDeleted = 0
+	and i.IsDeleted = 0
 	group by c.[Name]
 	order by NumberOfDeliverdItems DESC
 end

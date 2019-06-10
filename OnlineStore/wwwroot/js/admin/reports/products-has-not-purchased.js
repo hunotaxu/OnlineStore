@@ -1,28 +1,27 @@
-﻿var topSellingProducts = (function () {
+﻿var listProductsHasNotBeenPurchased = (function () {
     var init = function () {
         $(document).ready(function () {
             commons.initDateRangePicker();
             loadCategories();
-            applyDateRange();
-            onChangeCategory();
-            onSearch();
-            onResetDateRangePicker();
-            loadData();
-            //commons.applyDateRangePicker();
-        });
-    };
-
-    var applyDateRange = function () {
-        $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+            registerEvents();
+            //applyDateRange();
+            //onChangeCategory();
+            //onSearch();
             loadData();
         });
     };
 
-    var onChangeCategory = function () {
-        $('#ddlCategorySearch').on('change', function () {
-            loadData();
-        });
-    };
+    //var applyDateRange = function () {
+    //    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+    //        loadData();
+    //    });
+    //};
+
+    //var onChangeCategory = function () {
+    //    $('#ddlCategorySearch').on('change', function () {
+    //        loadData();
+    //    });
+    //};
 
     var loadCategories = function () {
         $.ajax({
@@ -45,19 +44,30 @@
         });
     };
 
-    var onResetDateRangePicker = function () {
-
-    };
-
-    var onSearch = function () {
-        $('#btnSearch').on('click', function () {
-            loadData();
+    var registerEvents = function () {
+        $('#ddlShowPage').on('change', function () {
+            commons.configs.pageSize = $(this).val();
+            commons.configs.pageIndex = 1;
+            loadData(true);
         });
+
+        $('#btnSearch').on('click', function () {
+            loadData(true);
+        });
+
+        $('#ddlCategorySearch').on('change', function () {
+            loadData(true);
+        });
+
         $('#txtKeyword').on('keypress', function (e) {
             if (e.which === 13) {
                 e.preventDefault();
-                loadData();
+                loadData(true);
             }
+        });
+
+        $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+            loadData(true);
         });
     };
 
@@ -70,7 +80,7 @@
         var productName = $('#txtKeyword').val();
         $.ajax({
             type: "GET",
-            url: "/Admin/Reports/TopSellingProducts?handler=BestSellerProduct",
+            url: '/Admin/Reports/ProductsNotPurchased?handler=ListProducts',
             data: {
                 fromDate: startDate,
                 toDate: endDate,
@@ -83,36 +93,42 @@
             beforeSend: function () {
                 commons.startLoading();
             },
-            success: function (responses) {
+            success: function (response) {
                 var template = $('#table-template').html();
                 var render = '';
                 $('#tbl-content').empty();
-                $.each(responses, function (i, item) {
+                $.each(response.results, function (i, item) {
                     render += Mustache.render(template, {
                         ProductName: item.productName,
-                        CategoryName: item.categoryName,
-                        AmountTotal: `${commons.formatNumber(item.amountTotal, 0)}đ`,
-                        QuantityTotal: item.quantityTotal
+                        CategoryName: item.categoryName
                     });
                 });
                 if (render !== '') {
                     $('#tbl-content').html(render);
                 }
-                $('#lblTotalRecords').text(Object.keys(responses).length);
-                wrapPaging(Object.keys(responses).length,
+                $('#lblTotalRecords').text(response.rowCount);
+                wrapPaging(response.rowCount,
                     function () {
                         loadData();
                     }, isPageChanged);
                 commons.stopLoading();
             },
-            error: function () {
+            error: function (ex) {
                 commons.notify('Không tải được dữ liệu', 'error');
                 commons.stopLoading();
             }
         });
     }
+
     function wrapPaging(recordCount, callBack, changePageSize) {
-        var totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        var totalSize;
+        if (recordCount !== 0) {
+            totalSize = Math.ceil(recordCount / commons.configs.pageSize);
+        }
+        else {
+            totalSize = 1;
+        }
+        
         // Unbind pagination if it existed or click change page size
         if ($('#paginationUL a').length === 0 || changePageSize === true) {
             $('#paginationUL').empty();
@@ -133,7 +149,7 @@
             }
         });
     }
-    
+
     return {
         init
     };

@@ -16,8 +16,6 @@ namespace OnlineStore.Areas.Admin.Pages.Reports
         {
             
         }
-        //public async Task<IActionResult> OnGetBestSellerProductAsync(string fromDate, string toDate, int categoryId, string productName)
-        //public async Task<IActionResult> OnGetBestSellerProductAsync(string fromDate, string toDate)
         public async Task<IActionResult> OnGetBestSellerProduct(string fromDate, string toDate, int categoryId, string productName, int pageIndex, int pageSize)
         {
             //var products = await _reportService.GetBestSellerProductsAsync(fromDate, toDate, categoryId, productName);

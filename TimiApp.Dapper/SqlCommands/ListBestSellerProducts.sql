@@ -17,7 +17,7 @@ begin
 	SET @toDate = ISNULL(@toDate, GETDATE())
 	select Category.[Name] as CategoryName, Item.[Name] as ProductName, QuantityTotal, AmountTotal
 	from Item,(select ItemId, SUM(OrderItem.Quantity) as QuantityTotal, SUM(Amount) as AmountTotal 
-	from OrderItem where OrderId in (select Id from dbo.[Order] where Status = 4 
+	from OrderItem where IsDeleted = 0 and OrderId in (select Id from dbo.[Order] where Status = 4 and IsDeleted = 0
 	and dbo.[Order].OrderDate >= cast(@fromDate as date) and dbo.[Order].OrderDate <= cast(@toDate as date)
 	)
 	group by ItemId) as listItem, Category
@@ -29,6 +29,7 @@ begin
 		else ISNULL(@categoryId, Category.Id)
 	end)
 	and Item.[Name] like '%'+ISNULL(@productName, '')+'%'
+	and Item.IsDeleted = 0
 	order by AmountTotal DESC, QuantityTotal DESC
 	offset @startIndex rows
 	fetch next @pageSize rows only
