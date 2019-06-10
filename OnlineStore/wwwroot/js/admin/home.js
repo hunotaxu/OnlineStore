@@ -36,10 +36,6 @@
         $.ajax({
             type: "GET",
             url: "/Admin/Home/Index?handler=Categories",
-            //data: {
-            //    fromDate: from,
-            //    toDate: to
-            //},
             dataType: "json",
             beforeSend: function () {
                 commons.startLoading();
@@ -65,10 +61,6 @@
         $.ajax({
             type: "GET",
             url: "/Admin/Home/Index?handler=DeliverMethod",
-            //data: {
-            //    fromDate: from,
-            //    toDate: to
-            //},
             dataType: "json",
             beforeSend: function () {
                 commons.startLoading();
@@ -83,10 +75,6 @@
                                 Color: item.colors[i],
                                 MethodName: item.deliveryName,
                                 ProportionOfMethod: `${item.proportionOfDeliverdItems}%`
-                                //BrandName: item.brandName,
-                                //Quantity: item.quantity,
-                                //Price: `${commons.formatNumber(item.price, 0)}đ`,
-                                //CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
                             });
                         totalOfTop3 += item.proportionOfDeliverdItems;
                     });
@@ -96,10 +84,6 @@
                                 Color: response[0].colors[4],
                                 MethodName: 'Các phương thức khác',
                                 ProportionOfMethod: `${100 - totalOfTop3}%`
-                                //BrandName: item.brandName,
-                                //Quantity: item.quantity,
-                                //Price: `${commons.formatNumber(item.price, 0)}đ`,
-                                //CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
                             });
                     }
                 }
@@ -115,27 +99,6 @@
             }
         });
     }
-
-    //var randNum = function () {
-    //    return (Math.floor(Math.random() * (1 + 40 - 20))) + 20;
-    //};
-
-    //function formatTime(input) {
-    //    for (var i = 0; i < input.length; i++) {
-    //        var date = input[i][0];
-    //        input[i][0] = new Date(date).getTime();
-    //    }
-    //    return input;
-    //}
-
-    //var jsonResponse = [["2013-11-05", 8.3333333333333], ["2013-12-05", 0]];
-
-    //function onDataReceived(series) {
-    //    series = formatTime(series);
-    //    data.push(series);
-    //    $.plot(placeholder, data, options);
-    //    //setData(data);not shown in question
-    //}
 
     function initBestMethodChart(data) {
         if (typeof (Chart) === 'undefined') { return; }
@@ -273,7 +236,10 @@
         $.each(data, function (i, item) {
             arrProfit.push([new Date(item.date).getTime(), item.profit]);
         });
-
+        var onedArrayRevenue = [];
+        for (var i = 0; i < arrRevenue.length; i++) {
+            onedArrayRevenue.push(arrRevenue[i][1]);
+        }
         //var chart_plot_02_data = [];
 
         //for (var i = 0; i < 30; i++) {
@@ -333,7 +299,8 @@
                 defaultTheme: false
             },
             yaxis: {
-                min: 0
+                min: 0,
+                max: onedArrayRevenue.length > 0 ? Math.max(...onedArrayRevenue) : 100000000
             },
             xaxis: {
                 mode: "time",
@@ -341,8 +308,10 @@
                 timeformat: "%d/%m/%y",
                 //min: chart_plot_02_data[0][0],
                 //max: chart_plot_02_data[20][0]
-                min: data[0] !== undefined ? new Date(data[0].fromDate).getTime() : "",
-                max: data[0] !== undefined ? new Date(data[0].toDate).getTime() : ""
+                //min: data[0] !== undefined ? new Date(data[0].fromDate).getTime() : "",
+                //min: $('#reportrange').data('daterangepicker').startDate.format("DD/MM/YY"),
+                min: $('#reportrange').data('daterangepicker').startDate,
+                max: $('#reportrange').data('daterangepicker').endDate
                 //min: new Date(fromDate).getTime(),
                 //max: new Date(toDate).getTime()
             }

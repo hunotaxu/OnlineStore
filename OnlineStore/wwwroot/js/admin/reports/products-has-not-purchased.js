@@ -4,24 +4,9 @@
             commons.initDateRangePicker();
             loadCategories();
             registerEvents();
-            //applyDateRange();
-            //onChangeCategory();
-            //onSearch();
             loadData();
         });
     };
-
-    //var applyDateRange = function () {
-    //    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-    //        loadData();
-    //    });
-    //};
-
-    //var onChangeCategory = function () {
-    //    $('#ddlCategorySearch').on('change', function () {
-    //        loadData();
-    //    });
-    //};
 
     var loadCategories = function () {
         $.ajax({
