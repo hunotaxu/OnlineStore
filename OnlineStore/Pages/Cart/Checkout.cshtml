@@ -3,7 +3,7 @@
 @using DAL.Models
 @using Microsoft.AspNetCore.Identity
 
-@inject UserManager<ApplicationUser> UserManager
+@inject UserManager<ApplicationUser>    UserManager
 @model OnlineStore.Pages.Order.CheckoutModel
 @{
     ViewData["Title"] = "Checkout";
@@ -28,14 +28,14 @@
     <div class="main container">
         <br />
         <div class="row">
-            <div class="col-main col-sm-7 col-xs-12">
+            <div class="col-main col-sm-8 col-xs-12">
                 <div class="page-title">
                     <h2>Sản phẩm của bạn</h2>
                 </div>
                 <!-- main-container -->
                 <div class="box-border">
                     <div class="order-detail-content">
-                        <table class="table table-bordered table-responsive jtv-cart-summary">
+                        <table class="table table-bordered table-responsive jtv-cart-summary" style="background-color:whitesmoke">
                             <thead>
                                 <tr>
                                     <th class="col-sm-2">Sản phẩm</th>
@@ -47,7 +47,7 @@
                             <tbody id="container-pay-cart"></tbody>
                         </table>
                     </div>
-                    <script id="template-cart" type="x-tmpl-mustache"  >
+                    <script id="template-cart" type="x-tmpl-mustache">
                         <tr>
                             <td>
                                 <input type="hidden" id="itemId" value="{{ItemId}}" />
@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 <a href="/Product/Detail?id={{ItemId}}">
-                                    <h4 id="productnamecheckout" class="nomargin">{{ProductName}}</h4>
+                                    <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
                                 </a>
                                 <span class="text-danger">{{OutOfStockNotifyCation}}</span>
                             </td>
@@ -63,66 +63,99 @@
                             <td data-th="Price" class="price">{{TotalPrice}}</td>
                         </tr>
                     </script>
-                    <div class=" right sidebar col-sm-6">
-                        <table class="table table-bordered table-responsive jtv-cart-summary">
-                            <thead>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            Tổng số sản phẩm:
-                                        </strong>
-                                    </td>
-                                    <td class="col-sm-4" id="itemTotal"></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>
-                                            Tạm tính:
-                                        </strong>
-                                    </td>
-                                    <td id="PriceTotaltmp"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
                 </div>
                 <!--End main-container -->
             </div>
-            <aside class="right sidebar col-sm-5 col-xs-12">
+            <aside class="right sidebar col-sm-4 col-xs-12">
                 <div class="page-title">
                     <h2>Hóa đơn của bạn</h2>
                 </div>
-                <div class="sidebar-checkout block">
+                <div class="sidebar-checkout block main-container">
                     <div class="block-content">
                         <dl>
                             <dt class="complete"> Thông tin người nhận </dt>
                             <dd class="complete">
                                 <address>
                                     <br />
-                                    <div><i class="fa fa-user-circle-o" aria-hidden="true"></i> @cus.Name <a id="btneditaddress" class="linkchange" href="#">Chỉnh sửa</a><br><br /></div>
-                                    <div>&nbsp;&nbsp;&nbsp;&nbsp;<p id="txtAddress"></p>  <br><br /> </div>
-                                    <i class="fa fa-phone-square" aria-hidden="true"></i> @cus.PhoneNumber <a class="linkchange" href="#">Chỉnh sửa</a><br><br />
-                                    <i class="fa fa-envelope" aria-hidden="true"></i> @cus.Email <a class="linkchange" href="#">Chỉnh sửa</a> <br><br />
+                                    <div>
+                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>
+                                    </div><br />
+                                    <div style="padding: 0 25% 0 3%" id="labelAddress">
+                                    </div><br />
+                                    <div>
+                                        <i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>
+                                    </div>
+                                    <div style="border-bottom: 5px solid #e5e5e5; margin-top: 5%">
+
+                                    </div>
+
                                 </address>
-                            </dd>   
-                            <dt class="complete"> Thông tin đơn hàng  </dt>
+                            </dd>
+                            <dt class="complete" style="border-bottom: 1px solid #e5e5e5"> Thông tin đơn hàng  </dt>
                             <dd class="complete">
                                 <address>
                                     <br />
-                                    Số sản phẩm: <span id="itemTotal1"></span> <a class="linkchange" href="#">Chỉnh sửa</a><br><br />
-                                    Tạm tính: <span id="PriceTotaltmp1"></span> <a class="linkchange" href="#">Chỉnh sửa</a><br><br />
-                                    Hình thức nhận hàng <a class="linkchange" href="#">Chỉnh sửa</a><br><br />
-                                    Phương thức thanh toán <a class="linkchange" href="#">Chỉnh sửa</a> <br><br />
-                                    Tổng cộng <a class="linkchange" hrsef="#">Chỉnh sửa</a> <br><br />
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        <i class="fa fa-hand-o-right color-black" aria-hidden="true"></i>
+                                        Số sản phẩm: <span id="itemTotal1"></span> <br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
+                                        Tạm tính: <span id="PriceTotaltmp1"></span><br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
+                                        Hình thức giao hàng <a id="btneditdeliveryMethod" class="linkchange" href="#">Chỉnh sửa</a><br><br />
+                                        <div id="deliveryMethod" class="box-border" style="padding: 0 25% 0 4%; display:none"  >
+                                            <ul class="shipping_method">
+                                                <li>
+                                                    <label for="radio_button_3">
+                                                        <input type="radio" checked name="radio_3" id="radio_button_3">
+                                                        Giao hàng tiêu chuẩn
+                                                    </label>
+                                                    <p class="subcaption " style="margin-left: 7%;font-size:80%">
+                                                        <i class="fa fa-info-circle" style=" indianred"></i>
+                                                        Thời gian giao hàng trong vòng từ 2-3 ngày kể từ ngày đặt hàng
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <label for="radio_button_4">
+                                                        <input type="radio" name="radio_3" id="radio_button_4">
+                                                        Giao hàng ưu tiên
+                                                    </label>
+                                                    <p class="subcaption " style="margin-left: 7%;font-size:80%">
+                                                        <i class="fa fa-info-circle" style=" indianred"></i>
+                                                        Thời gian giao hàng trong vòng 24h
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <label for="radio_button_5">
+                                                        <input type="radio" name="radio_3" id="radio_button_5">
+                                                        Nhận hàng tại showroom
+                                                    </label>
+                                                    <p class="subcaption " style="margin-left: 7%;font-size:80%">
+                                                        <i class="fa fa-info-circle" style=" indianred"></i>
+                                                        Chọn địa chỉ showroom đến nhận:
+                                                    </p>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        <i class="fa fa-money" aria-hidden="true"></i>
+                                        Phương thức thanh toán <a class="linkchange" href="#">Chỉnh sửa</a> <br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        <i class="fa fa-plus-square" aria-hidden="true"></i>
+                                        Tổng cộng <a class="linkchange" hrsef="#">Chỉnh sửa</a> <br><br />
+                                    </div>
                                 </address>
                             </dd>
                         </dl>
                         <button id="btnpay" class="button pro-action col-md-12"> THANH TOÁN</button>
                     </div>
                 </div>
+
             </aside>
         </div>
     </div>

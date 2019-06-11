@@ -1,5 +1,4 @@
-﻿
-jQuery(document).ready(function ($) {
+﻿jQuery(document).ready(function ($) {
     var $filter = $('.header-inner');
     var $filterSpacer = $('<div />', {
         "class": "vnkings-spacer",
@@ -38,7 +37,7 @@ var loadItemMyCart = (function () {
                     $('#cart-itemtotal').html(``);
                 }
                 //commons.stopLoading();
-                document.getElementById("cart-itemtotal").innerHTML.reload;
+                document.getElementById("cart-itemtotal").innerHTML.replace;
             },
             error: function () {
                 //commons.stopLoading();

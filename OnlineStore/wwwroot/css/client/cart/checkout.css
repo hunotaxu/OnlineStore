@@ -16,7 +16,7 @@
     color: #cb2d22;
     font-style:italic;
 }
-#productnamecheckout {
+.productnamecheckout {
     font-family:'Roboto','Montserrat', sans-serif; 
     font-size: 13px; 
     font-weight: 600;

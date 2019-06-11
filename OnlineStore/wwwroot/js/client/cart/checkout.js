@@ -1,8 +1,9 @@
 ﻿var checkoutcart = (function () {
-    
+
     var init = function () {
         loadData();
         registerEvents();
+        loadAddressDefault();
     };
     var loadCreditcard = function () {
         //hiện creditcard
@@ -40,38 +41,119 @@
         $("#ecashDIV").removeClass("none");
         $("#ecashDIV").addClass("showDIV");
     };
+    var registerEvents = function () {        
+        var Province, District, Ward, Detail, RecipientName, PhoneNumber ;
+        $('#frmselectaddress').click(function () {           
+            if ($('.radiobutton').is(':checked')) {
+                var x = $('input[name=radio]:checked');
+                Province = x.data("province");
+                District = x.data("district");
+                Ward = x.data("ward");
+                Detail = x.data("detail");
+                RecipientName = x.data("recipientname");
+                PhoneNumber = x.data("phonenumber");
+            }
+        });
+        $("#btnSaveAddress").on('click', function () {
+            document.getElementById('labelName').innerHTML = RecipientName;
+            document.getElementById('labelAddress').innerHTML = Detail + ', ' + Province + ' - ' + District + ' -' + Ward;
+            document.getElementById('labelPhoneNumber').innerHTML = PhoneNumber;
+            $('#modal-select-address').modal('hide');
+        });
 
-    var registerEvents = function () {
-        $(document).ready(function () { 
-            $("#btnSave").on('click', function () {
-                debugger;
-                e.preventDefault();
-                commons.notify('Không được chọn danh mục cha là chính nó', 'error');
-
-                alert("hi");
+        $('#btneditaddress').off('click').on('click', function () {
+            $('#modal-add-address').modal('hide');
+            $('#modal-select-address').modal('show');
+            loadAddress();
+        });
+        $('#btnaddaddress').off('click').on('click', function () {
+            $('#modal-select-address').modal('hide');
+            $('#modal-add-address').modal('show');
+        });
+        $('#btneditdeliveryMethod').off('click').on('click', function () {
+            $("#deliveryMethod").css({
+                "display": "block"                
             });
-            //$("#btnSave").on('click', function () {
-            //    debugger;
-            //    if ($('input[name=radio]:checked').length > 0) {
-            //        $('#txtAddress').val(this.data.Address);
-            //    }               
-            //});
+            
+        });
+    };
+    var loadAddress = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Cart/Checkout?handler=LoadAddress",
+            dataType: "json",
+            beforeSend: function () {
+                commons.startLoading();
+            },
+            success: function (response) {
+                var render = '';
+                if (response !== undefined) {
+                    $.each(response, function (i, item) {
+                        render += Mustache.render($('#script-select-address').html(),
+                            {
+                                RecipientName: item.recipientName,
+                                Detail: item.detail,
+                                ProVince: item.province,
+                                District: item.district,
+                                Ward: item.ward,
+                                PhoneNumber: item.phoneNumber,
+                                AddressId: item.addressId
+                            });
+                    });
+                }
+                if (render !== '') {
+                    $('#user-address-content').html(render);
 
-
-            $('#btneditaddress').off('click').on('click', function () {
-                $('#modal-edit-address').modal('hide');
-                $('#modal-select-address').modal('show');
-                loadAddress();
-
-            });
-            $('#btnaddaddress').off('click').on('click', function () {
-                $('#modal-select-address').modal('hide');
-                $('#modal-edit-address').modal('show');
-            });
+                } else {
+                    $('.user-address-label').html(`<div style='text-align: center;'><h3>Không có sẵn địa chỉ</h3></div>`);
+                }
+                commons.stopLoading();
+            },
+            error: function () {
+                commons.notify('Không thể tải địa chỉ', 'error');
+                commons.stopLoading();
+            }
+        });
+    };
+    var loadAddressDefault = function () {
+        $.ajax({
+            type: "GET",
+            url: "/Cart/Checkout?handler=LoadAddress",
+            dataType: "json",           
+            success: function (response) {
+                var RecipientName, Detail, ProVince, District, Ward, PhoneNumber;
+                if (response !== undefined) {
+                    $.each(response, function (i, item) {
+                        RecipientName = item.recipientName;
+                        Detail = item.detail;
+                        ProVince = item.province;
+                        District = item.district;
+                        Ward = item.ward;
+                        PhoneNumber = item.phoneNumber;
+                        AddressId = item.addressId;
+                        return false;
+                    });
+                }
+                else {
+                    RecipientName = '';
+                    Detail = '';
+                    ProVince = '';
+                    District = '';
+                    Ward = '';
+                    PhoneNumber = '';
+                    AddressId = '';
+                }
+                document.getElementById('labelName').innerHTML = RecipientName;
+                document.getElementById('labelAddress').innerHTML = Detail + ',' + ProVince + '-' + District + '-' + Ward;
+                document.getElementById('labelPhoneNumber').innerHTML = PhoneNumber;
+            },
+            error: function () {
+                commons.notify('Không thể tải địa chỉ', 'error');
+                commons.stopLoading();
+            }
         });
        
     };
-
     var loadData = function () {
         var PriceTotaltmp = 0;
         var itemTotal = 0;
@@ -81,7 +163,7 @@
             beforeSend: function () {
                 commons.startLoading();
             },
-            
+
             success: function (response) {
                 var render = '';
                 if (response !== undefined) {
@@ -96,7 +178,8 @@
                         if (item.maxQuantity > 0) {
                             PriceTotaltmp += item.price * item.quantity;
                         }
-                        itemTotal++;
+                        itemTotal += item.quantity
+                            ;
 
                     });
                 }
@@ -118,43 +201,13 @@
             }
         });
     };
-    var loadAddress = function () {
-        $.ajax({
-            type: "GET",
-            url: "/Cart/Checkout?handler=LoadAddress",
-            dataType: "json",
-            beforeSend: function () {
-                commons.startLoading();
-            },
-            success: function (response) {
-                var render = '';
-                if (response !== undefined) {
-                    $.each(response, function (i, item) {                        
-                        render += Mustache.render($('#script-select-address').html(),
-                            {
-                            RecipientName: item.recipientName,
-                            Detail: item.detail,
-                            Address: item.province + '-' + item.district + '-' + item.ward,
-                            PhoneNumber: item.phoneNumber,
-                            AddressId: item.addressId
-                        });
-                    });
-                }
-                if (render !== '') {
-                    $('#user-address-content').html(render);
-                    
-                } else {
-                    $('.user-address-label').html(`<div style='text-align: center;'><h3>Không có sẵn địa chỉ</h3></div>`);
-                }
-                commons.stopLoading();
-            },
-            error: function () {
-                commons.notify('Không thể tải địa chỉ', 'error');
-                commons.stopLoading();
-            }
-        });
-    };
+
+   
+    
     return {
         init
     };
+
+
+
 })();

@@ -1,10 +1,10 @@
 ﻿@section Scripts{
     <script src="~/js/client/cart/checkout.js" rel="stylesheet"></script>
     <script>
-        checkoutcart.loadAddress();
+        checkoutcart.registerEvents();
     </script>
 }
-<div id="modal-edit-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div id="modal-add-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,19 +18,19 @@
             </div>
             <div class="modal-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" id="frmeditaddress">
+                    <form class="form-horizontal" role="form" id="frmaddaddress">
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <br /><br />
                                     <label for="address_1" class="required">Họ tên</label>
-                                    <input class="input form-control" type="text" name="" id="address_1" placeholder="Họ và tên">
+                                    <input class="input form-control" type="text" name="" id="txtHoTen" placeholder="Họ và tên">
                                     <br />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <label for="address_1" class="required">Số điện thoại</label>
+                                    <label id="txtPhoneNumber" for="address_1" class="required">Số điện thoại</label>
                                     <input class="input form-control" type="text" name="" id="address_1" placeholder="Số điện thoại của bạn">
                                     <br />
                                 </div>
@@ -40,7 +40,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <br /><br />
-                                    <label for="address_1" class="required">Địa chỉ</label>
+                                    <label for="txtDetail" class="required">Địa chỉ</label>
                                     <input class="input form-control" type="text" name="" id="address_1" placeholder="Nhập số nhà, đường">
                                     <br />
                                 </div>
@@ -130,12 +130,13 @@
                                 <tr>
                                     <td>
                                         <input data-id="{{AddressId}}" data-RecipientName="{{RecipientName}}"
-                                               data-Detail="{{Detail}}" data-Address="{{Address}}"
-                                               data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio">
+                                               data-Detail="{{Detail}}" data-Province="{{ProVince}}"
+                                               data-District="{{District}}" data-Ward="{{Ward}}"
+                                               data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio" class="radiobutton" >
                                     </td>
                                     <td data-th="RecipientName" class="quantity">{{RecipientName}}</td>
                                     <td data-th="Detail" class="quantity">{{Detail}}</td>
-                                    <td data-th="Address" class="quantity">{{Address}}</td>
+                                    <td data-th="Address" class="quantity">{{ProVince}}-{{District}}-{{Ward}}</td>
                                     <td data-th="PhoneNumber" class="price">{{PhoneNumber}}</td>
                                 </tr>
                             </script>
@@ -144,8 +145,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCancel" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" id="btnSave" class="btn btn-primary">Lưu</button>
+                <button type="button" id="btnCancelAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnSaveAddress" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>

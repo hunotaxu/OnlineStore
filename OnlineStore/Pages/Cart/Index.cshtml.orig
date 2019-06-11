@@ -5,7 +5,7 @@
 }
 
 @section Styles{
-    <link href="~/css/client/cart/cart.css" rel="stylesheet" />
+    @*<link href="~/css/client/cart/cart.css" rel="stylesheet" />*@
 }
 
 @section Scripts{
