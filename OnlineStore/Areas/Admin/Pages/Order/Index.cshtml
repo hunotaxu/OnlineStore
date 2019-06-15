@@ -37,7 +37,7 @@
                 <select class="form-control" id="ddlOrderStatus" asp-for="Order.Status" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.OrderStatus>()"></select>
             </div>
             <div class="col-md-3 col-sm-12  form-group pull-right">
-                <select class="form-control" id="ddlDeliveryType" asp-for="Order.DeliveryType" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.DeliveryType>()"></select>
+                @*<select class="form-control" id="ddlDeliveryType" asp-for="Order.DeliveryType" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.DeliveryType>()"></select>*@
             </div>
         </div>
     </div>

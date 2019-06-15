@@ -1,4 +1,5 @@
-﻿using DAL.Data.Enums;
+﻿using DAL.Data.Entities;
+using DAL.Data.Enums;
 using System;
 
 namespace OnlineStore.Models.ViewModels
@@ -8,7 +9,7 @@ namespace OnlineStore.Models.ViewModels
         public string RecipientFullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public DeliveryType DeliveryType { get; set; }
+        public string DeliveryTypeName { get; set; }
         public DateTime DeliveryDate { get; set; }
         public PaymentType PaymentType { get; set; }
         public OrderStatus Status { get; set; }

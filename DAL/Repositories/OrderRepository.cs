@@ -18,7 +18,7 @@ namespace DAL.Repositories
 
             if (deliveryType != 0)
             {
-                query = query.Where(x => x.DeliveryType == (DeliveryType)deliveryType.Value);
+                //query = query.Where(x => x.DeliveryType == (DeliveryType)deliveryType.Value);
             }
 
             if (orderStatus != 0)

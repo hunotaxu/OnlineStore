@@ -22,9 +22,6 @@ namespace DAL.Data.Entities
         [DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
 
-        //[Column(TypeName = "decimal(18,2)")]
-        //public decimal? Bonus { get; set; }
-
         [Display(Name = "Người duyệt")]
         public Guid? EmployeeId { get; set; }
 
@@ -39,7 +36,7 @@ namespace DAL.Data.Entities
         [Display(Name = "Trạng thái")]
         public OrderStatus Status { get; set; }
 
-        public DeliveryType DeliveryType { get; set; }
+        public int DeliveryTypeId { get; set; }
 
         public PaymentType PaymentType { get; set; }
 
@@ -53,6 +50,7 @@ namespace DAL.Data.Entities
 
         public decimal SaleOff { get; set; }
 
+        public virtual DeliveryType DeliveryType { get; set; }
         [JsonIgnore]
         public virtual ApplicationUser Customer { get; set; }
         [JsonIgnore]

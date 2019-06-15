@@ -32,7 +32,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
             {
                 RecipientFullName = order.Customer.Name,
                 Email = order.Customer.Email,
-                DeliveryType = order.DeliveryType,
+                DeliveryTypeName = order.DeliveryType.Name,
                 PaymentType = order.PaymentType,
                 Status = order.Status,
                 DeliveryDate = order.DeliveryDate ?? order.OrderDate,
