@@ -12,9 +12,9 @@ var category = (function () {
             ignore: [],
             lang: 'en',
             rules: {
-                txtNameM: { required: true },
-                txtOrderM: { number: true },
-                txtHomeOrderM: { number: true }
+                txtNameM: { required: true }
+                //txtOrderM: { number: true },
+                //txtHomeOrderM: { number: true }
             }
         });
         $('#btnCreate').off('click').on('click', function () {

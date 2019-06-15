@@ -6,9 +6,23 @@
         registerEvents();
         loadAddressDefault();
 
-    };    
+    };
     var registerEvents = function () {
         $(document).ready(function () {
+            $('#frmaddaddress').validate({
+                errorClass: 'red',
+                ignore: [],
+                lang: 'en',
+                rules: {
+                    txtHoTen: { required: true },
+                    txtDetail: { required: true },
+                    txtPhoneNumber: { required: true },
+                    frmselectprovince: { required: true },
+                    frmselectward: { required: true },
+                    frmselectdistrict: { required: true }
+                }
+            });
+
             var Province, District, Ward, Detail, RecipientName, PhoneNumber;
             $('#frmselectaddress').click(function () {
                 if ($('.radiobutton').is(':checked')) {
@@ -21,19 +35,7 @@
                     PhoneNumber = x.data("phonenumber");
                 }
             });
-            //$('#frmaddaddress').validate({
-            //    errorClass: 'red',
-            //    ignore: [],
-            //    lang: 'en',
-            //    rules: {
-            //        txtHoTen: { required: true },
-            //        txtDetail: { required: true },
-            //        txtPhoneNumber: { required: true },
-            //        frmselectprovince: { required: true },
-            //        frmselectward: { required: true },
-            //        frmselectdistrict: { required: true }
-            //    }
-            //});
+
             $("#btnSaveSelectAddress").on('click', function () {
                 document.getElementById('labelName').innerHTML = RecipientName;
                 document.getElementById('labelAddress').innerHTML = Detail + ', ' + Province + ' - ' + District + ' -' + Ward;
@@ -42,11 +44,14 @@
                 $('#modal-select-address').modal('hide');
             });
             $("#btnSaveAddAddress").on('click', function () {
-                document.getElementById('labelName').innerHTML = $('#txtHoTen').val();
-                document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectprovince').val() + ' - ' + $('#frmselectdistrict').val() + ' -' + $('#frmselectward').val();
-                document.getElementById('labelPhoneNumber').innerHTML = $('#txtPhoneNumber').val();
-                saveAddress();
-                $('#modal-add-address').modal('hide');
+                if ($('#frmaddaddress').valid()) {
+                    document.getElementById('labelName').innerHTML = $('#txtHoTen').val();
+                    document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectprovince').val() + ' - ' + $('#frmselectdistrict').val() + ' -' + $('#frmselectward').val();
+                    document.getElementById('labelPhoneNumber').innerHTML = $('#txtPhoneNumber').val();
+                    saveAddress();
+                    $('#modal-add-address').modal('hide');
+                }
+                return false;
             });
             $("#txtPhoneNumber").on("keypress keyup", function (event) {
                 $(this).val($(this).val().replace(/[^\d].+/, ""));
@@ -85,7 +90,7 @@
                 e.preventDefault();
                 loadMomo();
             });
-            
+
 
 
             if ($('.radio-delivery').is(':checked')) {
