@@ -18,7 +18,6 @@ namespace DAL.EF
 
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
-        public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<CartDetail> CartDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Province> Province { get; set; }
@@ -31,11 +30,9 @@ namespace DAL.EF
         public virtual DbSet<Item> Item { get; set; }
         public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Order> Order { get; set; }
-        //public virtual DbSet<Role> Role { get; set; }
+        public virtual DbSet<ShowRoomAddress> ShowRoomAddress { get; set; }
+        public virtual DbSet<ReceivingType> ReceivingType { get; set; }
         public virtual DbSet<Supplier> Supplier { get; set; }
-        //public virtual DbSet<TypeOfUser> TypeOfUser { get; set; }
-        //public virtual DbSet<User> User { get; set; }
-        //public virtual DbSet<UserDecentralization> UserDecentralization { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -88,8 +85,8 @@ namespace DAL.EF
             //        .IsRequired();
             //});
 
-            modelBuilder.Entity<UserAddress>()
-                .HasKey(c => new { c.AddressId, c.CustomerId });
+            //modelBuilder.Entity<UserAddress>()
+            //    .HasKey(c => new { c.AddressId, c.CustomerId });
 
             modelBuilder.Entity<CartDetail>()
                 .HasKey(c => new { c.CartId, c.ItemId });

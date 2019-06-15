@@ -6,7 +6,7 @@ namespace TimiApp.Dapper.ViewModels
 {
     public class MostDeliveryMethodViewModel
     {
-        private DeliveryType delivery { get; set; }
+        private ReceivingType delivery { get; set; }
         //public string DeliveryName
         //{
         //    get

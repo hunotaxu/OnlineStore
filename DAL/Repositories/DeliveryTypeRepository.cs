@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class DeliveryTypeRepository : RepoBase<DeliveryType>, IDeliveryTypeRepository
+    public class ReceivingTypeRepository : RepoBase<ReceivingType>, IReceivingTypeRepository
     {
-        public DeliveryTypeRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
+        public ReceivingTypeRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
 
         }

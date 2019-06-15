@@ -890,7 +890,7 @@ namespace OnlineStore.Services
             //billingAddress.AddCell(new Paragraph(" "));
             //billingAddress.AddCell(new Paragraph(" "));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
-            cellBilling.Phrase.Add(GetParagraph("Phương thức giao hàng: {0}", string.Empty, font, order.DeliveryType.Name));
+            cellBilling.Phrase.Add(GetParagraph("Phương thức giao hàng: {0}", string.Empty, font, order.ReceivingType.Name));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             cellBilling.HorizontalAlignment = Element.ALIGN_LEFT;

@@ -10,7 +10,12 @@ namespace DAL.Data.Entities
         public string District { get; set; }
         public string Province { get; set; }
         public string Detail { get; set; }
+        public string PhoneNumber { get; set; }
+        public string RecipientName { get; set; }
+        public Guid CustomerId { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
+
+        public virtual ApplicationUser Customer { get; set; }
     }
 }

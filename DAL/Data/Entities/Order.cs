@@ -50,7 +50,7 @@ namespace DAL.Data.Entities
 
         public decimal SaleOff { get; set; }
 
-        public virtual DeliveryType DeliveryType { get; set; }
+        public virtual ReceivingType ReceivingType { get; set; }
         [JsonIgnore]
         public virtual ApplicationUser Customer { get; set; }
         [JsonIgnore]

@@ -3,12 +3,14 @@ using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -83,7 +85,7 @@ namespace OnlineStore
             {
                 options.IdleTimeout = TimeSpan.FromHours(2);
                 options.Cookie.HttpOnly = true;
-               // options.cookie.isessential = true;
+                // options.cookie.isessential = true;
             });
 
             services.Configure<IdentityOptions>(options =>
@@ -133,31 +135,25 @@ namespace OnlineStore
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<IShowRoomAddressRepository, ShowRoomAddressRepository>();
+            services.AddScoped<IReceivingTypeRepository, ReceivingTypeRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
-            //services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-
             services.AddScoped<IProvinceRepository, ProvinceRepository>();
             services.AddScoped<IDistrictRepository, DistrictRepository>();
             services.AddScoped<IWardRepository, WardRepository>();
-
-
-            //services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IPdfService, PdfService>();
             services.AddScoped<IReportService, ReportService>();
-            //services.AddScoped<ISettings, PdfSettings>();
             services.AddScoped<IPdfSettings, PdfSettings>();
-            //services.AddScoped<INopFileProvider, NopFileProvider>();
-            //services.AddScoped<PdfSettings>();
             services.AddScoped<IGoodsReceiptDetailRepository, GoodsReceiptDetailRepository>();
-            services.AddScoped<IUserAddressRepository, UserAddressRepository>();
+            //services.AddScoped<IUserAddressRepository, UserAddressRepository>();
             services.AddScoped<IProductImagesRepository, ProductImagesRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
@@ -180,7 +176,7 @@ namespace OnlineStore
             app.UseHttpsRedirection();
             //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
-            
+
             app.UseAuthentication();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);

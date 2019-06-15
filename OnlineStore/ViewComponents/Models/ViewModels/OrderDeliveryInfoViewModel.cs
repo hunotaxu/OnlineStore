@@ -9,7 +9,7 @@ namespace OnlineStore.Models.ViewModels
         public string RecipientFullName { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        public string DeliveryTypeName { get; set; }
+        public string ReceivingTypeName { get; set; }
         public DateTime DeliveryDate { get; set; }
         public PaymentType PaymentType { get; set; }
         public OrderStatus Status { get; set; }

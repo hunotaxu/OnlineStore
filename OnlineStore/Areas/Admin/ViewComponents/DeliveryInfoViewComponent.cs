@@ -12,12 +12,15 @@ namespace OnlineStore.Areas.Admin.ViewComponents
     {
         private readonly MapperConfiguration _mapperConfiguration;
         private readonly IOrderRepository _orderRepository;
-        private readonly IUserAddressRepository _userAddressRepository;
+        private readonly IAddressRepository _addressRepository;
+        //private readonly IUserAddressRepository _userAddressRepository;
 
-        public DeliveryInfoViewComponent(IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
+        //public DeliveryInfoViewComponent(IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
+        public DeliveryInfoViewComponent(IOrderRepository orderRepository, IAddressRepository addressRepository)
         {
             _orderRepository = orderRepository;
-            _userAddressRepository = userAddressRepository;
+            //_userAddressRepository = userAddressRepository;
+            _addressRepository = addressRepository;
             _mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderDeliveryInfoViewModel>());
         }
 
@@ -26,13 +29,14 @@ namespace OnlineStore.Areas.Admin.ViewComponents
             var order = _orderRepository.Find(orderId);
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 
-            var userAddress = order.AddressId.HasValue == true ? _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value) : null;
+            //var userAddress = order.AddressId.HasValue == true ? _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value) : null;
+            var userAddress = order.AddressId.HasValue == true ? _addressRepository.Find(order.AddressId) : null;
 
             var deliveryInfoVM = new OrderDeliveryInfoViewModel
             {
                 RecipientFullName = order.Customer.Name,
                 Email = order.Customer.Email,
-                DeliveryTypeName = order.DeliveryType.Name,
+                ReceivingTypeName = order.ReceivingType.Name,
                 PaymentType = order.PaymentType,
                 Status = order.Status,
                 DeliveryDate = order.DeliveryDate ?? order.OrderDate,

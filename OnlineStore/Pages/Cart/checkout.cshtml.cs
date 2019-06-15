@@ -15,7 +15,7 @@ namespace OnlineStore.Pages.Order
 {
     public class CheckoutModel : PageModel
     {
-        private readonly IUserAddressRepository _userAddressRepository;
+        //private readonly IUserAddressRepository _userAddressRepository;
         private readonly IItemRepository _itemRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IUserRepository _userRepository;
@@ -27,7 +27,7 @@ namespace OnlineStore.Pages.Order
         public readonly IAddressRepository _addressRepository;
 
         public CheckoutModel(IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
-            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IUserAddressRepository userAddressRepository
+            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository
             , IUserRepository userRepository)
         {
             _itemRepository = itemRepository;
@@ -35,7 +35,6 @@ namespace OnlineStore.Pages.Order
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
             _userManager = userManager;
-            _userAddressRepository = userAddressRepository;
             _provinceRepository = provinceRepository;
             _districtRepository = districtRepository;
             _wardRepository = wardRepository;
@@ -91,29 +90,30 @@ namespace OnlineStore.Pages.Order
         }
         public IActionResult OnGetLoadAddress()
         {
-            var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-            if (useraddress != null)
+            //var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+            var address = _addressRepository.GetSome(x => x.CustomerId == _userManager.GetUserAsync(HttpContext.User).Result.Id && x.IsDeleted == false);
+            if (address != null && address.Count() > 0)
             {
                 UserAddresses = new List<UserAddressViewModel>();
-                var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
-                if (items.Count > 0)
+                //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
+                //if (items.Count > 0)
+                //{
+                foreach (var item in address)
                 {
-                    foreach (var item in items)
+                    var userAddress = new UserAddressViewModel
                     {
-                        var userAddress = new UserAddressViewModel
-                        {
-                            AddressId = item.AddressId,
-                            CustomerId = item.CustomerId,
-                            PhoneNumber = item.PhoneNumber,
-                            RecipientName = item.RecipientName,
-                            Province = item.Address.Province,
-                            District = item.Address.District,
-                            Ward = item.Address.Ward,
-                            Detail = item.Address.Detail
-                        };
-                        UserAddresses.Add(userAddress);
-                    }
+                        AddressId = item.Id,
+                        CustomerId = item.CustomerId,
+                        PhoneNumber = item.PhoneNumber,
+                        RecipientName = item.RecipientName,
+                        Province = item.Province,
+                        District = item.District,
+                        Ward = item.Ward,
+                        Detail = item.Detail
+                    };
+                    UserAddresses.Add(userAddress);
                 }
+                //}
             }
             return new OkObjectResult(UserAddresses);
         }
@@ -236,23 +236,26 @@ namespace OnlineStore.Pages.Order
             if (user != null && !_userRepository.IsAdmin(user))
             {
 
-                var newAddress = new DAL.Data.Entities.Address
+                var newAddress = new Address
                 {
+                    PhoneNumber = model.PhoneNumber,
+                    RecipientName = model.RecipientName,
                     Ward = model.Ward,
                     District = model.District,
                     Province = model.Province,
                     Detail = model.Detail,
                     DateCreated = DateTime.Now,
                     DateModified = DateTime.Now,
+                    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id
                 };
                 _addressRepository.Add(newAddress);
-                _userAddressRepository.Add(new UserAddress
-                {
-                    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-                    AddressId = newAddress.Id,
-                    PhoneNumber = model.PhoneNumber,
-                    RecipientName = model.RecipientName,
-                });
+                //_userAddressRepository.Add(new UserAddress
+                //{
+                //    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
+                //    AddressId = newAddress.Id,
+                //    PhoneNumber = model.PhoneNumber,
+                //    RecipientName = model.RecipientName,
+                //});
             }
             return new OkObjectResult(model);
         }

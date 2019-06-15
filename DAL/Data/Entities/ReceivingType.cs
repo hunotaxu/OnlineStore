@@ -3,7 +3,7 @@ using System;
 
 namespace DAL.Data.Entities
 {
-    public class DeliveryType : EntityBase
+    public class ReceivingType : EntityBase
     {
         public string Name { get; set; }
         public decimal Value { get; set; }
