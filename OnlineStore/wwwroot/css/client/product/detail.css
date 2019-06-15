@@ -203,3 +203,10 @@ body .no-padding {
 .tabproduct {
     background: #fafafa;
 }
+
+.productnamedetail {
+    font-family: 'Roboto','Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: 500;
+    color: #333333;
+}

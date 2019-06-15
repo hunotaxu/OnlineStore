@@ -4,7 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using DAL.Data.Entities;
 using DAL.EF;
+using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DAL.Repositories
 {
@@ -30,9 +32,39 @@ namespace DAL.Repositories
             return Table.Where(x => x.CustomerId == userId);
         }
 
-        //public IEnumerable<UserAddress> GetAddressByUserId(Guid userId)
-        //{
-        //    return Table.Where(x => x.CustomerId == userId).Select(x => x.Address);
-        //}
+        public int Add(UserAddress entity, bool persist = true)
+        {
+            Table.Add(entity);
+            return persist ? SaveChanges() : 0;
+        }
+
+        public int SaveChanges()
+        {
+            try
+            {
+                return Db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                //A concurrency error occurred
+                //Should handle intelligently
+                Console.WriteLine(ex);
+                throw;
+            }
+            catch (RetryLimitExceededException ex)
+            {
+                //DbResiliency retry limit exceeded
+                //Should handle intelligently
+                Console.WriteLine(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                //Should handle intelligently
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
+
     }
 }

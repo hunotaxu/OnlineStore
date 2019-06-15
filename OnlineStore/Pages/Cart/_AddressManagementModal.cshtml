@@ -1,10 +1,4 @@
-﻿@section Scripts{
-    <script src="~/js/client/cart/checkout.js" rel="stylesheet"></script>
-    <script>
-        checkoutcart.registerEvents();
-    </script>
-}
-<div id="modal-add-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+﻿<div id="modal-add-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,20 +12,20 @@
             </div>
             <div class="modal-body">
                 <div id="horizontal-form">
-                    <form class="form-horizontal" role="form" id="frmaddaddress">
+                    <form class="form-horizontal" role="form" id="frmaddaddress" method="post">
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <br /><br />
-                                    <label for="address_1" class="required">Họ tên</label>
-                                    <input class="input form-control" type="text" name="" id="txtHoTen" placeholder="Họ và tên">
+                                    <label for="txtHoTen" class="required">Họ tên</label>
+                                    <input class="input form-control" type="text" name="txtHoTen" id="txtHoTen" placeholder="Họ và tên">
                                     <br />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <label id="txtPhoneNumber" for="address_1" class="required">Số điện thoại</label>
-                                    <input class="input form-control" type="text" name="" id="address_1" placeholder="Số điện thoại của bạn">
+                                    <label for="txtPhoneNumber" class="required">Số điện thoại</label>
+                                    <input class="input form-control" name="txtPhoneNumber" id="txtPhoneNumber" placeholder="Số điện thoại của bạn">
                                     <br />
                                 </div>
                             </div>
@@ -41,56 +35,60 @@
                                 <div class="col-xs-12">
                                     <br /><br />
                                     <label for="txtDetail" class="required">Địa chỉ</label>
-                                    <input class="input form-control" type="text" name="" id="address_1" placeholder="Nhập số nhà, đường">
+                                    <input required class="input form-control" type="text" name="txtDetail" id="txtDetail" placeholder="Nhập số nhà, đường">
                                     <br />
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label class="required">Tỉnh/ Thành phố</label>
+                                    <label for="frmselectprovince" class="required">Tỉnh/ Thành phố</label>
                                     <div class="custom_select">
-                                        <select class="input form-control" name="">
-                                            <option value="Alabama">Alabama</option>
-                                            <option value="Illinois">Illinois</option>
-                                            <option value="Kansas">Kansas</option>
-                                        </select>
+                                        <select required class="input form-control" name="frmselectprovince" id="frmselectprovince"></select>
                                     </div>
                                     <br />
                                 </div>
                             </div>
+                            <p class="error-loadprovince productnamecheckout"></p>
+                            <script id="script-select-province" type="x-tmpl-mustache">
+                                <option data-provinceid="{{ProVinceId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label class="required">Quận/ Huyện</label>
+                                    <label for="frmselectdistrict" class="required">Quận/ Huyện</label>
                                     <div class="custom_select">
-                                        <select class="input form-control" name="">
-                                            <option value="Alabama">Alabama</option>
-                                            <option value="Illinois">Illinois</option>
-                                            <option value="Kansas">Kansas</option>
-                                        </select>
+                                        <select required class="input form-control" name="frmselectdistrict" id="frmselectdistrict"></select>
                                     </div>
                                     <br />
                                 </div>
                             </div>
+                            <p class="error-loaddistrict productnamecheckout"></p>
+                            <script id="script-select-district" type="x-tmpl-mustache">
+                                <option data-districtid="{{DistrictId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
+
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <label class="required">Phường/ Xã</label>
+                                    <label for="frmselectward" class="required">Phường/ Xã</label>
                                     <div class="custom_select">
-                                        <select class="input form-control" name="">
-                                            <option value="Alabama">Alabama</option>
-                                            <option value="Illinois">Illinois</option>
-                                            <option value="Kansas">Kansas</option>
-                                        </select>
+                                        <select required class="input form-control" name="frmselectward" id="frmselectward"></select>
                                     </div>
                                     <br />
                                 </div>
                             </div>
+                            <p class="error-loadward productnamecheckout"></p>
+                            <script id="script-select-ward" type="x-tmpl-mustache">
+                                <option data-districtid="{{WardId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCancel" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" id="btnSave" class="btn btn-primary">Lưu</button>
+                <button type="button" id="btnCancelAddAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnSaveAddAddress" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>
@@ -132,7 +130,7 @@
                                         <input data-id="{{AddressId}}" data-RecipientName="{{RecipientName}}"
                                                data-Detail="{{Detail}}" data-Province="{{ProVince}}"
                                                data-District="{{District}}" data-Ward="{{Ward}}"
-                                               data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio" class="radiobutton" >
+                                               data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio" class="radiobutton">
                                     </td>
                                     <td data-th="RecipientName" class="quantity">{{RecipientName}}</td>
                                     <td data-th="Detail" class="quantity">{{Detail}}</td>
@@ -145,8 +143,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCancelAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                <button type="button" id="btnSaveAddress" class="btn btn-primary">Lưu</button>
+                <button type="button" id="btnCancelSelectAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnSaveSelectAddress" class="btn btn-primary">Lưu</button>
             </div>
         </div>
     </div>

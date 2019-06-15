@@ -45,6 +45,7 @@ $('#gotocomment1').on('click', function (e) {
     $("#review a").trigger('click');
 });
 $('#btnAddToCart').on('click', function (e) {
+    debugger;
     e.preventDefault();   
     var id = parseInt($(this).data('id'));
     if ($('#rateit_star').data('customerid') === '' || $('#rateit_star').data('customerid') === undefined) {

@@ -139,6 +139,12 @@ namespace OnlineStore
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            services.AddScoped<IProvinceRepository, ProvinceRepository>();
+            services.AddScoped<IDistrictRepository, DistrictRepository>();
+            services.AddScoped<IWardRepository, WardRepository>();
+
+
             //services.AddScoped<IUserDecentralizationRepository, UserDecentralizationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();

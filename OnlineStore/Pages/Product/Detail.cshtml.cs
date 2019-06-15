@@ -138,32 +138,6 @@ namespace OnlineStore.Pages.Product
         }
 
 
-
-
-
-        #region AJAX Request
-        /// <summary>
-        /// Get list item
-        /// </summary>
-        /// <returns></returns>
-        //public IActionResult GetCart()
-        //{
-        //    var session = HttpContext.Session.Get<List<ItemCartViewModel>>(CommonConstants.CartSession);
-        //    if (session == null)
-        //        session = new List<ItemCartViewModel>();
-        //    return new OkObjectResult(session);
-        //}
-        /// <summary>
-        /// Remove all products in cart
-        /// </summary>
-        /// <returns></returns>
-        //public IActionResult ClearCart()
-        //{
-        //    HttpContext.Session.Remove(CommonConstants.CartSession);
-        //    return new OkObjectResult("OK");
-        //}
-
-        //public IActionResult OnPostAddToCart(int itemId, int quantity, [FromBody] DAL.Data.Entities.Cart model)
         public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
         {
             if (!ModelState.IsValid)
@@ -219,29 +193,7 @@ namespace OnlineStore.Pages.Product
                 }
             }
             return new OkObjectResult(model);
-        }
-        //public IActionResult OnGetCheckAvailQtyCart()
-        //{
-        //    var avail = 0;
+        }        
 
-        //    var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-        //    if (cus != null)
-        //    {
-        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-        //        if (cart != null)
-        //        {
-        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-        //            foreach (var item in items)
-        //            {
-
-        //            };
-        //        }
-        //        return new OkObjectResult(itemnumbercart);
-        //    }
-        //    return new OkObjectResult(itemnumbercart);
-
-        //}
-
-        #endregion
     }
 }

@@ -21,6 +21,9 @@ namespace DAL.EF
         public virtual DbSet<UserAddress> UserAddress { get; set; }
         public virtual DbSet<CartDetail> CartDetail { get; set; }
         public virtual DbSet<Category> Category { get; set; }
+        public virtual DbSet<Province> Province { get; set; }
+        public virtual DbSet<District> District { get; set; }
+        public virtual DbSet<Ward> Ward { get; set; }
         public virtual DbSet<Comment> Comment { get; set; }
         public virtual DbSet<Event> Event { get; set; }
         public virtual DbSet<GoodsReceipt> GoodsReceipt { get; set; }

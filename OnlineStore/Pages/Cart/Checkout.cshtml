@@ -2,6 +2,8 @@
 @using DAL.Data.Entities
 @using DAL.Models
 @using Microsoft.AspNetCore.Identity
+@using  Utilities.Extensions
+@using DAL.Data.Enums
 
 @inject UserManager<ApplicationUser>    UserManager
 @model OnlineStore.Pages.Order.CheckoutModel
@@ -12,11 +14,16 @@
 }
 @section Scripts{
     <script src="~/js/client/cart/checkout.js" rel="stylesheet"></script>
+    <script src="~/lib/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+
     <script>
         checkoutcart.init();
     </script>
 }
 @section Styles{
+    <link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />
+
     <link href="~/css/client/cart/checkout.css" rel="stylesheet" />
 }
 @{
@@ -59,7 +66,7 @@
                                 </a>
                                 <span class="text-danger">{{OutOfStockNotifyCation}}</span>
                             </td>
-                            <td data-th="Quantity" class="quantity">{{Quantity}}</td>
+                            <td data-th="Quantity" class="quantity productnamecheckout ">{{Quantity}}</td>
                             <td data-th="Price" class="price">{{TotalPrice}}</td>
                         </tr>
                     </script>
@@ -106,11 +113,11 @@
                                     <div style="border-bottom: 1px solid #e5e5e5">
                                         <i class="fa fa-hand-peace-o" aria-hidden="true"></i>
                                         Hình thức giao hàng <a id="btneditdeliveryMethod" class="linkchange" href="#">Chỉnh sửa</a><br><br />
-                                        <div id="deliveryMethod" class="box-border" style="padding: 0 25% 0 4%; display:none"  >
+                                        <div id="deliveryMethod" class="box-border" style="padding: 0 25% 0 4%">
                                             <ul class="shipping_method">
-                                                <li>
+                                                <li class="li-radio-delivery">
                                                     <label for="radio_button_3">
-                                                        <input type="radio" checked name="radio_3" id="radio_button_3">
+                                                        <input value="Gia hàng tiêu chuẩn" class="radio-delivery" type="radio" name="radiodelivery" id="radiodelivery-standard">
                                                         Giao hàng tiêu chuẩn
                                                     </label>
                                                     <p class="subcaption " style="margin-left: 7%;font-size:80%">
@@ -118,9 +125,9 @@
                                                         Thời gian giao hàng trong vòng từ 2-3 ngày kể từ ngày đặt hàng
                                                     </p>
                                                 </li>
-                                                <li>
+                                                <li class="li-radio-delivery">
                                                     <label for="radio_button_4">
-                                                        <input type="radio" name="radio_3" id="radio_button_4">
+                                                        <input value="Giao hàng ưu tiên" class="radio-delivery" type="radio" name="radiodelivery">
                                                         Giao hàng ưu tiên
                                                     </label>
                                                     <p class="subcaption " style="margin-left: 7%;font-size:80%">
@@ -128,9 +135,9 @@
                                                         Thời gian giao hàng trong vòng 24h
                                                     </p>
                                                 </li>
-                                                <li>
+                                                <li class="li-radio-delivery">
                                                     <label for="radio_button_5">
-                                                        <input type="radio" name="radio_3" id="radio_button_5">
+                                                        <input value="Nhận hàng tại showroom" class="radio-delivery" type="radio" name="radiodelivery">
                                                         Nhận hàng tại showroom
                                                     </label>
                                                     <p class="subcaption " style="margin-left: 7%;font-size:80%">
@@ -144,15 +151,56 @@
                                     <div style="border-bottom: 1px solid #e5e5e5">
                                         <i class="fa fa-money" aria-hidden="true"></i>
                                         Phương thức thanh toán <a class="linkchange" href="#">Chỉnh sửa</a> <br><br />
+                                        <div id ="paymentMethod"class="box-border"  style="padding: 0 25% 0 4%">
+                                            <ul>
+                                                <li>
+                                                    <label for="radio_button_5">
+                                                        <input type="radio"  name="radio_4" id="radio_button_checkin" />
+                                                        Thanh toán khi nhận hàng
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="radio_button_5">
+                                                        <input type="radio"  name="radio_4" id="radio_button_atm" />
+                                                        Thanh toán bằng thẻ ATM nội địa
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="radio_button_6">
+                                                        <input type="radio" name='radio_4' id="radio_button_creditcard" />
+                                                        Thanh toán bằng thẻ quốc tế
+                                                    </label>
+                                                    <div class="payment none" id="creditcardtDIV">
+                                                        <ul>
+                                                            <li><a href="#"><img class="imgpayment" title="Visa" alt="Visa" src="~/images/client/layout/visa.png"></a></li>
+                                                            <li><a href="#"><img class="imgpayment" title="Paypal" alt="Paypal" src="~/images/client/layout/paypal.png"></a></li>
+                                                            <li><a href="#"><img class="imgpayment" title="Discover" alt="Discover" src="~/images/client/layout/discover.png"></a></li>
+                                                            <li><a href="#"><img class="imgpayment" title="Master Card" alt="Master Card" src="~/images/client/layout/master-card.png"></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <label for="radio_button_5">
+                                                        <input type="radio"  name="radio_4" id="radio_button_momo" >
+                                                        Thanh toán bằng ví điện tử
+                                                    </label>
+                                                    <div class="payment none" id="ecashDIV">
+                                                        <ul>
+                                                            <li><a href="#"><img class="imgpayment" title="Momo" alt="Visa" src="~/images/client/layout/momo.png"></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                     <div style="border-bottom: 1px solid #e5e5e5">
                                         <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                        Tổng cộng <a class="linkchange" hrsef="#">Chỉnh sửa</a> <br><br />
+                                        Tổng cộng: <br><br />
                                     </div>
                                 </address>
                             </dd>
                         </dl>
-                        <button id="btnpay" class="button pro-action col-md-12"> THANH TOÁN</button>
+                        <button id="btnpay" type="button" class="btnPay col-md-12"> THANH TOÁN</button>
                     </div>
                 </div>
 
