@@ -81,19 +81,25 @@ namespace OnlineStore
                     options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
                     options.Conventions.AuthorizeFolder("/Order", "RequireCustomerRole");
                     options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
-                    //options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
-                    //options.Conventions.AuthorizeAreaFolder("Admin", "", )
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/Product", "RequireProductManagerRole");
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/Category", "RequireProductManagerRole");
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
                 });
             services.AddAuthorization(options =>
             {
                 //options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
                 //options.AddPolicy("AtLeast21", policy => policy.Requirements.Add(new MinimumAgeRequirement(21)));
-                options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole(CommonConstants.CustomerRoleName));
-                options.AddPolicy("RequireProductManagerRole", policy => policy.RequireRole(CommonConstants.ProductManagerRoleName));
-                options.AddPolicy("RequireStoreOwnerRole", policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
-                options.AddPolicy("RequireOrderManagerRole", policy => policy.RequireRole(CommonConstants.OrderManagerRoleName));
-                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(new string[] { CommonConstants.OrderManagerRoleName, CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
-
+                options.AddPolicy("RequireCustomerRole", 
+                    policy => policy.RequireRole(CommonConstants.CustomerRoleName));
+                options.AddPolicy("RequireProductManagerRole", 
+                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
+                options.AddPolicy("RequireStoreOwnerRole", 
+                    policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
+                options.AddPolicy("RequireOrderManagerRole", 
+                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.OrderManagerRoleName }));
+                options.AddPolicy("RequireAdminRole", 
+                    policy => policy.RequireRole(new string[] { CommonConstants.OrderManagerRoleName, CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
             });
 
             //services.AddSession();
