@@ -72,7 +72,6 @@ namespace OnlineStore.Pages.Order
             int a = AddressId;
             DAL.Data.Entities.Order order = new DAL.Data.Entities.Order
             {
-                CustomerId = customerId,
                 Status = OrderStatus.Pending,
                 OrderDate = DateTime.Now,
                 DeliveryDate = DateTime.Now.AddDays(3),

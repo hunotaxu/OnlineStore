@@ -12,7 +12,7 @@ namespace DAL.Data.Entities
     {
         public Order()
         {
-            LineItems = new HashSet<OrderItem>();
+            OrderItems = new HashSet<OrderItem>();
         }
 
         [Display(Name = "Ngày giao dự kiến")]
@@ -25,9 +25,6 @@ namespace DAL.Data.Entities
         [Display(Name = "Người duyệt")]
         public Guid? EmployeeId { get; set; }
 
-        [Display(Name = "Mã khách hàng")]
-        public Guid CustomerId { get; set; }
-
         public int? AddressId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
@@ -36,7 +33,7 @@ namespace DAL.Data.Entities
         [Display(Name = "Trạng thái")]
         public OrderStatus Status { get; set; }
 
-        public int DeliveryTypeId { get; set; }
+        public int ReceivingTypeId { get; set; }
 
         public PaymentType PaymentType { get; set; }
 
@@ -52,10 +49,8 @@ namespace DAL.Data.Entities
 
         public virtual ReceivingType ReceivingType { get; set; }
         [JsonIgnore]
-        public virtual ApplicationUser Customer { get; set; }
-        [JsonIgnore]
         public virtual Address Address { get; set; }
         [JsonIgnore]
-        public virtual ICollection<OrderItem> LineItems { get; set; }
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
 }

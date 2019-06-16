@@ -440,7 +440,7 @@ namespace OnlineStore.Services
             doc.Add(productsHeader);
             doc.Add(new Paragraph(" "));
 
-            var orderItems = order.LineItems;
+            var orderItems = order.OrderItems;
 
             //var count = 4 + (_catalogSettings.ShowSkuOnProductDetailsPage ? 1 : 0)
             //            + (_vendorSettings.ShowVendorOnOrderDetailsPage ? 1 : 0);
@@ -813,11 +813,11 @@ namespace OnlineStore.Services
             //billingAddress.AddCell(GetParagraph("PDFInvoice.Name", indent, lang, font, order.BillingAddress.FirstName + " " + order.BillingAddress.LastName));
             //billingAddress.AddCell(GetParagraph("PDFInvoice.Name", indent, lang, font, order.BillingAddress.FirstName + " " + order.BillingAddress.LastName));
             //cellHeader.Phrase.Add(GetParagraph("Mã đơn hàng: {0}", string.Empty, font, order.Id));
-            cellBilling.Phrase.Add(GetParagraph("Tên khách hàng: {0}", string.Empty, font, order.Customer.Name));
+            cellBilling.Phrase.Add(GetParagraph("Tên khách hàng: {0}", string.Empty, font, order.Address.Customer.Name));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             //if (_addressSettings.PhoneEnabled)
             //billingAddress.AddCell(GetParagraph("Số điện thoại: {0}", indent, font, order.Customer.PhoneNumber));
-            cellBilling.Phrase.Add(GetParagraph("Số điện thoại: {0}", string.Empty, font, order.Customer.PhoneNumber));
+            cellBilling.Phrase.Add(GetParagraph("Số điện thoại: {0}", string.Empty, font, order.Address.Customer.PhoneNumber));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             //if (_addressSettings.FaxEnabled && !string.IsNullOrEmpty(order.BillingAddress.FaxNumber))
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Fax", indent, lang, font, order.BillingAddress.FaxNumber));

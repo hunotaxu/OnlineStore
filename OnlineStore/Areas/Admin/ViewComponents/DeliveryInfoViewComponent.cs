@@ -34,8 +34,8 @@ namespace OnlineStore.Areas.Admin.ViewComponents
 
             var deliveryInfoVM = new OrderDeliveryInfoViewModel
             {
-                RecipientFullName = order.Customer.Name,
-                Email = order.Customer.Email,
+                RecipientFullName = order.Address.Customer.Name,
+                Email = order.Address.Customer.Email,
                 ReceivingTypeName = order.ReceivingType.Name,
                 PaymentType = order.PaymentType,
                 Status = order.Status,
