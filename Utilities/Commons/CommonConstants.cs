@@ -12,7 +12,10 @@ namespace Utilities.Commons
         public static Guid StoreOwnerRoleId = new Guid("173330FD-2BBF-43DE-A030-3D869D591421");
         public static Guid CustomerRoleId = new Guid("681E4026-6248-4C17-B4A2-8533ACC2D0BB");
         public static Guid ProductManagerRoleId = new Guid("F1870140-A28B-41B0-A036-9CBAFCD13685");
+        public static string OrderManagerRoleName = "OrderManager";
+        public static string StoreOwnerRoleName = "StoreOwner";
+        public static string CustomerRoleName = "Customer";
+        public static string ProductManagerRoleName = "ProductManager";
         public static string Attachments = "attachments";
-        //public const string CartSession = "CartSession";
     }
 }

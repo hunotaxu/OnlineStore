@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Utilities.Commons;
 
 namespace OnlineStore.Areas.Identity.Pages.Account
 {
@@ -96,7 +97,8 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
-                if (_userRepository.IsAdmin(user))
+                var isCustomer = await _userManager.IsInRoleAsync(user, CommonConstants.CustomerRoleName);
+                if (!isCustomer)
                 {
                     return RedirectToPage("/Home/Index", new { area = "Admin" });
                 }

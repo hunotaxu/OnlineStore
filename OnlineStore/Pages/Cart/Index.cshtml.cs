@@ -34,42 +34,42 @@ namespace OnlineStore.Pages.Cart
 
         public ActionResult OnGet()
         {
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (user == null || _userRepository.IsAdmin(user))
-            {
-                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
-            }
+            //var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            //if (user == null || _userRepository.IsAdmin(user))
+            //{
+            //    return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
+            //}
             return Page();
         }
 
         public IActionResult OnGetLoadCart()
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (!_userRepository.IsAdmin(user))
+            //if (!_userRepository.IsAdmin())
+            //{
+            var cart = _cartRepository.GetCartByCustomerId(user.Id);
+            if (cart != null)
             {
-                var cart = _cartRepository.GetCartByCustomerId(user.Id);
-                if (cart != null)
+                ItemInCarts = new List<ItemCartViewModel>();
+                var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                if (items.Count > 0)
                 {
-                    ItemInCarts = new List<ItemCartViewModel>();
-                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                    if (items.Count > 0)
+                    foreach (var item in items)
                     {
-                        foreach (var item in items)
+                        var itemCartViewModel = new ItemCartViewModel
                         {
-                            var itemCartViewModel = new ItemCartViewModel
-                            {
-                                ItemId = item.ItemId,
-                                Image = $"/images/client/ProductImages/{item.Item.Image}",
-                                Price = item.Item.Price,
-                                ProductName = item.Item.Name,
-                                Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
-                                MaxQuantity = item.Item.Quantity
-                            };
-                            ItemInCarts.Add(itemCartViewModel);
-                        }
+                            ItemId = item.ItemId,
+                            Image = $"/images/client/ProductImages/{item.Item.Image}",
+                            Price = item.Item.Price,
+                            ProductName = item.Item.Name,
+                            Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
+                            MaxQuantity = item.Item.Quantity
+                        };
+                        ItemInCarts.Add(itemCartViewModel);
                     }
                 }
             }
+            //}
             return new OkObjectResult(ItemInCarts);
         }
 

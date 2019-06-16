@@ -25,7 +25,7 @@ var loadItemMyCart = (function () {
     loadItemCart = function () {       
         $.ajax({
             type: "GET",
-            url: "/Home/Index?handler=LoadNumberItemCart",
+            url: "/Cart/NumberOfItemsInCart?handler=LoadNumberItemCart",
             //beforeSend: function () {
             //    commons.startLoading();
             //},            
@@ -41,6 +41,7 @@ var loadItemMyCart = (function () {
             },
             error: function () {
                 //commons.stopLoading();
+                $('#cart-itemtotal').html(``);
             }
         });
     };

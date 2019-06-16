@@ -3,15 +3,14 @@ using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Utilities.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,6 +19,7 @@ using OnlineStore.Middleware;
 using OnlineStore.Services;
 using TimiApp.Dapper.Implementation;
 using TimiApp.Dapper.Interfaces;
+using Utilities.Commons;
 
 namespace OnlineStore
 {
@@ -58,7 +58,7 @@ namespace OnlineStore
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")).UseLazyLoadingProxies());
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>().AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>()
                 .AddDefaultTokenProviders();
             services.AddAuthentication().AddFacebook(facebookOptions =>
@@ -78,7 +78,23 @@ namespace OnlineStore
                     options.AllowAreas = true;
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                    options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
+                    options.Conventions.AuthorizeFolder("/Order", "RequireCustomerRole");
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
+                    //options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
+                    //options.Conventions.AuthorizeAreaFolder("Admin", "", )
                 });
+            services.AddAuthorization(options =>
+            {
+                //options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
+                //options.AddPolicy("AtLeast21", policy => policy.Requirements.Add(new MinimumAgeRequirement(21)));
+                options.AddPolicy("RequireCustomerRole", policy => policy.RequireRole(CommonConstants.CustomerRoleName));
+                options.AddPolicy("RequireProductManagerRole", policy => policy.RequireRole(CommonConstants.ProductManagerRoleName));
+                options.AddPolicy("RequireStoreOwnerRole", policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
+                options.AddPolicy("RequireOrderManagerRole", policy => policy.RequireRole(CommonConstants.OrderManagerRoleName));
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(new string[] { CommonConstants.OrderManagerRoleName, CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
+
+            });
 
             //services.AddSession();
             services.AddSession(options =>

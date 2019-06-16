@@ -9,7 +9,7 @@
 
     $.ajax({
         type: "POST",
-        url: "/Product/Detail?handler=SaveEntity",
+        url: "/Product/AddComment?handler=SaveEntity",
         data: JSON.stringify({
             Evaluation: star,
             Content: content,
@@ -45,7 +45,6 @@ $('#gotocomment1').on('click', function (e) {
     $("#review a").trigger('click');
 });
 $('#btnAddToCart').on('click', function (e) {
-    debugger;
     e.preventDefault();   
     var id = parseInt($(this).data('id'));
     if ($('#rateit_star').data('customerid') === '' || $('#rateit_star').data('customerid') === undefined) {
@@ -56,7 +55,7 @@ $('#btnAddToCart').on('click', function (e) {
 
     else {
         $.ajax({
-            url: "/Product/Detail?handler=AddToCart",
+            url: "/Product/AddToCart?handler=AddToCart",
             type: "POST",
             dataType: "json",
             contentType: 'application/json;charset=utf-8',

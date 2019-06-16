@@ -43,7 +43,7 @@ namespace OnlineStore.Pages.Home
             Laptops = _itemRepository.GetByCategory(2);
             Tablets = _itemRepository.GetByCategory(3);
             Accessories = _itemRepository.GetByCategory(4);
-            //var cus = _userManager.GetUserAsync(HttpContext.User).Result;
+            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
             //var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
             //if (cart != null)
             //{
@@ -56,26 +56,26 @@ namespace OnlineStore.Pages.Home
             //        _numbercartitem = 0;
             //}
         }
-        public IActionResult OnGetLoadNumberItemCart()
-        {
-            var itemnumbercart = 0;
+        //public IActionResult OnGetLoadNumberItemCart()
+        //{
+        //    var itemnumbercart = 0;
 
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if(user != null && !_userRepository.IsAdmin(user))
-            {
-                var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-                if (cart != null)
-                {
-                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                    foreach (var item in items)
-                    {
-                        itemnumbercart += item.Quantity;
-                    };
-                }
-                return new OkObjectResult(itemnumbercart);
-            }
-            return new OkObjectResult(itemnumbercart);
+        //    var user = _userManager.GetUserAsync(HttpContext.User).Result;
+        //    if(user != null && !_userRepository.IsAdmin())
+        //    {
+        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+        //        if (cart != null)
+        //        {
+        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+        //            foreach (var item in items)
+        //            {
+        //                itemnumbercart += item.Quantity;
+        //            };
+        //        }
+        //        return new OkObjectResult(itemnumbercart);
+        //    }
+        //    return new OkObjectResult(itemnumbercart);
 
-        }
+        //}
     }
 }

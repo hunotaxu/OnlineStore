@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using DAL.Data.Entities;
 using DAL.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Utilities.Extensions;
 using OnlineStore.Models.ViewModels;
-using OnlineStore.Models.ViewModels.Item;
-using Utilities.Commons;
 
 namespace OnlineStore.Pages.Product
 {
@@ -108,92 +101,91 @@ namespace OnlineStore.Pages.Product
             }
             return Page();
         }
-        public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Comment model)
-        {
-            if (!ModelState.IsValid)
-            {
-                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
-            }
+        //public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Comment model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+        //        return new BadRequestObjectResult(allErrors);
+        //    }
 
-            if (model.Id == 0)
-            {
-                model.DateCreated = DateTime.Now;
-                model.Id = model.Id;
-                model.Content = model.Content;
-                model.DateModified = DateTime.Now;
-                model.CustomerId = model.CustomerId;
-                model.ItemId = model.ItemId;
-                //model.DateModified = DateTime.Now;
-                _commentRepository.Add(model);
-                return new OkObjectResult(model);
-            }
+        //    if (model.Id == 0)
+        //    {
+        //        model.DateCreated = DateTime.Now;
+        //        model.Id = model.Id;
+        //        model.Content = model.Content;
+        //        model.DateModified = DateTime.Now;
+        //        model.CustomerId = model.CustomerId;
+        //        model.ItemId = model.ItemId;
+        //        //model.DateModified = DateTime.Now;
+        //        _commentRepository.Add(model);
+        //        return new OkObjectResult(model);
+        //    }
 
-            var comment = _commentRepository.Find(model.Id);
-            comment.Id = model.Id;
-            comment.Content = model.Content;
-            comment.DateModified = DateTime.Now;
+        //    var comment = _commentRepository.Find(model.Id);
+        //    comment.Id = model.Id;
+        //    comment.Content = model.Content;
+        //    comment.DateModified = DateTime.Now;
 
-            return new OkObjectResult(comment);
-        }
+        //    return new OkObjectResult(comment);
+        //}
 
+        //public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+        //        return new BadRequestObjectResult(allErrors);
+        //    }
 
-        public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
-        {
-            if (!ModelState.IsValid)
-            {
-                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
-            }
-
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (user != null && !_userRepository.IsAdmin(user))
-            {
-                var cart = _cartRepository.GetCartByCustomerId(user.Id);
-                var _item = _itemRepository.Find(model.ItemId);
-                if (cart == null)
-                {
-                    var newCart = new DAL.Data.Entities.Cart
-                    {
-                        CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-                    };
-                    _cartRepository.Add(newCart);
-                    _cartDetailRepository.Add(new CartDetail
-                    {
-                        CartId = newCart.Id,
-                        ItemId = model.ItemId,
-                        Quantity = model.Quantity
-                    });
-                }
-                else
-                {
-                    var cartDetails = cart.CartDetails;
-                    bool isMatch = false;
-                    foreach (var item in cart.CartDetails)
-                    {
-                        if (item.ItemId == model.ItemId)
-                        {
-                            item.Quantity += model.Quantity;
-                            if (item.Quantity > _item.Quantity)
-                                return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
-                            item.IsDeleted = false;
-                            _cartDetailRepository.Update(item);
-                            isMatch = true;
-                        }
-                    }
-                    if (!isMatch)
-                    {
-                        _cartDetailRepository.Add(new CartDetail
-                        {
-                            CartId = cart.Id,
-                            ItemId = model.ItemId,
-                            Quantity = model.Quantity
-                        });
-                    }
-                }
-            }
-            return new OkObjectResult(model);
-        }        
+        //    var user = _userManager.GetUserAsync(HttpContext.User).Result;
+        //    if (user != null && !_userRepository.IsAdmin(user))
+        //    {
+        //        var cart = _cartRepository.GetCartByCustomerId(user.Id);
+        //        var _item = _itemRepository.Find(model.ItemId);
+        //        if (cart == null)
+        //        {
+        //            var newCart = new DAL.Data.Entities.Cart
+        //            {
+        //                CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
+        //            };
+        //            _cartRepository.Add(newCart);
+        //            _cartDetailRepository.Add(new CartDetail
+        //            {
+        //                CartId = newCart.Id,
+        //                ItemId = model.ItemId,
+        //                Quantity = model.Quantity
+        //            });
+        //        }
+        //        else
+        //        {
+        //            var cartDetails = cart.CartDetails;
+        //            bool isMatch = false;
+        //            foreach (var item in cart.CartDetails)
+        //            {
+        //                if (item.ItemId == model.ItemId)
+        //                {
+        //                    item.Quantity += model.Quantity;
+        //                    if (item.Quantity > _item.Quantity)
+        //                        return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
+        //                    item.IsDeleted = false;
+        //                    _cartDetailRepository.Update(item);
+        //                    isMatch = true;
+        //                }
+        //            }
+        //            if (!isMatch)
+        //            {
+        //                _cartDetailRepository.Add(new CartDetail
+        //                {
+        //                    CartId = cart.Id,
+        //                    ItemId = model.ItemId,
+        //                    Quantity = model.Quantity
+        //                });
+        //            }
+        //        }
+        //    }
+        //    return new OkObjectResult(model);
+        //}        
 
     }
 }

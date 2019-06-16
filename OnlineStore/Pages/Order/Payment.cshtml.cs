@@ -41,10 +41,10 @@ namespace OnlineStore.Pages.Order
         public IActionResult OnGet(decimal shippingFee, int addressId)
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (user == null || _userRepository.IsAdmin(user))
-            {
-                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
-            }
+            //if (user == null || _userRepository.IsAdmin(user))
+            //{
+            //    return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
+            //}
             ShippingFee = shippingFee;
             AddressId = addressId;
             DAL.Data.Entities.Cart cart = _cartRepository.GetCartByCustomerId(user.Id);

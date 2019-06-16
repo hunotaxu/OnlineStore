@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Utilities.Commons;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -54,11 +54,11 @@ namespace OnlineStore.Pages.Order
 
         public ActionResult OnGet()
         {
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (user == null || _userRepository.IsAdmin(user))
-            {
-                return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
-            }
+            //var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            //if (user == null || _userRepository.IsAdmin(user))
+            //{
+            //    return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
+            //}
             return Page();
         }
 
@@ -233,30 +233,31 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult(allErrors);
             }
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if (user != null && !_userRepository.IsAdmin(user))
-            {
+            //if (user != null && !_userRepository.IsAdmin())
+            //if (user != null && !HttpContext.User.IsInRole(CommonConstants.CustomerRoleName))
+            //{
 
-                var newAddress = new Address
-                {
-                    PhoneNumber = model.PhoneNumber,
-                    RecipientName = model.RecipientName,
-                    Ward = model.Ward,
-                    District = model.District,
-                    Province = model.Province,
-                    Detail = model.Detail,
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id
-                };
-                _addressRepository.Add(newAddress);
-                //_userAddressRepository.Add(new UserAddress
-                //{
-                //    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-                //    AddressId = newAddress.Id,
-                //    PhoneNumber = model.PhoneNumber,
-                //    RecipientName = model.RecipientName,
-                //});
-            }
+            var newAddress = new Address
+            {
+                PhoneNumber = model.PhoneNumber,
+                RecipientName = model.RecipientName,
+                Ward = model.Ward,
+                District = model.District,
+                Province = model.Province,
+                Detail = model.Detail,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id
+            };
+            _addressRepository.Add(newAddress);
+            //_userAddressRepository.Add(new UserAddress
+            //{
+            //    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
+            //    AddressId = newAddress.Id,
+            //    PhoneNumber = model.PhoneNumber,
+            //    RecipientName = model.RecipientName,
+            //});
+            //}
             return new OkObjectResult(model);
         }
 
