@@ -23,12 +23,16 @@ as
 begin
 	DECLARE @total int  
 	set @total = dbo.[TotalDeliveredOrder]()
-	select TopPopularDeliveryMethods.DeliveryType as deliveryName, 
+	select TopPopularDeliveryMethods.ReceivingTypeName as receivingTypeName, 
 	ROUND(CAST(TopPopularDeliveryMethods.NumberOfDeliveredOrder*100 as float)/(CAST(@total as float)), 2) as ProportionOfDeliverdItems
-	from (select TOP 3 DeliveryType, COUNT(*) as NumberOfDeliveredOrder
-	from dbo.[Order]
-	where Status = 4 and IsDeleted = 0
-	group by DeliveryType
+	from (select TOP 3 ReceivingType.Name as ReceivingTypeName, COUNT(*) as NumberOfDeliveredOrder
+	--from dbo.[Order] inner join ReceivingType on ReceivingType.Id = dbo.[Order].ReceivingTypeId
+	from dbo.[Order], ReceivingType
+	where Status = 4 and dbo.[Order].IsDeleted = 0
+	and ReceivingType.Id = dbo.[Order].ReceivingTypeId
+	group by ReceivingType.Name
 	order by NumberOfDeliveredOrder DESC) as TopPopularDeliveryMethods
 end
 Go
+
+exec [GetBestDeliveryMethod]
