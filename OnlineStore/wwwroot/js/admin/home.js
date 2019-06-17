@@ -73,7 +73,7 @@
                         render += Mustache.render(template,
                             {
                                 Color: item.colors[i],
-                                MethodName: item.deliveryName,
+                                MethodName: item.receivingTypeName,
                                 ProportionOfMethod: `${item.proportionOfDeliverdItems}%`
                             });
                         totalOfTop3 += item.proportionOfDeliverdItems;

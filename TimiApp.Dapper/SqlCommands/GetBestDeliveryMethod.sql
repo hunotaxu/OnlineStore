@@ -23,7 +23,7 @@ as
 begin
 	DECLARE @total int  
 	set @total = dbo.[TotalDeliveredOrder]()
-	select TopPopularDeliveryMethods.ReceivingTypeName as receivingTypeName, 
+	select TopPopularDeliveryMethods.ReceivingTypeName as ReceivingTypeName, 
 	ROUND(CAST(TopPopularDeliveryMethods.NumberOfDeliveredOrder*100 as float)/(CAST(@total as float)), 2) as ProportionOfDeliverdItems
 	from (select TOP 3 ReceivingType.Name as ReceivingTypeName, COUNT(*) as NumberOfDeliveredOrder
 	--from dbo.[Order] inner join ReceivingType on ReceivingType.Id = dbo.[Order].ReceivingTypeId
