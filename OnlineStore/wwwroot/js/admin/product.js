@@ -8,7 +8,6 @@ var itemPage = (function () {
             loadData();
             registerEvents();
             registerControls();
-            //onSearchEvents();
         });
     };
 
@@ -71,7 +70,7 @@ var itemPage = (function () {
             removedfile: function (file) { removeAttachment(file); },
             error: function (file, response) {
                 removeThumbnail(file);
-                $(generalError).text(response);
+                //$(generalError).text(response);
             }
         });
     };
@@ -83,10 +82,10 @@ var itemPage = (function () {
                 data: { fileName: file.name },
                 success: function () {
                     removeThumbnail(file);
-                    $(generalError).text("");
+                    //$(generalError).text("");
                 },
                 error: function (file, response) {
-                    $(generalError).text(response);
+                    //$(generalError).text(response);
                 }
             });
         }
@@ -99,45 +98,30 @@ var itemPage = (function () {
         }
     };
 
-    //var onSearchEvents = function () {
-    //    $('#btnSearch').on('click',
-    //        function () {
-    //            loadData();
-    //        });
-
-    //    $('#txtKeyword').on('keypress',
-    //        function (e) {
-    //            if (e.which === 13) {
-    //                e.preventDefault();
-    //                loadData();
-    //            }
-    //        });
-    //};
-
     var registerEvents = function () {
         $(document).ready(function () {
             // Init validation
-            $('#frmMaintainance').validate({
-                errorClass: 'red',
-                ignore: [],
-                lang: 'vi',
-                rules: {
-                    txtNameM: { required: true },
-                    ddlCategoryIdM: { required: true },
-                    txtPriceM: {
-                        required: true,
-                        number: true
-                    },
-                    txtQuantity: {
-                        required: true,
-                        number: true
-                    },
-                    txtPromotionPriceM: {
-                        required: true,
-                        number: true
-                    }
-                }
-            });
+            //$('#frmMaintainance').validate({
+            //    errorClass: 'red',
+            //    ignore: [],
+            //    lang: 'vi',
+            //    rules: {
+            //        txtNameM: { required: true },
+            //        ddlCategoryIdM: { required: true },
+            //        txtPriceM: {
+            //            required: true,
+            //            number: true
+            //        },
+            //        txtQuantity: {
+            //            required: true,
+            //            number: true
+            //        },
+            //        txtPromotionPriceM: {
+            //            required: true,
+            //            number: true
+            //        }
+            //    }
+            //});
             //todo: binding events to controls
             $('#ddlShowPage').on('change', function () {
                 commons.configs.pageSize = $(this).val();
@@ -156,7 +140,7 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
-            
+
                 initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
@@ -164,7 +148,7 @@ var itemPage = (function () {
             });
 
             $('body').on('click', '.btn-edit', function (e) {
-            
+
                 e.preventDefault();
                 var that = $(this).data('id');
                 loadDetails(that);
@@ -274,7 +258,7 @@ var itemPage = (function () {
     }
 
     function saveProduct(e) {
-        if ($('#frmMaintainance').valid()) {
+        if ($('#frmMaintainance').parsley().validate()) {
             e.preventDefault();
             var id = $('#hidIdM').val();
             var name = $('#txtNameM').val();
