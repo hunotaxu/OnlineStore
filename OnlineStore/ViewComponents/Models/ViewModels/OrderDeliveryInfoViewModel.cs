@@ -1,5 +1,4 @@
-﻿using DAL.Data.Entities;
-using DAL.Data.Enums;
+﻿using DAL.Data.Enums;
 using System;
 
 namespace OnlineStore.Models.ViewModels
@@ -15,7 +14,6 @@ namespace OnlineStore.Models.ViewModels
         public OrderStatus Status { get; set; }
         public string Address { get; set; }
         public byte AddressType { get; set; }
-        //public decimal? ShippingFee { get; set; }
         public string ShippingFee { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Internal;
 using System;
+using System.Globalization;
 
 namespace Utilities.Commons
 {
@@ -14,6 +15,11 @@ namespace Utilities.Commons
         public static string FormatPrice(decimal price)
         {
             return FormatNumber(price, 0) + " VNĐ";
+        }
+        public static string FormatPrice(string strPrice)
+        {
+            CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+            return double.Parse(strPrice).ToString("#,###", cul.NumberFormat);
         }
         public static string FormatDateTime(DateTime dateTime)
         {

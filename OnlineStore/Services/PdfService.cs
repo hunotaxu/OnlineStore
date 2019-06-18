@@ -267,12 +267,14 @@ namespace OnlineStore.Services
             //    }
             //}
 
-            var orderShippingStr = CommonFunctions.FormatPrice(order.ShippingFee);
-
-            var pdfShipping = GetPdfCell($"Phí vận chuyển: {orderShippingStr}", font);
-            pdfShipping.HorizontalAlignment = Element.ALIGN_RIGHT;
-            pdfShipping.Border = Rectangle.NO_BORDER;
-            totalsTable.AddCell(pdfShipping);
+            if (order.ShippingFee.HasValue)
+            {
+                var orderShippingStr = CommonFunctions.FormatPrice(order.ShippingFee.Value);
+                var pdfShipping = GetPdfCell($"Phí vận chuyển: {orderShippingStr}", font);
+                pdfShipping.HorizontalAlignment = Element.ALIGN_RIGHT;
+                pdfShipping.Border = Rectangle.NO_BORDER;
+                totalsTable.AddCell(pdfShipping);
+            }
 
             //payment fee
             //if (order.PaymentMethodAdditionalFeeExclTax > decimal.Zero)
@@ -814,11 +816,11 @@ namespace OnlineStore.Services
             //billingAddress.AddCell(GetParagraph("PDFInvoice.Name", indent, lang, font, order.BillingAddress.FirstName + " " + order.BillingAddress.LastName));
             //billingAddress.AddCell(GetParagraph("PDFInvoice.Name", indent, lang, font, order.BillingAddress.FirstName + " " + order.BillingAddress.LastName));
             //cellHeader.Phrase.Add(GetParagraph("Mã đơn hàng: {0}", string.Empty, font, order.Id));
-            cellBilling.Phrase.Add(GetParagraph("Tên khách hàng: {0}", string.Empty, font, order.Address.Customer.Name));
+            cellBilling.Phrase.Add(GetParagraph("Tên người nhận: {0}", string.Empty, font, order.Address.RecipientName));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             //if (_addressSettings.PhoneEnabled)
             //billingAddress.AddCell(GetParagraph("Số điện thoại: {0}", indent, font, order.Customer.PhoneNumber));
-            cellBilling.Phrase.Add(GetParagraph("Số điện thoại: {0}", string.Empty, font, order.Address.Customer.PhoneNumber));
+            cellBilling.Phrase.Add(GetParagraph("Số điện thoại: {0}", string.Empty, font, order.Address.PhoneNumber));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             //if (_addressSettings.FaxEnabled && !string.IsNullOrEmpty(order.BillingAddress.FaxNumber))
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Fax", indent, lang, font, order.BillingAddress.FaxNumber));
@@ -891,7 +893,7 @@ namespace OnlineStore.Services
             //billingAddress.AddCell(new Paragraph(" "));
             //billingAddress.AddCell(new Paragraph(" "));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
-            cellBilling.Phrase.Add(GetParagraph("Phương thức giao hàng: {0}", string.Empty, font, order.ReceivingType.Name));
+            cellBilling.Phrase.Add(GetParagraph("Phương thức nhận hàng: {0}", string.Empty, font, order.ReceivingType.Name));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             cellBilling.HorizontalAlignment = Element.ALIGN_LEFT;

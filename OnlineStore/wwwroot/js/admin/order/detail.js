@@ -3,9 +3,6 @@
         onTypeCurrency();
         onDateTimePicker();
         registerEvents();
-        //$("#divOrderDate").on("dp.change", function (e) {
-        //    console.log($("#divOrderDate").find("input").val());
-        //});
     };
     var onDateTimePicker = function () {
         var orderDate = new Date($('#OrderDate').val());
@@ -114,6 +111,9 @@
                     else {
                         commons.notify('Đã có lỗi xãy ra', 'error');
                     }
+                    var deliveryDate = new Date($('#DeliveryDate').val());
+                    var defaultDeliveryDate = new Date(deliveryDate.getFullYear(), deliveryDate.getMonth() + 1, deliveryDate.getDate(), deliveryDate.getHours(), deliveryDate.getMinutes());
+                    $('#divDeliveryDate').data("DateTimePicker").date(defaultDeliveryDate).format('DD/MM/YYYY HH:mm');
                     commons.stopLoading();
                 }
             });

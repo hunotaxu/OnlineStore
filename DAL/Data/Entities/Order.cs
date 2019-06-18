@@ -28,7 +28,7 @@ namespace DAL.Data.Entities
         public int AddressId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal ShippingFee { get; set; }
+        public decimal? ShippingFee { get; set; }
 
         [Display(Name = "Trạng thái")]
         public OrderStatus Status { get; set; }
