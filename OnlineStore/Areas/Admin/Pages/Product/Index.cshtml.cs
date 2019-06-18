@@ -202,7 +202,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public IActionResult OnPostImportExcel(IList<IFormFile> files, int categoryId)
         {
-            if (files != null && files.Count > 0)
+            if (files != null && files.Count > 0 && categoryId > 0)
             {
                 var file = files[0];
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
@@ -217,10 +217,13 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                     file.CopyTo(fs); // Copy the contents of the uploaded file to the FileStream object
                     fs.Flush(); // clears buffer
                 }
-                _itemRepository.ImportExcel(filePath, categoryId);
-                return new OkObjectResult(filePath);
+                if(_itemRepository.ImportExcel(filePath, categoryId))
+                {
+                    return new OkObjectResult(filePath);
+                }
             }
-            return new NoContentResult();
+            //return new NoContentResult();
+            return new BadRequestResult();
         }
 
         public IActionResult OnPostExportExcel()

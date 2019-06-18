@@ -7,16 +7,12 @@
   <ItemGroup>
     <Compile Remove="Logs\**" />
     <Compile Remove="Pages\Shared\Components\BannerPartial\**" />
-    <Compile Remove="wwwroot\lib\parsley\**" />
     <Content Remove="Logs\**" />
     <Content Remove="Pages\Shared\Components\BannerPartial\**" />
-    <Content Remove="wwwroot\lib\parsley\**" />
     <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="Pages\Shared\Components\BannerPartial\**" />
-    <EmbeddedResource Remove="wwwroot\lib\parsley\**" />
     <None Remove="Logs\**" />
     <None Remove="Pages\Shared\Components\BannerPartial\**" />
-    <None Remove="wwwroot\lib\parsley\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\admin\style_form_dangnhap.css" />
@@ -72,6 +68,7 @@
     <Folder Include="wwwroot\js\client\order\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="node_modules\jquery-validation\dist\localization\messages_vi.js" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.svg" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.woff2" />
     <None Include="wwwroot\fonts\pe-icon-7-stroke\Pe-icon-7-stroke.svg" />

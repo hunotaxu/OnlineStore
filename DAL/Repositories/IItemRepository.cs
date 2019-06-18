@@ -14,7 +14,7 @@ namespace DAL.Repositories
 
 
         PagedResult<Item> GetAllPaging(int? categoryId, string keyword, int page, int pageSize);
-        void ImportExcel(string filePath, int categoryId);
+        bool ImportExcel(string filePath, int categoryId);
 
     }
 }

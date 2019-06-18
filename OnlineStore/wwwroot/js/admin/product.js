@@ -135,12 +135,12 @@ var itemPage = (function () {
 
             $('#txtKeyword').on('keypress', function (e) {
                 if (e.which === 13) {
+                    e.preventDefault();
                     loadData(true);
                 }
             });
 
             $("#btnCreate").on('click', function () {
-
                 initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
@@ -148,8 +148,8 @@ var itemPage = (function () {
             });
 
             $('body').on('click', '.btn-edit', function (e) {
-
                 e.preventDefault();
+                $('#frmMaintainance').parsley().reset();
                 var that = $(this).data('id');
                 loadDetails(that);
             });
@@ -190,7 +190,12 @@ var itemPage = (function () {
                         commons.notify('Nhập sản phẩm thành công', 'success');
                         commons.stopLoading();
                         loadData(true);
-                    }
+                    },
+                    error: function () {
+                        commons.notify('Nhập sản phẩm thất bại', 'error');
+                        commons.stopLoading();
+                    },
+                    timeout: 7000
                 });
                 return false;
             });
