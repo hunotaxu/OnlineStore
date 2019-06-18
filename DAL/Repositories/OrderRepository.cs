@@ -12,13 +12,13 @@ namespace DAL.Repositories
     {
         public int GetMaxId() => Table.Max(o => o.Id);
 
-        public PagedResult<Order> GetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize)
+        public PagedResult<Order> GetAllPaging(byte? deliveryTypeId, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
 
-            if (deliveryType != 0)
+            if (deliveryTypeId.HasValue)
             {
-                //query = query.Where(x => x.DeliveryType == (DeliveryType)deliveryType.Value);
+                query = query.Where(x => x.ReceivingTypeId == deliveryTypeId.Value);
             }
 
             if (orderStatus != 0)

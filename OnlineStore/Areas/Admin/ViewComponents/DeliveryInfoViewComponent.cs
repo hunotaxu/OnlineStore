@@ -30,8 +30,8 @@ namespace OnlineStore.Areas.Admin.ViewComponents
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 
             //var userAddress = order.AddressId.HasValue == true ? _userAddressRepository.GetByUserAndAddress(order.CustomerId, order.AddressId.Value) : null;
-            var userAddress = order.AddressId.HasValue == true ? _addressRepository.Find(order.AddressId) : null;
-
+            //var userAddress = order.AddressId.HasValue == true ? _addressRepository.Find(order.AddressId) : null;
+            var userAddress = _addressRepository.Find(order.AddressId);
             var deliveryInfoVM = new OrderDeliveryInfoViewModel
             {
                 RecipientFullName = order.Address.Customer.Name,

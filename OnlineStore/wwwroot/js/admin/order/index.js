@@ -83,6 +83,7 @@ var order = (function () {
 
             $('#txtKeyword').on('keypress', function (e) {
                 if (e.which === 13) {
+                    e.preventDefault();
                     loadData(true);
                 }
             });
@@ -344,11 +345,12 @@ var order = (function () {
     var loadData = function (isPageChanged) {
         var template = $('#table-template').html();
         var render = '';
+        console.log($('select#ddlReceivingType').children('option:selected').val());
         $.ajax({
             type: 'GET',
             data: {
                 "orderStatus": $('#ddlOrderStatus').val(),
-                "deliveryType": $('#ddlDeliveryType').val(),
+                "receivingTypeId": $('select#ddlReceivingType').children('option:selected').val(),
                 "keyword": $('#txtKeyword').val(),
                 "pageIndex": commons.configs.pageIndex,
                 "pageSize": commons.configs.pageSize
@@ -365,7 +367,8 @@ var order = (function () {
                         {
                             Id: item.id,
                             OrderDate: commons.dateTimeFormatJson(item.orderDate),
-                            DeliveryType: getDeliveryType(item.deliveryType),
+                            //ReceivingType: getReceivingType(item.receivingType.Name),
+                            ReceivingType: item.receivingType.name,
                             Status: getOrderStatus(item.status)
                         });
                 });
@@ -384,7 +387,7 @@ var order = (function () {
         });
     };
 
-    function getDeliveryType(deliveryType) {
+    function getReceivingType(deliveryType) {
         switch (deliveryType) {
             case 1:
                 return `Giao hàng tiêu chuẩn`;

@@ -373,9 +373,9 @@ namespace OnlineStore.Services
             //    totalsTable.AddCell(p);
             //}
 
-            if (order.SaleOff > decimal.Zero)
+            if (order.SaleOff.HasValue && order.SaleOff > decimal.Zero)
             {
-                var orderSubTotalDiscountStr = CommonFunctions.FormatPrice(order.SaleOff);
+                var orderSubTotalDiscountStr = CommonFunctions.FormatPrice(order.SaleOff.Value);
 
                 var pdfSaleOff = GetPdfCell($"Giảm giá: {orderSubTotalDiscountStr}", font);
                 pdfSaleOff.HorizontalAlignment = Element.ALIGN_RIGHT;
@@ -416,7 +416,8 @@ namespace OnlineStore.Services
             //order total
             //var orderTotalInCustomerCurrency = _currencyService.ConvertCurrency(order.OrderTotal, order.CurrencyRate);
             //var orderTotalStr = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency, true, order.CustomerCurrencyCode, false, lang);
-            var orderTotalStr = CommonFunctions.FormatPrice(order.Total);
+
+            var orderTotalStr = CommonFunctions.FormatPrice(order.Total.HasValue ? order.Total.Value : 0);
 
             var pTotal = GetPdfCell($"Tổng cộng: {orderTotalStr}", titleFont);
             pTotal.HorizontalAlignment = Element.ALIGN_RIGHT;

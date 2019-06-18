@@ -1,16 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using DAL.Data.Entities;
+using System;
 
 namespace OnlineStore.Models.ViewModels
 {
     public class OrderInfoViewModel
     {
         public int Id { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:MM}")]
-        //[DataType(DataType.Date)]
         public DateTime OrderDate { get; set; }
-        public byte ReceivingType { get; set; }
+        //public byte ReceivingType { get; set; }
+        public virtual ReceivingType ReceivingType { get; set; }
         public byte Status { get; set; }
     }
 }

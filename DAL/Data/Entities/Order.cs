@@ -25,7 +25,7 @@ namespace DAL.Data.Entities
         [Display(Name = "Người duyệt")]
         public Guid? EmployeeId { get; set; }
 
-        public int? AddressId { get; set; }
+        public int AddressId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal ShippingFee { get; set; }
@@ -43,9 +43,9 @@ namespace DAL.Data.Entities
 
         public decimal SubTotal { get; set; }
 
-        public decimal Total { get; set; }
+        public decimal? Total { get; set; }
 
-        public decimal SaleOff { get; set; }
+        public decimal? SaleOff { get; set; }
 
         public virtual ReceivingType ReceivingType { get; set; }
         [JsonIgnore]

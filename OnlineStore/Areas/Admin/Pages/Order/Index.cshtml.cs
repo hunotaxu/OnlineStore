@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Utilities.DTOs;
 using OnlineStore.Models.ViewModels;
+using DAL.Data.Entities;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace OnlineStore.Pages.Admin.Orders
 {
@@ -11,11 +14,15 @@ namespace OnlineStore.Pages.Admin.Orders
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
+        private readonly IReceivingTypeRepository _receivingTypeRepository;
         private readonly MapperConfiguration _mapperConfiguration;
 
-        public IndexModel(IOrderRepository orderRepository, IOrderItemRepository orderItemRepository)
+        public IndexModel(IOrderRepository orderRepository,
+            IOrderItemRepository orderItemRepository,
+            IReceivingTypeRepository receivingTypeRepository)
         {
             _orderRepository = orderRepository;
+            _receivingTypeRepository = receivingTypeRepository;
             _orderItemRepository = orderItemRepository;
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
@@ -25,15 +32,18 @@ namespace OnlineStore.Pages.Admin.Orders
 
         [BindProperty]
         public DAL.Data.Entities.Order Order { get; set; }
+        [BindProperty]
+        public IEnumerable<ReceivingType> ReceivingTypes { get; set; }
 
         public void OnGet()
         {
-
+            ReceivingTypes = _receivingTypeRepository.GetAll();
         }
 
-        public IActionResult OnGetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize)
+        public IActionResult OnGetAllPaging(byte? receivingTypeId, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
-            var order = _orderRepository.GetAllPaging(deliveryType, orderStatus, keyword, pageIndex, pageSize);
+            ReceivingTypes = _receivingTypeRepository.GetAll();
+            var order = _orderRepository.GetAllPaging(receivingTypeId, orderStatus, keyword, pageIndex, pageSize);
             var orderVM = _mapperConfiguration.CreateMapper().Map<PagedResult<OrderInfoViewModel>>(order);
             return new OkObjectResult(orderVM);
         }

@@ -37,7 +37,15 @@
                 <select class="form-control" id="ddlOrderStatus" asp-for="Order.Status" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.OrderStatus>()"></select>
             </div>
             <div class="col-md-3 col-sm-12  form-group pull-right">
-                @*<select class="form-control" id="ddlDeliveryType" asp-for="Order.DeliveryType" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.DeliveryType>()"></select>*@
+                @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="@(new SelectList(Model.ReceivingTypes,"Id","Name"))"></select>*@
+                @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="Model.ReceivingTypes"></select>*@
+                <select class="form-control" id="ddlReceivingType">
+                    <option value="">Chọn phương thức thanh toán</option>
+                    @foreach (var item in Model.ReceivingTypes)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
             </div>
         </div>
     </div>
@@ -88,7 +96,7 @@
         <tr>
             <td>{{Id}}</td>
             <td>{{OrderDate}}</td>
-            <td>{{DeliveryType}}</td>
+            <td>{{ReceivingType}}</td>
             <td>{{{Status}}}</td>
             <th>
                 <a class="btn btn-sm" data-id="{{Id}}" href="/Admin/Order/Details?id={{Id}}" title="Xem chi tiết"><i class="fa fa-info-circle"></i></a>
