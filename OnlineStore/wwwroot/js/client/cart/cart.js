@@ -92,6 +92,7 @@
                         render += Mustache.render($('#template-cart').html(), {
                             ItemId: item.itemId,
                             ProductName: item.productName,
+                            BrandName: item.brandName,
                             Image: item.image,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
                             Quantity: item.quantity,

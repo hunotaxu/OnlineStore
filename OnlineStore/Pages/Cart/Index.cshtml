@@ -23,12 +23,13 @@
             <div class="col-main">
                 <div class="cart">
                     <div class="page-content page-order">
+                        <br/>
                         <div class="page-title">
                             <h2>Giỏ hàng của tôi</h2>
                         </div>
                         <div class="main-container">
                             <div class="row container__row--center">
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <table id="cart" class="table table-hover table-condensed " style="background-color:whitesmoke">
                                         <thead>
                                             <tr>
@@ -42,46 +43,47 @@
                                         <tbody id="container-cart"></tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-4">
-                                    <table class="table table-hover table-condensed">
-                                        <thead>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <strong>
-                                                        Tạm tính:
-                                                    </strong>
-                                                </td>
-                                                <td id="subTotal"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-center">
-                                        <a class="btn btn-success" href="/cart/checkout">Xác nhận giỏ hàng</a>
-                                        @*<button class="btn btn-success" type="submit" hr>Tiến hành đặt hàng</button>*@
-                                    </div>
-
+                            </div>
+                            <div class="col-md-4 right">
+                                <table class="table table-hover table-condensed">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>
+                                                    Tạm tính:
+                                                </strong>
+                                            </td>
+                                            <td id="subTotal"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <a class="btn btn-success" href="/cart/checkout">Xác nhận giỏ hàng</a>
+                                    @*<button class="btn btn-success" type="submit" hr>Tiến hành đặt hàng</button>*@
                                 </div>
+
                             </div>
                         </div>
                         <script id="template-cart" type="x-tmpl-mustache">
                             <tr>
                                 <td>
                                     <input type="hidden" id="itemId" value="{{ItemId}}" />
-                                    <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="200" class="img-responsive" />
+                                    <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="100" class="img-responsive" />
                                 </td>
                                 <td>
                                     <a href="/Product/Detail?id={{ItemId}}">
-                                        <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
+                                        <h4 class="nomargin productnamecheckout">- {{ProductName}}</h4>
                                     </a>
+                                    <h4 class="nomargin productnamecheckout">- Thương hiệu: {{BrandName}}</h4>
                                     <span class="text-danger">{{OutOfStockNotifyCation}}</span>
                                 </td>
-                                <td data-th="Price" class="price">{{Price}}</td>
-                                <td data-th="Quantity">                                    
+                                <td style="vertical-align:middle;" data-th="Price" class=" price">{{Price}}</td>
+                                <td style="vertical-align:middle;" data-th="Quantity">                                    
                                     <input type="number" data-itemId="{{ItemId}}" id="btnQuantity" {{IsOutOfStock}} class="form-control text-center" value="{{Quantity}}" min="1" max="{{MaxQuantity}}">
                                 </td>
-                                <td class="actions" data-th="">
+                                <td style="vertical-align:middle;" class=" actions" data-th="">
                                     <button type="button" class="btn btn-danger btn-sm deleteItem right" data-itemId="{{ItemId}}" id="btnDeleteItem"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             </tr>

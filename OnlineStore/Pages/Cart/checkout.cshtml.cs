@@ -25,11 +25,15 @@ namespace OnlineStore.Pages.Order
         private readonly IDistrictRepository _districtRepository;
         public readonly IWardRepository _wardRepository;
         public readonly IAddressRepository _addressRepository;
+        public readonly IShowRoomAddressRepository _showRoomAddressRepository;
+        public readonly IReceivingTypeRepository _receivingTypeRepository;
 
-        public CheckoutModel(IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
+
+        public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository,IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
             ICartRepository cartRepository, ICartDetailRepository cartDetailRepository
             , IUserRepository userRepository)
         {
+
             _itemRepository = itemRepository;
             _userRepository = userRepository;
             _cartDetailRepository = cartDetailRepository;
@@ -39,6 +43,8 @@ namespace OnlineStore.Pages.Order
             _districtRepository = districtRepository;
             _wardRepository = wardRepository;
             _addressRepository = addressRepository;
+            _showRoomAddressRepository = showRoomAddressRepository;
+            _receivingTypeRepository = receivingTypeRepository;
         }
 
         [BindProperty]
@@ -51,6 +57,13 @@ namespace OnlineStore.Pages.Order
         public List<District> Districts { get; set; }
         [BindProperty]
         public List<Ward> Wards { get; set; }
+        [BindProperty]
+        public List<ShowRoomAddress> Showrooms { get; set; }
+        [BindProperty]
+        public List<ReceivingType> ReceivingTypes { get; set; }
+
+        [BindProperty]
+        public List<DAL.Data.Entities.Order> Orders { get; set; }
 
         public ActionResult OnGet()
         {
@@ -119,7 +132,7 @@ namespace OnlineStore.Pages.Order
         }
 
         public IActionResult OnGetLoadProvince()
-        {
+         {
             var province = _provinceRepository.GetAll();
             if (province != null)
             {
@@ -260,8 +273,78 @@ namespace OnlineStore.Pages.Order
             //}
             return new OkObjectResult(model);
         }
+        public IActionResult OnGetLoadShowroom()
+        {
+            var showroom = _showRoomAddressRepository.GetAll();
+            if (showroom != null)
+            {
+                Showrooms = new List<ShowRoomAddress>();
+                var items = showroom.Where(cd => cd.IsDeleted == false).ToList();
+                  
+                if (items.Count > 0)
+                {                    
+                    foreach (var item in items)
+                    {
+                        var showrooms = new ShowRoomAddress
+                        {
+                            Id=item.Id,
+                            Province = _provinceRepository.Find(cd => cd.Id == item.ProvinceId && cd.IsDeleted == false), 
+                            District = _districtRepository.Find(cd => cd.Id == item.DistrictId && cd.IsDeleted == false),
+                            Ward = _wardRepository.Find(cd => cd.Id == item.WardId && cd.IsDeleted == false),
+                            Detail =item.Detail,                           
+                        };
+                        Showrooms.Add(showrooms);
+                    }
+                }
+            }
+            return new OkObjectResult(Showrooms);
+        }
 
+        public IActionResult OnGetLoadReceivingType()
+        {
+            var receivingType = _receivingTypeRepository.GetAll();
+            if (receivingType != null)
+            {
+                ReceivingTypes = new List<ReceivingType>();
+                var items = receivingType.Where(cd => cd.IsDeleted == false).ToList();
 
+                if (items.Count > 0)
+                {
+                    foreach (var item in items)
+                    {
+                        var receivingTypes = new ReceivingType
+                        {
+                            Id=item.Id,
+                            Name=item.Name,
+                            Value=item.Value,
+                            NumberShipDay = item.NumberShipDay
+                        };
+                        ReceivingTypes.Add(receivingTypes);
+                    }
+                }
+            }
+            return new OkObjectResult(ReceivingTypes);
+        }
+        public IActionResult OnPostSaveOrder([FromBody] UserAddressViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult(allErrors);
+            }
+            Orders = new List<DAL.Data.Entities.Order>();
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            //if (user != null && !_userRepository.IsAdmin())
+            //if (user != null && !HttpContext.User.IsInRole(CommonConstants.CustomerRoleName))
+            //{
+
+            var newAddress = new Address
+            {
+                
+            };
+            
+            return new OkObjectResult(Orders);
+        }
 
 
 

@@ -5,22 +5,26 @@
 .showDIV {
     display: block;
 }
-.imgpayment{
+
+.imgpayment {
     height: 32px;
 }
-.subcaption{
+
+.subcaption {
     font-style: italic;
 }
+
 .linkchange {
     float: right;
     color: #cb2d22;
-    font-style:italic;
+    font-style: italic;
 }
+
 .productnamecheckout {
-    font-family:'Roboto','Montserrat', sans-serif; 
-    font-size: 13px; 
-    font-weight: 600;
-    color:#333333;
+    font-family: 'Roboto','Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333333;
 }
 
 .btnPay {
@@ -41,3 +45,103 @@
         color: #000;
         background-color: #fcd21b;
     }
+
+.border-box-cartmini {
+    border: 1px solid #e5e5e5
+}
+
+.none-padding{
+    padding: 0px !important;
+}
+.product-image-cartmini {
+    border-right: 1px solid #e5e5e5
+}
+
+#btn-receiving-standard{
+    white-space:normal !important;
+}
+
+.font-no-select{
+    color: #333333;
+    font-weight:400;
+    font-size: 12px;
+    padding-right:0px;
+}
+
+
+
+/* RECEIVING METHOD */
+
+.four { width: 32.26%; max-width: 32.26%;}
+
+.col {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1.6%;
+}
+
+.col:first-of-type { margin-left: 0; }
+
+
+.cf:before,
+.cf:after {
+    content: " ";
+    display: table;
+}
+
+.cf:after {
+    clear: both;
+}
+
+.cf {
+    *zoom: 1;
+}
+
+
+
+.form .payment-type input{
+	display: none;
+}
+.form label {
+    position: relative;
+    color: #666;
+    background-color: #ececec;
+    font-size: 16px;
+    text-align: center;
+    height: 100px;
+    
+    display: block;
+    cursor: pointer;
+    border: 3px solid transparent;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+  .form .payment-type input:checked + label {
+    border: 3px solid #e83f33;
+    background-color: #ececec;
+    color: #cb2d22;
+    
+}
+
+     .form .payment-type input:checked + label:after {
+        content: "\2713";
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        border-radius: 100%;
+        border: 2px solid #e83f33;
+        background-color: #ececec;
+        z-index: 999;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: #cb2d22;
+    }
+
+.credit-label{
+    padding: 5px 25px 5px 5px;
+}
+
+/*  END RECEIVING METHOD */

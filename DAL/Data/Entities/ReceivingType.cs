@@ -13,6 +13,7 @@ namespace DAL.Data.Entities
         }
         public string Name { get; set; }
         public decimal Value { get; set; }
+        public int NumberShipDay { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
 
