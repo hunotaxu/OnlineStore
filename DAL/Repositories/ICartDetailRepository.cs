@@ -12,7 +12,7 @@ namespace DAL.Repositories
         IEnumerable<CartDetail> GetSome(Expression<Func<CartDetail, bool>> where);
         int Add(CartDetail entity, bool persist = true);
         int Update(CartDetail entity, bool persist = true);
-        int Update(int itemId, int cartId, int newQuantity, bool persist = true);
+        //int Update(int itemId, int cartId, int newQuantity, bool persist = true);
         int Delete(CartDetail entity, bool persist = true);
         int Delete(int itemId, int cartId, bool persist = true);
         int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true);

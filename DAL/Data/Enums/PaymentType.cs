@@ -8,8 +8,8 @@ namespace DAL.Data.Enums
         CashOnDelivery,
         [Display(Name= "Thanh toán bằng thẻ quốc tế")]
         CreditDebitCard,
-        [Display(Name = "Thanh toán bằng thẻ ATM nội địa")]
-        LocalATM,
+        //[Display(Name = "Thanh toán bằng thẻ ATM nội địa")]
+        //LocalATM,
         [Display(Name = "Thanh toán qua momo")]
         Momo
     }
