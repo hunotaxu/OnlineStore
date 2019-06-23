@@ -9,6 +9,7 @@ namespace DAL.Repositories
         Cart GetCartByCustomerId(Guid customerId);
         int GetQuantity(int cartId);
         int Add(Cart cart);
+        void DeleteWithoutSave(int cartId);
         decimal GetTotalAmount(int cartId);
     }
 }

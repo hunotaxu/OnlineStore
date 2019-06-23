@@ -2,7 +2,6 @@
 using System.Linq;
 using DAL.Data.Entities;
 using DAL.EF;
-using DAL.Models;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +19,13 @@ namespace DAL.Repositories
             Table.Add(cart);
             SaveChanges();
             return cart.Id;
+        }
+
+        public void DeleteWithoutSave(int cartId)
+        {
+            var cart = Table.FirstOrDefault(x => x.Id == cartId);
+            cart.IsDeleted = true;
+            Table.Update(cart);
         }
 
         public Cart GetCartByCustomerId(Guid customerId)

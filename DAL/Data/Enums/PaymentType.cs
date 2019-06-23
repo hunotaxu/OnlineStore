@@ -4,6 +4,7 @@ namespace DAL.Data.Enums
 {
     public enum PaymentType : byte
     {
+        None,
         [Display(Name = "Thanh toán khi nhận hàng")]
         CashOnDelivery,
         [Display(Name= "Thanh toán bằng thẻ quốc tế")]

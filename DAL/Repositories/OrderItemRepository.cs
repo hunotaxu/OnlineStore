@@ -35,6 +35,11 @@ namespace DAL.Repositories
             Table.Add(entity);
             return persist ? SaveChanges() : 0;
         }
+        public void AddWithoutSave(OrderItem entity)
+        {
+            Table.Add(entity);
+            //return persist ? SaveChanges() : 0;
+        }
 
         public virtual int Update(OrderItem entity, bool persist = true)
         {

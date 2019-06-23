@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Models;
 
 namespace DAL.Data.Entities
 {
@@ -16,6 +16,9 @@ namespace DAL.Data.Entities
         public byte[] Timestamp { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public DateTime? DateCreated { get; set; }
+        public DateTime? DateModified { get; set; }
 
         [Column(TypeName="decimal(18,2)")]
         public decimal Amount { get; set; }

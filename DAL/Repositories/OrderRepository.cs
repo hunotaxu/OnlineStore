@@ -10,8 +10,6 @@ namespace DAL.Repositories
 {
     public class OrderRepository : RepoBase<Order>, IOrderRepository
     {
-        public int GetMaxId() => Table.Max(o => o.Id);
-
         public PagedResult<Order> GetAllPaging(byte? deliveryTypeId, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
@@ -44,6 +42,11 @@ namespace DAL.Repositories
             };
 
             return paginationSet;
+        }
+
+        public void AddWithoutSave(Order order)
+        {
+            Table.Add(order);
         }
 
         public OrderRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)

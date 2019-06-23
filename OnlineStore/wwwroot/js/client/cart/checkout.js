@@ -1,16 +1,17 @@
 ﻿var checkoutcart = (function () {
     var init = function () {
         $(document).ready(function () {
-            loadData();
             registerEvents();
             loadAddressDefault();
             loadShowroom();
             loadReceivingType();
+            loadData();
             //loadDefaultValue();
         });
     };
 
     var registerEvents = function () {
+        $('#frmselectshowroom').parsley();
         $('#frmaddaddress').parsley();
         //$(document).ready(function () {
         //$('#frmaddaddress').validate({
@@ -92,7 +93,7 @@
         $('#frmselectreceivingtype').click(function () {
             if ($('.radio-receivingtype').is(':checked')) {
                 var x = $('input[name=radio-receivingthod]:checked').attr("data-receivingId");
-                if (x !== undefined && x == "3") {
+                if (x !== undefined && x === "3") {
                     $("#frmselectshowroom").show();
                     $('#user-address').hide();
                     //$("#user-address").css("display", "none");
@@ -113,10 +114,11 @@
                 $('#frmselectreceivingtype').attr('data-receivingValue', x.attr("data-receivingValue"));
                 $('#frmselectreceivingtype').attr('data-receivingTypeId', x.attr("data-receivingId"));
                 $('#ShippingFee').text(x.attr("data-receivingValue"));
+                var total = parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1"));
                 //$('#Total1').attr('data-Total', parseInt(x.attr("data-receivingValue")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")));
                 //document.getElementById('Total1').innerHTML = `${commons.formatNumber(parseInt(x.attr("data-receivingValue")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")), 0)}đ`;
-                $('#Total1').attr('data-Total', parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")));
-                $('#Total1').text(`${commons.formatNumber(parseInt($('#Total1').attr('data-Total')), 0)}đ`);
+                $('#Total1').attr('data-Total', total);
+                $('#Total1').text(`${commons.formatNumber(total, 0)}đ`);
             }
         });
 
@@ -140,9 +142,19 @@
             e.preventDefault();
             document.getElementById("btnorder").disabled = false;
         });
+
         $('#btnorder').on('click', function (e) {
-            e.preventDefault();
-            saveOrder();
+            var x = $('input[name=radio-receivingthod]:checked').attr("data-receivingId");
+            if (x !== undefined && x === "3") {
+                if ($('#frmselectshowroom').parsley().validate()) {
+                    e.preventDefault();
+                    saveOrder(x);
+                }
+            }
+            else {
+                e.preventDefault();
+                saveOrder(x);
+            }
         });
         //});
     };
@@ -195,7 +207,6 @@
             url: "/Cart/Checkout?handler=LoadDefaultAddress",
             dataType: "json",
             success: function (response) {
-                debugger;
                 //var RecipientName, Detail, Province, District, Ward, PhoneNumber;
                 if (response !== undefined) {
                     //$.each(response, function (i, item) {
@@ -321,9 +332,10 @@
         $('#frmselectshowroom').hide();
         $('#ShippingFee').text($(".radio-receivingtype").first().data('receivingvalue'));
         var x = $('input[name=radio-receivingthod]:checked');
-        $('#Total1').attr('data-Total', parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")));
+        var total = parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1"));
+        $('#Total1').attr('data-Total', total);
         //document.getElementById('Total1').innerHTML = `${commons.formatNumber(parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")), 0)}đ`;
-        $('#Total1').text(`${commons.formatNumber(parseInt($('#Total1').attr('data-Total')), 0)}đ`);
+        $('#Total1').text(`${commons.formatNumber(total, 0)}đ`);
     };
 
     //var loadProvinceDistrictWard = function () {
@@ -430,6 +442,7 @@
                     $('#PriceTotaltmp1').html(`${commons.formatNumber(PriceTotaltmp, 0)}đ`);
                     $('#PriceTotaltmp1').data('priceTotaltmp1', PriceTotaltmp);
                     $('#PriceTotaltmp1').attr('data-priceTotaltmp1', PriceTotaltmp);
+                    loadDefaultValue();
                 } else {
                     $('.order-detail-contentr').html(`<div style='text-align: center;'><h3>Không có sản phẩm nào trong giỏ hàng</h3><a href='/' class='btn btn-warning'>Tiếp tục mua sắm</a></div>`);
                 }
@@ -450,7 +463,6 @@
                 commons.startLoading();
             },
             success: function (response) {
-                //var now = new Date();
                 var render = '';
                 if (response !== undefined) {
                     $.each(response, function (i, item) {
@@ -503,13 +515,13 @@
                             WardType: item.ward.type,
                             WardName: item.ward.name,
                             Detail: item.detail,
-                            AddressId: item.id
+                            ShowroomAddressId: item.id
                         });
 
                     });
                 }
                 if (render !== '') {
-                    $('#frmselectshowroom').html(render);
+                    $('#selectshowroom').html(render);
                 } else {
                     $('.error-loadshowroom').html(`<div style='text-align: center;'><h3>Dữ liệu địa chỉ không khả dụng</h3>`);
                 }
@@ -566,7 +578,6 @@
                 province = $('#frmselectprovince').val(),
                 district = $('#frmselectdistrict').val(),
                 ward = $('#frmselectward').val();
-            debugger;
             $.ajax({
                 type: "POST",
                 url: "/Cart/Checkout?handler=SaveAddress",
@@ -584,7 +595,9 @@
                     commons.startLoading();
                 },
                 success: function () {
+
                     commons.stopLoading();
+
                 },
                 error: function () {
                     commons.notify('Không thể thêm địa chỉ mới', 'error');
@@ -593,27 +606,46 @@
             });
         }
     };
-    var saveOrder = function () {
-        var ShippingFee, AddressId, ReceivingTypeId, PaymentType, SubTotal, Total;
 
-        ShippingFee = $('#frmselectshowroom').data("receivingValue");
-
+    var saveOrder = function (receivingType) {
+        //ShippingFee = $('#frmselectshowroom').data("receivingValue");
+        var addressObj = {
+            PhoneNumber: $('#txtRecipientPhoneNumber').val(),
+            RecipientName: $('#txtRecipientName').val(),
+            ShowRoomAddressId: $('#selectshowroom').children('option:selected').data('showroomaddressid')
+        };
+        var orderObj = {
+            AddressId: $('#addressId').val(),
+            //DeliveryDate: $('input[name="radio-receivingthod"]:checked').data('deliverydate'),
+            ShippingFee: $('input[name="radio-receivingthod"]:checked').data('receivingfee'),
+            PaymentType: $('input[name="paymentType"]:checked').val(),
+            ReceivingTypeId: receivingType,
+            SaleOff: 0
+        };
+        var sendObj = {
+            Order: orderObj,
+            Address: addressObj
+        };
         $.ajax({
             type: "POST",
             url: "/Cart/Checkout?handler=SaveOrder",
             contentType: 'application/json; charset=utf-8',
             dataType: "json",
-            data: JSON.stringify({
-
-            }),
+            data: JSON.stringify(sendObj),
             beforeSend: function () {
                 commons.startLoading();
             },
-            success: function () {
+            success: function (response) {
                 commons.stopLoading();
+                window.location.href = '/Order/ConfirmAndThanksForOrder/';
             },
-            error: function () {
-                commons.notify('Lỗi thêm địa chỉ', 'error');
+            error: function (response) {
+                if (response.responseText !== undefined && response.responseText !== '') {
+                    commons.notify(response.responseText, 'error');
+                }
+                else {
+                    commons.notify('Đặt hàng thất bại', 'error');
+                }
                 commons.stopLoading();
             }
         });

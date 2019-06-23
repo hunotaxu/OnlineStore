@@ -1,5 +1,4 @@
 ﻿using DAL.Data.Entities.Base;
-using DAL.Models;
 using System;
 
 namespace DAL.Data.Entities

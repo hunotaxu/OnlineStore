@@ -64,12 +64,23 @@ namespace DAL.Repositories
             //Table.Attach(cartDetail).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
-
+        public void DeleteRangeWithoutSave(IEnumerable<CartDetail> entities)
+        {
+            foreach (CartDetail cartDetail in entities)
+            {
+                cartDetail.IsDeleted = true;
+                cartDetail.Quantity = 0;
+                Table.Update(cartDetail);
+            }
+            //Table.RemoveRange(entities);
+            //return persist ? SaveChanges() : 0;
+        }
         public int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true)
         {
             foreach (CartDetail cartDetail in entities)
             {
                 cartDetail.IsDeleted = true;
+                cartDetail.Quantity = 0;
                 Table.Update(cartDetail);
             }
             //Table.RemoveRange(entities);

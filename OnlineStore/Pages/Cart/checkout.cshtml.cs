@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
 using OnlineStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using DAL.Data.Enums;
+using DAL.EF;
+using OnlineStore.Services;
 
 namespace OnlineStore.Pages.Order
 {
@@ -25,17 +28,27 @@ namespace OnlineStore.Pages.Order
         private readonly IDistrictRepository _districtRepository;
         public readonly IWardRepository _wardRepository;
         public readonly IAddressRepository _addressRepository;
+        public readonly IOrderItemRepository _orderItemRepository;
+        public readonly IOrderRepository _orderRepository;
         public readonly IShowRoomAddressRepository _showRoomAddressRepository;
         public readonly IReceivingTypeRepository _receivingTypeRepository;
-
+        public readonly IUnitOfWork _unitOfWork;
+        public readonly IOrderService _orderService;
 
         public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository, IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
             ICartRepository cartRepository, ICartDetailRepository cartDetailRepository,
             IUserRepository userRepository,
-            IDefaultAddressRepository defaultAddressRepository)
+            IDefaultAddressRepository defaultAddressRepository,
+            IOrderItemRepository orderItemRepository,
+            IOrderRepository orderRepository,
+            IUnitOfWork unitOfWork,
+            IOrderService orderService)
         {
-
+            _orderService = orderService;
             _itemRepository = itemRepository;
+            _unitOfWork = unitOfWork;
+            _orderItemRepository = orderItemRepository;
+            _orderRepository = orderRepository;
             _defaultAddressRepository = defaultAddressRepository;
             _userRepository = userRepository;
             _cartDetailRepository = cartDetailRepository;
@@ -397,28 +410,107 @@ namespace OnlineStore.Pages.Order
             }
             return new OkObjectResult(ReceivingTypes);
         }
-        public IActionResult OnPostSaveOrder([FromBody] UserAddressViewModel model)
+
+        public IActionResult OnPostSaveOrder([FromBody] OrderAddressViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                //return new BadRequestObjectResult(allErrors);
+                return new BadRequestObjectResult("Đặt hàng không thành công");
             }
-            Orders = new List<DAL.Data.Entities.Order>();
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user != null && !_userRepository.IsAdmin())
-            //if (user != null && !HttpContext.User.IsInRole(CommonConstants.CustomerRoleName))
-            //{
 
-            var newAddress = new Address
+            try
             {
+                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                if (user == null)
+                {
+                    return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                }
+                var isSaveOrderSuccess = _orderService.SaveOrder(model, user, out string error);
+                if (!isSaveOrderSuccess)
+                {
+                    return new BadRequestObjectResult("Đặt hàng không thành công");
+                }
 
-            };
+                //var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                //if (cart == null)
+                //{
+                //    return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                //}
+
+                //var newAddress = new Address();
+                //if (model.Order.ReceivingTypeId == 3)
+                //{
+                //    newAddress = new Address
+                //    {
+                //        CustomerId = user.Id,
+                //        PhoneNumber = model.Address.PhoneNumber,
+                //        RecipientName = model.Address.RecipientName,
+                //        ShowRoomAddressId = model.Address.ShowRoomAddressId,
+                //        DateCreated = DateTime.Now,
+                //        DateModified = DateTime.Now
+                //    };
+                //    _addressRepository.Add(newAddress);
+                //}
+                //var newOrder = new DAL.Data.Entities.Order
+                //{
+                //    AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId,
+                //    DateCreated = DateTime.Now,
+                //    DateModified = DateTime.Now,
+                //    DeliveryDate = model.Order.DeliveryDate,
+                //    ShippingFee = model.Order.ShippingFee,
+                //    //SubTotal = model.Order.SubTotal,
+                //    SubTotal = cart.CartDetails.Sum(x => x.Item.Price * x.Quantity),
+                //    OrderDate = DateTime.Now,
+                //    PaymentType = model.Order.PaymentType,
+                //    //Total = model.Order.Total,
+                //    ReceivingTypeId = model.Order.ReceivingTypeId,
+                //    SaleOff = model.Order.SaleOff,
+                //    Status = OrderStatus.Pending,
+                //};
+                //newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
+                //_orderRepository.AddWithoutSave(newOrder);
+
+                //var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                //if (items == null || items.Count() == 0)
+                //{
+                //    return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                //}
+                //foreach (var itemInCart in items)
+                //{
+                //    var item = _itemRepository.Find(itemInCart.ItemId);
+                //    if (itemInCart.Quantity > item.Quantity)
+                //    {
+                //        return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng. Quá trình đặt hàng thất bại.");
+                //    }
+                //    var newOrderItem = new OrderItem
+                //    {
+                //        OrderId = newOrder.Id,
+                //        Price = item.Price,
+                //        ItemId = itemInCart.ItemId,
+                //        Quantity = itemInCart.Quantity,
+                //        DateCreated = DateTime.Now,
+                //        DateModified = DateTime.Now,
+                //        SaleOff = 0,
+                //        IsDeleted = false,
+                //        Amount = item.Price * item.Quantity
+                //    };
+                //    _orderItemRepository.Add(newOrderItem);
+                //    item.Quantity -= item.Quantity;
+                //    _itemRepository.UpdateWithoutSave(item);
+                //}
+                //_cartRepository.DeleteWithoutSave(cart.Id);
+                //_cartDetailRepository.DeleteRangeWithoutSave(_cartDetailRepository.GetSome(cd => cd.CartId == cart.Id));
+                //_unitOfWork.Save();
+                //return new OkObjectResult(Orders);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult("Đặt hàng không thành công");
+            }
 
             return new OkObjectResult(Orders);
         }
-
-
-
     }
 }
