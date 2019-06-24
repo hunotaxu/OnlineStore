@@ -54,7 +54,6 @@ namespace OnlineStore.Pages.Product
             //Nếu không thì truy xuất csdl lấy ra sản phẩm tương ứng
 
             Item = _itemRepository.Find(n => n.Id == id && n.IsDeleted == false);
-            ItemId = Item.Id;
             //Comment = _commentRepository.Find(n => n.Id == id && n.IsDeleted == false);
 
             if (Item == null)
@@ -62,6 +61,8 @@ namespace OnlineStore.Pages.Product
                 //Thông báo nếu như không có sản phẩm đó
                 return NotFound();
             }
+
+            ItemId = Item.Id;
 
             Item.View++;
             _itemRepository.Update(Item);

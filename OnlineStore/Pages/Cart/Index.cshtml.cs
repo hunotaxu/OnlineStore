@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
 using System.Collections.Generic;
-using Utilities.Commons;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -71,6 +70,30 @@ namespace OnlineStore.Pages.Cart
             }
             //}
             return new OkObjectResult(ItemInCarts);
+        }
+
+        public IActionResult OnGetConfirmOrder()
+        {
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if(user == null)
+            {
+                return new BadRequestObjectResult("Giỏ hàng không tồn tại");
+            }
+
+            var cart = _cartRepository.GetCartByCustomerId(user.Id);
+            if (cart == null)
+            {
+                return new BadRequestObjectResult("Giỏ hàng không tồn tại");
+            }
+
+            var cartDetails = cart.CartDetails.Where(x => x.IsDeleted == false);
+
+            if (cartDetails.All(x => x.Item.Quantity == 0))
+            {
+                return new BadRequestObjectResult("Tất cả các sản phẩm đã hết hàng. Vui lòng thêm sản phẩm mới vào giỏ");
+            }
+
+            return new OkResult();
         }
 
         public IActionResult OnPostUpdateQuantity([FromBody] CartDetail model)

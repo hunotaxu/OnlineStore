@@ -177,7 +177,6 @@ namespace OnlineStore
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IPdfSettings, PdfSettings>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IGoodsReceiptDetailRepository, GoodsReceiptDetailRepository>();
             //services.AddScoped<IUserAddressRepository, UserAddressRepository>();
             services.AddScoped<IProductImagesRepository, ProductImagesRepository>();

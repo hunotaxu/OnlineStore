@@ -11,6 +11,10 @@ namespace DAL.EF
         ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
         ApplicationRoleClaim, ApplicationUserToken>
     {
+        public OnlineStoreDbContext()
+        {
+        }
+
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options)
             : base(options)
         {

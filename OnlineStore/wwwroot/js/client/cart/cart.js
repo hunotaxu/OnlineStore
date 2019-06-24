@@ -3,6 +3,33 @@
         loadData();
         editQuantity();
         deleteItem();
+        confirmOrder();
+    };
+
+    var confirmOrder = function () {
+        $('#btnConfirmOrder').on('click', function () {
+            $.ajax({
+                url: "/Cart/Index?handler=ConfirmOrder",
+                contentType: 'application/json; charset=utf-8',
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                success: function () {
+                    window.location.href = "/cart/checkout";
+                },
+                error: function (response) {
+                    if (response !== undefined && response !== '') {
+                        commons.notify(response.responseText, 'error');
+                    }
+                    else {
+                        commons.notify('Đã có lỗi xãy ra', 'error');
+                    }
+                },
+                complete: function () {
+                    commons.stopLoading();
+                }
+            });
+        });
     };
 
     var deleteItem = function () {
@@ -21,8 +48,7 @@
                     },
                     success: function () {
                         loadData();
-                        loadItemMyCart.init();             
-
+                        loadItemMyCart.init();
                         commons.stopLoading();
                     },
                     error: function () {
@@ -59,7 +85,7 @@
                     },
                     success: function () {
                         loadData();
-                        loadItemMyCart.init();               
+                        loadItemMyCart.init();
 
                     },
                     error: function (response) {

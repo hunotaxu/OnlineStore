@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace OnlineStore.Pages.Order
 {
     public class ConfirmAndThanksForOrderModel : PageModel
     {
-        public void OnGet()
+        [BindProperty]
+        public int OrderId { get; set; }
+        public void OnGet(int orderId)
         {
-
+            OrderId = orderId;
         }
     }
 }

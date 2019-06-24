@@ -105,7 +105,7 @@
                                     <div class="row">
                                         <div class="col-xs-12">
                                             @*<label for="txtPhoneNumber" class="required">Số điện thoại</label>*@
-                                            <input class="input form-control" name="txtPhoneNumber" id="txtRecipientPhoneNumber" placeholder="Nhập số điện thoại người nhận" data-parsley-required data-parsley-type="digits" data-parsley-trigger="change">
+                                            <input class="input form-control" name="txtPhoneNumber" id="txtRecipientPhoneNumber" placeholder="Nhập số điện thoại người nhận" data-parsley-required data-parsley-type="digits" data-parsley-length="[10, 11]" data-parsley-trigger="change">
                                             <br />
                                         </div>
                                     </div>
@@ -192,7 +192,8 @@
                                 <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
                             </a>
                             <span class="text-danger">{{OutOfStockNotifyCation}}</span>
-                            <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>
+                            @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>*@
+                            <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>
                         </div>
                     </div>
                 </script>

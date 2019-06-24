@@ -427,12 +427,14 @@
                             ItemId: item.itemId,
                             ProductName: item.productName,
                             Image: item.image,
-                            TotalPrice: `${commons.formatNumber(item.price * item.quantity, 0)}đ`,
+                            Price: `${commons.formatNumber(item.price, 0)}đ`,
+                            //TotalPrice: `${commons.formatNumber(item.price * item.quantity, 0)}đ`,
                             Quantity: item.quantity
                         });
-                        if (item.maxQuantity > 0) {
-                            PriceTotaltmp += item.price * item.quantity;
-                        }
+                        PriceTotaltmp += item.price * item.quantity;
+                        //if (item.maxQuantity > 0) {
+                        //    PriceTotaltmp += item.price * item.quantity;
+                        //}
                         itemTotal += item.quantity;
                     });
                 }
@@ -448,8 +450,14 @@
                 }
                 commons.stopLoading();
             },
-            error: function () {
-                commons.notify('Lỗi tải giỏ hàng', 'error');
+            error: function (response) {
+                if (response !== undefined && response !== '') {
+                    commons.notify(response.responseText, 'error');
+                }
+                else {
+                    commons.notify('Lỗi tải giỏ hàng', 'error');
+                }
+                
                 commons.stopLoading();
             }
         });
@@ -608,7 +616,13 @@
     };
 
     var saveOrder = function (receivingType) {
-        //ShippingFee = $('#frmselectshowroom').data("receivingValue");
+        var addressId = $('#addressId').val();
+        if (receivingType === "1" || receivingType === "2") {
+            if (addressId === undefined || addressId === '') {
+                commons.notify('Bạn phải chọn địa chỉ nhận hàng hợp lệ', 'error');
+                return false;
+            }
+        }
         var addressObj = {
             PhoneNumber: $('#txtRecipientPhoneNumber').val(),
             RecipientName: $('#txtRecipientName').val(),
@@ -637,7 +651,7 @@
             },
             success: function (response) {
                 commons.stopLoading();
-                window.location.href = '/Order/ConfirmAndThanksForOrder/';
+                window.location.href = `/Order/ConfirmAndThanksForOrder?orderId=${response.orderId}`;
             },
             error: function (response) {
                 if (response.responseText !== undefined && response.responseText !== '') {
