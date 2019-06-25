@@ -62,6 +62,11 @@ namespace DAL.Repositories
             return paginationSet;
         }
 
+        public void UpdateWithoutSave(Item item)
+        {
+            Table.Update(item);
+        }
+
         public bool ImportExcel(string filePath, int categoryId)
         {
             try

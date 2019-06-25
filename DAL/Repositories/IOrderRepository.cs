@@ -6,8 +6,8 @@ namespace DAL.Repositories
 {
     public interface IOrderRepository : IRepo<Order>
     {
-        int GetMaxId();
-
+        //int GetMaxId();
+        void AddWithoutSave(Order order);
         PagedResult<Order> GetAllPaging(byte? deliveryType, byte? orderStatus, string keyword, int pageIndex, int pageSize);
     }
 }

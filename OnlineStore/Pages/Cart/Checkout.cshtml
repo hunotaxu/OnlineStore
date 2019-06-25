@@ -5,13 +5,11 @@
 @using DAL.Data.Enums
 
 @using  Utilities.Extensions
-@using DAL.Data.Enums
-
-@inject UserManager<ApplicationUser>    UserManager
+@inject UserManager<ApplicationUser> UserManager
 @model OnlineStore.Pages.Order.CheckoutModel
 @{
     ViewData["Title"] = "Checkout";
- Layout = "~/Pages/Shared/_Layout.cshtml";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 
 }
 @section Scripts{
@@ -31,152 +29,203 @@
 }
 
 <!-- Main Container -->
-<form method="post">
-    <section class="main-container col2-right-layout">
-        <div class="main container">
-            <br />
-            <div class="row">
-                <div class="col-main col-sm-8 col-xs-12">
-
-                    <!-- main-container -->
-                    <div>
-                        <div class="page-title">
-                            <h2>Lựa chọn nhận hàng</h2>
-                        </div>
-                        <br />
-                        @*<div class="box-border" id="content-receivingmethod">
-                            </div>*@
-                        <div class="form cf" id="frmselectreceivingtype">
-                            <section class="payment-type cf" id="content-receivingmethod"></section>
-                        </div>
-                        <p class="error-loadreceivingmethod productnamecheckout"></p>
-                    </div>
-                    <script id="script-receivingmethod" type="x-tmpl-mustache">
-                        <input class="radio-receivingtype" type="radio" name="radio-receivingthod" id="{{ReceivingId}}-receivingthod" data-receivingId="{{ReceivingId}}" data-receivingValue="{{ReceivingValue}}">
-                        <label class="credit-label four col" for="{{ReceivingId}}-receivingthod">
-                            <p>{{ReceivingName}}</p>
-                            <p>{{ReceivingValue}}</p>
-                            <p>Nhận hàng sau {{NumberShipDay}} ngày </p>
-                        </label>
-                    </script>
-                    <div class="row" id="select-showroom-receiving">
-                        <div class="col-sm-12">
-                            <br /><label for="frmselectshowroom" class="required">Nhận hàng tại: </label>
-                            <div class="custom_select">
-                                <select class="input form-control" name="frmselectshowroom" id="frmselectshowroom"></select>
-                            </div>
-                            <br />
-                        </div>
-                    </div>
-                    <p class="error-loadprovince productnamecheckout"></p>
-                    <script id="script-select-showroom" type="x-tmpl-mustache">
-
-                        <option data-detail="{{Detail}}" data-wardid="{{WardId}}" data-districtid="{{DistrictId}}"
-                                data-provinceid="{{ProVinceId}}" data-addressId="{{AddressId}}">
-                            {{Detail}}, {{WardType}} {{WardName}}-{{DistrictType}} {{DistrictName}}-{{ProvinceType}} {{ProvinceName}}
-                        </option>
-                    </script>
-                    <button id="btn-continue-payment" type="button" class="btnPay col-md-4">Tiếp tục</button>
-                    <div id="frmPayment" style="display:none">
-                        <br /><br /><br /><br />
-                        <div class="page-title">
-                            <h2>Lựa chọn thanh toán</h2>
-                        </div>
-                        <br />
-                        <div style="border-bottom: 1px solid #e5e5e5">
-                            <div id="paymentMethod" class="box-border" style="padding: 0 25% 0 4%">
-                                <div>
-                                    <div>
-                                        <label for="radio_button_checkin">
-                                            <input type="radio" name="radio_4" id="radio_button_checkin" value="@PaymentType.CashOnDelivery.GetDisplayName()" />
-                                            @PaymentType.CashOnDelivery.GetDisplayName()
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label for="radio_button_atm">
-                                            <input type="radio" name="radio_4" id="radio_button_atm" value="@PaymentType.LocalATM.GetDisplayName()" />
-                                            @PaymentType.LocalATM.GetDisplayName()
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label for="radio_button_creditcard">
-                                            <input type="radio" name='radio_4' id="radio_button_creditcard" value=" @PaymentType.CreditDebitCard.GetDisplayName()" />
-                                            @PaymentType.CreditDebitCard.GetDisplayName()
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label for="radio_button_momo">
-                                            <input type="radio" name="radio_4" id="radio_button_momo" value="@PaymentType.Momo.GetDisplayName()">
-                                            @PaymentType.Momo.GetDisplayName()
-                                        </label>
-                                        <div class="payment none" id="ecashDIV">
-                                            <ul>
-                                                <li><a href="#"><img class="imgpayment" title="Momo" alt="Visa" src="~/images/client/layout/momo.png"></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <button id="btn-payment-continue" type="button" class="btnPay col-md-4">Tiếp tục</button>
-
-                        </div>
-
-                    </div>
-
-                    <!--End main-container -->
-                </div>
-
-                <div class="right sidebar col-sm-4 col-xs-12">
+@*<form method="post">*@
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <br />
+        <div class="row">
+            <div class="col-main col-sm-8 col-xs-12">
+                <!-- main-container -->
+                <div>
                     <div class="page-title">
-                        <h2>Đơn hàng của bạn</h2>
+                        <h2>Lựa chọn hình thức nhận hàng</h2>
                     </div>
                     <br />
-                    <p style="border-bottom: 1px solid #e5e5e5; font-weight:700"> Giỏ hàng  </p><br />
-                    <div class="col-sm-12 none-padding" id="container-pay-cart">
-
+                    @*<div class="box-border" id="content-receivingmethod">
+                        </div>*@
+                    <div class="form cf" id="frmselectreceivingtype">
+                        <section class="payment-type cf" id="content-receivingmethod"></section>
                     </div>
-                    <script id="template-cart" type="x-tmpl-mustache">
-                        <div class="col-sm-12 border-box-cartmini none-padding">
-                            <input type="hidden" id="itemId" value="{{ItemId}}" />
-                            <div class="col-sm-2 none-padding product-image-cartmini">
-                                <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template" width="65"></a>
-                            </div>
-                            <div class="product-details col-sm-10">
-                                <a href="/Product/Detail?id={{ItemId}}">
-                                    <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
-                                </a>
-                                <span class="text-danger">{{OutOfStockNotifyCation}}</span>
-                                <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>
-                            </div>
+                    <p class="error-loadreceivingmethod productnamecheckout"></p>
+                </div>
+                <script id="script-receivingmethod" type="x-tmpl-mustache">
+                    <input class="radio-receivingtype" type="radio" name="radio-receivingthod" data-deliveryDate="{{NumberShipDay}}" id="{{ReceivingId}}-receivingthod" data-receivingId="{{ReceivingId}}" data-receivingFee="{{ReceivingFee}}" data-receivingValue="{{ReceivingValue}}">
+                    <label class="credit-label four col" for="{{ReceivingId}}-receivingthod">
+                        <p>{{ReceivingName}}</p>
+                        <p>{{ReceivingValue}}</p>
+                        @*<p>Nhận hàng sau {{NumberShipDay}} ngày </p>*@
+                        <p>Dự kiến nhận hàng vào ngày {{NumberShipDay}}</p>
+                    </label>
+                </script>
+                <div class="row" id="select-showroom-receiving">
+                    <div class="col-sm-12">
+                        @*<br /><label for="frmselectshowroom" class="required">Nhận hàng tại: </label>*@
+                        <div class="page-title">
+                            <h2>Lựa chọn địa chỉ nhận hàng</h2>
                         </div>
-                    </script>
-
-                    <div class="sidebar-checkout block main-container col-sm-12">
-                        <div style="border-bottom: 5px solid #e5e5e5; margin-top: 5%"></div>
-                        <div class="block-content">
+                        <div class="block-content" id="user-address">
                             <dl>
-                                <dt class="complete" style="border-bottom: 1px solid #e5e5e5"> Thông tin đơn hàng  </dt>
                                 <dd class="complete">
                                     <address>
                                         <br />
-                                        <div style="border-bottom: 1px solid #e5e5e5">
-                                            <i class="fa fa-hand-o-right color-black" aria-hidden="true"></i>
-                                            Số sản phẩm: <span class="right" id="itemTotal1"></span> <br><br />
+                                        <input type="hidden" value="" id="addressId" />
+                                        <div>
+                                            @*<i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>*@
+                                            Tên người nhận: <h id="labelName"></h>
+                                            <a id="btneditaddress" class="linkchange " href="javascript:;">Chỉnh sửa</a>
                                         </div>
-                                        <div style="border-bottom: 1px solid #e5e5e5">
-                                            <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
-                                            Tạm tính: <span class="right" id="PriceTotaltmp1"></span><br><br />
+                                        <br />
+                                        @*<div style="padding: 0 25% 0 3%" id="labelAddress">*@
+                                        <div>
+                                            @*<i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>*@
+                                            Số điện thoại: <h id="labelPhoneNumber"></h>
                                         </div>
-
-                                        <div style="border-bottom: 1px solid #e5e5e5">
-                                            <i class="fa fa-plus-square" aria-hidden="true"></i>
-                                            Tổng cộng: <span class="right" id="Total1"></span> <br><br />
+                                        <br />
+                                        <div>
+                                            Địa chỉ: <h id="labelAddress"></h>
                                         </div>
                                     </address>
                                 </dd>
-                                <dt class="complete"> Thông tin người nhận </dt>
-                                <dd class="complete">
+                            </dl>
+                            @*<button id="btnorder" type="button" class="btnPay col-md-12" disabled>ĐẶT HÀNG</button>*@
+                        </div>
+                        <br />
+                        <div class="custom_select">
+                            <form class="form-horizontal" role="form" id="frmselectshowroom" method="post">
+                                <div class="col-sm-12">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            @*<br /><br />*@
+                                            @*<label for="txtHoTen" class="required">Họ tên</label>*@
+                                            @*<input class="input form-control" type="text" name="txtHoTen" id="txtHoTen" placeholder="Họ và tên" data-parsley-required="true" data-parsley-trigger="change">*@
+                                            <input class="input form-control" type="text" id="txtRecipientName" placeholder="Nhập họ và tên người nhận" data-parsley-required data-parsley-trigger="change">
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            @*<label for="txtPhoneNumber" class="required">Số điện thoại</label>*@
+                                            <input class="input form-control" name="txtPhoneNumber" id="txtRecipientPhoneNumber" placeholder="Nhập số điện thoại người nhận" data-parsley-required data-parsley-type="digits" data-parsley-length="[10, 11]" data-parsley-trigger="change">
+                                            <br />
+                                        </div>
+                                    </div>
+                                    <select class="input form-control" name="frmselectshowroom" id="selectshowroom"></select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <p class="error-loadprovince productnamecheckout"></p>
+                <script id="script-select-showroom" type="x-tmpl-mustache">
+                    <option data-detail="{{Detail}}" data-wardid="{{WardId}}" data-districtid="{{DistrictId}}"
+                            data-provinceid="{{ProVinceId}}" data-showroomAddressId="{{ShowroomAddressId}}">
+                        {{Detail}}, {{WardType}} {{WardName}}, {{DistrictType}} {{DistrictName}}, {{ProvinceType}} {{ProvinceName}}
+                    </option>
+                </script>
+                @*<button id="btn-continue-payment" type="button" class="btnPay col-md-4">Tiếp tục</button>*@
+                <div id="frmPayment">
+                    <div class="page-title">
+                        <h2>Lựa chọn hình thức thanh toán</h2>
+                    </div>
+                    <br />
+                    <div style="border-bottom: 1px solid #e5e5e5">
+                        <div id="paymentMethod" class="box-border" style="padding: 0 25% 0 4%">
+                            <div>
+                                <div>
+                                    <label for="radio_button_checkin">
+                                        <input type="radio" name="paymentType" id="radio_button_checkin" value="@((byte)PaymentType.CashOnDelivery)" checked />
+                                        @PaymentType.CashOnDelivery.GetDisplayName()
+                                    </label>
+                                </div>
+                                @*<div>
+                                        <label for="radio_button_atm">
+                                            <input type="radio" name="paymentType" id="radio_button_atm" value="@PaymentType.LocalATM.GetDisplayName()" />
+                                            @PaymentType.LocalATM.GetDisplayName()
+                                        </label>
+                                    </div>*@
+                                <div>
+                                    <label for="radio_button_creditcard">
+                                        <input type="radio" name='paymentType' id="radio_button_creditcard" value="@((byte)PaymentType.CreditDebitCard)" />
+                                        @PaymentType.CreditDebitCard.GetDisplayName()
+                                    </label>
+                                </div>
+                                <div>
+                                    <label for="radio_button_momo">
+                                        <input type="radio" name="paymentType" id="radio_button_momo" value="@((byte)PaymentType.Momo)">
+                                        @PaymentType.Momo.GetDisplayName()
+                                    </label>
+                                    <div class="payment none" id="ecashDIV">
+                                        <ul>
+                                            <li><a href="#"><img class="imgpayment" title="Momo" alt="Visa" src="~/images/client/layout/momo.png"></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        @*<button id="btn-payment-continue" type="button" class="btnPay col-md-4">Tiếp tục</button>*@
+
+                    </div>
+
+                </div>
+
+                <!--End main-container -->
+            </div>
+
+            <div class="right sidebar col-sm-4 col-xs-12">
+                <div class="page-title">
+                    <h2>Đơn hàng của bạn</h2>
+                </div>
+                <br />
+                <p style="border-bottom: 1px solid #e5e5e5; font-weight:700"> Giỏ hàng  </p><br />
+                <div class="col-sm-12 none-padding" id="container-pay-cart">
+
+                </div>
+                <script id="template-cart" type="x-tmpl-mustache">
+                    <div class="col-sm-12 border-box-cartmini none-padding">
+                        <input type="hidden" id="itemId" value="{{ItemId}}" />
+                        <div class="col-sm-2 none-padding product-image-cartmini">
+                            <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template" width="65"></a>
+                        </div>
+                        <div class="product-details col-sm-10">
+                            <a href="/Product/Detail?id={{ItemId}}">
+                                <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
+                            </a>
+                            <span class="text-danger">{{OutOfStockNotifyCation}}</span>
+                            @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>*@
+                            <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>
+                        </div>
+                    </div>
+                </script>
+
+                <div class="sidebar-checkout block main-container col-sm-12">
+                    <div style="border-bottom: 5px solid #e5e5e5; margin-top: 5%"></div>
+                    <div class="block-content">
+                        <dl>
+                            <dt class="complete" style="border-bottom: 1px solid #e5e5e5"> Thông tin đơn hàng  </dt>
+                            <dd class="complete">
+                                <address>
+                                    <br />
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-hand-o-right color-black" aria-hidden="true"></i>*@
+                                        Số sản phẩm: <span class="right" id="itemTotal1"></span> <br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-dot-circle-o" aria-hidden="true"></i>*@
+                                        Tạm tính: <span class="right" id="PriceTotaltmp1"></span><br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-dot-circle-o" aria-hidden="true"></i>*@
+                                        Phí vận chuyển: <span class="right" id="ShippingFee"></span><br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-plus-square" aria-hidden="true"></i>*@
+                                        Tổng cộng: <span class="right" id="Total1"></span> <br><br />
+                                    </div>
+                                </address>
+                            </dd>
+                            @*<dt class="complete"> Thông tin người nhận </dt>*@
+                            @*<dd class="complete">
                                     <address>
                                         <br />
                                         <div>
@@ -189,68 +238,68 @@
                                         </div>
 
                                     </address>
-                                </dd>
-                            </dl>
-                            <button id="btnorder" type="button" class="btnPay col-md-12" disabled>ĐẶT HÀNG</button>
-                        </div>
+                                </dd>*@
+                        </dl>
+                        <button id="btnorder" type="button" class="btnPay col-md-12">ĐẶT HÀNG</button>
                     </div>
+                </div>
 
-                </div>
-            </div>
-        </div>
-    </section>
-</form>
-<!-- Main Container End -->
-<!-- service section -->
-@*<div class="jtv-service-area">
-    <div class="container">
-        <div class="row">
-            <div class="col col-md-3 col-sm-6 col-xs-12">
-                <div class="block-wrapper ship">
-                    <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-paper-plane"></i></div>
-                        <div class="service-wrapper">
-                            <h3>World-Wide Shipping</h3>
-                            <p>On order over $99</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-3 col-sm-6 col-xs-12 ">
-                <div class="block-wrapper return">
-                    <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-rotate-right"></i></div>
-                        <div class="service-wrapper">
-                            <h3>30 Days Return</h3>
-                            <p>Moneyback guarantee </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-md-3 col-sm-6 col-xs-12">
-                <div class="block-wrapper support">
-                    <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-umbrella"></i></div>
-                        <div class="service-wrapper">
-                            <h3>Support 24/7</h3>
-                            <p>Call us: ( +123 ) 456 789</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col col-md-3 col-sm-6 col-xs-12">
-                <div class="block-wrapper user">
-                    <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-tags"></i></div>
-                        <div class="service-wrapper">
-                            <h3>Member Discount</h3>
-                            <p>25% on order over $199</p>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-</div>*@
+</section>
+@*</form>*@
+<!-- Main Container End -->
+<!-- service section -->
+@*<div class="jtv-service-area">
+        <div class="container">
+            <div class="row">
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper ship">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-paper-plane"></i></div>
+                            <div class="service-wrapper">
+                                <h3>World-Wide Shipping</h3>
+                                <p>On order over $99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-3 col-sm-6 col-xs-12 ">
+                    <div class="block-wrapper return">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-rotate-right"></i></div>
+                            <div class="service-wrapper">
+                                <h3>30 Days Return</h3>
+                                <p>Moneyback guarantee </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper support">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-umbrella"></i></div>
+                            <div class="service-wrapper">
+                                <h3>Support 24/7</h3>
+                                <p>Call us: ( +123 ) 456 789</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper user">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-tags"></i></div>
+                            <div class="service-wrapper">
+                                <h3>Member Discount</h3>
+                                <p>25% on order over $199</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
 <partial name="_AddressManagementModal" />

@@ -11,10 +11,14 @@ namespace DAL.EF
         ApplicationUserClaim, ApplicationUserRole, ApplicationUserLogin,
         ApplicationRoleClaim, ApplicationUserToken>
     {
+        public OnlineStoreDbContext()
+        {
+        }
+
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options)
             : base(options)
         {
-            
+
         }
 
         public virtual DbSet<Address> Address { get; set; }
@@ -92,11 +96,14 @@ namespace DAL.EF
             modelBuilder.Entity<CartDetail>()
                 .HasKey(c => new { c.CartId, c.ItemId });
 
+            modelBuilder.Entity<DefaultAddress>()
+                .HasKey(d => new { d.AddressId, d.CustomerId });
+
             modelBuilder.Entity<GoodsReceiptDetail>()
                 .HasKey(c => new { c.GoodsReceiptId, c.ItemId });
 
             modelBuilder.Entity<OrderItem>()
-                .HasKey(c => new {c.ItemId, c.OrderId});
+                .HasKey(c => new { c.ItemId, c.OrderId });
         }
     }
 }

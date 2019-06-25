@@ -112,7 +112,7 @@
             // arrow size in pixels
             arrowSize: 5,
             // position defines the notification position though uses the defaults below
-            position: 'top center',
+            position: 'bottom center',
             // default positions
             elementPosition: 'top right',
             globalPosition: 'top center',
@@ -178,20 +178,22 @@
         if (datetime === null || datetime === '') {
             return '';
         }
-        var newDate = new Date(parseInt(datetime.substr(6)));
+        //var newDate = new Date(parseInt(datetime.substr(6)));
+        var newDate = datetime;
         var month = newDate.getMonth() + 1;
         var day = newDate.getDate();
         var year = newDate.getFullYear();
-        var hh = newDate.getHours();
-        var mm = newDate.getMinutes();
+        //var hh = newDate.getHours();
+        //var mm = newDate.getMinutes();
         if (month < 10)
-            month = `0${day}`;
-        if (hh < 10)
-            hh = `0${hh}`;
-        if (mm < 10)
-            mm = `0${mm}`;
+            month = `0${month}`;
+        //if (hh < 10)
+        //    hh = `0${hh}`;
+        //if (mm < 10)
+        //    mm = `0${mm}`;
         return `${day}/${month}/${year}`;
     },
+
     dateTimeFormatJson: function (datetime) {
         if (datetime === null || datetime === '')
             return '';
@@ -235,7 +237,7 @@
         }
 
         var a = number.toFixed(precision).split('.');
-        a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&,');
+        a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&.');
         return a.join('.');
     },
 

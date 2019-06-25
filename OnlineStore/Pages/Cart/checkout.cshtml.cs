@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Utilities.Commons;
 using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +9,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
 using OnlineStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using DAL.Data.Enums;
+using DAL.EF;
+using OnlineStore.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineStore.Pages.Order
 {
@@ -17,6 +20,7 @@ namespace OnlineStore.Pages.Order
     {
         //private readonly IUserAddressRepository _userAddressRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly IDefaultAddressRepository _defaultAddressRepository;
         private readonly ICartRepository _cartRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
@@ -25,16 +29,28 @@ namespace OnlineStore.Pages.Order
         private readonly IDistrictRepository _districtRepository;
         public readonly IWardRepository _wardRepository;
         public readonly IAddressRepository _addressRepository;
+        public readonly IOrderItemRepository _orderItemRepository;
+        public readonly IOrderRepository _orderRepository;
         public readonly IShowRoomAddressRepository _showRoomAddressRepository;
         public readonly IReceivingTypeRepository _receivingTypeRepository;
+        public readonly IUnitOfWork _unitOfWork;
+        protected readonly DbContextOptions<OnlineStoreDbContext> _options;
 
-
-        public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository,IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
-            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository
-            , IUserRepository userRepository)
+        public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository, IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
+            ICartRepository cartRepository, ICartDetailRepository cartDetailRepository,
+            IUserRepository userRepository,
+            IDefaultAddressRepository defaultAddressRepository,
+            IOrderItemRepository orderItemRepository,
+            IOrderRepository orderRepository,
+            IUnitOfWork unitOfWork,
+            DbContextOptions<OnlineStoreDbContext> options)
         {
-
+            _options = options;
             _itemRepository = itemRepository;
+            _unitOfWork = unitOfWork;
+            _orderItemRepository = orderItemRepository;
+            _orderRepository = orderRepository;
+            _defaultAddressRepository = defaultAddressRepository;
             _userRepository = userRepository;
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
@@ -52,6 +68,8 @@ namespace OnlineStore.Pages.Order
         [BindProperty]
         public List<UserAddressViewModel> UserAddresses { get; set; }
         [BindProperty]
+        public UserAddressViewModel DefaultAddress { get; set; }
+        [BindProperty]
         public List<Province> Provinces { get; set; }
         [BindProperty]
         public List<District> Districts { get; set; }
@@ -64,6 +82,8 @@ namespace OnlineStore.Pages.Order
 
         [BindProperty]
         public List<DAL.Data.Entities.Order> Orders { get; set; }
+
+        public int OrderId { get; set; }
 
         public ActionResult OnGet()
         {
@@ -86,53 +106,129 @@ namespace OnlineStore.Pages.Order
                 {
                     foreach (var item in items)
                     {
-                        var itemCartViewModel = new ItemCartViewModel
+                        //if (item.Item.Quantity == 0 || item.Item.Quantity < item.Quantity)
+                        //{
+                        //    return new BadRequestObjectResult("Số lượng sản phẩm của cửa hàng không còn đủ cho đơn hàng. Vui lòng xác nhận lại giỏ hàng.");
+                        //}
+                        if (item.Item.Quantity != 0 && item.Item.Quantity > item.Quantity)
                         {
-                            ItemId = item.ItemId,
-                            Image = $"/images/client/ProductImages/{item.Item.Image}",
-                            Price = item.Item.Price,
-                            ProductName = item.Item.Name,
-                            Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
-                            MaxQuantity = item.Item.Quantity
-                        };
-                        ItemInCarts.Add(itemCartViewModel);
+                            var itemCartViewModel = new ItemCartViewModel
+                            {
+                                ItemId = item.ItemId,
+                                Image = $"/images/client/ProductImages/{item.Item.Image}",
+                                Price = item.Item.Price,
+                                ProductName = item.Item.Name,
+                                //Quantity = item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
+                                Quantity = item.Quantity,
+                                //MaxQuantity = item.Item.Quantity
+                            };
+                            ItemInCarts.Add(itemCartViewModel);
+                        }
                     }
                 }
             }
             return new OkObjectResult(ItemInCarts);
         }
-        public IActionResult OnGetLoadAddress()
+        public IActionResult OnGetLoadDefaultAddress()
         {
             //var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
             var address = _addressRepository.GetSome(x => x.CustomerId == _userManager.GetUserAsync(HttpContext.User).Result.Id && x.IsDeleted == false);
-            if (address != null && address.Count() > 0)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user != null)
             {
-                UserAddresses = new List<UserAddressViewModel>();
-                //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
-                //if (items.Count > 0)
-                //{
-                foreach (var item in address)
+                var defaultAddress = _defaultAddressRepository.GetSome(x => x.CustomerId == user.Id && x.IsDeleted == false).FirstOrDefault();
+                if (defaultAddress != null)
                 {
-                    var userAddress = new UserAddressViewModel
+                    //UserAddresses = new List<UserAddressViewModel>();
+                    //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
+                    //if (items.Count > 0)
+                    //{
+                    //foreach (var item in address)
+                    //{
+                    DefaultAddress = new UserAddressViewModel
                     {
-                        AddressId = item.Id,
-                        CustomerId = item.CustomerId,
-                        PhoneNumber = item.PhoneNumber,
-                        RecipientName = item.RecipientName,
-                        Province = item.Province,
-                        District = item.District,
-                        Ward = item.Ward,
-                        Detail = item.Detail
+                        AddressId = defaultAddress.Address.Id,
+                        CustomerId = defaultAddress.Address.CustomerId,
+                        PhoneNumber = defaultAddress.Address.PhoneNumber,
+                        RecipientName = defaultAddress.Address.RecipientName,
+                        Province = defaultAddress.Address.Province,
+                        District = defaultAddress.Address.District,
+                        Ward = defaultAddress.Address.Ward,
+                        Detail = defaultAddress.Address.Detail
                     };
-                    UserAddresses.Add(userAddress);
+                    //UserAddresses.Add(userAddress);
                 }
                 //}
+            }
+            //if (address != null && address.Count() > 0)
+            //{
+            //    UserAddresses = new List<UserAddressViewModel>();
+            //    //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
+            //    //if (items.Count > 0)
+            //    //{
+            //    foreach (var item in address)
+            //    {
+            //        var userAddress = new UserAddressViewModel
+            //        {
+            //            AddressId = item.Id,
+            //            CustomerId = item.CustomerId,
+            //            PhoneNumber = item.PhoneNumber,
+            //            RecipientName = item.RecipientName,
+            //            Province = item.Province,
+            //            District = item.District,
+            //            Ward = item.Ward,
+            //            Detail = item.Detail
+            //        };
+            //        UserAddresses.Add(userAddress);
+            //    }
+            //}
+            return new OkObjectResult(DefaultAddress);
+        }
+        public IActionResult OnGetLoadAddress(int? availableAddressId)
+        {
+            //var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+            var customer = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (customer != null)
+            {
+                //var defaultAddress = _defaultAddressRepository.GetSome(x => x.CustomerId == customer.Id);
+                var address = _addressRepository.GetSome(x => x.CustomerId == customer.Id && x.IsDeleted == false && x.ShowRoomAddressId == null);
+                if (address != null && address.Count() > 0)
+                {
+                    UserAddresses = new List<UserAddressViewModel>();
+                    //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
+                    //if (items.Count > 0)
+                    //{```````
+                    foreach (var item in address)
+                    {
+                        var userAddress = new UserAddressViewModel
+                        {
+                            AddressId = item.Id,
+                            CustomerId = item.CustomerId,
+                            PhoneNumber = item.PhoneNumber,
+                            RecipientName = item.RecipientName,
+                            Province = item.Province,
+                            District = item.District,
+                            Ward = item.Ward,
+                            Detail = item.Detail,
+                            DefaultChecked = availableAddressId != null && availableAddressId > 0 && availableAddressId == item.Id ? "checked" : ""
+                            //DefaultChecked = item.Id == defaultAddress?.First().AddressId ? "checked" : ""
+                        };
+                        //if (defaultAddress != null)
+                        //{
+                        //    if (userAddress.AddressId == defaultAddress.AddressId)
+                        //    {
+                        //        userAddress.DefaultChecked = "checked";
+                        //    }
+                        //}
+                        UserAddresses.Add(userAddress);
+                    }
+                }
             }
             return new OkObjectResult(UserAddresses);
         }
 
         public IActionResult OnGetLoadProvince()
-         {
+        {
             var province = _provinceRepository.GetAll();
             if (province != null)
             {
@@ -280,18 +376,18 @@ namespace OnlineStore.Pages.Order
             {
                 Showrooms = new List<ShowRoomAddress>();
                 var items = showroom.Where(cd => cd.IsDeleted == false).ToList();
-                  
+
                 if (items.Count > 0)
-                {                    
+                {
                     foreach (var item in items)
                     {
                         var showrooms = new ShowRoomAddress
                         {
-                            Id=item.Id,
-                            Province = _provinceRepository.Find(cd => cd.Id == item.ProvinceId && cd.IsDeleted == false), 
+                            Id = item.Id,
+                            Province = _provinceRepository.Find(cd => cd.Id == item.ProvinceId && cd.IsDeleted == false),
                             District = _districtRepository.Find(cd => cd.Id == item.DistrictId && cd.IsDeleted == false),
                             Ward = _wardRepository.Find(cd => cd.Id == item.WardId && cd.IsDeleted == false),
-                            Detail =item.Detail,                           
+                            Detail = item.Detail,
                         };
                         Showrooms.Add(showrooms);
                     }
@@ -314,9 +410,9 @@ namespace OnlineStore.Pages.Order
                     {
                         var receivingTypes = new ReceivingType
                         {
-                            Id=item.Id,
-                            Name=item.Name,
-                            Value=item.Value,
+                            Id = item.Id,
+                            Name = item.Name,
+                            Value = item.Value,
                             NumberShipDay = item.NumberShipDay
                         };
                         ReceivingTypes.Add(receivingTypes);
@@ -325,28 +421,138 @@ namespace OnlineStore.Pages.Order
             }
             return new OkObjectResult(ReceivingTypes);
         }
-        public IActionResult OnPostSaveOrder([FromBody] UserAddressViewModel model)
+
+        public IActionResult OnPostSaveOrder([FromBody] OrderAddressViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                return new BadRequestObjectResult("Đặt hàng không thành công");
             }
-            Orders = new List<DAL.Data.Entities.Order>();
-            var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user != null && !_userRepository.IsAdmin())
-            //if (user != null && !HttpContext.User.IsInRole(CommonConstants.CustomerRoleName))
-            //{
 
-            var newAddress = new Address
+            using (var context = new OnlineStoreDbContext())
             {
-                
-            };
-            
-            return new OkObjectResult(Orders);
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                        if (user == null)
+                        {
+                            return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                        }
+                        if (user == null)
+                        {
+                            return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                        }
+
+                        var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                        if (cart == null)
+                        {
+                            return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                        }
+                        var newAddress = new Address();
+                        if (model.Order.ReceivingTypeId == 3)
+                        {
+                            newAddress = new Address
+                            {
+                                CustomerId = user.Id,
+                                PhoneNumber = model.Address.PhoneNumber,
+                                RecipientName = model.Address.RecipientName,
+                                ShowRoomAddressId = model.Address.ShowRoomAddressId,
+                                DateCreated = DateTime.Now,
+                                DateModified = DateTime.Now
+                            };
+                            //_addressRepository.Add(newAddress);
+                            context.Address.Add(newAddress);
+                            context.SaveChanges();
+                        }
+                        var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
+                        var newOrder = new DAL.Data.Entities.Order
+                        {
+                            AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId,
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                            //DeliveryDate = model.Order.DeliveryDate,
+                            DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
+                            ShippingFee = model.Order.ShippingFee,
+                            //SubTotal = model.Order.SubTotal,
+                            SubTotal = cart.CartDetails.Sum(x => x.Item.Price * x.Quantity),
+                            OrderDate = DateTime.Now,
+                            PaymentType = model.Order.PaymentType,
+                            //Total = model.Order.Total,
+                            ReceivingTypeId = model.Order.ReceivingTypeId,
+                            SaleOff = model.Order.SaleOff,
+                            Status = OrderStatus.Pending,
+                        };
+                        newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
+                        //_unitOfWork.OrderRepository.Add(newOrder);
+                        context.Order.Add(newOrder);
+                        context.SaveChanges();
+
+                        var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+
+                        if (items == null || items.Count() == 0)
+                        {
+                            transaction.Rollback();
+                            return new BadRequestObjectResult("Giỏ hàng không tồn tại.");
+                        }
+                        foreach (var itemInCart in items)
+                        {
+                            var item = _itemRepository.Find(itemInCart.ItemId);
+                            if (itemInCart.Quantity > item.Quantity)
+                            {
+                                transaction.Rollback();
+                                return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại.");
+                            }
+                            var newOrderItem = new OrderItem
+                            {
+                                OrderId = newOrder.Id,
+                                Price = item.Price,
+                                ItemId = itemInCart.ItemId,
+                                Quantity = itemInCart.Quantity,
+                                DateCreated = DateTime.Now,
+                                DateModified = DateTime.Now,
+                                SaleOff = 0,
+                                IsDeleted = false,
+                                Amount = item.Price * item.Quantity
+                            };
+                            //_orderItemRepository.Add(newOrderItem);
+                            context.OrderItem.Add(newOrderItem);
+                            context.SaveChanges();
+
+                            item.Quantity -= itemInCart.Quantity;
+                            //_itemRepository.Update(item);
+                            context.Item.Update(item);
+                            context.SaveChanges();
+                        }
+                        //_cartRepository.Delete(cart);
+                        cart.IsDeleted = true;
+                        context.Cart.Update(cart);
+                        context.SaveChanges();
+
+                        var cartDetails = cart.CartDetails;
+                        foreach (var cartDetail in cartDetails)
+                        {
+                            cartDetail.IsDeleted = true;
+                            cartDetail.Quantity = 0;
+                            context.CartDetail.Update(cartDetail);
+                            context.SaveChanges();
+                        }
+                        //_cartDetailRepository.DeleteRange(_cartDetailRepository.GetSome(cd => cd.CartId == cart.Id));
+                        //_unitOfWork.Save();
+                        //return new OkObjectResult(Orders);
+                        transaction.Commit();
+                        return new OkObjectResult(new { orderId = newOrder.Id });
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        context.Database.RollbackTransaction();
+                        return new BadRequestObjectResult("Đặt hàng không thành công");
+                    }
+                }
+            }
         }
-
-
-
     }
 }

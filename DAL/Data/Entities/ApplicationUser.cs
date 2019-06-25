@@ -28,5 +28,6 @@ namespace DAL.Data.Entities
         public virtual ICollection<ApplicationUserToken> Tokens { get; set; }
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
         public virtual ICollection<Address> Address { get; set; }
+        public virtual DefaultAddress DefaultAddress { get; set; }
     }
 }

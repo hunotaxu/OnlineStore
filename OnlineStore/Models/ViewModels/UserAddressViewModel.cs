@@ -16,5 +16,6 @@ namespace OnlineStore.Models.ViewModels
         public string District { get; set; }
         public string Province { get; set; }
         public string Detail { get; set; }
+        public string DefaultChecked { get; set; }
     }
 }

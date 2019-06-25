@@ -1,86 +1,74 @@
-﻿using DAL.EF;
+﻿using DAL.Data.Entities;
+using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using DAL.Data.Entities;
 
 namespace DAL.Repositories
 {
-    public class CartDetailRepository : ICartDetailRepository
+    public class DefaultAddressRepository : IDefaultAddressRepository
     {
-        protected DbSet<CartDetail> Table;
+        protected DbSet<DefaultAddress> Table;
         protected readonly OnlineStoreDbContext Db;
 
-        public CartDetailRepository()
+        public DefaultAddressRepository()
         {
 
         }
-        public CartDetailRepository(DbContextOptions<OnlineStoreDbContext> options)
+        public DefaultAddressRepository(DbContextOptions<OnlineStoreDbContext> options)
         {
             Db = new OnlineStoreDbContext(options);
-            Table = Db.Set<CartDetail>();
+            Table = Db.Set<DefaultAddress>();
         }
 
-        public CartDetail Find(Expression<Func<CartDetail, bool>> where)
+        public DefaultAddress Find(Expression<Func<DefaultAddress, bool>> where)
             => Table.FirstOrDefault(where);
 
-        public IEnumerable<CartDetail> GetSome(Expression<Func<CartDetail, bool>> where) => Table.Where(where);
+        public IEnumerable<DefaultAddress> GetSome(Expression<Func<DefaultAddress, bool>> where) => Table.Where(where);
 
-        public int Add(CartDetail entity, bool persist = true)
+        public int Add(DefaultAddress entity, bool persist = true)
         {
             Table.Add(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public virtual int Update(CartDetail entity, bool persist = true)
+        public virtual int Update(DefaultAddress entity, bool persist = true)
         {
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        //public int Update(int itemId, int cartId, int newQuantity, bool persist = true)
+        //public int Update(Guid customerId, int cartId, int newQuantity, bool persist = true)
         //{
-        //    CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
+        //    DefaultAddress cartDetail = Find(c => c.AddressId == cartId && c.CustomerId == customerId);
         //    Table.Attach(cartDetail).State = EntityState.Deleted;
         //    return persist ? SaveChanges() : 0;
         //}
 
-        public virtual int Delete(CartDetail entity, bool persist = true)
+        public virtual int Delete(DefaultAddress entity, bool persist = true)
         {
             entity.IsDeleted = true;
-            entity.Quantity = 0;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
 
-        public int Delete(int itemId, int cartId, bool persist = true)
+        public int Delete(Guid customerId, int addressId, bool persist = true)
         {
-            CartDetail cartDetail = Find(c => c.CartId == cartId && c.ItemId == itemId);
+            DefaultAddress cartDetail = Find(c => c.AddressId == addressId && c.CustomerId == customerId);
             cartDetail.IsDeleted = true;
             Table.Update(cartDetail);
             //Table.Attach(cartDetail).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
-        public void DeleteRangeWithoutSave(IEnumerable<CartDetail> entities)
+
+        public int DeleteRange(IEnumerable<DefaultAddress> entities, bool persist = true)
         {
-            foreach (CartDetail cartDetail in entities)
+            foreach (DefaultAddress cartDetail in entities)
             {
                 cartDetail.IsDeleted = true;
-                cartDetail.Quantity = 0;
-                Table.Update(cartDetail);
-            }
-            //Table.RemoveRange(entities);
-            //return persist ? SaveChanges() : 0;
-        }
-        public int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true)
-        {
-            foreach (CartDetail cartDetail in entities)
-            {
-                cartDetail.IsDeleted = true;
-                cartDetail.Quantity = 0;
                 Table.Update(cartDetail);
             }
             //Table.RemoveRange(entities);

@@ -172,11 +172,11 @@ namespace OnlineStore
             services.AddScoped<IAddressRepository, AddressRepository>();  
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IReceivingTypeRepository, ReceivingTypeRepository>();
-
-            
+            services.AddScoped<IDefaultAddressRepository, DefaultAddressRepository>();
             services.AddScoped<IPdfService, PdfService>();
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IPdfSettings, PdfSettings>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IGoodsReceiptDetailRepository, GoodsReceiptDetailRepository>();
             //services.AddScoped<IUserAddressRepository, UserAddressRepository>();
             services.AddScoped<IProductImagesRepository, ProductImagesRepository>();
