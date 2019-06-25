@@ -100,11 +100,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
 
         public IActionResult OnGetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
         {
-            //var admin = HttpContext.Session.Get<ApplicationUser>(CommonConstants.UserSession);
-            //if (admin == null || !_userRepository.IsProductManager(admin.UserName))
-            //{
-            //    return new JsonResult(new { authenticate = false });
-            //}
             var model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
             var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);

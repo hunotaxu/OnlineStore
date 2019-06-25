@@ -24,3 +24,16 @@
 .red {
     color: #E74C3C;
 }
+
+.range-price {
+    display: flex;
+    align-items: center;
+}
+
+.row__sm4--nopadding{
+    padding: 0;
+}
+
+.row__sm2--padding {
+    padding: 2px;
+}

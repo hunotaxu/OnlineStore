@@ -352,7 +352,8 @@ jQuery(document).ready(function() {
                 max: max,
                 values: [value_min, value_max],
                 slide: function(event, ui) {
-                    var result = label_reasult + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
+                    //var result = label_reasult + " " + unit + ui.values[0] + ' - ' + unit + ui.values[1];
+                    var result = label_reasult + " " + ui.values[0] + unit + ' - ' + ui.values[1] + unit;
                     console.log(t);
                     t.closest('.slider-range').find('.amount-range-price').html(result);
                 }
