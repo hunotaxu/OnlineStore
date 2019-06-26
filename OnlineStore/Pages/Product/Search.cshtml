@@ -1,4 +1,5 @@
 ﻿@page
+@using DAL.Data.Enums
 @model OnlineStore.Pages.Product.SearchModel
 @{
     ViewData["Title"] = "SearchResult";
@@ -72,15 +73,17 @@
                         </div>
                         <div class="sorter">
                             <div class="short-by">
-                                <label>Sort By:</label>
-                                <select>
+                                @*<label>Sort By:</label>*@
+                                <label>Sắp xếp theo: </label>
+                                @*<select>
                                     <option selected="selected">Position</option>
                                     <option>Name</option>
                                     <option>Price</option>
                                     <option>Size</option>
-                                </select>
+                                </select>*@
+                                <select asp-for="SearchProductViewModel.Sort" asp-items="Html.GetEnumSelectList<SortType>()"></select>
                             </div>
-                            <div class="short-by page">
+                            @*<div class="short-by page">
                                 <label>Show:</label>
                                 <select>
                                     <option selected="selected">18</option>
@@ -88,7 +91,7 @@
                                     <option>25</option>
                                     <option>30</option>
                                 </select>
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <div class="product-grid-area">
