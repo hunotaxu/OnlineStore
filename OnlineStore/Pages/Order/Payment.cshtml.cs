@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Utilities.Extensions;
 using OnlineStore.Models.ViewModels;
 using Utilities.Commons;
+using System.Linq;
 
 namespace OnlineStore.Pages.Order
 {
@@ -55,7 +56,7 @@ namespace OnlineStore.Pages.Order
                 CustomerCartViewModel customerCart = new CustomerCartViewModel()
                 {
                     CartId = cart.Id,
-                    Image = item.Image,
+                    Image = item.ProductImages.First().Name,
                     ItemId = item.Id,
                     ItemName = item.Name,
                     Price = item.Price,

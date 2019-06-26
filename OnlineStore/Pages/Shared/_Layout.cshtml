@@ -127,9 +127,9 @@
                                 @*@await Component.InvokeAsync("SearchPartial")*@
                                 <div class="top-search">
                                     <div id="search">
-                                        <form asp-page="/Product/Index" method="get">
+                                        <form asp-page="/Product/Search" method="get">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?..." name="searchstring">
+                                                <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?..." name="SearchString">
                                                 <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                             </div>
                                         </form>

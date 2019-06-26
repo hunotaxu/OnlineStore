@@ -10,9 +10,17 @@
     <script src="~/js/client/product/search.js"></script>
     <script>
         search.init();
+
     </script>
 }
 
+@section Styles{
+    <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
+    @*<link href="~/css/client/layout/style.css" rel="stylesheet" />
+    <link href="~/css/client/product/detail.css" rel="stylesheet" />*@
+}
+
+<input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
 <!-- Breadcrumbs -->
 @*<div class="breadcrumbs">
         <div class="container">
@@ -96,7 +104,8 @@
                     </div>
                     <div class="product-grid-area">
                         <ul class="products-grid">
-                            @*<li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
+                            @*
+                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
                                     <div class="product-item">
                                         <div class="item-inner">
                                             <div class="product-thumbnail">
@@ -755,15 +764,15 @@
                                             <div class="pr-img-area">
                                                 <a title="Ipsums Dolors Untra" href="single_product.html">
                                                     @*<figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>*@
-                                                    <figure><img class="first-img" src="{{Image}}" alt="HTML template"> @*<img class="hover-img" src="{{Image}}" alt="HTML template">*@</figure>
+                                                    <figure><img class="first-img" src="{{Image}}" height="250" alt="HTML template"> @*<img class="hover-img" src="{{Image}}" alt="HTML template">*@</figure>
                                                 </a>
                                             </div>
                                             <div class="pr-info-area">
                                                 @*<div class="pr-button">
-                                                    <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                    <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                    <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                </div>*@
+                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
+                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
+                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                                                    </div>*@
                                             </div>
                                         </div>
                                         <div class="item-info">
@@ -771,16 +780,17 @@
                                                 @*<div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>*@
                                                 <div class="item-title"> <a title="{{ProductName}}" href="/Product/Detail?id={{ProductId}}">{{ProductName}} </a> </div>
                                                 <div class="item-content">
-                                                    <div class="rating">
+                                                    <div class="ratings">
                                                         @*<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i>*@
-                                                        <div class="rateit" data-rateit-value="3.2" data-rateit-readonly="true"> </div>
+                                                        @*<div class="rateit" data-rateit-value= data-rateit-readonly="true"> </div>*@
+                                                        <div class="rateit" data-rateit-value={{AvgRating}} data-rateit-readonly="true"> </div>
                                                     </div>
                                                     <div class="item-price">
                                                         <div class="price-box">
                                                             @*<p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>*@
                                                             <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> {{Price}} </span> </p>
                                                             @*<p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>*@
-                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> {{AdvertisingPrice}} </span> </p>
+                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> {{OriginalPrice}} </span> </p>
                                                         </div>
                                                     </div>
                                                     <div class="pro-action">
@@ -795,12 +805,35 @@
                         </script>
                     </div>
                     <div class="pagination-area">
-                        <ul>
-                            <li><a class="active" href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                        </ul>
+                        <!--Pagination-->
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                                    <select id="ddlShowPage">
+                                        <option value="10" selected="selected">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <span class="item-per-page">
+                                        bản ghi/trang.
+                                    </span>
+                                    Tổng số bản ghi: <strong id="lblTotalRecords"></strong>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                                    <ul id="paginationUL"></ul>
+                                </div>
+                            </div>
+                        </div>
+                        @*<ul>
+
+                                <li><a class="active" href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                            </ul>*@
                     </div>
                 </div>
             </div>

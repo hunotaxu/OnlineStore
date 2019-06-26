@@ -236,8 +236,12 @@
             return number.toString();
         }
 
+        if (number === null || number === undefined) {
+            number = 0;
+        }
+
         var a = number.toFixed(precision).split('.');
-        a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&.');
+        a[0] = a[0].replace(/\d(?=(\d{3})+$)/g, '$&,');
         return a.join('.');
     },
 

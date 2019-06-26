@@ -28,6 +28,10 @@ namespace OnlineStore.Pages.Product
                 return new BadRequestObjectResult(allErrors);
             }
 
+            //Tính trung bình cộng đánh giá
+            //var cmt = _commentRepository.GetSome(x => x.ItemId == model.ItemId);
+            //var avg = cmt.Sum(x => x.Evaluation) / cmt.Count();
+
             if (model.Id == 0)
             {
                 model.DateCreated = DateTime.Now;

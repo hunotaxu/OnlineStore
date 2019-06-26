@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DAL.Data.Entities;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +31,7 @@ namespace OnlineStore.Models.ViewModels.Item
         [Required]
         [DefaultValue(0)]
         public decimal? PromotionPrice { get; set; }
+        public decimal? OriginalPrice { get; set; }
 
         [StringLength(255)]
         public string Description { get; set; }
@@ -38,6 +41,7 @@ namespace OnlineStore.Models.ViewModels.Item
         public string BrandName { get; set; }
 
         public CategoryViewModel Category { set; get; }
+        public IList<ProductImages> ProductImages { get; set; }
 
         public DateTime DateCreated { set; get; }
 

@@ -53,14 +53,14 @@
                         <div class="large-image">
                             @*<a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">*@
                             <a class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="products">
+                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)" alt="products">
                             </a>
                         </div>
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides">
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="Thumbnail 2" /></a></li>
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="Thumbnail 1" /></a></li>
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" alt="Thumbnail 1" /></a></li>
+                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)'"><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)" alt="Thumbnail 2" /></a></li>
+                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)" alt="Thumbnail 1" /></a></li>
+                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.First().Name)" alt="Thumbnail 1" /></a></li>
                             </ul>
                         </div>
 

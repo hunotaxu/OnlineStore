@@ -37,8 +37,8 @@ namespace DAL.Data.Entities
         [Column(TypeName = "nvarchar(MAX)")]
         public string Description { get; set; }
 
-        [Display(Name = "Hình ảnh")]
-        public string Image { get; set; }
+        //[Display(Name = "Hình ảnh")]
+        //public string Image { get; set; }
 
         [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
