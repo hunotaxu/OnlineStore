@@ -44,38 +44,39 @@ namespace OnlineStore.Pages.Home
             Tablets = _itemRepository.GetByCategory(3);
             Accessories = _itemRepository.GetByCategory(4);
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-            //var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-            //if (cart != null)
-            //{
-            //    //var items = cart.CartDetails.Where(cd => cd.IsDeleted == false && cd.CartId == cart.Id).ToList();
-            //    List<CartDetail> items = _cartDetailRepository.GetSome(cd => cd.IsDeleted == false && cd.CartId == cart.Id).ToList();
-
-            //    if (items.Count > 0)
-            //        _numbercartitem = items.Count;
-            //    else
-            //        _numbercartitem = 0;
-            //}
         }
-        //public IActionResult OnGetLoadNumberItemCart()
-        //{
-        //    var itemnumbercart = 0;
+        public IActionResult OnGetLoadCartLayout()
+        {
+            if (_userManager.GetUserAsync(HttpContext.User).Result != null)
+            {
+                var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+                if (cart != null)
+                {
+                    ItemInCarts = new List<ItemCartViewModel>();
+                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                    if (items.Count > 0)
+                    {
+                        foreach (var item in items)
+                        {
 
-        //    var user = _userManager.GetUserAsync(HttpContext.User).Result;
-        //    if(user != null && !_userRepository.IsAdmin())
-        //    {
-        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-        //        if (cart != null)
-        //        {
-        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-        //            foreach (var item in items)
-        //            {
-        //                itemnumbercart += item.Quantity;
-        //            };
-        //        }
-        //        return new OkObjectResult(itemnumbercart);
-        //    }
-        //    return new OkObjectResult(itemnumbercart);
+                            var itemCartViewModel = new ItemCartViewModel
+                            {
+                                ItemId = item.ItemId,
+                                Image = $"/images/client/ProductImages/{item.Item.Image}",
+                                Price = item.Item.Price,
+                                ProductName = item.Item.Name,
+                                //Quantity = item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
+                                Quantity = item.Quantity,
+                                //MaxQuantity = item.Item.Quantity
+                            };
+                            ItemInCarts.Add(itemCartViewModel);
 
-        //}
+                        }
+                    }
+                }
+            }
+            return new OkObjectResult(ItemInCarts);
+        }
+
     }
 }

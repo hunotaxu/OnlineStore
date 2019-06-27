@@ -26,6 +26,7 @@
     <link href="~/lib/notifyjs/styles/metro/notify-metro.css" rel="stylesheet" />
     <link href="~/node_modules/parsleyjs/src/parsley.css" rel="stylesheet" />
     <link href="~/css/client/style.css" rel="stylesheet" />
+    <link href="~/css/main.css" rel="stylesheet" />
     @RenderSection("Styles", false)
 
 </head>
@@ -46,12 +47,12 @@
             @await Component.InvokeAsync("MenuPartial")
             <li><a href="#">Games &amp; Video</a></li>
             <li>
-                <a href="blog.html">Blog</a>
+                <a href="#">Blog</a>
                 <ul>
-                    <li><a href="blog_right_sidebar.html"> Blog – Right Sidebar </a></li>
-                    <li><a href="blog_left_sidebar.html"> Blog – Left Sidebar </a></li>
-                    <li><a href="blog_full_width.html"> Blog – Full-Width </a></li>
-                    <li><a href="blog_single_post.html"> Single post </a></li>
+                    <li><a href="#"> Blog – Right Sidebar </a></li>
+                    <li><a href="#"> Blog – Left Sidebar </a></li>
+                    <li><a href="#"> Blog – Full-Width </a></li>
+                    <li><a href="#"> Single post </a></li>
                 </ul>
             </li>
             <li><a href="#">Accessories</a></li>
@@ -138,7 +139,7 @@
                                 <!-- End Search -->
                             </div>
                             <div class="col-xs-12 col-sm-4 col-md-3 top-cart">
-                                <div class="link-wishlist"> <a href="#"> <i class="icon-heart icons"></i><span> Wishlist</span></a> </div>
+                                <div class="link-wishlist"> <a href="#"> <i class="icon-heart icons"></i><span> Yêu thích</span></a> </div>
                                 <!-- top cart -->
                                 <div class="top-cart-contain">
                                     <div class="mini-cart">
@@ -156,36 +157,30 @@
                                         <div>
                                             <div class="top-cart-content">
                                                 <div class="block-subtitle hidden">Recently added items</div>
-                                                <ul id="cart-sidebar" class="mini-products-list">
-                                                    <li class="item odd">
-                                                        <a href="shopping_cart.html" title="Product title here" class="product-image"><img src="~/images/client/layout/products/product-1.jpg" alt="html Template" width="65"></a>
-                                                        <div class="product-details">
-                                                            <a href="#" title="Remove This Item" class="remove-cart"><i class="pe-7s-trash"></i></a>
-                                                            <p class="product-name"><a href="shopping_cart.html">Lorem ipsum dolor sit amet Consectetur</a> </p>
-                                                            <strong>1</strong> x <span class="price">$20.00</span>
+                                                <div id="container-pay-cart-layout" class="mini-products-list">
+
+                                                </div>
+                                                <p class="productnamecheckout error-load-cart-layout"></p>
+                                                <script id="template-cart-layout" type="x-tmpl-mustache">
+                                                    <div class="col-sm-12 border-box-cartmini none-padding">
+                                                        <input type="hidden" id="itemId" value="{{ItemId}}" />
+                                                        <div class="col-sm-2 none-padding product-image-cartmini">
+                                                            <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>
                                                         </div>
-                                                    </li>
-                                                    <li class="item even">
-                                                        <a href="shopping_cart.html" title="Product title here" class="product-image"><img src="~/images/client/layout/products/product-1.jpg" alt="html Template" width="65"></a>
-                                                        <div class="product-details">
-                                                            <a href="#" title="Remove This Item" class="remove-cart"><i class="pe-7s-trash"></i></a>
-                                                            <p class="product-name"><a href="shopping_cart.html">Consectetur utes anet adipisicing elit</a> </p>
-                                                            <strong>1</strong> x <span class="price">$230.00</span>
+                                                        <div class="product-details col-sm-10 ">
+                                                            <a href="/Product/Detail?id={{ItemId}}">
+                                                                <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
+                                                            </a>
+                                                            <span class="text-danger">{{OutOfStockNotifyCation}}</span>
+                                                            @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>*@
+                                                            <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>
                                                         </div>
-                                                    </li>
-                                                    <li class="item last odd">
-                                                        <a href="shopping_cart.html" title="Product title here" class="product-image"><img src="~/images/client/layout/products/product-1.jpg" alt="html Template" width="65"></a>
-                                                        <div class="product-details">
-                                                            <a href="#" title="Remove This Item" class="remove-cart"><i class="pe-7s-trash"></i></a>
-                                                            <p class="product-name"><a href="shopping_cart.html">Sed do eiusmod tempor incidist</a> </p>
-                                                            <strong>2</strong> x <span class="price">$420.00</span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
+                                                    </div>
+                                                </script>
+                                                <div class="top-subtotal">Tạm tính: <span id="PriceTotaltmpLayout" class="price"></span></div>
                                                 <div class="actions">
                                                     <button class="btn-checkout" type="button" onClick="location.href='/Cart/Checkout'"><i class="fa fa-check"></i><span>Checkout</span></button>
-                                                    <button class="view-cart" type="button" onClick="location.href='/Cart/Index'"><i class="fa fa-shopping-cart"></i><span>View Cart</span></button>
+                                                    <button class="view-cart" type="button" onClick="location.href='/Cart/Index'"><i class="fa fa-shopping-cart"></i><span>Giỏ hàng</span></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -213,20 +208,20 @@
                             </div>
 
                             <!-- Shop by category -->
-                            <div class="mega-menu-category">
+                            <div class="mega-menu-category mega-menu-index">
                                 <ul class="nav">
                                     @await Component.InvokeAsync("MenuPartial")
 
                                     <li class="nosub"><a href="#">Games &amp; Video</a></li>
                                     <li>
-                                        <a href="blog.html">Blog</a>
+                                        <a href="#">Blog</a>
                                         <div class="wrap-popup column1">
                                             <div class="popup">
                                                 <ul class="nav">
-                                                    <li><a href="blog_right_sidebar.html"> Blog – Right Sidebar </a></li>
-                                                    <li><a href="blog_left_sidebar.html"> Blog – Left Sidebar </a></li>
-                                                    <li><a href="blog_full_width.html"> Blog – Full-Width </a></li>
-                                                    <li><a href="blog_single_post.html"> Single post </a></li>
+                                                    <li><a href="#"> Blog – Right Sidebar </a></li>
+                                                    <li><a href="#"> Blog – Left Sidebar </a></li>
+                                                    <li><a href="#"> Blog – Full-Width </a></li>
+                                                    <li><a href="#"> Single post </a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -256,22 +251,22 @@
                                 </li>
                                 <li class="mt-root demo_custom_link_cms">
                                     <div class="mt-root-item">
-                                        <a href="blog.html">
+                                        <a href="#">
                                             <div class="title title_font"><span class="title-text">Blog</span></div>
                                         </a>
                                     </div>
                                     <ul class="menu-items col-md-3 col-sm-4 col-xs-12" style="top: 28px; left: 402.531px;">
                                         <li class="menu-item depth-1">
-                                            <div class="title"> <a href="blog_right_sidebar.html"> Blog – Right Sidebar </a></div>
+                                            <div class="title"> <a href="#"> Blog – Right Sidebar </a></div>
                                         </li>
                                         <li class="menu-item depth-1">
-                                            <div class="title"> <a href="blog_left_sidebar.html"> Blog – Left Sidebar </a></div>
+                                            <div class="title"> <a href="#"> Blog – Left Sidebar </a></div>
                                         </li>
                                         <li class="menu-item depth-1">
-                                            <div class="title"> <a href="blog_full_width.html"> Blog – Full-Width </a></div>
+                                            <div class="title"> <a href="#"> Blog – Full-Width </a></div>
                                         </li>
                                         <li class="menu-item depth-1">
-                                            <div class="title"> <a href="blog_single_post.html"> Single post </a></div>
+                                            <div class="title"> <a href="#"> Single post </a></div>
                                         </li>
                                     </ul>
                                 </li>
@@ -286,21 +281,21 @@
                                                     <div class="product-thumbnail">
                                                         <div class="icon-sale-label sale-left">Sale</div>
                                                         <div class="pr-img-area">
-                                                            <a title="Product title here" href="single_product.html">
+                                                            <a title="Product title here" href="#">
                                                                 <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html theme"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
                                                             </a>
                                                         </div>
                                                         <div class="pr-info-area">
                                                             <div class="pr-button">
-                                                                <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                                <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                                <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
                                                             <div class="item-content">
                                                                 <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                                                                 <div class="item-price">
@@ -321,21 +316,21 @@
                                                     <div class="product-thumbnail">
                                                         <div class="icon-sale-label sale-left">Sale</div>
                                                         <div class="pr-img-area">
-                                                            <a title="Product title here" href="single_product.html">
+                                                            <a title="Product title here" href="#">
                                                                 <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
                                                             </a>
                                                         </div>
                                                         <div class="pr-info-area">
                                                             <div class="pr-button">
-                                                                <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                                <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                                <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
                                                             <div class="item-content">
                                                                 <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                                                                 <div class="item-price">
@@ -358,21 +353,21 @@
                                                     <div class="product-thumbnail">
                                                         <div class="icon-sale-label sale-left">Sale</div>
                                                         <div class="pr-img-area">
-                                                            <a title="Product title here" href="single_product.html">
+                                                            <a title="Product title here" href="#">
                                                                 <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
                                                             </a>
                                                         </div>
                                                         <div class="pr-info-area">
                                                             <div class="pr-button">
-                                                                <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                                <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                                <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="item-info">
                                                         <div class="info-inner">
-                                                            <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
                                                             <div class="item-content">
                                                                 <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                                                                 <div class="item-price">
@@ -489,8 +484,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-md-3 col-xs-12">
-                        <div class="footer-logo"><a href="index.html"><img src="~/images/client/layout/LogoTimi.png" alt="fotter logo"></a> </div>
-                        <p>Lorem Ipsum is simply dummy text of the print and typesetting industry. Ut pharetra augue nec augue. Nam elit agna, endrerit sit amet.</p>
+                        <div class="footer-logo"><a href="#"><img src="~/images/client/layout/LogoTimi.png" alt="fotter logo"></a> </div>
+                        <p>TimiShop là một cửa hàng chuyên kinh doanh các sản phẩm thiết bị công nghệ uy tín hàng đầu Việt Nam</p>
                         <div class="social">
                             <ul class="inline-mode">
                                 <li class="social-network fb"><a title="Connect us on Facebook" target="_blank" href="https://www.facebook.com"><i class="fa fa-facebook"></i></a></li>
@@ -503,58 +498,58 @@
                     </div>
                     <div class="col-sm-6 col-md-2 col-xs-12 collapsed-block">
                         <div class="footer-links">
-                            <h3 class="links-title">Information<a class="expander visible-xs" href="#TabBlock-1">+</a></h3>
+                            <h3 class="links-title">Hỗ trợ khách hàng<a class="expander visible-xs" href="#TabBlock-1">+</a></h3>
                             <div class="tabBlock" id="TabBlock-1">
                                 <ul class="list-links list-unstyled">
-                                    <li><a href="#s">Delivery Information</a></li>
-                                    <li><a href="#">Discount</a></li>
-                                    <li><a href="sitemap.html">Sitemap</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="faq.html">FAQs</a></li>
-                                    <li><a href="#">Terms &amp; Condition</a></li>
+                                    <li><a href="#s">Thẻ ưu đãi</a></li>
+                                    <li><a href="#">Phiếu mua hàng</a></li>
+                                    <li><a href="#">Trung tâm bảo hành</a></li>
+                                    <li><a href="#">Thanh toán </a></li>
+                                    <li><a href="#">Giao hàng</a></li>
+                                    <li><a href="#">Dịch vụ sửa chữa và bảo trì</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3 col-md-2 col-xs-12 collapsed-block">
                         <div class="footer-links">
-                            <h3 class="links-title">Insider<a class="expander visible-xs" href="#TabBlock-3">+</a></h3>
+                            <h3 class="links-title">Chính sách<a class="expander visible-xs" href="#TabBlock-3">+</a></h3>
                             <div class="tabBlock" id="TabBlock-3">
                                 <ul class="list-links list-unstyled">
-                                    <li><a href="sitemap.html"> Sites Map </a></li>
-                                    <li><a href="#">News</a></li>
-                                    <li><a href="#">Trends</a></li>
-                                    <li><a href="about_us.html">About Us</a></li>
-                                    <li><a href="contact_us.html">Contact Us</a></li>
-                                    <li><a href="#">My Orders</a></li>
+                                    <li><a href="#">Quy định chung </a></li>
+                                    <li><a href="#">Chính sách bảo mật thông tin</a></li>
+                                    <li><a href="#">Chính sách vận tải</a></li>
+                                    <li><a href="#">Chính sách bảo hành</a></li>
+                                    <li><a href="#">Chính sách đổi trả</a></li>
+                                    <li><a href="#">Chính sách trả góp</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-3 col-md-2 col-xs-12 collapsed-block">
                         <div class="footer-links">
-                            <h3 class="links-title">Service<a class="expander visible-xs" href="#TabBlock-4">+</a></h3>
+                            <h3 class="links-title">Thông tin TimiShop<a class="expander visible-xs" href="#TabBlock-4">+</a></h3>
                             <div class="tabBlock" id="TabBlock-4">
                                 <ul class="list-links list-unstyled">
-                                    <li><a href="account_page.html">Account</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="shopping_cart.html">Shopping Cart</a></li>
-                                    <li><a href="#">Return Policy</a></li>
-                                    <li><a href="#">Special</a></li>
-                                    <li><a href="#">Lookbook</a></li>
+                                    <li><a href="#"></a></li>
+                                    <li><a href="#">Thông tin liên hệ</a></li>
+                                    <li><a href="#">Hệ thống showroom</a></li>
+                                    <li><a href="#">Hỏi đáp</a></li>
+                                    <li><a href="#">Tin công nghệ</a></li>
+                                    <li><a href="#">Tin hot</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-3 col-xs-12 collapsed-block">
                         <div class="footer-links">
-                            <h3 class="links-title">Working hours<a class="expander visible-xs" href="#TabBlock-5">+</a></h3>
+                            <h3 class="links-title">Khung giờ làm việc<a class="expander visible-xs" href="#TabBlock-5">+</a></h3>
                             <div class="tabBlock" id="TabBlock-5">
-                                <div class="footer-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.</div>
+                                <div class="footer-description">TimiShop là một cửa hàng chuyên kinh doanh các sản phẩm thiết bị công nghệ uy tín hàng đầu Việt Nam</div>
                                 <div class="footer-description">
-                                    <b>Monday-Friday:</b> 8.30 a.m. - 5.30 p.m.<br>
-                                    <b>Saturday:</b> 9.00 a.m. - 2.00 p.m.<br>
-                                    <b>Sunday:</b> Closed
+                                    <b>Thứ 2-thứ 6:</b> 8.30 a.m. - 5.30 p.m.<br>
+                                    <b>Thứ 7:</b> 9.00 a.m. - 2.00 p.m.<br>
+                                    <b>Chủ nhật:</b> Đóng cửa
                                 </div>
                                 <div class="payment">
                                     <ul>
@@ -572,12 +567,12 @@
             <div class="footer-coppyright">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6 col-xs-12 coppyright"> Copyright © 2019 <a href="#"> ShopMart </a>. All Rights Reserved. </div>
+                        <div class="col-sm-6 col-xs-12 coppyright"> Copyright © 2019 <a href="#"> TimiShop </a>. Đã đăng kí Bộ công thương. </div>
                         <div class="col-sm-6 col-xs-12">
                             <ul class="footer-company-links">
-                                <li> <a href="about_us.html">About ShopMart</a> </li>
-                                <li> <a href="#">Careers</a> </li>
-                                <li> <a href="#">Privacy Policy</a> </li>
+                                <li> <a href="#">Về chúng tôi</a> </li>
+                                <li> <a href="#">Tuyển dụng</a> </li>
+                                <li> <a href="#">Chính sách</a> </li>
                             </ul>
                         </div>
                     </div>
@@ -595,7 +590,8 @@
     <script type="text/javascript" src="~/js/client/layout/jquery.min.js"></script>
 
     <!-- bootstrap js -->
-    @*<script type="text/javascript" src="~/js/client/layout/bootstrap.min.js"></script>*@
+    @*
+    <script type="text/javascript" src="~/js/client/layout/bootstrap.min.js"></script>*@
     <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/client/layout/jquery.flexslider.js"></script>
     <script src="~/node_modules/mustache/mustache.min.js"></script>
@@ -611,6 +607,9 @@
 
     <!-- main js -->
     <script type="text/javascript" src="~/js/client/layout/main.js"></script>
+    <script>
+        jslayout.init();
+    </script>
 
     <!-- Slider Js -->
     <script type="text/javascript" src="~/js/client/layout/revolution-slider.js"></script>

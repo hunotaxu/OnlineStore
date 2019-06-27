@@ -22,7 +22,7 @@ namespace OnlineStore.ViewComponents
         {
             //Truy vấn lấy về 1 list các sản phẩm
             //var items = _itemRepository.GetAll();
-            IEnumerable<Category> categories = _categoryRepository.GetAll();
+            IEnumerable<Category> categories = _categoryRepository.GetSome(x=>x.IsDeleted==false);
             //var lstSP = _itemRepository. db.SANPHAMs;
             //return View("Default", lstSP);
             return Task.FromResult<IViewComponentResult>(View("Default", categories));

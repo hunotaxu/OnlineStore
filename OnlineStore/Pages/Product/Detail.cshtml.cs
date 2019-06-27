@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,19 +19,29 @@ namespace OnlineStore.Pages.Product
         private readonly ICommentRepository _commentRepository;
         private readonly IUserRepository _userRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        public readonly IAddressRepository _addressRepository;
+        public readonly IOrderRepository _orderRepository;
+        public readonly IOrderItemRepository _orderItemRepository;
+        public readonly IProductImagesRepository _productImagesRepository;
 
         public Item Item { get; set; }
         public DAL.Data.Entities.Cart Cart { get; set; }
 
         public IList<CustomerCommentViewModel> CustomerCommentViewModel { get; set; }
-
+        [BindProperty]
+        public List<ProductImages> productImages { get; set; }
+        
         public double Average { get; set; }
         public int ItemId;
         public double _countComment = 0;
         public int _countItemCart = 0;
-
-        public DetailModel(UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
+        public bool isordered = false;
+        public DetailModel(IProductImagesRepository productImagesRepository,IOrderItemRepository orderItemRepository,IAddressRepository addressRepository, IOrderRepository orderRepository, UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
         {
+            _productImagesRepository = productImagesRepository;
+            _orderItemRepository = orderItemRepository;
+            _addressRepository = addressRepository;
+            _orderRepository = orderRepository;
             _cartRepository = cartRepository;
             _cartDetailRepository = cartDetailRepository;
             _userManager = userManager;
@@ -100,8 +111,57 @@ namespace OnlineStore.Pages.Product
                 CustomerCommentViewModel = null;
                 Average = 0;
             }
+
+            if (_userManager.GetUserAsync(HttpContext.User).Result != null)
+            {
+                var orders = _orderRepository.GetSome(o => o.Status == OrderStatus.Delivered);
+                foreach (var order in orders)
+                {
+                    var address = _addressRepository.GetSome(a => a.Id == order.AddressId);
+                    foreach(var _address in address)
+                    {
+                        if(_address.Id == order.AddressId && _address.CustomerId == _userManager.GetUserAsync(HttpContext.User).Result.Id)
+                        {
+                            var orderitems = _orderItemRepository.GetSome(cd => cd.IsDeleted == false && cd.ItemId == id).ToList();
+                            foreach( var orderitem in orderitems)
+                            {
+                                if(orderitem.OrderId == order.Id)
+                                {
+                                    isordered = true; break;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
             return Page();
         }
+
+        //public IActionResult OnGetLoadPreviewImage(int? id)
+        //{
+        //    var productimage = _productImagesRepository.GetSome(c=>c.ItemId == 35 );
+        //    if (productimage != null)
+        //    {
+        //        productImages = new List<ProductImages>();
+        //        var productimages = productimage.Where(cd => cd.IsDeleted == false).ToList();
+        //        if (productimages.Count > 0)
+        //        {
+        //            foreach (var item in productimages)
+        //            {
+        //                var productimg = new ProductImages
+        //                {
+        //                    Id = item.Id,
+        //                    Name = item.Name,
+        //                };
+        //                productImages.Add(productimg);
+        //            }
+        //        }
+        //    }
+        //    return new OkObjectResult(productImages);
+        //}
+
+
         //public IActionResult OnPostSaveEntity([FromBody] DAL.Data.Entities.Comment model)
         //{
         //    if (!ModelState.IsValid)

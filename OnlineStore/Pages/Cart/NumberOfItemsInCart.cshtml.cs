@@ -41,9 +41,7 @@ namespace OnlineStore.Pages.Cart
                     itemnumbercart += item.Quantity;
                 };
             }
-            return new OkObjectResult(itemnumbercart);
-            //}
-            return new OkObjectResult(itemnumbercart);
+            return new OkObjectResult(itemnumbercart);           
 
         }
     }
