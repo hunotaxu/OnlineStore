@@ -33,11 +33,6 @@ namespace OnlineStore.Pages.Cart
 
         public ActionResult OnGet()
         {
-            //var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user == null || _userRepository.IsAdmin(user))
-            //{
-            //    return RedirectToPage("/Account/Login", new { area = "Identity", returnUrl = "/Cart/Index" });
-            //}
             return Page();
         }
 

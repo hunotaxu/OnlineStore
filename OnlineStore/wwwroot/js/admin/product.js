@@ -116,7 +116,7 @@ var itemPage = (function () {
             //            required: true,
             //            number: true
             //        },
-            //        txtPromotionPriceM: {
+            //        txtOriginalPriceM: {
             //            required: true,
             //            number: true
             //        }
@@ -270,7 +270,7 @@ var itemPage = (function () {
             var categoryId = $('#ddlCategoryIdM').combotree('getValue');
             var description = CKEDITOR.instances.txtDescM.getData();
             var price = $('#txtPriceM').val();
-            var promotionPrice = $('#txtPromotionPriceM').val();
+            var originalPrice = $('#txtOriginalPriceM').val();
             var image = $('#txtImage').val();
             var brandName = $('#txtBrandName').val();
             var quantity = $('#txtQuantity').val();
@@ -285,7 +285,7 @@ var itemPage = (function () {
                     BrandName: brandName,
                     Quantity: quantity,
                     Price: price,
-                    PromotionPrice: promotionPrice,
+                    OriginalPrice: originalPrice,
                     Description: description
                 }),
                 contentType: 'application/json;charset=utf-8',
@@ -327,7 +327,7 @@ var itemPage = (function () {
                 $('#txtQuantity').val(data.quantity);
                 initTreeDropDownCategory(data.categoryId);
                 $('#txtPriceM').val(`${commons.formatNumber(data.price, 0)}`);
-                $('#txtPromotionPriceM').val(`${commons.formatNumber(data.promotionPrice, 0)}`);
+                $('#txtOriginalPriceM').val(`${commons.formatNumber(data.originalPrice, 0)}`);
                 CKEDITOR.instances.txtDescM.setData(data.description);
                 $('#modal-add-edit').modal('show');
                 commons.stopLoading();
@@ -381,7 +381,7 @@ var itemPage = (function () {
         $('#txtQuantity').val('');
         initTreeDropDownCategory('');
         $('#txtPriceM').val('0');
-        $('#txtPromotionPriceM').val('0');
+        $('#txtOriginalPriceM').val('0');
         CKEDITOR.instances.txtDescM.setData('');
     }
 
@@ -475,7 +475,7 @@ var itemPage = (function () {
     };
 
     var onTypeCurrency = function () {
-        $("#txtPromotionPriceM").on({
+        $("#txtOriginalPriceM").on({
             keyup: function () {
                 formatCurrency($(this));
             }

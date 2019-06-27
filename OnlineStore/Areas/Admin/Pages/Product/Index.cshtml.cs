@@ -127,7 +127,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                 item.CategoryId = model.CategoryId;
                 item.Description = model.Description;
                 item.Price = model.Price;
-                item.PromotionPrice = model.PromotionPrice;
+                item.OriginalPrice = model.OriginalPrice;
                 item.DateModified = DateTime.Now;
                 _itemRepository.Update(item);
             }

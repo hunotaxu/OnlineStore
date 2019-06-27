@@ -3,28 +3,32 @@
         $(document).ready(function () {
             //formatPrice();
             loadData();
-            //onSortProducts();
+            onSortProducts();
             //changeBrandNames();
         });
     };
 
-    //var onSortProducts = function sortProduct() {
-    //    var listBrandName = [];
-    //    $('#CurrentPage').val(1);
-    //    $.ajax({
-    //        type: "GET",
-    //        url: "/Product/Index?handler=Search",
-    //        data: {
-    //            "currentSearchString": "@Model.CurrentSearchString",
-    //            "currentSort": $('#CurrentSort option:selected').val(),
-    //            "currentBrand": listBrandName
-    //        }
-    //    }).done(function (result) {
-    //        $(".bottom-product").html(result);
-    //    }).fail(function (result) {
-    //        console.log(result);
-    //    });
-    //};
+    var onSortProducts = function sortProduct() {
+        var listBrandName = [];
+        $('#SearchProductViewModel_Sort').on('change', function () {
+            loadData(true);
+        });
+        //$('#CurrentPage').val(1);
+        commons.configs.pageIndex = 1;
+        //$.ajax({
+        //    type: "GET",
+        //    url: "/Product/Index?handler=Search",
+        //    data: {
+        //        "currentSearchString": "@Model.CurrentSearchString",
+        //        "currentSort": $('#CurrentSort option:selected').val(),
+        //        "currentBrand": listBrandName
+        //    }
+        //}).done(function (result) {
+        //    $(".bottom-product").html(result);
+        //}).fail(function (result) {
+        //    console.log(result);
+        //});
+    };
 
     //var changeBrandNames = function () {
     //    $("input[type=checkbox]").change(function () {
@@ -59,13 +63,12 @@
     //};
 
     var loadData = function (isPageChanged) {
-        
         var template = $('#search-result-template').html();
         var render = '';
         $.ajax({
             type: 'GET',
             data: {
-                //"Sort": "1",
+                "Sort": $('#SearchProductViewModel_Sort').val(),
                 "SearchString": $('#search-string').val(),
                 //"Rating": "4",
                 "pageIndex": commons.configs.pageIndex,
@@ -85,7 +88,8 @@
                                 `/images/client/ProductImages/${item.productImages[0].name}` : `/images/client/ProductImages/default-image.jpg`,
                             ProductName: item.name,
                             ProductId: item.id,
-                            AvgRating: item.averageEvaluation,
+                            AvgRating: (item.averageEvaluation !== undefined && item.averageEvaluation !== '' && item.averageEvaluation !== null) ?
+                                `Đánh giá: ${item.averageEvaluation}/5` : 'Chưa có đánh giá nào',
                             OriginalPrice: `${commons.formatNumber(item.originalPrice, 0)}đ`,
                             Price: `${commons.formatNumber(item.price, 0)}đ`
                         });
