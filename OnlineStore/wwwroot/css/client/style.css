@@ -30,10 +30,18 @@
     align-items: center;
 }
 
-.row__sm4--nopadding{
+.row__sm4--nopadding {
     padding: 0;
 }
 
 .row__sm2--padding {
     padding: 2px;
+}
+
+.product-pagination li > a {
+    color: orangered !important;
+}
+
+.row--ul__center {
+    text-align: center;
 }

@@ -9,15 +9,16 @@
 @section Scripts{
     <script src="~/js/client/product/search.js"></script>
     <script>
-        search.init();
-
+        $(document).ready(function () {
+            search.init();
+        });
     </script>
 }
 
 @section Styles{
-    <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
+    @*<link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />*@
     @*<link href="~/css/client/layout/style.css" rel="stylesheet" />
-    <link href="~/css/client/product/detail.css" rel="stylesheet" />*@
+        <link href="~/css/client/product/detail.css" rel="stylesheet" />*@
 }
 
 <input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
@@ -69,15 +70,16 @@
                         </div>
                     </div>*@
                 <div class="shop-inner">
-                    <div class="page-title">
-                        <h2>iPhone 6</h2>
-                    </div>
+                    @*<div class="page-title">
+                            <h2>iPhone 6</h2>
+                        </div>*@
                     <div class="toolbar">
                         <div class="view-mode">
-                            <ul>
-                                <li class="active"> <a href="shop_grid.html"> <i class="fa fa-th-large"></i> </a> </li>
-                                <li> <a href="shop_list.html"> <i class="fa fa-th-list"></i> </a> </li>
-                            </ul>
+                            @*0 mặt hàng được tìm thấy theo "d9ien655 thoai5"*@
+                            @*<ul>
+                                    <li class="active"> <a href="shop_grid.html"> <i class="fa fa-th-large"></i> </a> </li>
+                                    <li> <a href="shop_list.html"> <i class="fa fa-th-list"></i> </a> </li>
+                                </ul>*@
                         </div>
                         <div class="sorter">
                             <div class="short-by">
@@ -104,656 +106,6 @@
                     </div>
                     <div class="product-grid-area">
                         <ul class="products-grid">
-                            @*
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-new-label new-left">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="icon-sale-label sale-left">Sale</div>
-                                            <div class="icon-new-label new-right">New</div>
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-new-label new-left">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-sale-label sale-left">Sale</div>
-                                                <div class="icon-new-label new-right">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="icon-sale-label sale-left">Sale</div>
-                                            <div class="icon-new-label new-right">New</div>
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-new-label new-left">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$89.99</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.99</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$225.88</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-new-label new-right">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$120.99</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-new-label new-right">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$99.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="icon-sale-label sale-left">Sale</div>
-                                                <div class="icon-new-label new-right">New</div>
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
-                                    <div class="product-item">
-                                        <div class="item-inner">
-                                            <div class="product-thumbnail">
-                                                <div class="pr-img-area">
-                                                    <a title="Ipsums Dolors Untra" href="single_product.html">
-                                                        <figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>
-                                                    </a>
-                                                </div>
-                                                <div class="pr-info-area">
-                                                    <div class="pr-button">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-signal"></i> </a> </div>
-                                                        <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Ipsums Dolors Untra" href="single_product.html">Ipsums Dolors Untra </a> </div>
-                                                    <div class="item-content">
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box">
-                                                                <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                                <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>*@
                         </ul>
                         <script id="search-result-template" type="x-tmpl-mustache">
                             <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
@@ -762,9 +114,9 @@
                                         <div class="product-thumbnail">
                                             @*<div class="icon-new-label new-left">New</div>*@
                                             <div class="pr-img-area">
-                                                <a title="Ipsums Dolors Untra" href="single_product.html">
+                                                <a title="{{ProductName}}" href="/Product/Detail?id={{ProductId}}">
                                                     @*<figure> <img class="first-img" src="images/products/product-1.jpg" alt="HTML template"> <img class="hover-img" src="images/products/product-1.jpg" alt="HTML template"></figure>*@
-                                                    <figure><img class="first-img" src="{{Image}}" height="250" alt="HTML template"> @*<img class="hover-img" src="{{Image}}" alt="HTML template">*@</figure>
+                                                    <figure><img class="first-img" src="{{Image}}" height="250" alt="Xin lỗi, hình ảnh không thể hiển thị"> @*<img class="hover-img" src="{{Image}}" alt="HTML template">*@</figure>
                                                 </a>
                                             </div>
                                             <div class="pr-info-area">
@@ -783,7 +135,7 @@
                                                     <div class="ratings">
                                                         {{AvgRating}}
                                                         @*<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i>*@
-                                                        @*<div class="rateit" data-rateit-value= data-rateit-readonly="true"> </div>*@
+                                                        @*<div class="rateit" data-rateit-value=data-rateit-readonly ="true"> </div>*@
                                                         @*<div class="rateit" data-rateit-value={{AvgRating}} data-rateit-readonly="true"> </div>*@
                                                     </div>
                                                     <div class="item-price">
@@ -805,9 +157,66 @@
                             </li>
                         </script>
                     </div>
-                    <div class="pagination-area">
-                        <!--Pagination-->
-                        <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                @*<table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Tên</th>
+                                                <th>Loại sản phẩm</th>
+                                                <th>Thương hiệu</th>
+                                                <th>Số lượng</th>
+                                                <th>Giá</th>
+                                                <th>Ngày tạo</th>
+                                                <th width="10%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbl-content"></tbody>
+                                    </table>*@
+                                <!--Pagination-->
+                                <br />
+                                <div class="row">
+                                    @*<div class="col-sm-3">
+                                            <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                                                <select id="ddlShowPage">
+                                                    <option value="10" selected="selected">10</option>
+                                                    <option value="20">20</option>
+                                                    <option value="30">30</option>
+                                                    <option value="50">50</option>
+                                                </select>
+                                                <span class="item-per-page">
+                                                    sản phẩm/trang.
+                                                </span>
+                                                Tổng số sản phẩm: <strong id="lblTotalRecords"></strong>
+                                            </div>
+                                        </div>*@
+                                    <div class="row--ul__center">
+                                        <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                                            <ul id="paginationUL" class="product-pagination"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="pagination-area">
+                    *@
+                    <!--Pagination-->
+                    @*<div class="container">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination" id="pagination"></ul>
+                            </nav>
+                        </div>*@
+                    @*<ul id="pagination-demo" class="pagination-sm"></ul>*@
+                    @*<ul id="paginationUL"></ul>
+                        <ul>
+                            <li><a class="active" href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                        </ul>*@
+                    @*<div class="row">
                             <div class="col-sm-5">
                                 <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
                                     <select id="ddlShowPage">
@@ -827,15 +236,15 @@
                                     <ul id="paginationUL"></ul>
                                 </div>
                             </div>
-                        </div>
-                        @*<ul>
-
-                                <li><a class="active" href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-                            </ul>*@
-                    </div>
+                        </div>*@
+                    @*<ul>
+                            <li><a class="active" href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                        </ul>*@
+                    @*
+                        </div>*@
                 </div>
             </div>
             <aside class="sidebar col-sm-3 col-xs-12 col-sm-pull-9">
@@ -903,7 +312,7 @@
                         <div class="manufacturer-area">
                             <h2 class="saider-bar-title">Danh mục sản phẩm</h2>
                             <div class="saide-bar-menu">
-                                <ul>
+                                <ul id="list-categories">
                                     @*
                                         <li><a href="#"><i class="fa fa-angle-right"></i> Aliquam</a></li>
                                         <li><a href="#"><i class="fa fa-angle-right"></i> Duis tempus id </a></li>
@@ -911,12 +320,25 @@
                                         <li><a href="#"><i class="fa fa-angle-right"></i> Suspendisse </a></li>
                                         <li><a href="#"><i class="fa fa-angle-right"></i> Nunc gravida </a></li>*@
                                 </ul>
+                                <script id="categoies-template" type="x-tmpl-mustache">
+                                    <li>
+                                        <a href="#" class="category-filter" data-category-id="{{CategoryId}}">{{CategoryName}}</a>
+                                    </li>
+                                    @*
+                                        <li><a href="javascript:;" id="" class="category-filter" data-category-id="{{CategoryId}}"><i class="fa fa-angle-right"></i> {{CategoryName}}</a></li>*@
+                                    @*
+                                        <li><a href="#" id="category-filter" name="category-filter" class="category-filter"><i class="fa fa-angle-right"></i> {{CategoryName}}</a></li>*@
+                                    @*
+                                        <li class="category-filter" data-category-id="{{CategoryId}}"><i class="fa fa-angle-right"></i> {{CategoryName}}</li>*@
+                                    @*
+                                        <li class="category-filter" data-category-id="{{CategoryId}}"> {{CategoryName}}</li>*@
+                                </script>
                             </div>
                         </div>
                         <div class="layered-Category">
-                            <h2 class="saider-bar-title">Thương hiệu</h2>
+                            <h2 class="saider-bar-title">Tên thương hiệu</h2>
                             <div class="layered-content">
-                                <ul class="check-box-list">
+                                <ul class="check-box-list" id="list-brand-names">
                                     @*
                                         <li>
                                             <input type="checkbox" id="jtv1" name="jtvc">
@@ -963,6 +385,13 @@
                                             <label for="jtv8"> <span class="button"></span> Best selling<span class="count">(05)</span> </label>
                                         </li>*@
                                 </ul>
+                                <script id="brand-names-template" type="x-tmpl-mustache">
+                                    <li>
+                                        <input type="checkbox" name="BrandName" value="{{BrandName}}" /> {{BrandName}}
+                                        @*<label for="jtv1"> <span class="button"></span> Women<span class="count">(12)</span> </label>*@
+                                        @*<label for="BrandName"> {{BrandName}}</label>*@
+                                    </li>
+                                </script>
                             </div>
                         </div>
                         <div class="manufacturer-area">
@@ -970,7 +399,7 @@
                             <div class="saide-bar-menu">
                                 <ul>
                                     <li>
-                                        <a href="#" class="rating">
+                                        <a href="#" class="rating" data-rating-number="5">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -980,7 +409,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="rating">
+                                        <a href="#" class="rating" data-rating-number="4">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -990,7 +419,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="rating">
+                                        <a href="#" class="rating" data-rating-number="3">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
@@ -1000,7 +429,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="rating">
+                                        <a href="#" class="rating" data-rating-number="2">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-o"></i>
@@ -1010,7 +439,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" class="rating">
+                                        <a href="#" class="rating" data-rating-number="3">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star-o"></i>
                                             <i class="fa fa-star-o"></i>
@@ -1028,43 +457,6 @@
                                 </ul>
                             </div>
                         </div>
-                        @*<div class="manufacturer-area">
-                                <h2 class="saider-bar-title">Manufacturer</h2>
-                                <div class="saide-bar-menu">
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i> Aliquam</a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i> Duis tempus id </a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i> Leo quis molestie. </a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i> Suspendisse </a></li>
-                                        <li><a href="#"><i class="fa fa-angle-right"></i> Nunc gravida </a></li>
-                                    </ul>
-                                </div>
-                            </div>*@
-                        @*<div class="color-area">
-                                <h2 class="saider-bar-title">Color</h2>
-                                <div class="color">
-                                    <ul>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                    </ul>
-                                </div>
-                            </div>*@
-                        @*<div class="size-area">
-                                <h2 class="saider-bar-title">Size</h2>
-                                <div class="size">
-                                    <ul>
-                                        <li><a href="#">S</a></li>
-                                        <li><a href="#">L</a></li>
-                                        <li><a href="#">M</a></li>
-                                        <li><a href="#">XL</a></li>
-                                        <li><a href="#">XXL</a></li>
-                                    </ul>
-                                </div>
-                            </div>*@
                     </div>
                 </div>
                 <div class="block product-price-range ">
@@ -1075,16 +467,16 @@
                         <div class="row">
                             <div class="range-price col-sm-12">
                                 <div class="col-sm-4 row__sm4--nopadding">
-                                    <input type="number" class="form-control" id="min-price">
+                                    <input type="number" min="0" class="form-control" id="min-price">
                                 </div>
                                 <div class="col-sm-2">
                                     đến
                                 </div>
                                 <div class="col-sm-4 row__sm4--nopadding">
-                                    <input type="number" class="form-control" id="max-price">
+                                    <input type="number" min="0" class="form-control" id="max-price">
                                 </div>
                                 <div class="col-sm-2 row__sm2--padding">
-                                    <button class="btn btn-default"><i class="fa fa-arrow-right"></i></button>
+                                    <button class="btn btn-default" id="btn-price-range"><i class="fa fa-arrow-right"></i></button>
                                 </div>
                             </div>
                         </div>
