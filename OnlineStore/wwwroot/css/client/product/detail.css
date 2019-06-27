@@ -201,7 +201,8 @@ body .no-padding {
 }
 
 .tabproduct {
-    background: #fafafa;
+    /*background: #fafafa;*/
+    background: #fff;
 }
 
 .productnamedetail {

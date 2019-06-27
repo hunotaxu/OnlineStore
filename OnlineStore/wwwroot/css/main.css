@@ -1,18 +1,20 @@
-body {
-  background-color: #336666;
+.productnamecheckout {
+    font-family: 'Roboto','Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333333;
 }
-.baseColor {
-  color: #663333;
+
+.border-box-cartmini {
+    border: 1px solid #e5e5e5
 }
-.bgLight {
-  color: #884a44;
+
+.product-image-cartmini {
+    border-right: 1px solid #e5e5e5
 }
-.bgLight2 {
-  color: #aa6355;
+.none-padding {
+    padding: 0px !important;
 }
-.bgDark {
-  color: #442225;
-}
-.bgDark2 {
-  color: #221114;
+.icon-service {
+    color: #cb2d22 !important;
 }

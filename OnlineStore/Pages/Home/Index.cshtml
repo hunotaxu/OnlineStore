@@ -5,7 +5,10 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-@section scripts{
+@section StyleS{
+    <link href="~/css/client/home.css" rel="stylesheet" />
+}
+@section Scripts{
     <script type='text/javascript'>
         jQuery(document).ready(function () {
             jQuery('#rev_slider_4').show().revolution({
@@ -79,8 +82,10 @@
             });
         });
     </script>
-    
-}
+    <script src="~/js/client/home.js" rel="stylesheet" asp-append-version="true"></script>
+    <script>
+        jshome.init();
+    </script>}
 <!-- Slideshow  -->
 <div class="main-slider" id="home">
     <div class="container">
@@ -135,7 +140,7 @@
             <div class="col col-md-3 col-sm-6 col-xs-12">
                 <div class="block-wrapper ship">
                     <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-paper-plane"></i></div>
+                        <div class="icon-wrapper"><i class="fa fa-paper-plane icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Miễn phí vận chuyển</h3>
                             <p>Đơn hàng trên 50k</p>
@@ -146,7 +151,7 @@
             <div class="col col-md-3 col-sm-6 col-xs-12 ">
                 <div class="block-wrapper return">
                     <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-rotate-right"></i></div>
+                        <div class="icon-wrapper"><i class="fa fa-rotate-right icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Bảo mật thanh toán</h3>
                             <p>Momo, ATM, Paypal</p>
@@ -157,7 +162,7 @@
             <div class="col col-md-3 col-sm-6 col-xs-12">
                 <div class="block-wrapper support">
                     <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-umbrella"></i></div>
+                        <div class="icon-wrapper"><i class="fa fa-umbrella icon-service" ></i></div>
                         <div class="service-wrapper">
                             <h3>Hỗ trợ 24/7</h3>
                             <p>Điện thoại: 016769276</p>
@@ -168,7 +173,7 @@
             <div class="col col-md-3 col-sm-6 col-xs-12">
                 <div class="block-wrapper user">
                     <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-tags"></i></div>
+                        <div class="icon-wrapper"><i class="fa fa-tags icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Ưu đãi khách hàng cũ</h3>
                             <p>25% cho đơn hàng trên 200k</p>
@@ -203,7 +208,7 @@
                 <div class="jtv-best-sale-list">
                     <div class="wpb_wrapper">
                         <div class="best-title text-left">
-                            <h2>K</h2>
+                            <h2>Sản phẩm giảm giá hot</h2>
                         </div>
                     </div>
                     <div class="slider-items-products">
@@ -221,37 +226,24 @@
 </div>
 
 <!-- All products-->
-
+@*Slide sản phảm bán chạy *@
 <div class="container">
     <div class="home-tab">
         <div class="tab-title text-left">
-            <h2>Best selling</h2>
+            <h2>Sản phẩm bán chạy</h2>
             <ul class="nav home-nav-tabs home-product-tabs">
-                <li class="active"><a href="#computer" data-toggle="tab" aria-expanded="false">Laptop</a></li>
-                <li><a href="#smartphone" data-toggle="tab" aria-expanded="false">Điện thoại</a></li>
-                <li><a href="#watches" data-toggle="tab" aria-expanded="false">Máy tính bảng</a></li>
-                <li><a href="#photo" data-toggle="tab" aria-expanded="false">Phụ kiện</a></li>
+                <li class="active"><a href="#topsellphone" data-toggle="tab" aria-expanded="false">Điện thoại</a></li>
+                <li><a href="#topselllaptop" data-toggle="tab" aria-expanded="false">Laptop</a></li>
+                <li><a href="#topselltablets" data-toggle="tab" aria-expanded="false">Máy tính bảng</a></li>
+                <li><a href="#topsellaccessories" data-toggle="tab" aria-expanded="false">Phụ kiện</a></li>
             </ul>
         </div>
         <div id="productTabContent" class="tab-content">
-            <div class="tab-pane active in" id="computer">
+            <div class="tab-pane active in" id="topsellphone">
                 <div class="featured-pro">
                     <div class="slider-items-products">
                         <div id="computer-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
-                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Laptops)
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane" id="smartphone">
-                <div class="top-sellers-pro">
-                    <div class="slider-items-products">
-                        <div id="smartphone-slider" class="product-flexslider hidden-buttons">
-                            <div class="slider-items slider-width-col4 ">
-
                                 @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Phones)
 
                             </div>
@@ -259,7 +251,20 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="watches">
+            <div class="tab-pane" id="topselllaptop">
+                <div class="top-sellers-pro">
+                    <div class="slider-items-products">
+                        <div id="smartphone-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4 ">
+
+                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Laptops)
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="topselltablets">
                 <div class="top-sellers-pro">
                     <div class="slider-items-products">
                         <div id="watches-slider" class="product-flexslider hidden-buttons">
@@ -270,12 +275,12 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane" id="photo">
+            <div class="tab-pane" id="topsellaccessories">
                 <div class="top-sellers-pro">
                     <div class="slider-items-products">
                         <div id="photo-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
-                                @*@await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.)*@
+                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Accessories)
                             </div>
                         </div>
                     </div>
@@ -284,6 +289,75 @@
         </div>
     </div>
 </div>
+@*//Slide sản phẩm bán chạy *@
+
+@*Slide sản phẩm mới *@
+<div class="container">
+    <div class="home-tab">
+        <div class="tab-title text-left">
+            <h2>Sản phẩm mới</h2>
+            <ul class="nav home-nav-tabs home-product-tabs">
+                <li class="active"><a href="#newphones" data-toggle="tab" aria-expanded="false">Điện thoại</a></li>
+                <li><a href="#newlaptops" data-toggle="tab" aria-expanded="false">Laptop</a></li>
+                <li><a href="#newtablets" data-toggle="tab" aria-expanded="false">Máy tính bảng</a></li>
+                <li><a href="#newaccessories" data-toggle="tab" aria-expanded="false">Phụ kiện</a></li>
+            </ul>
+        </div>
+        <div id="productTabContent" class="tab-content">
+            <div class="tab-pane active in" id="newphones">
+                <div class="featured-pro">
+                    <div class="slider-items-products">
+                        <div id="computer-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4">
+                                @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Phones)
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="newlaptops">
+                <div class="top-sellers-pro">
+                    <div class="slider-items-products">
+                        <div id="smartphone-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4 ">
+
+                                @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Laptops)
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="newtablets">
+                <div class="top-sellers-pro">
+                    <div class="slider-items-products">
+                        <div id="watches-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4 ">
+                                @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Tablets)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="newaccessories">
+                <div class="top-sellers-pro">
+                    <div class="slider-items-products">
+                        <div id="photo-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4 ">
+
+                                @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Accessories)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*//Slide sản phẩm mới *@
+
+
 @*<div class="container">
         <div class="row">
             <div class="daily-deal-section">
@@ -341,148 +415,23 @@
                 <div class="jtv-best-sale-list">
                     <div class="wpb_wrapper">
                         <div class="best-title text-left">
-                            <h2>Top Rate</h2>
+                            <h2>Top đánh giá</h2>
                         </div>
                     </div>
                     <div class="slider-items-products">
                         <div id="toprate-products-slider" class="product-flexslider">
                             <div class="slider-items">
                                 <ul class="products-grid">
+                                    @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Laptops)
+
+                                </ul>
+                                <ul class="products-grid">
                                     @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Phones)
 
-                                    @*<li class="item">
-                                            <div class="item-inner">
-                                                <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                                <div class="item-info">
-                                                    <div class="info-inner">
-                                                        <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                        </div>
-                                                        <div class="pr-button-hover">
-                                                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="item">
-                                            <div class="item-inner">
-                                                <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                                <div class="item-info">
-                                                    <div class="info-inner">
-                                                        <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                        <div class="item-price">
-                                                            <div class="price-box"> <span class="regular-price"> <span class="price">$99.99</span> </span> </div>
-                                                        </div>
-                                                        <div class="pro-action">
-                                                            <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                        </div>
-                                                        <div class="pr-button-hover">
-                                                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>*@
                                 </ul>
                                 <ul class="products-grid">
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$99.99</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <ul class="products-grid">
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Accessories)
+
                                 </ul>
                             </div>
                         </div>
@@ -495,7 +444,7 @@
                     <div class="jtv-banner3-inner">
                         <a href="#"><img src="~/images/client/layout/sub1a.jpg" alt="HTML template"></a>
                         <div class="hover_content">
-                            <div class="hover_data bottom" >
+                            <div class="hover_data bottom">
                                 <div class="desc-text" style="color:#333333; font-weight: 500">Thương hiệu ưu đãi </div>
                                 <div class="title" style="color:#333333; font-weight: 600">Khuyến mãi điện thoại</div>
                                 <span style="color:#333333; font-weight: 500">Điện thoại thông mimh</span>
@@ -509,152 +458,22 @@
                 <div class="jtv-best-sale-list">
                     <div class="wpb_wrapper">
                         <div class="best-title text-left">
-                            <h2>New products</h2>
+                            <h2>Sản phảm mới</h2>
                         </div>
                     </div>
                     <div class="slider-items-products">
                         <div id="new-products-slider" class="product-flexslider">
                             <div class="slider-items">
                                 <ul class="products-grid">
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Laptops)
                                 </ul>
                                 <ul class="products-grid">
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Phones)
+
                                 </ul>
                                 <ul class="products-grid">
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="item">
-                                        <div class="item-inner">
-                                            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="product_detail.html"> <img alt="HTML template" src="~/images/client/layout/products/product-1.jpg"> </a> </div>
-                                            <div class="item-info">
-                                                <div class="info-inner">
-                                                    <div class="item-title"> <a title="Product title here" href="single_product.html">Product title here </a> </div>
-                                                    <div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                    <div class="item-price">
-                                                        <div class="price-box">
-                                                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> $456.00 </span> </p>
-                                                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"> $567.00 </span> </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                                                    </div>
-                                                    <div class="pr-button-hover">
-                                                        <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                                                        <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Accessories)
+
                                 </ul>
                             </div>
                         </div>
@@ -839,46 +658,52 @@
             <!-- Newsletter -->
             <div class="col-md-6 col-sm-6">
                 <form id="newsletter-validate-detail" method="post" action="#">
-                    <h3>Join Our Newsletter</h3>
+                    <h3>Đăng kí nhận khuyễn mãi</h3>
                     <div class="title-divider"><span></span></div>
-                    <p class="sub-title text-center">Get 25% off</p>
+                    <p class="sub-title text-center">Giảm giá đến 25%</p>
                     <div class="newsletter-inner">
-                        <input class="newsletter-email" name='Email' placeholder='Enter Your Email' />
-                        <button class="button subscribe" type="submit" title="Subscribe">Subscribe</button>
+                        <input class="newsletter-email" name='Email' placeholder='Nhập email của bạn' />
+                        <button class="button subscribe" type="submit" title="Subscribe">Đăng kí</button>
                     </div>
                 </form>
             </div>
             <!-- Customers Box -->
             <div class="col-sm-6 col-xs-12 testimonials">
                 <div class="page-header">
-                    <h2>What Our Customers Say</h2>
+                    <h2>Giới thiệu về chúng tôi</h2>
                 </div>
                 <div class="slider-items-products">
                     <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
                         <div class="slider-items slider-width-col4 ">
                             <div class="holder">
                                 <blockquote>
-                                    Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip volutpat.
-                                    Integer rutrum ante eu lacus.Vestibulum libero nisl, porta vel.
+                                    © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
                                 </blockquote>
                                 <div class="thumb"> <img src="~/images/client/layout/testimonials-img3.jpg" alt="testimonials img"> </div>
-                                <div class="holder-info"> <strong class="name">John Doe</strong> <strong class="designation">CEO, Company</strong></div>
+                                <div class="holder-info"> <strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Công ty</strong></div>
                             </div>
                             <div class="holder">
-                                <blockquote>Lorem ipsum dolor sit ame consetur adipisicing elit. Voluptate, consetur adipisicing elit.Lorem ipsum dolor sit ame consetur adipisicing elit.Lorem ipsum dolor sit ame consetur adipisicing elit. Voluptate, consetur adipisicing elit.</blockquote>
+                                <blockquote>
+                                    © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
+
+                                </blockquote>
                                 <div class="thumb"> <img src="~/images/client/layout/testimonials-img1.jpg" alt="testimonials img"> </div>
-                                <div class="holder-info"> <strong class="name">Vince Roy</strong> <strong class="designation">CEO, Newspaper</strong> </div>
+                                <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Công ty</strong> </div>
                             </div>
                             <div class="holder">
-                                <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim. Donec sit amet eros. Cras feugiat luctus nulla vitae posuere. Suspendisse potenti. </blockquote>
+                                <blockquote>
+                                    MST:0105815899 (Số giấy chứng nhận đăng ký kinh doanh thương nhân) - Ngày cấp lần đầu: 12/03/2012
+                                    Đăng ký thay đổi lần 2: 04/4/2016 - Nơi cấp: Sở kế hoạch và đầu tư thành phố Hà Nội
+                                </blockquote>
                                 <div class="thumb"> <img src="~/images/client/layout/testimonials-img2.jpg" alt="testimonials img"> </div>
-                                <div class="holder-info"><strong class="name">John Doe</strong> <strong class="designation">CEO, ABC Softwear</strong></div>
+                                <div class="holder-info"><strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Nhà báo</strong></div>
                             </div>
                             <div class="holder">
-                                <blockquote>Aliquam erat volutpat. Sed do eiusmod tempor incididunt Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget. Donec sit amet eros. Nulla non ornare nisi, sed condimentum lorem. Morbi sed vehicula magna.</blockquote>
+                                <blockquote>
+                                    © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
+                                </blockquote>
                                 <div class="thumb"> <img src="~/images/client/layout/testimonials-img4.jpg" alt="testimonials img"> </div>
-                                <div class="holder-info"> <strong class="name">Vince Roy</strong> <strong class="designation">CEO, XYZ Softwear</strong></div>
+                                <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Nhà văn</strong></div>
                             </div>
                         </div>
                     </div>
