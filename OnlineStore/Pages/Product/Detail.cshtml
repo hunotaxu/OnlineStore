@@ -52,6 +52,7 @@
                         <div class="icon-sale-label sale-left">Sale</div>
                         <div class="large-image">
                             @*<a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">*@
+<<<<<<< Updated upstream
                             <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
                                 <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="products">
                             </a>
@@ -61,6 +62,19 @@
                                 <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 2" /></a></li>
                                 <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 1" /></a></li>
                                 <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 1" /></a></li>
+=======
+                            <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
+                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="products">
+                            </a>
+                        </div>                        
+                        <div class="flexslider flexslider-thumb">
+                            <ul class="previews-list slides" id="previews-list-images">                                
+                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="Thumbnail 1" /></a></li>
+                                @foreach (var item in Model.Item.ProductImages)
+                                {
+                                    <li><a href='@Url.Content("~/images/client/productimages/"+item.Name)' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/productimages/"+item.Name)' "><img src="@Url.Content("~/images/client/productimages/"+item.Name)" alt="thumbnail 1" /></a></li>
+                                }
+>>>>>>> Stashed changes
 
                             </ul>
                         </div>
