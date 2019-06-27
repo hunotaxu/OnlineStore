@@ -14,8 +14,8 @@
             <div class="icon-new-label new-right">New</div>
             <div class="product-thumbnail">
                 <div class="pr-img-area">
-                    <a title=@item.ProductImages.First().Name href="~/Product/Detail?id=@item.Id">
-                        <figure> <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages.First().Name" alt="Hình ảnh không thể hiển thị" /> <img class="hover-img" src="~/images/client/ProductImages/@item.ProductImages.First().Name" alt="Hình ảnh không thể hiển thị" /></figure>
+                    <a title=@item.ProductImages?.First()?.Name href="~/Product/Detail?id=@item.Id">
+                        <figure> <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.First()?.Name" alt="Hình ảnh không thể hiển thị" /> <img class="hover-img" src="~/images/client/ProductImages/@item.ProductImages?.First()?.Name" alt="Hình ảnh không thể hiển thị" /></figure>
                     </a>
                 </div>
                 <div class="pr-info-area">
