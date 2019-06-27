@@ -30,7 +30,7 @@ namespace DAL.Repositories
 
         public Cart GetCartByCustomerId(Guid customerId)
         {
-            return Table.FirstOrDefault(c => c.CustomerId == customerId);
+            return Table.FirstOrDefault(c => c.CustomerId == customerId && c.IsDeleted == false);
         }
 
         public int GetQuantity(int cartId)

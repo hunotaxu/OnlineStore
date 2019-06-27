@@ -16,7 +16,7 @@ namespace OnlineStore.Pages.Product
         private readonly ICartRepository _cartRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
         private readonly IItemRepository _itemRepository;
-        public AddToCartModel(UserManager<ApplicationUser> userManager, 
+        public AddToCartModel(UserManager<ApplicationUser> userManager,
             IUserRepository userRepository,
             ICartRepository cartRepository,
             ICartDetailRepository cartDetailRepository,
@@ -44,48 +44,49 @@ namespace OnlineStore.Pages.Product
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
             //if (user != null && !_userRepository.IsAdmin())
             //{
-                var cart = _cartRepository.GetCartByCustomerId(user.Id);
-                var _item = _itemRepository.Find(model.ItemId);
-                if (cart == null)
+            var cart = _cartRepository.GetCartByCustomerId(user.Id);
+            var _item = _itemRepository.Find(model.ItemId);
+            if (cart == null)
+            {
+                var newCart = new DAL.Data.Entities.Cart
                 {
-                    var newCart = new DAL.Data.Entities.Cart
+                    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
+                };
+                _cartRepository.Add(newCart);
+                _cartDetailRepository.Add(new CartDetail
+                {
+                    CartId = newCart.Id,
+                    ItemId = model.ItemId,
+                    Quantity = model.Quantity
+                });
+            }
+            else
+            {
+                var cartDetails = cart.CartDetails;
+                bool isMatch = false;
+                foreach (var item in cart.CartDetails)
+                {
+                    if (item.ItemId == model.ItemId)
                     {
-                        CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-                    };
-                    _cartRepository.Add(newCart);
+                        item.Quantity = item.IsDeleted == true ? model.Quantity : item.Quantity + model.Quantity;
+                        //item.Quantity += model.Quantity;
+                        if (item.Quantity > _item.Quantity)
+                            return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
+                        item.IsDeleted = false;
+                        _cartDetailRepository.Update(item);
+                        isMatch = true;
+                    }
+                }
+                if (!isMatch)
+                {
                     _cartDetailRepository.Add(new CartDetail
                     {
-                        CartId = newCart.Id,
+                        CartId = cart.Id,
                         ItemId = model.ItemId,
                         Quantity = model.Quantity
                     });
                 }
-                else
-                {
-                    var cartDetails = cart.CartDetails;
-                    bool isMatch = false;
-                    foreach (var item in cart.CartDetails)
-                    {
-                        if (item.ItemId == model.ItemId)
-                        {
-                            item.Quantity += model.Quantity;
-                            if (item.Quantity > _item.Quantity)
-                                return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
-                            item.IsDeleted = false;
-                            _cartDetailRepository.Update(item);
-                            isMatch = true;
-                        }
-                    }
-                    if (!isMatch)
-                    {
-                        _cartDetailRepository.Add(new CartDetail
-                        {
-                            CartId = cart.Id,
-                            ItemId = model.ItemId,
-                            Quantity = model.Quantity
-                        });
-                    }
-                }
+            }
             //}
             return new OkObjectResult(model);
         }

@@ -15,6 +15,7 @@
             filterByCategoryName();
             filterByPriceRange();
             preventNegativeNumber();
+            addToCart();
         });
     };
 
@@ -83,6 +84,51 @@
                 listBrandNamesSelected.splice(listBrandNamesSelected.indexOf(brand, 1));
             }
             loadData(true);
+        });
+    };
+
+    var addToCart = function () {
+        $('body').on('click', '#btnAddToCart', function (e) {
+            //$('#btnAddToCart').on('click', function (e) {
+            e.preventDefault();
+            var id = parseInt($(this).data('id'));
+            //if ($('#datahidden-cus').data('customerid') === '' || $('#datahidden-cus').data('customerid') === undefined) {
+            if ($('#user-id').val() === '' || $('#user-id').val() === undefined) {
+                commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
+                    window.location.replace(`/Identity/Account/Login?returnUrl=/Product/Detail?id=${id}`);
+                });
+            }
+            else {
+                $.ajax({
+                    url: "/Product/AddToCart?handler=AddToCart",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: 'application/json;charset=utf-8',
+                    beforeSend: function () {
+                        commons.startLoading();
+                    },
+                    data: JSON.stringify({
+                        ItemId: id,
+                        Quantity: 1
+                    }),
+                    success: function () {
+                        commons.notify('Thêm vào giỏ hàng thành công', 'success');
+                        loadItemMyCart.init();
+                    },
+                    error: function (response) {
+                        debugger;
+                        if (response.responseText !== undefined && response.responseText !== '') {
+                            commons.notify(response.responseText, 'error');
+                        }
+                        else {
+                            commons.notify('Đã có lỗi xãy ra', 'error');
+                        }
+                    },
+                    complete: function () {
+                        commons.stopLoading();
+                    }
+                });
+            }
         });
     };
 

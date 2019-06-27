@@ -1,12 +1,20 @@
 ﻿@page
 @using DAL.Data.Enums
+@using DAL.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @model OnlineStore.Pages.Product.SearchModel
 @{
     ViewData["Title"] = "SearchResult";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@{
+    var cus = await UserManager.GetUserAsync(HttpContext.User);
+}
+
 @section Scripts{
+
     <script src="~/js/client/product/search.js"></script>
     <script>
         $(document).ready(function () {
@@ -16,27 +24,11 @@
 }
 
 @section Styles{
-    @*<link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />*@
-    @*<link href="~/css/client/layout/style.css" rel="stylesheet" />
-        <link href="~/css/client/product/detail.css" rel="stylesheet" />*@
 }
 
 <input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
-<!-- Breadcrumbs -->
-@*<div class="breadcrumbs">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <ul>
-                        <li class="home"> <a title="Go to Home Page" href="index.html">Home</a><span>&raquo;</span></li>
-                        <li class=""> <a title="Go to Home Page" href="shop_grid.html">Smartphone</a><span>&raquo;</span></li>
-                        <li><strong>iPhone 6</strong></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>*@
-<!-- Breadcrumbs End -->
+<input type="hidden" id="user-id" value="@(cus != null ? cus.Id.ToString() : "")" />
+<form method="post"></form>
 <!-- Main Container -->
 <div class="main-container col2-left-layout">
     <div class="container">
@@ -105,8 +97,7 @@
                         </div>
                     </div>
                     <div class="product-grid-area">
-                        <ul class="products-grid">
-                        </ul>
+                        <ul class="products-grid"></ul>
                         <script id="search-result-template" type="x-tmpl-mustache">
                             <li class="item col-lg-4 col-md-4 col-sm-6 col-xs-6 ">
                                 <div class="product-item">
@@ -147,7 +138,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="pro-action">
-                                                        <button type="button" class="add-to-cart"><span> Thêm vào giỏ hàng</span> </button>
+                                                        <button type="button" class="add-to-cart" id="btnAddToCart" data-id="{{ProductId}}"><span> Thêm vào giỏ hàng</span> </button>
                                                     </div>
                                                 </div>
                                             </div>
