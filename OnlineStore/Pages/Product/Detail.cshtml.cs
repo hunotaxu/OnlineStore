@@ -5,8 +5,10 @@ using DAL.Data.Enums;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels;
+using OnlineStore.Models.ViewModels.Item;
 
 namespace OnlineStore.Pages.Product
 {
@@ -29,7 +31,7 @@ namespace OnlineStore.Pages.Product
 
         public IList<CustomerCommentViewModel> CustomerCommentViewModel { get; set; }
         [BindProperty]
-        public List<ProductImages> productImages { get; set; }
+        public List<ItemViewModel> Items { get; set; }
         
         public double Average { get; set; }
         public int ItemId;
@@ -138,27 +140,29 @@ namespace OnlineStore.Pages.Product
             return Page();
         }
 
-        //public IActionResult OnGetLoadPreviewImage(int? id)
+        //public IActionResult OnPostLoadPreviewImage([FromBody] ItemViewModel model)
         //{
-        //    var productimage = _productImagesRepository.GetSome(c=>c.ItemId == 35 );
-        //    if (productimage != null)
+
+        //    var _item = _itemRepository.Find(x=> x.Id== model.Id && x.IsDeleted==false);
+        //    if (_item != null)
         //    {
-        //        productImages = new List<ProductImages>();
-        //        var productimages = productimage.Where(cd => cd.IsDeleted == false).ToList();
-        //        if (productimages.Count > 0)
+        //        Items = new List<ItemViewModel>();
+        //        var imgitem = _productImagesRepository.GetSome(y => y.ItemId == _item.Id && y.IsDeleted == false).ToList();                
+        //        if (imgitem.Count > 0)
         //        {
-        //            foreach (var item in productimages)
+        //            foreach (var item in imgitem)
         //            {
-        //                var productimg = new ProductImages
+        //                var itemViewModel = new ItemViewModel
         //                {
-        //                    Id = item.Id,
-        //                    Name = item.Name,
+        //                    Id = _item.Id,
+        //                    Name=_item.Name,
+        //                    Image = item.Name,
         //                };
-        //                productImages.Add(productimg);
+        //                Items.Add(itemViewModel);
         //            }
         //        }
         //    }
-        //    return new OkObjectResult(productImages);
+        //    return new OkObjectResult(Items);
         //}
 
 

@@ -45,14 +45,13 @@ $('#gotocomment1').on('click', function (e) {
     $("#review a").trigger('click');
 });
 $('#btnAddToCart').on('click', function (e) {
-    e.preventDefault();   
+    e.preventDefault();
     var id = parseInt($(this).data('id'));
-    if ($('#rateit_star').data('customerid') === '' || $('#rateit_star').data('customerid') === undefined) {
+    if ($('#datahidden-cus').data('customerid') === '' || $('#datahidden-cus').data('customerid') === undefined) {
         commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
             window.location.replace(`/Identity/Account/Login?returnUrl=/Product/Detail?id=${id}`);
         });
     }
-
     else {
         $.ajax({
             url: "/Product/AddToCart?handler=AddToCart",
@@ -68,7 +67,7 @@ $('#btnAddToCart').on('click', function (e) {
             }),
             success: function () {
                 commons.notify('Thêm vào giỏ hàng thành công', 'success');
-                loadItemMyCart.init();               
+                loadItemMyCart.init();
                 commons.stopLoading();
             },
             error: function (response) {
@@ -81,7 +80,7 @@ $('#btnAddToCart').on('click', function (e) {
                 commons.stopLoading();
             }
         });
-    };
+    }
 });
 
 var x = document.getElementById('itemQty').value;
@@ -102,14 +101,51 @@ $("#txtQuantity").on("keypress keyup", function (event) {
     if ((event.which < 48 || event.which > 57)) {
         event.preventDefault();
     }
-    $("#txtQuantity").val();       
+    $("#txtQuantity").val();
 
     var y = document.getElementById('txtQuantity').value;
     if (y > x) {
         commons.notify('Số sản phẩm bạn nhập quá số lượng tồn', 'error');
-        
+
 
         $(this).val('');
         $(this).val(x);
     }
 });
+
+//$.ajax({
+    
+//    type: "POST",
+//    url: "/Product/Detail?handler=LoadPreviewImage",
+//    data: JSON.stringify({        
+//        Id: $('#datahidden-item').data('itemid')
+//    }),
+//    contentType: 'application/json;charset=utf-8',
+//    dataType: "json",
+//    beforeSend: function (xhr) {
+//        commons.startLoading();
+//    },
+//    success: function (response) {
+//        debugger;
+//        var render = '';
+//        if (response !== undefined) {
+//            $.each(response, function (i, item) {
+//                render += Mustache.render($('#script-previews-list-images').html(),
+//                    {                        
+//                        ItemId: item.id,                        
+//                        Name: item.name,
+//                        Image: (item.image !== undefined && item.image.length > 0) ?
+//                            `/images/client/ProductImages/${item.image}` : `/images/client/ProductImages/default-iamge.jpg$`
+//                    });
+//            });
+//        }
+//        if (render !== '') {
+//            $('#previews-list-images').html(render);
+//        }
+//        commons.stopLoading();
+//    },
+//    error: function () {
+//        commons.notify('Không thể tải địa chỉ', 'error');
+//        commons.stopLoading();
+//    }
+//});
