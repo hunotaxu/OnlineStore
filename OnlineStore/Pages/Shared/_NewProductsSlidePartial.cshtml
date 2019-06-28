@@ -18,12 +18,12 @@
                         <figure>
                             @if (@item.ProductImages?.FirstOrDefault()?.Name != null)
                             {
-                                <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" height="250" alt="Hình ảnh" />
+                                <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh" />
 
                             }
                             else
                             {
-                                <img class="first-img" src="~/images/client/ProductImages/default-image.jpg" height="250" alt="Hình ảnh" />
+                                <img class="first-img" src="~/images/client/ProductImages/default-image.jpg" alt="Hình ảnh" />
                             }
                             @*<img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" height="250" alt="Hình ảnh" />*@
                         </figure>

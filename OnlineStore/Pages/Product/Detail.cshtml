@@ -52,18 +52,43 @@
                         <div class="icon-sale-label sale-left">Sale</div>
                         <div class="large-image">
                             <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="products">
+                                @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
+                                {
+                                    <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="products">
+                                }
+                                else
+                                {
+                                    <img class="zoom-img" src="~/images/client/ProductImages/default-image.jpg" alt="products">
+                                }
                             </a>
-                        </div>                                               
+                        </div>
                         <div class="flexslider flexslider-thumb">
-                            <ul class="previews-list slides" id="previews-list-images">                                
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)" alt="Thumbnail 1" /></a></li>
+                            <ul class="previews-list slides" id="previews-list-images">
+                                <li>
+                                    @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
+                                    {
+                                        <a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="Thumbnail 1" /></a>
+                                    }
+                                    else
+                                    {
+                                        <a href='~/images/client/ProductImages/default-image.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/images/client/ProductImages/default-image.jpg' "><img src="~/images/client/ProductImages/default-image.jpg" alt="Thumbnail 1" /></a>
+                                    }
+                                </li>
                                 @foreach (var item in Model.Item.ProductImages)
                                 {
-                                    <li><a href='@Url.Content("~/images/client/productimages/"+item.Name)' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/productimages/"+item.Name)' "><img src="@Url.Content("~/images/client/productimages/"+item.Name)" alt="thumbnail 1" /></a></li>
+                            <li>
+                                @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
+                                {
+                                    <a href='@Url.Content("~/images/client/productimages/"+item.Name)' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/productimages/"+item.Name)' "><img src="@Url.Content("~/images/client/productimages/"+item.Name)" alt="thumbnail 1" /></a>
+                                }
+                                else
+                                {
+                                    <a href='~/images/client/ProductImages/default-image.jpg' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '~/images/client/ProductImages/default-image.jpg' "><img src="~/images/client/ProductImages/default-image.jpg" alt="thumbnail 1" /></a>
+                                }
+                            </li>
                                 }
                             </ul>
-                        </div>                       
+                        </div>
 
                     </div>
                     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
@@ -158,11 +183,11 @@
                             <div id="reviews" class="tab-pane fade">
                                 <div class="col-sm-12 col-lg-12 col-md-12">
                                     <div class="reviews-content-left">
-                                        @if(cus != null)
+                                        @if (cus != null)
                                         {
-                                            <input data-customerid="@cus.Id" id="data-cus-hidden" hidden/>
+                                            <input data-customerid="@cus.Id" id="data-cus-hidden" hidden />
                                         }
-                                        <input data-itemid="@Model.ItemId" id="data-item-hidden" hidden/>
+                                        <input data-itemid="@Model.ItemId" id="data-item-hidden" hidden />
                                         @if (Model.CustomerCommentViewModel != null)
                                         {
                                             @foreach (var item in Model.CustomerCommentViewModel)

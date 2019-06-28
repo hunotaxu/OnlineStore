@@ -30,18 +30,19 @@ namespace OnlineStore.Pages.Cart
             var itemnumbercart = 0;
 
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user != null && !_userRepository.IsAdmin())
-            //{
-            var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-            if (cart != null)
+            if (user != null)
             {
-                var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                foreach (var item in items)
+                var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+                if (cart != null)
                 {
-                    itemnumbercart += item.Quantity;
-                };
+                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                    foreach (var item in items)
+                    {
+                        itemnumbercart += item.Quantity;
+                    };
+                }
             }
-            return new OkObjectResult(itemnumbercart);           
+            return new OkObjectResult(itemnumbercart);
 
         }
     }
