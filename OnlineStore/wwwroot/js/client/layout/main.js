@@ -497,7 +497,7 @@ var jslayout = (function () {
                     $('#container-pay-cart-layout').html(render);
                     $('#PriceTotaltmpLayout').html(`${commons.formatNumber(PriceTotaltmp, 0)}đ`);
                 } else {
-                    $('.error-load-cart-layout').html(`<div style='text-align: center;'><h3 class="productnamecheckout">Không có sản phẩm nào trong giỏ hàng</h3></div>`);
+                    $('.error-load-cart-layout').html(`<div style='text-align: center;'><br/><h3 class="productnamecheckout">Không có sản phẩm nào trong giỏ hàng</h3></div>`);
                 }
                 commons.stopLoading();
             },

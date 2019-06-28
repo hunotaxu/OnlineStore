@@ -3,7 +3,7 @@
 @using OnlineStore.ViewComponents;
 
 
-@{ 
+@{
     var newitems = Model.OrderByDescending(x => x.DateCreated);
 }
 @foreach (var item in newitems.Take(9))
@@ -15,7 +15,18 @@
             <div class="product-thumbnail">
                 <div class="pr-img-area">
                     <a title=@item.ProductImages?.FirstOrDefault()?.Name href="~/Product/Detail?id=@item.Id">
-                        <figure> <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh không thể hiển thị" /> <img class="hover-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh không thể hiển thị" /></figure>
+                        <figure>
+                            @if (@item.ProductImages?.FirstOrDefault()?.Name != null)
+                            {
+                                <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" height="250" alt="Hình ảnh" />
+
+                            }
+                            else
+                            {
+                                <img class="first-img" src="~/images/client/ProductImages/default-image.jpg" height="250" alt="Hình ảnh" />
+                            }
+                            @*<img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" height="250" alt="Hình ảnh" />*@
+                        </figure>
                     </a>
                 </div>
                 <div class="pr-info-area">

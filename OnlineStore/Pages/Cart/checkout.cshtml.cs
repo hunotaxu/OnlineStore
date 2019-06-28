@@ -115,7 +115,7 @@ namespace OnlineStore.Pages.Order
                             var itemCartViewModel = new ItemCartViewModel
                             {
                                 ItemId = item.ItemId,
-                                Image = $"/images/client/ProductImages/{item.Item.ProductImages.First().Name}",
+                                Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
                                 Price = item.Item.Price,
                                 ProductName = item.Item.Name,
                                 //Quantity = item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,

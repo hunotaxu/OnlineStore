@@ -5939,9 +5939,9 @@ button span {
             color: #e83f33
         }
 
-    .check-box-list input[type="checkbox"] {
+    /*.check-box-list input[type="checkbox"] {
         display: none
-    }
+    }*/
 
         .check-box-list input[type="checkbox"] + label span.button {
             display: inline-block;

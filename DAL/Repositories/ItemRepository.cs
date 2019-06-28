@@ -35,7 +35,7 @@ namespace DAL.Repositories
             return Table.Where(s => s.Name.Contains(name));
         }
 
-        public PagedResult<Item> GetAllPaging(decimal? maxPrice, decimal? minPrice, int? rating, byte sortType, string searchString, List<string> brandNames, int pageIndex, int pageSize)
+        public PagedResult<Item> GetAllPaging(decimal? maxPrice, decimal? minPrice, int? categoryId, int? rating, byte sortType, string searchString, List<string> brandNames, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
 
@@ -44,16 +44,22 @@ namespace DAL.Repositories
                 query = query.Where(i => i.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
             }
 
+            if (categoryId.HasValue)
+            {
+                query = query.Where(i => i.CategoryId == categoryId);
+            }
+
             if (brandNames?.Any() == true)
             {
-                if (brandNames.Count() != query.Count())
-                {
-                    List<Item> itemFilters = (from c in brandNames
-                                              from i in query
-                                              where i.BrandName.Equals(c, StringComparison.InvariantCultureIgnoreCase)
-                                              select i).ToList();
-                    query = itemFilters;
-                }
+                //if (brandNames.Count() != query.Count())
+                //{
+                List<Item> itemFilters = query.Where(x => brandNames.Contains(x.BrandName)).ToList();
+                //List<Item> itemFilters = (from c in brandNames
+                //                          from i in query
+                //                          where !string.IsNullOrEmpty(c) && i.BrandName.Equals(c, StringComparison.InvariantCultureIgnoreCase)
+                //                          select i).ToList();
+                query = itemFilters;
+                //}
             }
 
             switch ((SortType)sortType)
@@ -86,10 +92,14 @@ namespace DAL.Repositories
 
             var rowCount = query.ToList().Count;
 
-            query = query.OrderByDescending(x => x.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var All = query.ToList();
+
+            //query = query.OrderByDescending(x => x.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            query = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             var paginationSet = new PagedResult<Item>
             {
+                All = All,
                 Results = query.ToList(),
                 CurrentPage = pageIndex,
                 RowCount = rowCount,

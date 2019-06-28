@@ -33,9 +33,8 @@ namespace OnlineStore.Pages.Product
 
         public IActionResult OnGetAllPaging()
         {
-            var a = SearchProductViewModel;
-            var model = _itemRepository.GetAllPaging(SearchProductViewModel.MaxPrice, SearchProductViewModel.MinPrice, 
-                SearchProductViewModel.Rating, SearchProductViewModel.Sort, SearchProductViewModel.SearchString, 
+            var model = _itemRepository.GetAllPaging(SearchProductViewModel.MaxPrice, SearchProductViewModel.MinPrice,
+                SearchProductViewModel.CategoryId, SearchProductViewModel.Rating, SearchProductViewModel.Sort, SearchProductViewModel.SearchString, 
                 SearchProductViewModel.Brand, SearchProductViewModel.PageIndex, SearchProductViewModel.PageSize);
             var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);

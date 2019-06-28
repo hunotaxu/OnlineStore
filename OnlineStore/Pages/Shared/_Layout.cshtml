@@ -26,9 +26,7 @@
     <link href="~/lib/notifyjs/styles/metro/notify-metro.css" rel="stylesheet" />
     <link href="~/node_modules/parsleyjs/src/parsley.css" rel="stylesheet" />
     <link href="~/css/client/style.css" rel="stylesheet" />
-    <link href="~/css/main.css" rel="stylesheet" />
     @RenderSection("Styles", false)
-
 </head>
 
 <body class="shop_grid_full_width_page">
@@ -165,7 +163,7 @@
                                                     <div class="col-sm-12 border-box-cartmini none-padding">
                                                         <input type="hidden" id="itemId" value="{{ItemId}}" />
                                                         <div class="col-sm-2 none-padding product-image-cartmini">
-                                                            <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>
+                                                            <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="Hình ảnh"></a>
                                                         </div>
                                                         <div class="product-details col-sm-10 ">
                                                             <a href="/Product/Detail?id={{ItemId}}">
@@ -595,7 +593,7 @@
     <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/client/layout/jquery.flexslider.js"></script>
     <script src="~/node_modules/mustache/mustache.min.js"></script>
-    <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
+
     <!-- owl.carousel.min js -->
     <script type="text/javascript" src="~/js/client/layout/owl.carousel.min.js"></script>
 
@@ -625,6 +623,7 @@
     <script src="~/node_modules/jquery-validation/dist/localization/messages_vi.js"></script>
     <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/js/client/layout/header.js"></script>
+    <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
     <script src="~/node_modules/parsleyjs/dist/parsley.min.js"></script>
     <script src="~/lib/parsley/vi.js"></script>
     <script>

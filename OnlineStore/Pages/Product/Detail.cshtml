@@ -51,37 +51,19 @@
                     <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
                         <div class="icon-sale-label sale-left">Sale</div>
                         <div class="large-image">
-                            @*<a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.Image)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">*@
-<<<<<<< Updated upstream
-                            <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="products">
-                            </a>
-                        </div>
-                        <div class="flexslider flexslider-thumb" id="previews-list-images">
-                            <ul class="previews-list slides">
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 2" /></a></li>
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 1" /></a></li>
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.First()?.Name)" alt="Thumbnail 1" /></a></li>
-=======
                             <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
                                 <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="products">
                             </a>
-                        </div>                        
+                        </div>                                               
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides" id="previews-list-images">                                
-                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="Thumbnail 1" /></a></li>
+                                <li><a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages.FirstOrDefault().Name)" alt="Thumbnail 1" /></a></li>
                                 @foreach (var item in Model.Item.ProductImages)
                                 {
                                     <li><a href='@Url.Content("~/images/client/productimages/"+item.Name)' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/productimages/"+item.Name)' "><img src="@Url.Content("~/images/client/productimages/"+item.Name)" alt="thumbnail 1" /></a></li>
                                 }
->>>>>>> Stashed changes
-
                             </ul>
-                        </div>
-                        @*<script id="script-previews-list-images" type="x-tmpl-mustache">
-                                <li><a href="/images/client/ProductImages/{{Name}}" class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '/images/client/ProductImages/{{Name}}' "><img src="/images/client/ProductImages/{{Name}})" alt="Thumbnail" /></a></li>
-                            </script>*@
-                        <!-- end: more-images -->
+                        </div>                       
 
                     </div>
                     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
@@ -160,11 +142,11 @@
                 <div class="product-overview-tab ">
                     <div class="product-tab-inner">
                         @*<ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                            <li id="description" class="active"> <a class="tabproduct" href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
-                            <li id="review"> <a class="tabproduct" href="#reviews" data-toggle="tab">Đánh giá</a> </li>
-                            <li id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Thẻ</a></li>
-                            <li id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Tùy chỉnh</a> </li>
-                        </ul>*@
+                                <li id="description" class="active"> <a class="tabproduct" href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
+                                <li id="review"> <a class="tabproduct" href="#reviews" data-toggle="tab">Đánh giá</a> </li>
+                                <li id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Thẻ</a></li>
+                                <li id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Tùy chỉnh</a> </li>
+                            </ul>*@
                         <div id="productTabContent" class="tab-content">
                             <div class="tab-pane fade in active" id="descriptions">
                                 <div class="std">
@@ -173,14 +155,18 @@
                                     </p>
                                 </div>
                             </div>
-                            <div id="reviews" class="tab-pane fade">                                
+                            <div id="reviews" class="tab-pane fade">
                                 <div class="col-sm-12 col-lg-12 col-md-12">
                                     <div class="reviews-content-left">
-                                        
+                                        @if(cus != null)
+                                        {
+                                            <input data-customerid="@cus.Id" id="data-cus-hidden" hidden/>
+                                        }
+                                        <input data-itemid="@Model.ItemId" id="data-item-hidden" hidden/>
                                         @if (Model.CustomerCommentViewModel != null)
                                         {
                                             @foreach (var item in Model.CustomerCommentViewModel)
-                                            {                                                
+                                            {
                                                 <div class="review-ratting">
                                                     <p>@item.Content</p>
                                                     <table>
@@ -204,35 +190,40 @@
 
                                         <!--Đánh giá của bạn-->
                                         <br />
+                                        @if (cus != null)
+                                        {
+                                            <input id="datahidden-cus" data-customerid="@cus.Id" hidden />
+
+                                        }
+                                        <input id="datahidden-item" data-itemid="@Model.ItemId" hidden />
                                         @if (Model.isordered)
                                         {
                                             <div id="frmreview">
-                                                @if (cus != null)
-                                                {
-                                                    <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Viết đánh giá của bạn:</h2>
-                                                    <form class="frmEvaluation" method="post">
-                                                        <!--Đánh giá sao-->
-                                                        <div id="rateit_star" class="rateit" data-rateit-value="5" data-rateit-readonly="false" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
-                                                        <!--Đánh giá sao-->
-                                                        <div class="form-area">
-                                                            <div class="form-element">
-                                                                <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
-                                                            </div>
-                                                            @*<div class="buttons-set">*@
-                                                                @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
-                                                                <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
-                                                            @*</div>*@
+
+                                                <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Viết đánh giá của bạn:</h2>
+                                                <form class="frmEvaluation" method="post">
+                                                    <!--Đánh giá sao-->
+                                                    <div id="rateit_star" class="rateit" data-rateit-value="5" data-rateit-readonly="false" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
+                                                    <!--Đánh giá sao-->
+                                                    <div class="form-area">
+                                                        <div class="form-element">
+                                                            <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
                                                         </div>
-                                                    </form>
-                                                }
+                                                        @*<div class="buttons-set">*@
+                                                        @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
+                                                        <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
+                                                        @*</div>*@
+                                                    </div>
+                                                </form>
+
                                             </div>
                                         }
                                         else
                                         {
-                                    <h2 class="center-block">
-                                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                        Vui lòng mua sản phẩm để đánh giá!
-                                    </h2>
+                                            <h2 class="center-block">
+                                                <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                                                Vui lòng mua sản phẩm để đánh giá!
+                                            </h2>
                                         }
                                         <!--//Đánh giá của bạn-->
                                     </div>

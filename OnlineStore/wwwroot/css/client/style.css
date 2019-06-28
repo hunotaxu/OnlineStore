@@ -30,10 +30,41 @@
     align-items: center;
 }
 
-.row__sm4--nopadding{
+.row__sm4--nopadding {
     padding: 0;
 }
 
 .row__sm2--padding {
     padding: 2px;
+}
+
+.product-pagination li > a {
+    color: orangered !important;
+}
+
+.row--ul__center {
+    text-align: center;
+}
+}
+.productnamecheckout {
+    font-family: 'Roboto','Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333333;
+}
+
+.border-box-cartmini {
+    border: 1px solid #e5e5e5
+}
+
+.product-image-cartmini {
+    border-right: 1px solid #e5e5e5
+}
+
+.none-padding {
+    padding: 0px !important;
+}
+
+.icon-service {
+    color: #cb2d22 !important;
 }
