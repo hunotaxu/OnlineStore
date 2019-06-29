@@ -45,36 +45,36 @@ namespace OnlineStore.Pages.Home
             Accessories = _itemRepository.GetByCategory(4);
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
         }
-        public IActionResult OnGetLoadCartLayout()
-        {
-            if (_userManager.GetUserAsync(HttpContext.User).Result != null)
-            {
-                var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-                if (cart != null)
-                {
-                    ItemInCarts = new List<ItemCartViewModel>();
-                    var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                    if (items.Count > 0)
-                    {
-                        foreach (var item in items)
-                        {
+        //public IActionResult OnGetLoadCartLayout()
+        //{
+        //    if (_userManager.GetUserAsync(HttpContext.User).Result != null)
+        //    {
+        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
+        //        if (cart != null)
+        //        {
+        //            ItemInCarts = new List<ItemCartViewModel>();
+        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+        //            if (items.Count > 0)
+        //            {
+        //                foreach (var item in items)
+        //                {
 
-                            var itemCartViewModel = new ItemCartViewModel
-                            {
-                                ItemId = item.ItemId,
-                                Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
-                                Price = item.Item.Price,
-                                ProductName = item.Item.Name,
-                                Quantity = item.Quantity,
-                            };
-                            ItemInCarts.Add(itemCartViewModel);
+        //                    var itemCartViewModel = new ItemCartViewModel
+        //                    {
+        //                        ItemId = item.ItemId,
+        //                        Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
+        //                        Price = item.Item.Price,
+        //                        ProductName = item.Item.Name,
+        //                        Quantity = item.Quantity,
+        //                    };
+        //                    ItemInCarts.Add(itemCartViewModel);
 
-                        }
-                    }
-                }
-            }
-            return new OkObjectResult(ItemInCarts);
-        }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    return new OkObjectResult(ItemInCarts);
+        //}
 
     }
 }

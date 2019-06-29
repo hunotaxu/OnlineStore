@@ -1,384 +1,233 @@
-﻿:root {
-    --form-height: 550px;
-    --form-width: 900px;
-    /*  Sea Green */
-    --left-color: #9fdeaf;
-    /*  Light Blue  */
-    --right-color: #96dbe2;
+﻿/*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');*/
+
+* {
+    box-sizing: border-box;
 }
 
-
-.container1 {
-    width: var(--form-width);
-    height: var(--form-height);
-    position: relative;
-    margin: auto;
-    border-radius: 10px;
-    margin-top: 50px;
-    padding: 0px;
-}
-/* 
-----------------------
-      Overlay
-----------------------
-*/
-.overlay {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    z-index: 100;
-    background-image: linear-gradient( to right, var(--left-color), var(--right-color) );
-    color: white;
-    clip: rect(0, 385px, var(--form-height), 0);
-}
-
-.open-sign-up {
-    animation: slideleft 1s linear forwards;
-}
-
-.open-sign-in {
-    animation: slideright 1s linear forwards;
-}
-
-.overlay .sign-in,
-.overlay .sign-up {
-    /*  Width is 385px - padding  */
-    --padding: 50px;
-    width: calc(483px - var(--padding) * 2);
-    height: 100%;
+.bodylogin {
+    background: #f6f5f7;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
-    padding: 0px var(--padding);
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    height: 100vh;
+    margin: -20px 0 50px;
+}
+
+h1 {
+    font-weight: bold;
+    margin: 0;
+    font-weight: 500;
+}
+
+p {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+}
+
+.spantext {
+    font-size: 12px;
+}
+
+.linktext {
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+.buttonlogin {
+    border-radius: 20px;
+    border: 1px solid #45D9AD;
+    background-color: #45D9AD;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+buttonlogin:active {
+    transform: scale(0.95);
+}
+
+buttonlogin:focus {
+    outline: none;
+}
+
+buttonlogin.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+}
+
+.formlogin {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
     text-align: center;
 }
 
-.overlay .sign-in {
-    float: left;
-}
-
-.overlay-text-left-animation {
-    animation: text-slide-in-left 1s linear;
-}
-
-.overlay-text-left-animation-out {
-    animation: text-slide-out-left 1s linear;
-}
-
-.overlay .sign-up {
-    float: right;
-}
-
-.overlay-text-right-animation {
-    animation: text-slide-in-right 1s linear;
-}
-
-.overlay-text-right-animation-out {
-    animation: text-slide-out-right 1s linear;
-}
-
-.overlay h1 {
-    margin: 0px 5px;
-    font-size: 2.1rem;
-}
-
-.overlay p {
-    margin: 20px 0px 30px;
-    font-weight: 200;
-}
-/* 
-------------------------
-      Buttons
-------------------------
-*/
-.switch-button,
-.control-button {
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 140px;
-    height: 40px;
-    font-size: 14px;
-    text-transform: uppercase;
-    background: none;
-    border-radius: 20px;
-    color: white;
-}
-
-.switch-button {
-    border: 2px solid;
-}
-
-.control-button {
+.inputlogin {
+    background-color: #eee;
     border: none;
-    margin-top: 15px;
-}
-
-    .switch-button:focus,
-    .control-button:focus {
-        outline: none;
-    }
-
-    .control-button.up {
-        background-color: var(--left-color);
-    }
-
-    .control-button.in {
-        background-color: var(--right-color);
-    }
-
-/* 
---------------------------
-      Forms
---------------------------
-*/
-.form {
+    padding: 12px 15px;
+    margin: 8px 0;
     width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 10px;
 }
 
-    .form .sign-in,
-    .form .sign-up {
-        --padding: 50px;
-        position: absolute;
-        /*  Width is 100% - 385px - padding  */
-        width: calc(var(--form-width) - 385px - var(--padding) * 2);
-        height: 100%;
-        display: flex;
+.social-containerlogin {
+    margin: 20px 0;
+}
+
+    .social-containerlogin a {
+        border: 1px solid #dddddd;
+        border-radius: 50%;
+        display: inline-flex;
         justify-content: center;
-        flex-direction: column;
         align-items: center;
-        padding: 0px var(--padding);
-        text-align: center;
-    }
-
-    /* Sign in is initially not displayed */
-    .form .sign-in {
-        display: none;
-    }
-
-    .form .sign-in {
-        left: 0;
-    }
-
-    .form .sign-up {
-        right: 0;
-    }
-
-.form-right-slide-in {
-    animation: form-slide-in-right 1s;
-}
-
-.form-right-slide-out {
-    animation: form-slide-out-right 1s;
-}
-
-.form-left-slide-in {
-    animation: form-slide-in-left 1s;
-}
-
-.form-left-slide-out {
-    animation: form-slide-out-left 1s;
-}
-
-.form .sign-in h1 {
-    color: var(--right-color);
-    margin: 0;
-}
-
-.form .sign-up h1 {
-    color: var(--left-color);
-    margin: 0;
-}
-
-.social-media-buttons {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin: 15px;
-}
-
-    .social-media-buttons .icon {
-        width: 40px;
+        margin: 0 5px;
         height: 40px;
-        border: 1px solid #dadada;
-        border-radius: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 10px 7px;
+        width: 40px;
     }
 
-.small {
-    font-size: 13px;
-    color: grey;
-    font-weight: 200;
-    margin: 5px;
+.containerlogin {
+    background-color: #ffffff;
+    
+  //  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    //width: 768px;
+    //max-width: 100%;
+    min-height: 480px;
 }
 
-.social-media-buttons .icon svg {
-    width: 25px;
-    height: 25px;
+.form-containerlogin {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
 }
 
-#sign-in-form input,
-#sign-up-form input {
-    margin: 12px;
-    font-size: 14px;
-    padding: 15px;
-    width: 260px;
-    font-weight: 300;
-    border: none;
-    background-color: #e4e4e494;
-    font-family: "Helvetica Neue", sans-serif;
-    letter-spacing: 1.5px;
-    padding-left: 20px;
+.sign-in-containerlogin {
+    left: 0;
+    width: 50%;
+    //z-index: 2;
 }
 
-    #sign-in-form input::placeholder {
-        letter-spacing: 1px;
-    }
-
-.forgot-password {
-    font-size: 12px;
-    display: inline-block;
-    border-bottom: 2px solid #efebeb;
-    padding-bottom: 3px;
+.sign-up-containerlogin {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+   // z-index: 1;
 }
 
-    .forgot-password:hover {
-        cursor: pointer;
+.containerlogin.right-panel-active .sign-in-containerlogin {
+    transform: translateX(100%);
+}
+
+.containerlogin.right-panel-active .sign-up-containerlogin {
+    transform: translateX(100%);
+    //opacity: 1;
+    //z-index: 5;
+    animation: show 0.6s;
+}
+
+@keyframes show {
+    0%, 49.99% {
+        opacity: 0;
+        //z-index: 1;
     }
 
-/* 
----------------------------
-    Animation
----------------------------
-*/
-@keyframes slideright {
-    0% {
-        clip: rect(0, 385px, var(--form-height), 0);
-    }
-
-    30% {
-        clip: rect(0, 480px, var(--form-height), 0);
-    }
-    /*  we want the width to be slightly larger here  */
-    50% {
-        clip: rect( 0px, calc(var(--form-width) / 2 + 480px / 2), var(--form-height), calc(var(--form-width) / 2 - 480px / 2) );
-    }
-
-    80% {
-        clip: rect( 0px, var(--form-width), var(--form-height), calc(var(--form-width) - 480px) );
-    }
-
-    100% {
-        clip: rect( 0px, var(--form-width), var(--form-height), calc(var(--form-width) - 385px) );
+    50%, 100% {
+        opacity: 1;
+        //z-index: 5;
     }
 }
 
-@keyframes slideleft {
-    100% {
-        clip: rect(0, 385px, var(--form-height), 0);
-    }
-
-    70% {
-        clip: rect(0, 480px, var(--form-height), 0);
-    }
-    /*  we want the width to be slightly larger here  */
-    50% {
-        clip: rect( 0px, calc(var(--form-width) / 2 + 480px / 2), var(--form-height), calc(var(--form-width) / 2 - 480px / 2) );
-    }
-
-    30% {
-        clip: rect( 0px, var(--form-width), var(--form-height), calc(var(--form-width) - 480px) );
-    }
-
-    0% {
-        clip: rect( 0px, var(--form-width), var(--form-height), calc(var(--form-width) - 385px) );
-    }
+.overlay-containerlogin {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    //z-index: 100;
 }
 
-@keyframes text-slide-in-left {
-    0% {
-        padding-left: 20px;
-    }
-
-    100% {
-        padding-left: 50px;
-    }
+.overlay-containerlogin {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    //z-index: 100;
 }
 
-@keyframes text-slide-in-right {
-    0% {
-        padding-right: 20px;
-    }
-
-    100% {
-        padding-right: 50px;
-    }
+.containerlogin.right-panel-active .overlay-containerlogin {
+    transform: translateX(-100%);
 }
 
-@keyframes text-slide-out-left {
-    0% {
-        padding-left: 50px;
-    }
-
-    100% {
-        padding-left: 20px;
-    }
+.overlay {
+    background: #24D7BF;
+    background: -webkit-linear-gradient(to right, #F24645, #EBC08D);
+    background: linear-gradient(to right, #F24645, #EBC08D);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #ffffff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
 }
 
-@keyframes text-slide-out-right {
-    0% {
-        padding-right: 50px;
-    }
-
-    100% {
-        padding-right: 20px;
-    }
+.containerlogin.right-panel-active .overlay {
+    transform: translateX(50%);
 }
 
-@keyframes form-slide-in-right {
-    0% {
-        padding-right: 100px;
-    }
-
-    100% {
-        padding-right: 50px;
-    }
+.overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
 }
 
-@keyframes form-slide-in-left {
-    0% {
-        padding-left: 100px;
-    }
-
-    100% {
-        padding-left: 50px;
-    }
+.overlay-left {
+    transform: translateX(-20%);
 }
 
-@keyframes form-slide-out-right {
-    0% {
-        padding-right: 50px;
-    }
-
-    100% {
-        padding-right: 80px;
-    }
+.containerlogin.right-panel-active .overlay-left {
+    transform: translateX(0);
 }
 
-@keyframes form-slide-out-left {
-    0% {
-        padding-left: 50px;
-    }
+.overlay-right {
+    right: 0;
+    transform: translateX(0);
+}
 
-    100% {
-        padding-left: 80px;
-    }
+.containerlogin.right-panel-active .overlay-right {
+    transform: translateX(20%);
 }

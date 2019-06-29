@@ -474,7 +474,7 @@ var jslayout = (function () {
         var PriceTotaltmp = 0;
         $.ajax({
             type: "GET",
-            url: "/Home/Index?handler=LoadCartLayout",
+            url: "/Cart/Index?handler=LoadCartLayout",
             beforeSend: function () {
                 commons.startLoading();
             },

@@ -110,7 +110,7 @@ namespace OnlineStore.Pages.Order
                         //{
                         //    return new BadRequestObjectResult("Số lượng sản phẩm của cửa hàng không còn đủ cho đơn hàng. Vui lòng xác nhận lại giỏ hàng.");
                         //}
-                        if (item.Item.Quantity != 0 && item.Item.Quantity > item.Quantity)
+                        if (item.Item.Quantity != 0 && item.Item.Quantity >= item.Quantity)
                         {
                             var itemCartViewModel = new ItemCartViewModel
                             {

@@ -50,46 +50,57 @@
                 <div class="product-view-area">
                     <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
                         <div class="icon-sale-label sale-left">Sale</div>
-                        <div class="large-image">
-                            <a href="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
-                                {
-                                    <img class="zoom-img" src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="products">
-                                }
-                                else
-                                {
+                        <div class="large-image" style="height: 351px">
+                            @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
+                            {
+                                <a href="~/images/client/ProductImages/@Model.Item.ProductImages?.FirstOrDefault()?.Name" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
+                                    <img class="zoom-img" src="~/images/client/ProductImages/@Model.Item.ProductImages?.FirstOrDefault()?.Name" alt="products">
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="~/images/client/ProductImages/default-image.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
                                     <img class="zoom-img" src="~/images/client/ProductImages/default-image.jpg" alt="products">
-                                }
-                            </a>
+                                </a>
+                            }
+
                         </div>
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides" id="previews-list-images">
-                                <li>
-                                    @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
-                                    {
-                                        <a href='@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+Model.Item.ProductImages?.FirstOrDefault()?.Name)" alt="Thumbnail 1" /></a>
-                                    }
-                                    else
-                                    {
-                                        <a href='~/images/client/ProductImages/default-image.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '~/images/client/ProductImages/default-image.jpg' "><img src="~/images/client/ProductImages/default-image.jpg" alt="Thumbnail 1" /></a>
-                                    }
-                                </li>
-                                @foreach (var item in Model.Item.ProductImages)
+                                @if (Model.Item.ProductImages.Count() == 0)
                                 {
-                            <li>
-                                @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
-                                {
-                                    <a href='@Url.Content("~/images/client/productimages/"+item.Name)' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/productimages/"+item.Name)' "><img src="@Url.Content("~/images/client/productimages/"+item.Name)" alt="thumbnail 1" /></a>
+                                    <li>
+                                        <a href='@Url.Content("~/images/client/ProductImages/default-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/default-image.jpg")' "><img src="@Url.Content("~/images/client/ProductImages/default-image.jpg")" alt="thumbnail 1" /></a>
+                                    </li>
+                                    <li>
+                                        <a href='@Url.Content("~/images/client/ProductImages/default-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/default-image.jpg")' "><img src="@Url.Content("~/images/client/ProductImages/default-image.jpg")" alt="thumbnail 1" /></a>
+                                    </li>
+                                    <li>
+                                        <a href='@Url.Content("~/images/client/ProductImages/default-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/default-image.jpg")' "><img src="@Url.Content("~/images/client/ProductImages/default-image.jpg")" alt="thumbnail 1" /></a>
+                                    </li>
                                 }
                                 else
                                 {
-                                    <a href='~/images/client/ProductImages/default-image.jpg' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '~/images/client/ProductImages/default-image.jpg' "><img src="~/images/client/ProductImages/default-image.jpg" alt="thumbnail 1" /></a>
-                                }
-                            </li>
+                                    @if (Model.Item.ProductImages.Count() <= 2)
+                                    {
+                                        <li>
+                                            <a href='@Url.Content("~/images/client/ProductImages/default-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/default-image.jpg")' "><img src="@Url.Content("~/images/client/ProductImages/default-image.jpg")" alt="thumbnail 1" /></a>
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Content("~/images/client/ProductImages/default-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/default-image.jpg")' "><img src="@Url.Content("~/images/client/ProductImages/default-image.jpg")" alt="thumbnail 1" /></a>
+                                        </li>
+                                    }
+
+                                    @foreach (var item in Model.Item.ProductImages)
+                                    {
+                                        <li>
+                                            <a href='@Url.Content("~/images/client/ProductImages/"+item.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+item.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+item.Name)" alt="Thumbnail 1" /></a>
+                                        </li>
+                                    }
+
                                 }
                             </ul>
                         </div>
-
                     </div>
                     <div class="col-xs-12 col-sm-7 col-lg-7 col-md-7 product-details-area">
                         <div class="product-name ">
@@ -234,10 +245,12 @@
                                                         <div class="form-element">
                                                             <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
                                                         </div>
-                                                        @*<div class="buttons-set">*@
+                                                        @*<div class="buttons-set">
+                                                        *@
                                                         @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
                                                         <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
-                                                        @*</div>*@
+                                                        @*
+                                                            </div>*@
                                                     </div>
                                                 </form>
 
