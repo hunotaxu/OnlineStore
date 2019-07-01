@@ -23,7 +23,7 @@
                                     <th>Mã đơn hàng</th>
                                     <th>Ngày đặt hàng</th>
                                     <th>Trạng thái đơn hàng</th>
-                                    @*<th>Total</th>*@
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +38,7 @@
                                         <td data-title="Order Status">@order.Status.GetDisplayName()</td>
                                         <!--quanity-->
                                         @*<td data-title="Total"><span class="order-total">$79.00</span></td>*@
+                                        <td class="a-center last"><span class="nobr"> <a asp-page="/Order/MyOrder" asp-route-orderId="@order.Id">Xem đơn hàng</a></span></td>
                                     </tr>
                                 }
                                 @*<tr>
