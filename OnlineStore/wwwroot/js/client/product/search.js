@@ -191,7 +191,7 @@
                         render += Mustache.render(template,
                             {
                                 Image: (item.productImages !== undefined && item.productImages.length > 0) ?
-                                    `/images/client/ProductImages/${item.productImages[0].name}` : `/images/client/ProductImages/default-image.jpg`,
+                                    `/images/client/ProductImages/${item.productImages[0].name}` : `/images/client/ProductImages/no-image.png`,
                                 ProductName: item.name,
                                 ProductId: item.id,
                                 AvgRating: (item.averageEvaluation !== undefined && item.averageEvaluation !== '' && item.averageEvaluation !== null) ?
