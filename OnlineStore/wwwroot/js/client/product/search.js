@@ -1,5 +1,5 @@
 ﻿var search = (function () {
-    var categoryId = '';
+    var categoryId = $('#category-id').val();
     var rating = '';
     var minPrice = '';
     var maxPrice = '';

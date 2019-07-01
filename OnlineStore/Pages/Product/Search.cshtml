@@ -27,6 +27,7 @@
 }
 
 <input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
+<input type="hidden" id="category-id" value="@Model.SearchProductViewModel.CategoryId" />
 <input type="hidden" id="user-id" value="@(cus != null ? cus.Id.ToString() : "")" />
 <form method="post"></form>
 <!-- Main Container -->
