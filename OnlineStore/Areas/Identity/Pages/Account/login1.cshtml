@@ -8,54 +8,54 @@
 
 
 @section Styles{
-    <link href="~/css/client/login.css" rel="stylesheet" />
+<link href="~/css/client/login.css" rel="stylesheet" />
 }
-<br /><br/>
-<div class="bodylogin main-container">
-    <div class="containerlogin col-xs-10 col-md-10 col-lg-10" id="containerlogin">
-        <div class="form-containerlogin sign-up-containerlogin">
-            <form class="formlogin" action="#">
-                <h1>Đăng kí tài khoản</h1>
-                <div class="social-containerlogin">
-                    <a href="#" class="social linktext"><i class="fa fa-facebook" aria-hidden="true"></i></a>                   
-                </div>
-                <span class="spantext">Hoặc sử dụng email của bạn để đăng kí</span>
-                <input class="inputlogin" type="text" placeholder="Name" />
-                <input class="inputlogin" type="email" placeholder="Email" />
-                <input class="inputlogin" type="password" placeholder="Password" />
-                <button class="buttonlogin">Đăng kí</button>
-            </form>
-        </div>
-        <div class="form-containerlogin sign-in-containerlogin">
-            <form class="formlogin" action="#">
-                <h1>Đăng nhập</h1>
-                <div class="social-containerlogin">
-                    <a href="#" class="social linktext"><i class="fa fa-facebook" aria-hidden="true"></i></a>                   
-                </div>
-                <span class="spantext">Đã có tài khoản</span>
-                <input class="inputlogin" type="email" placeholder="Email" />
-                <input class="inputlogin" type="password" placeholder="Password" />
-                <a href="#" class="linktext">Quên mật khẩu?</a>
-                <button class="buttonlogin">Đăng nhập</button>
-            </form>
-        </div>
-        <div class="overlay-containerlogin">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Chào mừng bạn đến với TimiShop</h1>
-                    <p>Để mua hàng xin vui lòng đăng nhập tài khoản</p>
-                    <button class="ghost buttonlogin" id="signIn">Đăng nhập</button>
-                </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Xin chào</h1>
-                    <p>Bạn vui lòng đăng kí tài khoản tại đây!</p>
-                    <button class="ghost buttonlogin" id="signUp">Đăng kí</button>
+<br /><br />
+<div class="main-container">
+    <div class="bodylogin row">
+        <div class="containerlogin col-md-10 col-xs-10" id="containerlogin">
+            <div class="form-containerlogin sign-up-containerlogin">
+                <form action="#">
+                    <h1 class="h1login">Tạo tài khoản</h1>
+                    <input class="inputlogin" type="text" placeholder="Tên" />
+                    <input class="inputlogin" type="text" placeholder="Số điện thoại" />
+                    <input class="inputlogin" type="email" placeholder="Email" />
+                    <input class="inputlogin" type="password" placeholder="Mật khẩu" />
+                    <button class="buttonlogin">Đăng kí</button>
+                </form>
+            </div>
+            <div class="form-containerlogin sign-in-containerlogin">
+                <form action="#">
+                    <h1 class="h1login">Đăng nhập</h1>
+                    <div class="social-containerlogin">
+                        <a href="#" class="social"><i class="fa fa-facebook-f"></i></a>
+                    </div>
+                    <span class="spanlogin">Đã có tài khoản</span>
+                    <input class="inputlogin" type="email" placeholder="Email" />
+                    <input class="inputlogin" type="password" placeholder="Mật khẩu" />
+                    <a href="#">Quên mật khẩu?</a>
+                    <button class="buttonlogin">Đăng nhập</button>
+                </form>
+            </div>
+            <div class="overlay-containerlogin">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <h1 class="h1login">Chào mừng bạn quay trở lại!</h1>
+                        <p class="plogin">Để tiếp tục. Vui lòng đăng nhập</p>
+                        <button class="buttonlogin ghost" id="signIn">Đăng nhập</button>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <h1 class="h1login">Xin chào!</h1>
+                        <p class="plogin">Đăng kí tài khoản tại đây</p>
+                        <button class=" buttonlogin ghost" id="signUp">Đăng kí</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<br /><br />
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/client/login.js"></script>
+<partial name="_ValidationScriptsPartial" />
+<script src="~/js/client/login.js"></script>
 }

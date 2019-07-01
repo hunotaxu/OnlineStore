@@ -1,4 +1,4 @@
-﻿/*@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');*/
+﻿@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 * {
     box-sizing: border-box;
@@ -11,17 +11,15 @@
     align-items: center;
     flex-direction: column;
     font-family: 'Montserrat', sans-serif;
-    height: 100vh;
-    margin: -20px 0 50px;
+    //height: 100vh;
+    
 }
 
-h1 {
-    font-weight: bold;
+.h1login {
     margin: 0;
-    font-weight: 500;
 }
 
-p {
+.plogin {
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
@@ -29,21 +27,14 @@ p {
     margin: 20px 0 30px;
 }
 
-.spantext {
+.spanlogin {
     font-size: 12px;
-}
-
-.linktext {
-    color: #333;
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
 }
 
 .buttonlogin {
     border-radius: 20px;
-    border: 1px solid #45D9AD;
-    background-color: #45D9AD;
+    border: 1px solid #e83f33;
+    background-color: #e83f33;
     color: #ffffff;
     font-size: 12px;
     font-weight: bold;
@@ -53,20 +44,20 @@ p {
     transition: transform 80ms ease-in;
 }
 
-buttonlogin:active {
+.buttonbuttonlogin:active {
     transform: scale(0.95);
 }
 
-buttonlogin:focus {
+.buttonlogin:focus {
     outline: none;
 }
 
-buttonlogin.ghost {
+.buttonlogin.ghost {
     background-color: transparent;
     border-color: #ffffff;
 }
 
-.formlogin {
+form {
     background-color: #ffffff;
     display: flex;
     align-items: center;
@@ -101,13 +92,11 @@ buttonlogin.ghost {
     }
 
 .containerlogin {
-    background-color: #ffffff;
-    
-  //  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background-color: #ffffff;    
     position: relative;
     overflow: hidden;
     //width: 768px;
-    //max-width: 100%;
+    max-width: 100%;
     min-height: 480px;
 }
 
@@ -121,14 +110,14 @@ buttonlogin.ghost {
 .sign-in-containerlogin {
     left: 0;
     width: 50%;
-    //z-index: 2;
+    z-index: 2;
 }
 
 .sign-up-containerlogin {
     left: 0;
     width: 50%;
     opacity: 0;
-   // z-index: 1;
+    z-index: 1;
 }
 
 .containerlogin.right-panel-active .sign-in-containerlogin {
@@ -137,20 +126,20 @@ buttonlogin.ghost {
 
 .containerlogin.right-panel-active .sign-up-containerlogin {
     transform: translateX(100%);
-    //opacity: 1;
-    //z-index: 5;
+    opacity: 1;
+    z-index: 5;
     animation: show 0.6s;
 }
 
 @keyframes show {
     0%, 49.99% {
         opacity: 0;
-        //z-index: 1;
+        z-index: 1;
     }
 
     50%, 100% {
         opacity: 1;
-        //z-index: 5;
+        z-index: 5;
     }
 }
 
@@ -162,7 +151,7 @@ buttonlogin.ghost {
     height: 100%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
-    //z-index: 100;
+    z-index: 100;
 }
 
 .overlay-containerlogin {
@@ -173,8 +162,8 @@ buttonlogin.ghost {
     height: 100%;
     overflow: hidden;
     transition: transform 0.6s ease-in-out;
-    //z-index: 100;
-}
+    z-index: 100;
+}   
 
 .containerlogin.right-panel-active .overlay-containerlogin {
     transform: translateX(-100%);
@@ -182,8 +171,8 @@ buttonlogin.ghost {
 
 .overlay {
     background: #24D7BF;
-    background: -webkit-linear-gradient(to right, #F24645, #EBC08D);
-    background: linear-gradient(to right, #F24645, #EBC08D);
+    background: -webkit-linear-gradient(to right, #45D9AD, #24D7BF);
+    background: linear-gradient(to right, #F97373, #FAACAC);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: 0 0;
