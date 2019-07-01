@@ -29,6 +29,8 @@ namespace DAL.Data.Entities
 
         public DateTime? DateModified { get; set; }
 
+        //public virtual ICollection<Category> Parent { get; set; }
+
         public virtual ICollection<Item> Item { get; set; }
     }
 }
