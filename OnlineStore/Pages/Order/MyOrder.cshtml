@@ -12,15 +12,13 @@
 }
 
 @section Scripts{
-    @*<script src="~/js/client/cart/checkout.js" rel="stylesheet" asp-append-version="true"></script>
-        <script>
-            checkoutcart.init();
-        </script>*@
+    <script src="~/js/admin/my-order.js"></script>
+    <script>
+        myOrder.init();
+    </script>
 }
 @section Styles{
-    @*<link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
-        <link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />*@
-    <link href="~/css/client/cart/checkout.css" rel="stylesheet" />
+    @*<link href="~/css/client/cart/checkout.css" rel="stylesheet" />*@
 }
 
 @{
@@ -138,7 +136,7 @@
                 <br />
                 <p style="border-bottom: 1px solid #e5e5e5; font-weight:700"> Giỏ hàng  </p><br />
                 <div class="col-sm-12 none-padding" id="container-pay-cart">
-                    @foreach (var orderItem in Model.MyOrderViewModel.OrderItems)
+                    @foreach (var orderItem in Model.MyOrderViewModel.Order.OrderItems)
                     {
                         <div class="col-sm-12 border-box-cartmini none-padding">
                             @*<input type="hidden" id="itemId" value="{{ItemId}}" />*@
@@ -214,23 +212,23 @@
                             </dd>
                             @*<dt class="complete"> Thông tin người nhận </dt>*@
                             @*<dd class="complete">
-                <address>
-                    <br />
-                    <div>
-                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>
-                    </div><br />
-                    <div style="padding: 0 25% 0 3%" id="labelAddress">
-                    </div><br />
-                    <div>
-                        <i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>
-                    </div>
+                                    <address>
+                                        <br />
+                                        <div>
+                                            <i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>
+                                        </div><br />
+                                        <div style="padding: 0 25% 0 3%" id="labelAddress">
+                                        </div><br />
+                                        <div>
+                                            <i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>
+                                        </div>
 
-                </address>
-            </dd>*@
+                                    </address>
+                                </dd>*@
                         </dl>
                         @if (Model.MyOrderViewModel.Order.Status == OrderStatus.Pending)
                         {
-                            <button type="button" id="cancelOrder" class="btn btn-secondary col-md-12">Hủy đơn hàng</button>
+                            <button type="button" id="cancelOrder" data-id="@Model.MyOrderViewModel.Order.Id" class="btn btn-secondary col-md-12">Hủy đơn hàng</button>
                         }
                         else
                         {
@@ -244,7 +242,7 @@
         </div>
     </div>
 </section>
-@*</form>*@
+<form method="post"></form>
 <!-- Main Container End -->
 <!-- service section -->
 @*<div class="jtv-service-area">
