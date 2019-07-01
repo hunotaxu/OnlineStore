@@ -25,5 +25,9 @@ namespace Utilities.Commons
         {
             return dateTime.ToString("dd/MM/yyyy HH:mm");
         }
+        public static string FormatDate(DateTime dateTime)
+        {
+            return dateTime.ToString("dd/MM/yyyy");
+        }
     }
 }

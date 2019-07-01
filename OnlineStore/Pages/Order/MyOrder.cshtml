@@ -1,0 +1,301 @@
+﻿@page
+@using DAL.Data.Entities
+@using Microsoft.AspNetCore.Identity
+@using Utilities.Commons
+@using DAL.Data.Enums
+@using  Utilities.Extensions
+@inject UserManager<ApplicationUser> UserManager
+@model OnlineStore.Pages.Order.MyOrderModel
+@{
+    ViewData["Title"] = "MyOrder";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@section Scripts{
+    @*<script src="~/js/client/cart/checkout.js" rel="stylesheet" asp-append-version="true"></script>
+        <script>
+            checkoutcart.init();
+        </script>*@
+}
+@section Styles{
+    @*<link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
+        <link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />*@
+    <link href="~/css/client/cart/checkout.css" rel="stylesheet" />
+}
+
+@{
+    var cus = await UserManager.GetUserAsync(HttpContext.User);
+}
+
+<!-- Main Container -->
+@*<form method="post">*@
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <br />
+        <div class="row">
+            <div class="col-main col-sm-8 col-xs-12">
+                <div class="my-account">
+                    <div class="page-title">
+                        <h2>Thông tin đơn hàng</h2>
+                    </div>
+                    <div class="orders-list table-responsive">
+                        <!--order info tables-->
+                        <table class="table table-bordered cart_summary table-striped">
+                            <tr>
+                                <td class="order-number">Mã đơn hàng</td>
+                                <td data-title="Order Number">@Model.MyOrderViewModel.Order.Id</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Thời gian đặt hàng</td>
+                                <td data-title="Order Date">@CommonFunctions.FormatDateTime(Model.MyOrderViewModel.Order.OrderDate)</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Ngày giao dự kiến</td>
+                                @if (Model.MyOrderViewModel.Order.DeliveryDate.HasValue)
+                                {
+                                    <td data-title="Order Date">@CommonFunctions.FormatDate(Model.MyOrderViewModel.Order.DeliveryDate.Value)</td>
+                                }
+                                else
+                                {
+                                    <td data-title="Order Date">@CommonFunctions.FormatDate(Model.MyOrderViewModel.Order.OrderDate.AddDays(3))</td>
+                                }
+                            </tr>
+                            <tr>
+                                <td class="order-number">Tình trạng đơn hàng</td>
+                                <td data-title="Order Status">@Model.MyOrderViewModel.Order.Status.GetDisplayName()</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Hình thức nhận hàng</td>
+                                <td data-title="Order Status">@Model.MyOrderViewModel.Order.ReceivingType.Name</td>
+                            </tr>
+                            <tr>
+                                <td class="order-number">Hình thức thanh toán</td>
+                                <td data-title="Order Status">@Model.MyOrderViewModel.Order.PaymentType.GetDisplayName()</td>
+                            </tr>
+                            @*<tr>
+                                    <td class="order-number">Last Updated</td>
+                                    <td data-title="Last Update">2017-03-13</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Shipment</td>
+                                    <td data-title="Shipment">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Payment</td>
+                                    <td data-title="Payment">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Comment</td>
+                                    <td data-title="Comment">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td class="order-number">Total</td>
+                                    <td data-title="Total"><p>$89.00</p></td>
+                                </tr>*@
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-md-12 col-sm-12">
+                            <div class="page-title">
+                                <h2>Địa chỉ nhận hàng</h2>
+                            </div>
+
+                            <table class="table table-bordered cart_summary">
+                                @*<tr>
+                                        <td>E-Mail</td>
+                                        <td data-title="E-Mail"><a href="mailto:#" class="color_dark">support@themes.com</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Company Name</td>
+                                        <td data-title="Company Name">Company Name</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Title</td>
+                                        <td data-title="Title">Mr</td>
+                                    </tr>*@
+                                <tr>
+                                    <td>Tên người nhận</td>
+                                    <td data-title="">@Model.MyOrderViewModel.Order.Address.RecipientName</td>
+                                </tr>
+                                <tr>
+                                    <td>Số điện thoại</td>
+                                    <td data-title="Middle Name">@Model.MyOrderViewModel.Order.Address.PhoneNumber</td>
+                                </tr>
+                                <tr>
+                                    <td>Địa chỉ chi tiết</td>
+                                    <td data-title="Last Name">@Model.MyOrderViewModel.Order.Address.Detail</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="right sidebar col-sm-4 col-xs-12">
+                <div class="page-title">
+                    <h2>Đơn hàng của bạn</h2>
+                </div>
+                <br />
+                <p style="border-bottom: 1px solid #e5e5e5; font-weight:700"> Giỏ hàng  </p><br />
+                <div class="col-sm-12 none-padding" id="container-pay-cart">
+                    @foreach (var orderItem in Model.MyOrderViewModel.OrderItems)
+                    {
+                        <div class="col-sm-12 border-box-cartmini none-padding">
+                            @*<input type="hidden" id="itemId" value="{{ItemId}}" />*@
+                            <input type="hidden" id="itemId" value="@orderItem.ItemId" />
+                            <div class="col-sm-2 none-padding product-image-cartmini img-height-58">
+                                @*<a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>*@
+                                @if (orderItem.Item.ProductImages != null && string.IsNullOrEmpty(orderItem.Item.ProductImages.FirstOrDefault()?.Name))
+                                {
+                                    <a href="/Product/Detail?id=@orderItem.ItemId" title=""><img src="/images/client/ProductImages/@orderItem.Item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh không thể hiển thị"></a>
+                                }
+                                else
+                                {
+                                    <a href="/Product/Detail?id=@orderItem.ItemId" title=""><img src="~/images/client/ProductImages/no-image.png" alt="html Template"></a>
+                                }
+
+                            </div>
+                            <div class="product-details col-sm-10">
+                                @*<a href="/Product/Detail?id={{ItemId}}">*@
+                                <a href="/Product/Detail?id=@orderItem.ItemId">
+                                    @*<h4 class="nomargin productnamecheckout">{{ProductName}}</h4>*@
+                                    <h4 class="nomargin productnamecheckout">@orderItem.Item.Name</h4>
+                                </a>
+                                @*<span class="text-danger">{{OutOfStockNotifyCation}}</span>*@
+                                @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>*@
+                                @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>*@
+                                <strong>@orderItem.Quantity</strong> x <span class="price productnamecheckout"><strong>@CommonFunctions.FormatNumber(orderItem.Price, 0)đ</strong></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+                @*<script id="template-cart" type="x-tmpl-mustache">
+                        <div class="col-sm-12 border-box-cartmini none-padding">
+                            <input type="hidden" id="itemId" value="{{ItemId}}" />
+                            <div class="col-sm-2 none-padding product-image-cartmini img-height-58">
+                                <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>
+                            </div>
+                            <div class="product-details col-sm-10">
+                                <a href="/Product/Detail?id={{ItemId}}">
+                                    <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
+                                </a>
+                                <span class="text-danger">{{OutOfStockNotifyCation}}</span>
+                                @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>
+                                <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>
+                            </div>
+                        </div>
+                    </script>*@
+                <div class="sidebar-checkout block main-container col-sm-12">
+                    <div style="border-bottom: 5px solid #e5e5e5; margin-top: 5%"></div>
+                    <div class="block-content">
+                        <dl>
+                            <dt class="complete" style="border-bottom: 1px solid #e5e5e5"> Thông tin đơn hàng  </dt>
+                            <dd class="complete">
+                                <address>
+                                    <br />
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-hand-o-right color-black" aria-hidden="true"></i>*@
+                                        @*Số sản phẩm: <span class="right" id="itemTotal1"></span> <br><br />*@
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-dot-circle-o" aria-hidden="true"></i>*@
+                                        Tạm tính: <span class="right" id="PriceTotaltmp1">@CommonFunctions.FormatNumber(Model.MyOrderViewModel.Order.SubTotal, 0)đ</span><br><br />
+                                    </div>
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-dot-circle-o" aria-hidden="true"></i>*@
+                                        Phí vận chuyển: <span class="right" id="ShippingFee">@CommonFunctions.FormatNumber(Model.MyOrderViewModel.Order.ShippingFee.Value, 0)đ </span><br><br />
+                                    </div>
+
+                                    <div style="border-bottom: 1px solid #e5e5e5">
+                                        @*<i class="fa fa-plus-square" aria-hidden="true"></i>*@
+                                        Tổng cộng: <span class="right" id="Total1">@CommonFunctions.FormatNumber(Model.MyOrderViewModel.Order.Total.Value, 0)đ</span> <br><br />
+                                    </div>
+                                </address>
+                            </dd>
+                            @*<dt class="complete"> Thông tin người nhận </dt>*@
+                            @*<dd class="complete">
+                <address>
+                    <br />
+                    <div>
+                        <i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>
+                    </div><br />
+                    <div style="padding: 0 25% 0 3%" id="labelAddress">
+                    </div><br />
+                    <div>
+                        <i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>
+                    </div>
+
+                </address>
+            </dd>*@
+                        </dl>
+                        @if (Model.MyOrderViewModel.Order.Status == OrderStatus.Pending)
+                        {
+                            <button type="button" id="cancelOrder" class="btn btn-secondary col-md-12">Hủy đơn hàng</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary col-md-12" disabled data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Hủy đơn hàng</button>
+                            <span class="red col-md-12">Xin lỗi, quý khách không thể hủy đơn hàng ở trạng thái này</span>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+@*</form>*@
+<!-- Main Container End -->
+<!-- service section -->
+@*<div class="jtv-service-area">
+        <div class="container">
+            <div class="row">
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper ship">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-paper-plane"></i></div>
+                            <div class="service-wrapper">
+                                <h3>World-Wide Shipping</h3>
+                                <p>On order over $99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-3 col-sm-6 col-xs-12 ">
+                    <div class="block-wrapper return">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-rotate-right"></i></div>
+                            <div class="service-wrapper">
+                                <h3>30 Days Return</h3>
+                                <p>Moneyback guarantee </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper support">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-umbrella"></i></div>
+                            <div class="service-wrapper">
+                                <h3>Support 24/7</h3>
+                                <p>Call us: ( +123 ) 456 789</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-md-3 col-sm-6 col-xs-12">
+                    <div class="block-wrapper user">
+                        <div class="text-des">
+                            <div class="icon-wrapper"><i class="fa fa-tags"></i></div>
+                            <div class="service-wrapper">
+                                <h3>Member Discount</h3>
+                                <p>25% on order over $199</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+@*<partial name="_AddressManagementModal" />*@
