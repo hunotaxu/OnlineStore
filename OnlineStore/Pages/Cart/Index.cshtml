@@ -28,7 +28,7 @@
                             <h2>Giỏ hàng của tôi</h2>
                         </div>
                         <div class="main-container">
-                            <div class="row container__row--center">
+                            <div class="row container__row--center col-md-8">
                                 <div class="col-md-12">
                                     <table id="cart" class="table table-hover table-condensed " style="background-color:whitesmoke">
                                         <thead>
@@ -63,14 +63,13 @@
                                     <a class="btn btn-success" id="btnConfirmOrder">Xác nhận giỏ hàng</a>
                                     @*<button class="btn btn-success" type="submit" hr>Tiến hành đặt hàng</button>*@
                                 </div>
-
                             </div>
                         </div>
                         <script id="template-cart" type="x-tmpl-mustache">
                             <tr>
-                                <td>
+                                <td class="img-height-100">
                                     <input type="hidden" id="itemId" value="{{ItemId}}" />
-                                    <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" width="100" class="img-responsive" />
+                                    <img src="{{Image}}" alt="Sản phẩm không thể hiển thị" class="img-responsive" />
                                 </td>
                                 <td>
                                     <a href="/Product/Detail?id={{ItemId}}">

@@ -244,7 +244,7 @@
                     <div class="slider-items-products">
                         <div id="computer-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
-                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Phones)
+                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Phones)
 
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                         <div id="smartphone-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
 
-                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Laptops)
+                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Laptops)
 
                             </div>
                         </div>
@@ -269,7 +269,7 @@
                     <div class="slider-items-products">
                         <div id="watches-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
-                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Tablets)
+                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Tablets)
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                     <div class="slider-items-products">
                         <div id="photo-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
-                                @await Html.PartialAsync("~/Pages/Shared/_ProductsSlidePartial.cshtml", Model.Accessories)
+                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Accessories)
                             </div>
                         </div>
                     </div>
@@ -663,7 +663,7 @@
                     <p class="sub-title text-center">Giảm giá đến 25%</p>
                     <div class="newsletter-inner">
                         <input class="newsletter-email" name='Email' placeholder='Nhập email của bạn' />
-                        <button class="button subscribe" type="submit" title="Subscribe">Đăng kí</button>
+                        <button class="button subscribe" @*type="submit"*@ title="Subscribe">Đăng kí</button>
                     </div>
                 </form>
             </div>
@@ -679,7 +679,7 @@
                                 <blockquote>
                                     © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
                                 </blockquote>
-                                <div class="thumb"> <img src="~/images/client/layout/testimonials-img3.jpg" alt="testimonials img"> </div>
+                                <div class="thumb"> <img src="~/images/shared/avatar/87aca9df-7d73-4f10-454d-08d6c9f84ff9.jpg" alt="testimonials img"> </div>
                                 <div class="holder-info"> <strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Công ty</strong></div>
                             </div>
                             <div class="holder">
@@ -687,7 +687,7 @@
                                     © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
 
                                 </blockquote>
-                                <div class="thumb"> <img src="~/images/client/layout/testimonials-img1.jpg" alt="testimonials img"> </div>
+                                <div class="thumb"> <img src="~/images/shared/avatar/e3ad53c6-5be2-46db-2a7d-08d6c5692d9b.PNG" alt="testimonials img"> </div>
                                 <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Công ty</strong> </div>
                             </div>
                             <div class="holder">
@@ -695,14 +695,14 @@
                                     MST:0105815899 (Số giấy chứng nhận đăng ký kinh doanh thương nhân) - Ngày cấp lần đầu: 12/03/2012
                                     Đăng ký thay đổi lần 2: 04/4/2016 - Nơi cấp: Sở kế hoạch và đầu tư thành phố Hà Nội
                                 </blockquote>
-                                <div class="thumb"> <img src="~/images/client/layout/testimonials-img2.jpg" alt="testimonials img"> </div>
+                                <div class="thumb"> <img src="~/images/shared/avatar/87aca9df-7d73-4f10-454d-08d6c9f84ff9.jpg" alt="testimonials img"> </div>
                                 <div class="holder-info"><strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Nhà báo</strong></div>
                             </div>
                             <div class="holder">
                                 <blockquote>
                                     © 2017 - Công ty Cổ Phần viễn thông Di Động Thông Minh - 119 phố Thái Thịnh, phường Thịnh Quang, quận Đống Đa, thành phố Hà Nội, Việt Nam
                                 </blockquote>
-                                <div class="thumb"> <img src="~/images/client/layout/testimonials-img4.jpg" alt="testimonials img"> </div>
+                                <div class="thumb"> <img src="~/images/shared/avatar/e3ad53c6-5be2-46db-2a7d-08d6c5692d9b.PNG" alt="testimonials img"> </div>
                                 <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Nhà văn</strong></div>
                             </div>
                         </div>

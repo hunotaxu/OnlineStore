@@ -3,75 +3,74 @@
 @model IEnumerable<DAL.Data.Entities.Category>
 
 
-@foreach (Category item in Model) { 
-
-
-<li>
-    <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
-    <div class="wrap-popup">
-        <div class="popup">
-            <div class="row">
-                <div class="col-md-4 col-sm-6">
-                    <h3>Televisions</h3>
-                    <ul class="nav">
-                        <li><a href="shop_grid.html">LCD Televisions</a></li>
-                        <li><a href="shop_grid.html">Projection Televisions</a></li>
-                        <li><a href="shop_grid.html">Play Stations</a></li>
-                        <li><a href="shop_grid.html">Televisions/Tube</a></li>
-                    </ul>
-                    <br>
-                    <h3>Headphones</h3>
-                    <ul class="nav">
-                        <li><a href="shop_grid.html">Players &amp; Video</a></li>
-                        <li><a href="shop_grid.html">Party Dresses</a></li>
-                        <li><a href="shop_grid.html">Midi Dresses</a></li>
-                        <li><a href="shop_grid.html">Strapless Dresses</a></li>
-                        <li><a href="shop_grid.html">Day Dresses</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 col-sm-6 has-sep">
-                    <h3>Appliances</h3>
-                    <ul class="nav">
-                        <li><a href="shop_grid.html">Kitchen</a></li>
-                        <li><a href="shop_grid.html">Refrigerators</a></li>
-                        <li><a href="shop_grid.html">Laundry &amp; Garment</a></li>
-                        <li><a href="shop_grid.html">Vacuum Cleaners</a></li>
-                    </ul>   
-                    <br>
-                    <h3>Video Accessories</h3>
-                    <ul class="nav">
-                        <li><a href="shop_grid.html">Bags &amp; Cases</a></li>
-                        <li><a href="shop_grid.html">Video Tapes</a></li>
-                        <li><a href="shop_grid.html">Memory Card</a></li>
-                        <li><a href="shop_grid.html">Readers Tripods</a></li>
-                        <li><a href="shop_grid.html">Batteries</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 has-sep hidden-sm">
-                    <div class="custom-menu-right">
-                        <div class="box-banner media">
-                            <div class="add-desc">
-                                <h3>
-                                    Computer <br>
-                                    Services
-                                </h3>
-                                <div class="price-sale">2016</div>
-                                <a href="#">Shop Now</a>
+@foreach (Category item in Model.Take(10))
+{
+    <li>
+        <a class="color1" asp-page="/Product/Index" asp-page-handler="Category" asp-route-categoryId="@item.Id">@item.Name</a>
+        @*<div class="wrap-popup">
+            <div class="popup">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <h3>Televisions</h3>
+                        <ul class="nav">
+                            <li><a href="shop_grid.html">LCD Televisions</a></li>
+                            <li><a href="shop_grid.html">Projection Televisions</a></li>
+                            <li><a href="shop_grid.html">Play Stations</a></li>
+                            <li><a href="shop_grid.html">Televisions/Tube</a></li>
+                        </ul>
+                        <br>
+                        <h3>Headphones</h3>
+                        <ul class="nav">
+                            <li><a href="shop_grid.html">Players &amp; Video</a></li>
+                            <li><a href="shop_grid.html">Party Dresses</a></li>
+                            <li><a href="shop_grid.html">Midi Dresses</a></li>
+                            <li><a href="shop_grid.html">Strapless Dresses</a></li>
+                            <li><a href="shop_grid.html">Day Dresses</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-6 has-sep">
+                        <h3>Appliances</h3>
+                        <ul class="nav">
+                            <li><a href="shop_grid.html">Kitchen</a></li>
+                            <li><a href="shop_grid.html">Refrigerators</a></li>
+                            <li><a href="shop_grid.html">Laundry &amp; Garment</a></li>
+                            <li><a href="shop_grid.html">Vacuum Cleaners</a></li>
+                        </ul>
+                        <br>
+                        <h3>Video Accessories</h3>
+                        <ul class="nav">
+                            <li><a href="shop_grid.html">Bags &amp; Cases</a></li>
+                            <li><a href="shop_grid.html">Video Tapes</a></li>
+                            <li><a href="shop_grid.html">Memory Card</a></li>
+                            <li><a href="shop_grid.html">Readers Tripods</a></li>
+                            <li><a href="shop_grid.html">Batteries</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 has-sep hidden-sm">
+                        <div class="custom-menu-right">
+                            <div class="box-banner media">
+                                <div class="add-desc">
+                                    <h3>
+                                        Computer <br>
+                                        Services
+                                    </h3>
+                                    <div class="price-sale">2016</div>
+                                    <a href="#">Shop Now</a>
+                                </div>
+                                <div class="add-right"><a href="#"><img src="~/images/client/layout/menu-banner-img2.jpg" alt="fashion"></a></div>
                             </div>
-                            <div class="add-right"><a href="#"><img src="~/images/client/layout/menu-banner-img2.jpg" alt="fashion"></a></div>
-                        </div>
-                        <div class="box-banner media">
-                            <div class="add-desc">
-                                <h3>Save up to</h3>
-                                <div class="price-sale">75 <sup>%</sup><sub>off</sub></div>
-                                <a href="#">Shopping Now</a>
+                            <div class="box-banner media">
+                                <div class="add-desc">
+                                    <h3>Save up to</h3>
+                                    <div class="price-sale">75 <sup>%</sup><sub>off</sub></div>
+                                    <a href="#">Shopping Now</a>
+                                </div>
+                                <div class="add-right"><a href="#"><img src="~/images/client/layout/menu-banner-img3.jpg" alt=" html store"></a></div>
                             </div>
-                            <div class="add-right"><a href="#"><img src="~/images/client/layout/menu-banner-img3.jpg" alt=" html store"></a></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</li>
+        </div>*@
+    </li>
 }

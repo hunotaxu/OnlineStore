@@ -135,7 +135,7 @@
                     $('#container-cart').html(render);
                     $('#subTotal').html(`${commons.formatNumber(subTotal, 0)}đ`);
                 } else {
-                    $('.container__row--center').html(`<div style='text-align: center;'><h3>Không có sản phẩm nào trong giỏ hàng</h3><a href='/' class='btn btn-warning'>Tiếp tục mua sắm</a></div>`);
+                    $('.container__row--center').html(`<br/><div style='text-align: center;'><h3>Không có sản phẩm nào trong giỏ hàng</h3><a href='/' class='btn btn-warning'>Tiếp tục mua sắm</a></div>`);
                 }
                 commons.stopLoading();
             },

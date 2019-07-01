@@ -5,7 +5,20 @@
 {
     <li class="item">
         <div class="item-inner">
-            <div class="item-img"> <a class="product-image" title="Retis lapen casen" href="~/Product/Detail?id=@item.Id"> <img class="hover-img" alt="Hình ảnh không thể hiển thị" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name"> </a> </div>
+            <div class="item-img img-height-133">
+                <a class="product-image" title="Retis lapen casen" href="~/Product/Detail?id=@item.Id">
+                    @if (@item.ProductImages?.FirstOrDefault()?.Name != null)
+                    {
+                        <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh" />
+
+                    }
+                    else
+                    {
+                        <img class="first-img" src="~/images/client/ProductImages/no-image.png" alt="Hình ảnh" />
+                    }
+                    @*<img class="hover-img" alt="Hình ảnh không thể hiển thị" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name">*@
+                </a>
+            </div>
             <div class="item-info">
                 <div class="info-inner">
                     <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
