@@ -71,6 +71,7 @@
     <Folder Include="wwwroot\js\client\order\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="node_modules\gentelella\build\js\custom.js" />
     <None Include="node_modules\jquery-validation\dist\localization\messages_vi.js" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.svg" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.woff2" />
