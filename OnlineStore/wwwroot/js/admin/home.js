@@ -110,7 +110,7 @@
             var proportionData = [];
             var backgroundColors = [];
             $.each(data, function (i, item) {
-                labels.push(item.deliveryName);
+                labels.push(item.receivingTypeName);
                 proportionData.push(item.proportionOfDeliverdItems);
                 backgroundColors.push(item.colors[i]);
             });
@@ -120,13 +120,6 @@
                 //tooltipFillColor: "rgba(51, 51, 51, 0.55)",
                 data: {
                     labels: labels,
-                    //labels: [
-                    //    "Symbian",
-                    //    "Blackberry",
-                    //    "Other",
-                    //    "Android",
-                    //    "IOS"
-                    //],
                     datasets: [{
                         //data: [15, 20, 30, 10, 30],
                         data: proportionData,
