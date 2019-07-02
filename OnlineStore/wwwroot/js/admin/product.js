@@ -1,5 +1,5 @@
 var itemPage = (function () {
-    var init = function () {
+    var init = function () {        
         onTypeCurrency();
         Dropzone.autoDiscover = false;
         $(document).ready(function () {
@@ -99,7 +99,7 @@ var itemPage = (function () {
     };
 
     var registerEvents = function () {
-        $(document).ready(function () {
+        //$(document).ready(function () {
             // Init validation
             //$('#frmMaintainance').validate({
             //    errorClass: 'red',
@@ -141,11 +141,12 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
+                debugger;
                 initDropzone(0);
                 resetFormMaintainance();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
-            });
+            });           
 
             $('body').on('click', '.btn-edit', function (e) {
                 e.preventDefault();
@@ -217,7 +218,7 @@ var itemPage = (function () {
                     }
                 });
             });
-        });
+        //});
     };
 
     function deleteProduct(that) {
