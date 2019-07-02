@@ -17,6 +17,7 @@ namespace OnlineStore.Pages.Home
         private readonly ICartRepository _cartRepository;
         private readonly IUserRepository _userRepository;
         private readonly ICartDetailRepository _cartDetailRepository;
+        private readonly ICategoryRepository _categoryRepository;
         public int _numbercartitem;
 
         public IEnumerable<Item> Phones { get; set; }
@@ -38,7 +39,7 @@ namespace OnlineStore.Pages.Home
         }
 
         public void OnGet()
-        {
+        {          
             Phones = _itemRepository.GetByCategory(1);
             Laptops = _itemRepository.GetByCategory(2);
             Tablets = _itemRepository.GetByCategory(3);
