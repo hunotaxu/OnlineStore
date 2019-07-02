@@ -1,35 +1,106 @@
 ﻿@page
-@model ChangePasswordModel
+@model AddressBookModel
 @{
     ViewData["Title"] = "Change password";
     Layout = "~/Areas/Identity/Pages/Account/Manage/_Layout.cshtml";
 }
 
-<h4>@ViewData["Title"]</h4>
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 <div class="row">
-    <div class="col-md-6">
-        <form id="change-password-form" method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.OldPassword"></label>
-                <input asp-for="Input.OldPassword" class="form-control" />
-                <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+    <div class="col-md-12">
+        <form class="form-horizontal" role="form" id="frmselectaddress">
+            <div class="box-border">
+                <div class="user-address-label">
+                    <table class="table table-bordered table-responsive jtv-cart-summary">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-2">Địa chỉ mặc định</th>
+                                <th class="col-sm-2">Tên người nhận</th>
+                                <th class="col-sm-3">Địa chỉ</th>
+                                <th class="col-sm-2">Mã vùng</th>
+                                <th class="col-sm-2">Số điện thoại</th>
+                                <th class="col-sm-3"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-address-content">
+                            @foreach (var address in Model.Addresses)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (address.Id == Model.DefaultAddress?.AddressId)
+                                        {
+                                            <input data-id="{{AddressId}}" data-RecipientName="@address.RecipientName"
+                                                   data-Detail="{{Detail}}" data-Province="{{ProVince}}"
+                                                   data-District="{{District}}" data-Ward=" {{Ward}}"
+                                                   data-PhoneNumber="{{PhoneNumber}}"
+                                                   type="radio" name="radio"
+                                                   class="radiobutton" checked>
+                                        }
+                                        else
+                                        {
+                                            <input data-id="{{AddressId}}" data-RecipientName="@address.RecipientName"
+                                                   data-Detail="{{Detail}}" data-Province="{{ProVince}}"
+                                                   data-District="{{District}}" data-Ward=" {{Ward}}"
+                                                   data-PhoneNumber="{{PhoneNumber}}"
+                                                   type="radio" name="radio"
+                                                   class="radiobutton">
+                                        }
+
+                                    </td>
+                                    <td data-th="RecipientName" class="quantity">@address.RecipientName</td>
+                                    <td data-th="Detail" class="quantity">@address.Detail</td>
+                                    <td data-th="Address" class="quantity">@address.Province - @address.District - @address.Ward</td>
+                                    <td data-th="PhoneNumber">@address.PhoneNumber</td>
+                                    <td>
+                                        <a class="btn btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                @*<script id="script-select-address" type="x-tmpl-mustache">
+                        <tr>
+                            <td>
+                                <input data-id="{{AddressId}}" data-RecipientName="{{RecipientName}}"
+                                       data-Detail="{{Detail}}" data-Province="{{ProVince}}"
+                                       data-District="{{District}}" data-Ward="{{Ward}}"
+                                       data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio" class="radiobutton" {{DefaultChecked}}>
+                            </td>
+                            <td data-th="RecipientName" class="quantity">{{RecipientName}}</td>
+                            <td data-th="Detail" class="quantity">{{Detail}}</td>
+                            <td data-th="Address" class="quantity">{{ProVince}} - {{District}} - {{Ward}}</td>
+                            <td data-th="PhoneNumber" class="price">{{PhoneNumber}}</td>
+                        </tr>
+                    </script>*@
             </div>
-            <div class="form-group">
-                <label asp-for="Input.NewPassword"></label>
-                <input asp-for="Input.NewPassword" class="form-control" />
-                <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Update password</button>
         </form>
     </div>
 </div>
+@*<div class="row">
+        <div class="col-md-6">
+            <form id="change-password-form" method="post">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.OldPassword"></label>
+                    <input asp-for="Input.OldPassword" class="form-control" />
+                    <span asp-validation-for="Input.OldPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.NewPassword"></label>
+                    <input asp-for="Input.NewPassword" class="form-control" />
+                    <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-default">Update password</button>
+            </form>
+        </div>
+    </div>*@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
