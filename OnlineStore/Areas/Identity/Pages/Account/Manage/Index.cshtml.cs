@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.EF;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -28,7 +29,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
             _emailSender = emailSender;
         }
-
+        [Display(Name = "Tên đăng nhập")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -41,23 +42,28 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Vui lòng nhập họ tên")]
             [DataType(DataType.Text)]
-            [Display(Name = "Full name")]
+            [Display(Name = "Họ tên")]
             public string Name { get; set; }
 
-            [Required]
-            [Display(Name = "Birth Date")]
+            [Required(ErrorMessage = "Vui lòng nhập ngày sinh")]
+            [Display(Name = "Ngày sinh")]
             [DataType(DataType.Date)]
             public DateTime DOB { get; set; }
 
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Vui lòng nhập email")]
+            [EmailAddress(ErrorMessage = "Email chưa đúng định dạng")]
             public string Email { get; set; }
 
-            [Phone]
+            [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            //[Phone]
+            [Required(ErrorMessage = "Vui lòng chọn giới tính")]
+            [Display(Name = "Giới tính")]
+            public Gender Gender { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -78,6 +84,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             {
                 Name = user.Name,
                 DOB = user.DOB,
+                Gender = (Gender)user.Gender,
                 Email = email,
                 PhoneNumber = phoneNumber
             };
@@ -119,6 +126,11 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             if (Input.DOB != user.DOB)
             {
                 user.DOB = Input.DOB;
+            }
+
+            if ((byte)Input.Gender != user.Gender)
+            {
+                user.Gender = (byte)Input.Gender;
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

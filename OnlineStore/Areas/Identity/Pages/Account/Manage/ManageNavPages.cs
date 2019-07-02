@@ -11,6 +11,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
         public static string Index => "Index";
 
         public static string ChangePassword => "ChangePassword";
+        public static string AddressBook => "AddressBook";
 
         public static string DownloadPersonalData => "DownloadPersonalData";
 
@@ -24,6 +25,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
 
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
+        public static string AddressBookNavClass(ViewContext viewContext) => PageNavClass(viewContext, AddressBook);
         public static string ChangePasswordNavClass(ViewContext viewContext) => PageNavClass(viewContext, ChangePassword);
 
         public static string DownloadPersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, DownloadPersonalData);

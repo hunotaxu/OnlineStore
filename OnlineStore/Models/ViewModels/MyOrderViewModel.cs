@@ -1,5 +1,4 @@
 ﻿using DAL.Data.Entities;
-using System.Collections.Generic;
 
 namespace OnlineStore.Models.ViewModels
 {
