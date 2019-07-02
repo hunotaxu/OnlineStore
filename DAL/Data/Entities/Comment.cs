@@ -7,7 +7,6 @@ namespace DAL.Data.Entities
     public class Comment : EntityBase
     {
         //public int Id { get; set; }
-        [StringLength(200)]
         public string Content { get; set; }
 
         public int ItemId { get; set; }
