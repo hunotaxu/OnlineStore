@@ -502,31 +502,32 @@ namespace OnlineStore.Pages.Order
                         foreach (var itemInCart in items)
                         {
                             var item = _itemRepository.Find(itemInCart.ItemId);
-                            if (itemInCart.Quantity > item.Quantity)
+                            if (item.IsDeleted == false && item.Quantity > 0)
                             {
-                                transaction.Rollback();
-                                return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại.");
-                            }
-                            var newOrderItem = new OrderItem
-                            {
-                                OrderId = newOrder.Id,
-                                Price = item.Price,
-                                ItemId = itemInCart.ItemId,
-                                Quantity = itemInCart.Quantity,
-                                DateCreated = DateTime.Now,
-                                DateModified = DateTime.Now,
-                                SaleOff = 0,
-                                IsDeleted = false,
-                                Amount = item.Price * item.Quantity
-                            };
-                            //_orderItemRepository.Add(newOrderItem);
-                            context.OrderItem.Add(newOrderItem);
-                            context.SaveChanges();
+                                if (itemInCart.Quantity > item.Quantity)
+                                {
+                                    transaction.Rollback();
+                                    return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại.");
+                                }
+                                var newOrderItem = new OrderItem
+                                {
+                                    OrderId = newOrder.Id,
+                                    Price = item.Price,
+                                    ItemId = itemInCart.ItemId,
+                                    Quantity = itemInCart.Quantity,
+                                    DateCreated = DateTime.Now,
+                                    DateModified = DateTime.Now,
+                                    SaleOff = 0,
+                                    IsDeleted = false,
+                                    Amount = item.Price * item.Quantity
+                                };
+                                context.OrderItem.Add(newOrderItem);
+                                context.SaveChanges();
 
-                            item.Quantity -= itemInCart.Quantity;
-                            //_itemRepository.Update(item);
-                            context.Item.Update(item);
-                            context.SaveChanges();
+                                item.Quantity -= itemInCart.Quantity;
+                                context.Item.Update(item);
+                                context.SaveChanges();
+                            }
                         }
                         //_cartRepository.Delete(cart);
                         cart.IsDeleted = true;

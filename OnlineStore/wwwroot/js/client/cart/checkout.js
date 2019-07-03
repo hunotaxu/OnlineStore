@@ -404,7 +404,7 @@
                 commons.stopLoading();
             },
             error: function () {
-                commons.notify('Không tải được dữ liệu tỉnh/ thành phố', 'error');
+                commons.notify('Không tải được dữ liệu tỉnh/thành phố', 'error');
                 commons.stopLoading();
             }
         });
