@@ -229,7 +229,7 @@
 
                     } else {
                         //$('.container__row--center').html(`<div style='text-align: center;'><h3>Không có sản phẩm nào trong giỏ hàng</h3><a href='/' class='btn btn-warning'>Tiếp tục mua sắm</a></div>`);
-                        $('.products-grid').html(`<br /><br /><div style='text-align: center;'><h3>Xin lỗi, chúng tôi không thể tìm được kết quả hợp với tìm kiếm của bạn</h3></div>`);
+                        $('.products-grid').html(`<br /><br /><div class="clol-md-5 center" ><h3 style="text-align: center; font-family: 'Roboto','Montserrat', sans-serif; font-weight: 400; font-size: 24;">Xin lỗi, chúng tôi không thể tìm được kết quả hợp với tìm kiếm của bạn</h3></div>`);
                         $('#paginationUL').empty();
                     }
 

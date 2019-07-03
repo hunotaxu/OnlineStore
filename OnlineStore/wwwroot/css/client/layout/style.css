@@ -2907,8 +2907,8 @@ a.link {
 }
 
 .product-item .item-inner .item-info .add-to-cart:hover {
-    background-color: #444;
-    border: 1px #444 solid;
+    background-color: #fcd21b;
+    border: 1px #fcd21b solid;
     transition: 0.5s all ease;
 }
 
