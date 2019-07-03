@@ -9,7 +9,7 @@
             <div class="icon-sale-label sale-left">Sale</div>
             <div class="icon-new-label new-right">New</div>
             <div class="product-thumbnail">
-                <div class="pr-img-area img-height-188">
+                <div class="pr-img-area img-height-188 zoomindex">
                     <a title=@item.ProductImages?.FirstOrDefault()?.Name href="~/Product/Detail?id=@item.Id">
                         <figure>
                             @if (@item.ProductImages?.FirstOrDefault()?.Name != null)
@@ -47,7 +47,7 @@
                             <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
                         </div>
                         <div class="pro-action">
-                            <button type="button" class="add-to-cart addtocart-layout"><span> Add to Cart</span> </button>
+                            <button type="button" class="add-to-cart addtocart-layout"><span>Thêm vào giỏ hàng</span> </button>
                         </div>
                     </div>
                 </div>

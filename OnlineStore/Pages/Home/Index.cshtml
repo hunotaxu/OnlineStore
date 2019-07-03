@@ -195,8 +195,8 @@
                         <div class="hover_content">
                             <div class="hover_data">
                                 <div class="title" style="color:#fff"> Khuyễn mãi cực lớn </div>
-                                <div class="desc-text bold">Lên đến 50%</div>
-                                <span style="color:#fff">Xiaomi</span>
+                                <div class="desc-text bold" style="color:yellow; font-size: 18px">Lên đến 50%</div>
+                                <span style="color:#fff; font-size: 24px; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Xiaomi</span>
                                 <p><a href="#" class="shop-now">Nhận ngay!</a></p>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
 <div class="container">
     <div class="home-tab">
         <div class="tab-title text-left">
-            <h2>Sản phẩm bán chạy</h2>
+            <h2>Sản phẩm được quan tâm</h2>
             <ul class="nav home-nav-tabs home-product-tabs">
                 <li class="active"><a href="#topsellphone" data-toggle="tab" aria-expanded="false">Điện thoại</a></li>
                 <li><a href="#topselllaptop" data-toggle="tab" aria-expanded="false">Laptop</a></li>
@@ -244,7 +244,7 @@
                     <div class="slider-items-products">
                         <div id="computer-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
-                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Phones)
+                                @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Phones)
 
                             </div>
                         </div>
@@ -257,7 +257,7 @@
                         <div id="smartphone-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
 
-                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Laptops)
+                                @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Laptops)
 
                             </div>
                         </div>
@@ -269,7 +269,7 @@
                     <div class="slider-items-products">
                         <div id="watches-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
-                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Tablets)
+                                @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Tablets)
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                     <div class="slider-items-products">
                         <div id="photo-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4 ">
-                                @await Html.PartialAsync("~/Pages/Shared/_BestSellProductsSlidePartial.cshtml", Model.Accessories)
+                                @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Accessories)
                             </div>
                         </div>
                     </div>
