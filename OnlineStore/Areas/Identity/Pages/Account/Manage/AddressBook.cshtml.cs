@@ -85,6 +85,25 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             return Page();
         }
 
+        public async Task<IActionResult> OnGetById(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            //var hasPassword = await _userManager.HasPasswordAsync(user);
+            //if (!hasPassword)
+            //{
+            //    return RedirectToPage("./SetPassword");
+            //}
+            var address = _addressRepository.GetSome(x => x.CustomerId == user.Id && x.IsDeleted == false && x.Id == id).FirstOrDefault();
+            //DefaultAddress = _defaultAddressRepository.GetSome(da => da.CustomerId == user.Id && da.IsDeleted == false).FirstOrDefault();
+            return new OkObjectResult(address);
+            //return Page();
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             //if (!ModelState.IsValid)

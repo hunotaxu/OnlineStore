@@ -1,0 +1,153 @@
+﻿<div id="modal-add-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLongTitle">
+                    Thêm địa chỉ nhận hàng
+                </h4>
+
+            </div>
+            <div class="modal-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" id="frmaddaddress" method="post">
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <br /><br />
+                                    <label for="txtHoTen" class="required">Họ tên</label>
+                                    @*<input class="input form-control" type="text" name="txtHoTen" id="txtHoTen" placeholder="Họ và tên" data-parsley-required="true" data-parsley-trigger="change">*@
+                                    <input class="input form-control" type="text" name="txtHoTen" id="txtHoTen" placeholder="Họ và tên" data-parsley-required data-parsley-trigger="change">
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label for="txtPhoneNumber" class="required">Số điện thoại</label>
+                                    <input class="input form-control" name="txtPhoneNumber" id="txtPhoneNumber" placeholder="Số điện thoại của bạn" data-parsley-required data-parsley-type="digits" data-parsley-trigger="change">
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <br /><br />
+                                    <label for="txtDetail" class="required">Địa chỉ</label>
+                                    <input required class="input form-control" type="text" name="txtDetail" id="txtDetail" placeholder="Nhập số nhà, đường" data-parsley-required data-parsley-trigger="change">
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="frmselectprovince" class="required">Tỉnh/ Thành phố</label>
+                                    <div class="custom_select">
+                                        <select required class="input form-control" name="frmselectprovince" id="frmselectprovince" data-parsley-required data-parsley-trigger="change"></select>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <p class="error-loadprovince productnamecheckout"></p>
+                            <script id="script-select-province" type="x-tmpl-mustache">
+                                <option data-provinceid="{{ProVinceId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="frmselectdistrict" class="required">Quận/ Huyện</label>
+                                    <div class="custom_select">
+                                        <select required class="input form-control" name="frmselectdistrict" id="frmselectdistrict"></select>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <p class="error-loaddistrict productnamecheckout"></p>
+                            <script id="script-select-district" type="x-tmpl-mustache">
+                                @*<option data-districtid="{{DistrictId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>*@
+                                <option data-districtid="{{DistrictId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="frmselectward" class="required">Phường/ Xã</label>
+                                    <div class="custom_select">
+                                        <select required class="input form-control" name="frmselectward" id="frmselectward"></select>
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <p class="error-loadward productnamecheckout"></p>
+                            <script id="script-select-ward" type="x-tmpl-mustache">
+                                <option data-districtid="{{WardId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
+                            </script>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCancelAddAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnSaveAddAddress" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-select-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLongTitle">
+                    Chọn địa chỉ nhận hàng
+                </h4>
+                <a style="color:crimson;" id="btnaddaddress" href="javascript:;"> Thêm địa chỉ mới</a>
+            </div>
+            <div class="modal-body">
+                <div id="horizontal-form">
+                    <form class="form-horizontal" role="form" id="frmselectaddress">
+                        <div class="box-border">
+                            <div class="user-address-label">
+                                <table class="table table-bordered table-responsive jtv-cart-summary">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-sm-1"></th>
+                                            <th class="col-sm-2">Tên</th>
+                                            <th class="col-sm-3">Địa chỉ</th>
+                                            <th class="col-sm-4">Mã vùng</th>
+                                            <th class="col-sm-2">Số điện thoại</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="user-address-content"></tbody>
+                                </table>
+                            </div>
+                            <script id="script-select-address" type="x-tmpl-mustache">
+                                <tr>
+                                    <td>
+                                        <input data-id="{{AddressId}}" data-RecipientName="{{RecipientName}}"
+                                               data-Detail="{{Detail}}" data-Province="{{ProVince}}"
+                                               data-District="{{District}}" data-Ward="{{Ward}}"
+                                               data-PhoneNumber="{{PhoneNumber}}" type="radio" name="radio" class="radiobutton" {{DefaultChecked}}>
+                                    </td>
+                                    <td data-th="RecipientName" class="quantity">{{RecipientName}}</td>
+                                    <td data-th="Detail" class="quantity">{{Detail}}</td>
+                                    <td data-th="Address" class="quantity">{{ProVince}} - {{District}} - {{Ward}}</td>
+                                    <td data-th="PhoneNumber" class="price">{{PhoneNumber}}</td>
+                                </tr>
+                            </script>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCancelSelectAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" id="btnSaveSelectAddress" class="btn btn-primary">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

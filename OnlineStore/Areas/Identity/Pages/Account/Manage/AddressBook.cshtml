@@ -52,8 +52,8 @@
                                     <td data-th="Address" class="quantity">@address.Province - @address.District - @address.Ward</td>
                                     <td data-th="PhoneNumber">@address.PhoneNumber</td>
                                     <td>
-                                        <a class="btn btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></a>
+                                        <a class="btn btn-sm btn-edit" data-id="@address.Id"><i class="fa fa-pencil"></i></a>
+                                        <a class="btn btn-sm btn-delete" data-id="@address.Id"><i class="fa fa-trash"></i></a>
                                     </td>
                                 </tr>
                             }
@@ -104,4 +104,9 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/client/account-management.js"></script>
+    <script>
+        accountManagement.init();
+    </script>
 }
+<partial name="_AddressManagementModal" />
