@@ -58,7 +58,7 @@
     <Content Update="wwwroot\favicontimi.ico">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="wwwroot\images\client\ProductImages\no-image.png">
+    <Content Update="wwwroot\images\client\ProductImages\no-image.jpg">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>

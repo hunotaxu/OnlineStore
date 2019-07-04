@@ -15,6 +15,7 @@
 
 @{
     var cus = await UserManager.GetUserAsync(HttpContext.User);
+    var _productImages = Model.Item.ProductImages.Where(x => x.IsDeleted == false);
 }
 
 @section Scripts{
@@ -50,59 +51,54 @@
                     <div class="product-big-image col-xs-12 col-sm-5 col-lg-5 col-md-5">
                         <div class="icon-sale-label sale-left">Sale</div>
                         <div class="large-image" style="height: 351px">
-                            @if (Model.Item.ProductImages?.FirstOrDefault()?.Name != null)
+                            @if (_productImages.Count() != 0)
                             {
-                                <a href="~/images/client/ProductImages/@Model.Item.ProductImages?.FirstOrDefault()?.Name" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                    <img class="zoom-img" src="~/images/client/ProductImages/@Model.Item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh">
-                                </a>
+                                foreach (var item in _productImages)
+                                {
+                                    <a href="~/images/client/ProductImages/@item.Name" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
+                                        <img class="zoom-img" src="~/images/client/ProductImages/@item.Name" alt="Hình ảnh">
+                                    </a>
+                                    break;
+                                }
                             }
                             else
                             {
-                                <a href="~/images/client/ProductImages/no-image.png" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                    <img class="zoom-img" src="~/images/client/ProductImages/no-image.png" alt="Hình ảnh">
+                                <a href="~/images/client/ProductImages/no-image.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
+                                    <img class="zoom-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh">
                                 </a>
                             }
-
                         </div>
                         <div class="flexslider flexslider-thumb">
                             <ul class="previews-list slides" id="previews-list-images">
-                                @if (Model.Item.ProductImages.Count() == 0)
+                                @if (_productImages.Count() == 0)
                                 {
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.png")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
                                     </li>
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.png")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
                                     </li>
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.png")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
                                     </li>
                                 }
                                 else
                                 {
-                                    @if (Model.Item.ProductImages.Count() <= 2)
-                                    {
-                                        @*<li>
-                    <a href='@Url.Content("~/images/client/ProductImages/no-image.png")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
-                </li>
-                <li>
-                    <a href='@Url.Content("~/images/client/ProductImages/no-image.png")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
-                </li>*@
-                                        <li>
-                                            <a href='#' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
-                                        </li>
-                                        <li>
-                                            <a href='#' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.png")' "><img src="@Url.Content("~/images/client/ProductImages/no-image.png")" alt="Hình ảnh" /></a>
-                                        </li>
-                                    }
-
-                                    @foreach (var item in Model.Item.ProductImages)
+                                    @foreach (var item in _productImages)
                                     {
                                         <li>
-                                            <a href='@Url.Content("~/images/client/ProductImages/"+item.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+item.Name)' "><img src="@Url.Content("~/images/client/ProductImages/"+item.Name)" alt="Hình ảnh" /></a>
+                                            <a href='@Url.Content("~/images/client/ProductImages/"+item.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+item.Name)' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/"+item.Name)" alt="Hình ảnh" /></a>
                                         </li>
                                     }
-
+                                    @if (_productImages.Count() <= 2)
+                                    {
+                                        <li>
+                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh"></a>
+                                        </li>
+                                        <li>
+                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh"></a>
+                                        </li>
+                                    }
                                 }
                             </ul>
                         </div>
@@ -125,13 +121,11 @@
                             @if (Model.Item.Quantity == 0)
                             {
                                 <p class="availability out-of-stock pull-right"><span>Hết hàng</span></p>
-
                             }
                             else
                             {
                                 //<p>@Html.Raw(Model.Item.Quantity) Sản phẩm trong kho</p>
                                 <p class="availability in-stock pull-right"><span>Còn hàng</span></p>
-
                             }
                         </div>
                         <br />
@@ -182,12 +176,6 @@
                 </div>
                 <div class="product-overview-tab ">
                     <div class="product-tab-inner">
-                        @*<ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                                <li id="description" class="active"> <a class="tabproduct" href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
-                                <li id="review"> <a class="tabproduct" href="#reviews" data-toggle="tab">Đánh giá</a> </li>
-                                <li id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Thẻ</a></li>
-                                <li id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Tùy chỉnh</a> </li>
-                            </ul>*@
                         <div id="productTabContent" class="tab-content">
                             <div class="tab-pane fade in active" id="descriptions">
                                 <div class="std">

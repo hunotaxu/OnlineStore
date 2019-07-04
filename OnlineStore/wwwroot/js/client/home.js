@@ -12,6 +12,7 @@
 
     var registerEvents = function () {
         $('.btnAddToCart').on('click', function (e) {
+            debugger;
             e.preventDefault();
             var id = parseInt($(this).data('id'));
             if ($('#rateit_star').data('customerid') === '' || $('#rateit_star').data('customerid') === undefined) {
