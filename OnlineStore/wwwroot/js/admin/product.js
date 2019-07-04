@@ -141,9 +141,9 @@ var itemPage = (function () {
             });
 
             $("#btnCreate").on('click', function () {
-                debugger;
                 initDropzone(0);
                 resetFormMaintainance();
+                resetImageTemporary();
                 initTreeDropDownCategory();
                 $('#modal-add-edit').modal('show');
             });           
@@ -371,6 +371,16 @@ var itemPage = (function () {
                 if (selectedId !== undefined) {
                     $('#ddlCategoryIdM').combotree('setValue', selectedId);
                 }
+            }
+        });
+    }
+
+    function resetImageTemporary() {
+        $.ajax({
+            url: '/Admin/Upload/TemporaryRemoveAllAttachment',
+            success: function () {
+            },
+            error: function (file, response) {
             }
         });
     }

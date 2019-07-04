@@ -122,10 +122,15 @@ namespace OnlineStore.Controllers
 
             return Json("success");
         }
+        public ActionResult TemporaryRemoveAllAttachment()
+        {
+            TempData.Remove(CommonConstants.Attachments);
+            TempData.Keep();
+            return Json("success");
+        }
 
         public ActionResult TemporaryRemoveAttachment(string fileName)
         {
-            //var listAttachment = TempData.Peek(CommonConstants.Attachments) as List<ProductImages>;
             var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments) as List<ProductImages>;
             if (listAttachment == null)
             {
