@@ -95,3 +95,7 @@
         -ms-transform: scale(1.08); /* IE 9 */
         -webkit-transform: scale(1.08); /* Safari 3-8 */
     }
+
+.bootbox.modal {
+    z-index: 2000 !important;
+}
