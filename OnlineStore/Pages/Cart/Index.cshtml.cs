@@ -57,7 +57,7 @@ namespace OnlineStore.Pages.Cart
                                     $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.png",
                             Price = item.Item.Price,
                             ProductName = item.Item.Name,
-                            Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
+                            Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity <= 0) ? item.Quantity : item.Item.Quantity,
                             MaxQuantity = item.Item.Quantity
                         };
                         ItemInCarts.Add(itemCartViewModel);
@@ -117,7 +117,7 @@ namespace OnlineStore.Pages.Cart
 
             var cartDetails = cart.CartDetails.Where(x => x.IsDeleted == false);
 
-            if (cartDetails.All(x => x.Item.Quantity == 0))
+            if (cartDetails.All(x => x.Item.Quantity <= 0))
             {
                 return new BadRequestObjectResult("Tất cả các sản phẩm đã hết hàng. Vui lòng thêm sản phẩm mới vào giỏ");
             }
