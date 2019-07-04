@@ -28,54 +28,43 @@ namespace OnlineStore.Pages.Home
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
 
-        public IndexModel(ICartRepository cartRepository, IUserRepository userRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
+        public IndexModel(ICategoryRepository categoryRepository,ICartRepository cartRepository, IUserRepository userRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
+            _categoryRepository = categoryRepository;
 
         }
+
 
         public void OnGet()
-        {          
-            Phones = _itemRepository.GetByCategory(1);
-            Laptops = _itemRepository.GetByCategory(2);
-            Tablets = _itemRepository.GetByCategory(3);
-            Accessories = _itemRepository.GetByCategory(4);
+        {
+
+            var chuildPhoneCategory = _categoryRepository.GetSome(x=>x.IsDeleted == false && x.ParentId == 1);
+            foreach (var item in chuildPhoneCategory)
+            {               
+                    Phones = _itemRepository.GetByCategory(item.Id);                
+            }
+            var chuildLaptopCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 2);
+            foreach (var item in chuildLaptopCategory)
+            {
+                Laptops = _itemRepository.GetByCategory(item.Id);
+            }
+            var chuildTabletCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 3);
+            foreach (var item in chuildTabletCategory)
+            {
+                Tablets = _itemRepository.GetByCategory(item.Id);
+            }
+            var chuildAccessorieCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 4);
+            foreach (var item in chuildAccessorieCategory)
+            {
+                Accessories = _itemRepository.GetByCategory(item.Id);
+            }
+           
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-        }
-        //public IActionResult OnGetLoadCartLayout()
-        //{
-        //    if (_userManager.GetUserAsync(HttpContext.User).Result != null)
-        //    {
-        //        var cart = _cartRepository.GetCartByCustomerId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
-        //        if (cart != null)
-        //        {
-        //            ItemInCarts = new List<ItemCartViewModel>();
-        //            var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-        //            if (items.Count > 0)
-        //            {
-        //                foreach (var item in items)
-        //                {
-
-        //                    var itemCartViewModel = new ItemCartViewModel
-        //                    {
-        //                        ItemId = item.ItemId,
-        //                        Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
-        //                        Price = item.Item.Price,
-        //                        ProductName = item.Item.Name,
-        //                        Quantity = item.Quantity,
-        //                    };
-        //                    ItemInCarts.Add(itemCartViewModel);
-
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return new OkObjectResult(ItemInCarts);
-        //}
-
+        }       
     }
 }

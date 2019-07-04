@@ -1,41 +1,68 @@
 ﻿@model IEnumerable<DAL.Data.Entities.Item>
 @using Utilities.Commons
 
-@foreach (var item in Model.Take(2))
+@if (Model != null)
 {
-    <li class="item">
-        <div class="item-inner">
-            <div class="item-img img-height-133 zoomindex">
-                <a class="product-image" title="Retis lapen casen" href="~/Product/Detail?id=@item.Id">
-                    @if (@item.ProductImages?.FirstOrDefault()?.Name != null)
+    @foreach (var item in Model.Take(2))
+    {
+        <li class="item">
+            <div class="item-inner">
+                <div class="item-img img-height-133 zoomindex">
+                    @if (item.ProductImages.Count() != 0)
                     {
-                        <img class="first-img" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh" />
+                        bool valid = false;
+                        foreach (var _item in item.ProductImages)
+                        {
+                            if (_item.IsDeleted == false)
+                            {
+                                <a class="product-image" title=@item.Name href="~/Product/Detail?id=@item.Id">
+                                    <figure>
+                                        <img class="zoomindex first-img" src="~/images/client/ProductImages/@_item.Name" alt="@item.Name" />
+                                    </figure>
+                                </a>
+                                valid = true;
+                                break;
+                            }
+                        }
+                        if (valid == false)
+                        {
+                            <a class="product-image" title=@item.Name href="~/Product/Detail?id=@item.Id">
+                                <figure>
+                                    <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                                </figure>
+                            </a>
+                        }
+
 
                     }
                     else
                     {
-                        <img class="first-img" src="~/images/client/ProductImages/no-image.png" alt="Hình ảnh" />
+                        <a class="product-image" title=@item.Name href="~/Product/Detail?id=@item.Id">
+                            <figure>
+                                <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                            </figure>
+                        </a>
                     }
-                    @*<img class="hover-img" alt="Hình ảnh không thể hiển thị" src="~/images/client/ProductImages/@item.ProductImages?.FirstOrDefault()?.Name">*@
-                </a>
-            </div>
-            <div class="item-info">
-                <div class="info-inner">
-                    <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
 
-                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                    <div class="item-price">
-                        <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
-                    </div>
-                    <div class="pro-action">
-                        <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                    </div>
-                    <div class="pr-button-hover">
-                        <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart-o"></i> </a> </div>
-                        <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-link"></i> </a> </div>
+                </div>
+                <div class="item-info">
+                    <div class="info-inner">
+                        <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
+
+                        <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
+                        <div class="item-price">
+                            <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
+                        </div>
+                        <div class="pro-action">
+                            <button type="button" class="add-to-cart"><i class="fa fa-shopping-cart"></i></button>
+                        </div>
+                        <div class="pr-button-hover">
+                            <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart-o"></i> </a> </div>
+                            <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-link"></i> </a> </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </li>
+        </li>
+    }
 }
