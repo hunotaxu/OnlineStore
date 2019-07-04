@@ -66,11 +66,23 @@ namespace DAL.Repositories
 
         public int DeleteRange(IEnumerable<DefaultAddress> entities, bool persist = true)
         {
-            foreach (DefaultAddress cartDetail in entities)
+            foreach (DefaultAddress defaultAddress in entities)
             {
-                cartDetail.IsDeleted = true;
-                Table.Update(cartDetail);
+                defaultAddress.IsDeleted = true;
+                Table.Update(defaultAddress);
             }
+            //Table.RemoveRange(entities);
+            return persist ? SaveChanges() : 0;
+        }
+
+        public int DeleteRangeForever(IEnumerable<DefaultAddress> entities, bool persist = true)
+        {
+            Table.RemoveRange(entities);
+            //foreach (DefaultAddress defaultAddress in entities)
+            //{
+            //    defaultAddress.IsDeleted = true;
+            //    Table.Remove(defaultAddress);
+            //}
             //Table.RemoveRange(entities);
             return persist ? SaveChanges() : 0;
         }

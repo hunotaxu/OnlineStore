@@ -197,9 +197,7 @@ namespace OnlineStore.Pages.Order
                 if (address != null && address.Count() > 0)
                 {
                     UserAddresses = new List<UserAddressViewModel>();
-                    //var items = useraddress.Where(cd => cd.IsDeleted == false).ToList();
-                    //if (items.Count > 0)
-                    //{```````
+
                     foreach (var item in address)
                     {
                         var userAddress = new UserAddressViewModel

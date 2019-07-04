@@ -80,7 +80,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             //{
             //    return RedirectToPage("./SetPassword");
             //}
-            Addresses = _addressRepository.GetSome(x => x.CustomerId == user.Id && x.IsDeleted == false).ToList();
+            Addresses = _addressRepository.GetSome(x => x.CustomerId == user.Id && x.IsDeleted == false && x.ShowRoomAddressId == null).ToList();
             DefaultAddress = _defaultAddressRepository.GetSome(da => da.CustomerId == user.Id && da.IsDeleted == false).FirstOrDefault();
             return Page();
         }
@@ -104,18 +104,36 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             //return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostUpdateDefaultAddress([FromBody] Address address)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    return Page();
-            //}
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
 
-            //var user = await _userManager.GetUserAsync(User);
-            //if (user == null)
-            //{
-            //    return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            //}
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                //return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return new BadRequestResult();
+            }
+
+            //var defaultAddress = _defaultAddressRepository.GetSome(x => x.CustomerId == user.Id && x.AddressId == address.Id && x.IsDeleted == false).FirstOrDefault();
+            var defaultAddresses = _defaultAddressRepository.GetSome(x => x.CustomerId == user.Id);
+            if (defaultAddresses?.Any() == true)
+            {
+                _defaultAddressRepository.DeleteRangeForever(defaultAddresses);
+            }
+
+            _defaultAddressRepository.Add(new DefaultAddress()
+            {
+                AddressId = address.Id,
+                CustomerId = user.Id,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now,
+                IsDeleted = false
+            });
+
 
             //var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             //if (!changePasswordResult.Succeeded)
@@ -131,7 +149,8 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             //_logger.LogInformation("User changed their password successfully.");
             //StatusMessage = "Your password has been changed.";
 
-            return RedirectToPage();
+            //return RedirectToPage();
+            return new OkResult();
         }
     }
 }

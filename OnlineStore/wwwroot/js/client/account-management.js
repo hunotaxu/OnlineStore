@@ -99,54 +99,34 @@
     //};
 
     var registerEvents = function () {
-        //$(document).ready(function () {
-        // Init validation
-        //$('#frmMaintainance').validate({
-        //    errorClass: 'red',
-        //    ignore: [],
-        //    lang: 'vi',
-        //    rules: {
-        //        txtNameM: { required: true },
-        //        ddlCategoryIdM: { required: true },
-        //        txtPriceM: {
-        //            required: true,
-        //            number: true
-        //        },
-        //        txtQuantity: {
-        //            required: true,
-        //            number: true
-        //        },
-        //        txtOriginalPriceM: {
-        //            required: true,
-        //            number: true
-        //        }
-        //    }
-        //});
-        //todo: binding events to controls
-        //$('#ddlShowPage').on('change', function () {
-        //    commons.configs.pageSize = $(this).val();
-        //    commons.configs.pageIndex = 1;
-        //    loadData(true);
-        //});
+        $('#frmselectprovince').change(function () {
+            var provinceid = $(this.options[this.selectedIndex]).attr('data-provinceid');
+            loadDistrict(provinceid);
+        });
 
-        //$('#btnSearch').on('click', function () {
-        //    loadData(true);
-        //});
+        $('#frmselectdistrict').change(function () {
+            var districtid = $(this.options[this.selectedIndex]).attr('data-districtid');
+            loadWard(districtid);
+        });
 
-        //$('#txtKeyword').on('keypress', function (e) {
-        //    if (e.which === 13) {
-        //        e.preventDefault();
-        //        loadData(true);
-        //    }
-        //});
+        $('#btnaddaddress').off('click').on('click', function (e) {
+            e.preventDefault();
+            //$('#modal-select-address').modal('hide');
+            $('#modal-add-address').modal('show');
+            loadProvince();
+        });
 
-        //$("#btnCreate").on('click', function () {
-        //    debugger;
-        //    initDropzone(0);
-        //    resetFormMaintainance();
-        //    initTreeDropDownCategory();
-        //    $('#modal-add-edit').modal('show');
-        //});
+        $("#btnSaveAddAddress").on('click', function () {
+            if ($('#frmaddaddress').parsley().validate()) {
+                //document.getElementById('labelName').innerHTML = $('#txtHoTen').val();
+                ////document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectprovince').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectward').val();
+                //document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectward').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectprovince').val();
+                //document.getElementById('labelPhoneNumber').innerHTML = $('#txtPhoneNumber').val();
+                saveAddress();
+                //$('#modal-add-address').modal('hide');
+            }
+            return false;
+        });
 
         $('body').on('click', '.btn-edit', function (e) {
             e.preventDefault();
@@ -156,160 +136,69 @@
             loadDetails(that);
         });
 
-        $('body').on('click', '.btn-delete', function (e) {
-            e.preventDefault();
-            var that = $(this).data('id');
-            deleteProduct(that);
-        });
-
-        $('#btnSave').on('click', function (e) {
-            saveProduct(e);
-        });
-
-        $('#btn-import').on('click', function () {
-            initTreeDropDownCategory();
-            $('#modal-import-excel').modal('show');
-        });
-
-        $('#btnImportExcel').on('click', function () {
-            var files = $('#fileInputExcel').get(0).files;
-            var fileData = new FormData();
-            for (var i = 0; i < files.length; i++) {
-                fileData.append('files', files[i]);
-            }
-            fileData.append('categoryId', $('#ddlCategoryIdImportExcel').combotree('getValue'));
+        $('input[name=radio]').on('change', function (e) {
+            var addressId = $(this).data('id');
+            console.log(addressId);
             $.ajax({
-                url: '/Admin/Product/Index?handler=ImportExcel',
-                type: 'post',
-                beforeSend: function () {
-                    commons.startLoading();
-                },
-                data: fileData,
-                processData: false, // default is true, 
-                contentType: false, // not set content type, nếu không có dòng này sẽ xãy ra lỗi error 500
-                success: function (data) {
-                    $('#modal-import-excel').modal('hide');
-                    commons.notify('Nhập sản phẩm thành công', 'success');
-                    commons.stopLoading();
-                    loadData(true);
-                },
-                error: function () {
-                    commons.notify('Nhập sản phẩm thất bại', 'error');
-                    commons.stopLoading();
-                },
-                timeout: 7000
-            });
-            return false;
-        });
-
-        $('#btn-export').on('click', function () {
-            $.ajax({
-                type: "POST",
-                url: "/Admin/Product/ExportExcel",
-                beforeSend: function () {
-                    commons.startLoading();
-                },
-                success: function (response) {
-                    window.location.href = response;
-                    commons.stopLoading();
-                },
-                error: function () {
-                    commons.notify('Đã xãy ra lỗi', 'error');
-                    commons.stopLoading();
-                }
-            });
-        });
-        //});
-    };
-
-    function deleteProduct(that) {
-        commons.confirm('Bạn có chắc chắn muốn xóa?', function () {
-            $.ajax({
-                type: "POST",
-                url: "/Admin/Product/Index?handler=Delete",
-                data: JSON.stringify({ Id: that }),
-                contentType: 'application/json; charset=utf-8',
-                beforeSend: function () {
-                    commons.startLoading();
-                },
-                success: function (response) {
-                    commons.notify('Thành công', 'success');
-                    commons.stopLoading();
-                    loadData(true);
-                },
-                error: function (status) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
-                    commons.stopLoading();
-                }
-            });
-        });
-    }
-
-    function registerControls() {
-        CKEDITOR.replace('txtDescM', {});
-        //Fix: cannot click on element ck in modal
-        $.fn.modal.Constructor.prototype.enforceFocus = function () {
-            $(document)
-                .off('focusin.bs.modal') // guard against infinite focus loop
-                .on('focusin.bs.modal', $.proxy(function (e) {
-                    if (
-                        this.$element[0] !== e.target && !this.$element.has(e.target).length
-                        // CKEditor compatibility fix start.
-                        && !$(e.target).closest('.cke_dialog, .cke').length
-                        // CKEditor compatibility fix end.
-                    ) {
-                        this.$element.trigger('focus');
-                    }
-                }, this));
-        };
-    }
-
-    function saveProduct(e) {
-        if ($('#frmMaintainance').parsley().validate()) {
-            e.preventDefault();
-            var id = $('#hidIdM').val();
-            var name = $('#txtNameM').val();
-            var categoryId = $('#ddlCategoryIdM').combotree('getValue');
-            var description = CKEDITOR.instances.txtDescM.getData();
-            var price = $('#txtPriceM').val();
-            var originalPrice = $('#txtOriginalPriceM').val();
-            var image = $('#txtImage').val();
-            var brandName = $('#txtBrandName').val();
-            var quantity = $('#txtQuantity').val();
-            $.ajax({
-                type: "POST",
-                url: "/Admin/Product/Index?handler=SaveEntity",
+                type: 'POST',
+                url: '/Identity/Account/Manage/AddressBook?handler=UpdateDefaultAddress',
                 data: JSON.stringify({
-                    Id: id,
-                    Name: name,
-                    CategoryId: categoryId,
-                    Image: image,
-                    BrandName: brandName,
-                    Quantity: quantity,
-                    Price: price,
-                    OriginalPrice: originalPrice,
-                    Description: description
+                    Id: addressId
                 }),
                 contentType: 'application/json;charset=utf-8',
-                dataType: "json",
                 beforeSend: function () {
                     commons.startLoading();
                 },
-                success: function (response) {
-                    commons.notify('Thành công', 'success');
-                    $('#modal-add-edit').modal('hide');
-                    resetFormMaintainance();
-                    commons.stopLoading();
-                    loadData(true);
+                success: function () {
+                    commons.notify('Cập nhật địa chỉ mặc định thành công', 'success');
                 },
-                error: function (response) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                error: function () {
+                    commons.notify('Cập nhật địa chỉ mặc định thất bại', 'error');
+                },
+                complete: function () {
                     commons.stopLoading();
                 }
             });
-            return false;
+        });
+    };
+
+
+    var saveAddress = function () {
+        if ($('#frmaddaddress').parsley().validate()) {
+            var recipientName = $('#txtHoTen').val(),
+                phoneNumber = $('#txtPhoneNumber').val(),
+                detail = $('#txtDetail').val(),
+                province = $('#frmselectprovince').val(),
+                district = $('#frmselectdistrict').val(),
+                ward = $('#frmselectward').val();
+            $.ajax({
+                type: "POST",
+                url: "/Cart/Checkout?handler=SaveAddress",
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({
+                    RecipientName: recipientName,
+                    PhoneNumber: phoneNumber,
+                    Detail: detail,
+                    Province: province,
+                    District: district,
+                    Ward: ward
+                }),
+                beforeSend: function () {
+                    commons.startLoading();
+                },
+                success: function () {
+                    window.location.href = window.location.href;
+                    commons.stopLoading();
+
+                },
+                error: function () {
+                    commons.notify('Không thể thêm địa chỉ mới', 'error');
+                    commons.stopLoading();
+                }
+            });
         }
-    }
+    };
 
     function loadDetails(that) {
         console.log('that = ' + that);
@@ -345,6 +234,7 @@
     }
 
     var loadProvince = function (province) {
+        debugger;
         $.ajax({
             type: "GET",
             url: "/Cart/Checkout?handler=LoadProvince",

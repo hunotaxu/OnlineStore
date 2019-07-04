@@ -15,6 +15,7 @@ namespace DAL.Repositories
         int Delete(DefaultAddress entity, bool persist = true);
         int Delete(Guid customerId, int addressId, bool persist = true);
         int DeleteRange(IEnumerable<DefaultAddress> entities, bool persist = true);
+        int DeleteRangeForever(IEnumerable<DefaultAddress> entities, bool persist = true);
         int SaveChanges();
     }
 }

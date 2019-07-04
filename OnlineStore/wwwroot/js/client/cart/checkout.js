@@ -230,11 +230,16 @@
                     //return false;
                     //});
                     //$('#labelName').innerHTML = RecipientName;
-                    $('#labelName').text(response.recipientName);
+                    $('#labelName').text(response.recipientName || '');
                     $('#addressId').val(response.addressId);
                     //$('#labelAddress').val(Detail + ',' + Province + ', ' + District + ', ' + Ward);
-                    $('#labelAddress').text(response.detail + ', ' + response.ward + ', ' + response.district + ', ' + response.province);
-                    $('#labelPhoneNumber').text(response.phoneNumber);
+                    response.detail = response.detail === null ? '' : response.detail + ', ';
+                    response.province = response.province === null ? '' : response.province + ', ';
+                    response.district = response.district === null ? '' : response.district + ', ';
+                    response.ward = response.ward === null ? '' : response.ward + ', ';
+                    //$('#labelAddress').text(response.detail + ', ' + response.ward + ', ' + response.district + ', ' + response.province);
+                    $('#labelAddress').text(response.detail + response.ward + response.district + response.province);
+                    $('#labelPhoneNumber').text(response.phoneNumber || '');
                 }
                 else {
                     RecipientName = '';
@@ -457,7 +462,7 @@
                 else {
                     commons.notify('Lỗi tải giỏ hàng', 'error');
                 }
-                
+
                 commons.stopLoading();
             }
         });
@@ -664,8 +669,8 @@
             }
         });
     };
-    
-   
+
+
     return {
         init
     };

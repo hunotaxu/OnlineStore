@@ -6,7 +6,9 @@
 }
 
 @Html.Partial("_StatusMessage", Model.StatusMessage)
+
 <div class="row">
+    <a href="javascript:;" id="btnaddaddress"><i class="fa fa-plus"></i>Thêm địa chỉ mới</a>
     <div class="col-md-12">
         <form class="form-horizontal" role="form" id="frmselectaddress">
             <div class="box-border">
@@ -29,19 +31,19 @@
                                     <td>
                                         @if (address.Id == Model.DefaultAddress?.AddressId)
                                         {
-                                            <input data-id="{{AddressId}}" data-RecipientName="@address.RecipientName"
-                                                   data-Detail="{{Detail}}" data-Province="{{ProVince}}"
-                                                   data-District="{{District}}" data-Ward=" {{Ward}}"
+                                            <input data-id="@address.Id" data-RecipientName="@address.RecipientName"
+                                                   data-Detail="@address.Detail" data-Province="@address.Province"
+                                                   data-District="@address.District" data-Ward="@address.Ward"
                                                    data-PhoneNumber="{{PhoneNumber}}"
                                                    type="radio" name="radio"
                                                    class="radiobutton" checked>
                                         }
                                         else
                                         {
-                                            <input data-id="{{AddressId}}" data-RecipientName="@address.RecipientName"
-                                                   data-Detail="{{Detail}}" data-Province="{{ProVince}}"
-                                                   data-District="{{District}}" data-Ward=" {{Ward}}"
-                                                   data-PhoneNumber="{{PhoneNumber}}"
+                                            <input data-id="@address.Id" data-RecipientName="@address.RecipientName"
+                                                   data-Detail="@address.Detail" data-Province="@address.Province"
+                                                   data-District="@address.District" data-Ward="@address.Ward"
+                                                   data-PhoneNumber="@address.PhoneNumber"
                                                    type="radio" name="radio"
                                                    class="radiobutton">
                                         }
@@ -53,7 +55,7 @@
                                     <td data-th="PhoneNumber">@address.PhoneNumber</td>
                                     <td>
                                         <a class="btn btn-sm btn-edit" data-id="@address.Id"><i class="fa fa-pencil"></i></a>
-                                        <a class="btn btn-sm btn-delete" data-id="@address.Id"><i class="fa fa-trash"></i></a>
+                                        @*<a class="btn btn-sm btn-delete" data-id="@address.Id"><i class="fa fa-trash"></i></a>*@
                                     </td>
                                 </tr>
                             }
