@@ -483,7 +483,7 @@ namespace OnlineStore.Pages.Order
                             //Total = model.Order.Total,
                             ReceivingTypeId = model.Order.ReceivingTypeId,
                             SaleOff = model.Order.SaleOff,
-                            Status = OrderStatus.Pending,
+                            Status = model.Order.Status == OrderStatus.ReadyToDeliver ? OrderStatus.ReadyToDeliver : OrderStatus.Pending,
                         };
                         newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
                         //_unitOfWork.OrderRepository.Add(newOrder);

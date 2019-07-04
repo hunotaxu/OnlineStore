@@ -90,6 +90,66 @@
         //    });
         //});
 
+        $('#radio_button_creditcard').on('change', function () {
+            $("#btnorder").prop('disabled', true);
+        });
+
+        $('#frmPaypalCheckout').submit(function () {
+            //var addressId = $('#addressId').val();
+            //if (receivingType === "1" || receivingType === "2") {
+            //    if (addressId === undefined || addressId === '') {
+            //        commons.notify('Bạn phải chọn địa chỉ nhận hàng hợp lệ', 'error');
+            //        return false;
+            //    }
+            //}
+            var addressObj = {
+                PhoneNumber: $('#txtRecipientPhoneNumber').val(),
+                RecipientName: $('#txtRecipientName').val(),
+                ShowRoomAddressId: $('#selectshowroom').children('option:selected').data('showroomaddressid')
+            };
+            var orderObj = {
+                AddressId: $('#addressId').val(),
+                //DeliveryDate: $('input[name="radio-receivingthod"]:checked').data('deliverydate'),
+                ShippingFee: $('input[name="radio-receivingthod"]:checked').data('receivingfee'),
+                PaymentType: $('input[name="paymentType"]:checked').val(),
+                ReceivingTypeId: 1,
+                SaleOff: 0,
+                Status: 2
+            };
+            var sendObj = {
+                Order: orderObj,
+                Address: addressObj
+            };
+            debugger;
+            $.ajax({
+                type: "POST",
+                url: "/Cart/Checkout?handler=SaveOrder",
+                contentType: 'application/json; charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify(sendObj),
+                beforeSend: function () {
+                    //commons.startLoading();
+                },
+                success: function (response) {
+                    //commons.stopLoading();
+                    //window.location.href = `/Order/ConfirmAndThanksForOrder?orderId=${response.orderId}`;
+                },
+                error: function (response) {
+                    //if (response.responseText !== undefined && response.responseText !== '') {
+                    //    commons.notify(response.responseText, 'error');
+                    //}
+                    //else {
+                    //    commons.notify('Đặt hàng thất bại', 'error');
+                    //}
+                    //commons.stopLoading();
+                }
+            });
+        });
+
+        $('#radio_button_checkin').on('change', function () {
+            $("#btnorder").prop('disabled', false);
+        });
+
         $('#frmselectreceivingtype').click(function () {
             if ($('.radio-receivingtype').is(':checked')) {
                 var x = $('input[name=radio-receivingthod]:checked').attr("data-receivingId");
