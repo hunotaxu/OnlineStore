@@ -20,10 +20,16 @@ namespace OnlineStore.Pages.Home
         private readonly ICategoryRepository _categoryRepository;
         public int _numbercartitem;
 
-        public IEnumerable<Item> Phones { get; set; }
-        public IEnumerable<Item> Laptops { get; set; }
-        public IEnumerable<Item> Tablets { get; set; }
-        public IEnumerable<Item> Accessories { get; set; }
+        //public IEnumerable<Item> _Phones { get; set; }
+        //public IEnumerable<Item> _Laptops { get; set; }
+        //public IEnumerable<Item> _Tablets { get; set; }
+        //public IEnumerable<Item> _Accessories { get; set; }
+
+        public List<Item> Phones { get; set; }
+        public List<Item> Laptops { get; set; }
+        public List<Item> Tablets { get; set; }
+        public List<Item> Accessories { get; set; }
+
 
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
@@ -36,34 +42,50 @@ namespace OnlineStore.Pages.Home
             _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
             _categoryRepository = categoryRepository;
+            Phones = new List<Item>();
+            Laptops = new List<Item>();
+            Tablets = new List<Item>();
+            Accessories = new List<Item>();
 
         }
-
-
         public void OnGet()
         {
-
             var chuildPhoneCategory = _categoryRepository.GetSome(x=>x.IsDeleted == false && x.ParentId == 1);
             foreach (var item in chuildPhoneCategory)
             {               
-                    Phones = _itemRepository.GetByCategory(item.Id);                
+                var phone = _itemRepository.GetByCategory(item.Id);
+                foreach(var _phone in phone)
+                {
+                    Phones.Add(_phone);
+                }
             }
             var chuildLaptopCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 2);
             foreach (var item in chuildLaptopCategory)
             {
-                Laptops = _itemRepository.GetByCategory(item.Id);
+                var laptop = _itemRepository.GetByCategory(item.Id);
+                foreach (var _laptop in laptop)
+                {
+                    Phones.Add(_laptop);
+                }
             }
             var chuildTabletCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 3);
             foreach (var item in chuildTabletCategory)
             {
-                Tablets = _itemRepository.GetByCategory(item.Id);
+                var tablet = _itemRepository.GetByCategory(item.Id);
+                foreach (var _tablet in tablet)
+                {
+                    Phones.Add(_tablet);
+                }
             }
             var chuildAccessorieCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 4);
             foreach (var item in chuildAccessorieCategory)
             {
-                Accessories = _itemRepository.GetByCategory(item.Id);
+                var accessorie = _itemRepository.GetByCategory(item.Id);
+                foreach (var _accessorie in accessorie)
+                {
+                    Phones.Add(_accessorie);
+                }
             }
-           
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
         }       
     }

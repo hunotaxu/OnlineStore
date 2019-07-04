@@ -1,7 +1,7 @@
 ﻿@using DAL.Data.Entities
 @model IEnumerable<DAL.Data.Entities.Category>
 
-@foreach (Category parentMenu in Model)
+@foreach (Category parentMenu in Model.Take(10))
 {
     <li>
         @if (parentMenu.ParentId == null)
