@@ -43,7 +43,15 @@ namespace OnlineStore.Areas.Admin.ViewComponents
                 ShippingFee = CommonFunctions.FormatPrice(order.ShippingFee.Value.ToString())
             };
             //deliveryInfoVM.PhoneNumber = userAddress == null ? string.Empty : userAddress.PhoneNumber;
-            deliveryInfoVM.Address = userAddress == null ? string.Empty : order.Address?.Detail;
+            var address = order.Address;
+            if (userAddress != null && address != null)
+            {
+                deliveryInfoVM.Address = $"{address.Detail}, {address.Ward}, {address.District}, {address.Province}";
+            }
+            else
+            {
+                deliveryInfoVM.Address = string.Empty;
+            }
             return Task.FromResult<IViewComponentResult>(View(deliveryInfoVM));
         }
     }
