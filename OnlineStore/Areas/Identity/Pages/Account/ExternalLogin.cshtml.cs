@@ -6,11 +6,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.EF;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using Utilities.Commons;
 
 namespace OnlineStore.Areas.Identity.Pages.Account
 {
@@ -20,15 +22,18 @@ namespace OnlineStore.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly IUserRepository _userRepository;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            ILogger<ExternalLoginModel> logger)
+            ILogger<ExternalLoginModel> logger,
+            IUserRepository userRepository)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _userRepository = userRepository;
         }
 
         [BindProperty]
@@ -120,6 +125,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    _userRepository.AddUserRole(user.Id, CommonConstants.CustomerRoleId);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

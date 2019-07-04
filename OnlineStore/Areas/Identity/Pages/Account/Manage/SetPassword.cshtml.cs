@@ -32,15 +32,22 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //[Required]
+            //[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            //[DataType(DataType.Password)]
+            //[Display(Name = "New password")]
+            [Required(ErrorMessage = "Vui lòng nhập mật khẩu mới")]
+            [StringLength(100, ErrorMessage = "Mật khẩu mới phải có tổi thiểu 6 ký tự và tối đa 100 ký tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Mật khẩu mới")]
             public string NewPassword { get; set; }
 
+            //[DataType(DataType.Password)]
+            //[Display(Name = "Confirm new password")]
+            //[Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Display(Name = "Xác nhận mật khẩu mới")]
+            [Compare("NewPassword", ErrorMessage = "Xác nhận mật khẩu mới không trùng khớp.")]
             public string ConfirmPassword { get; set; }
         }
 
