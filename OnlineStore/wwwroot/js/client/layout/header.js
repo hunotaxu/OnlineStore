@@ -72,6 +72,7 @@ var loadItemMyCart = (function () {
                 if (render !== '') {
                     $('#container-pay-cart-layout').html(render);
                     $('#PriceTotaltmpLayout').html(`${commons.formatNumber(PriceTotaltmp, 0)}đ`);
+                    $('.error-load-cart-layout').hide();
                 } else {
                     $('.error-load-cart-layout').html(`<div style='text-align: center;'><br/><h3 class="productnamecheckout">Không có sản phẩm nào trong giỏ hàng</h3></div>`);
                 }

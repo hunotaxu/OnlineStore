@@ -10,8 +10,7 @@
     {
         <div class="product-item">
             <div class="item-inner">
-                <div class="icon-sale-label sale-left">Sale</div>
-                <div class="icon-new-label new-right">New</div>
+                <div class="icon-new-label new-right">Mới</div>
                 <div class="product-thumbnail">
                     <div class="pr-img-area img-height-250 zoomindex">
                         @if (item.ProductImages.Count() != 0)
@@ -63,8 +62,8 @@
                         <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
                         <div class="item-content">
                             @*<div class="rating">
-                                    @await Component.InvokeAsync("EvaluationStarPartial")
-                                </div>*@
+                        @await Component.InvokeAsync("EvaluationStarPartial")
+                    </div>*@
                             <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
                             @*<div class="rateit" data-rateit-value=@Html.Raw() data-rateit-readonly="true"> </div>*@
 
@@ -80,4 +79,6 @@
             </div>
         </div>
     }
+}
+else {
 }

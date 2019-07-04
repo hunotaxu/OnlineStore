@@ -4,15 +4,18 @@
 
 @if (Model != null)
 {
-    var hotitems = Model.OrderByDescending(x => x.View);
+    var hotitems = Model.OrderByDescending(x => (x.Price-x.OriginalPrice));
 
     @foreach (var item in hotitems.Take(9))
     {
+        decimal? nullsaleprice = item.Price - item.OriginalPrice;
+        decimal saleprice = nullsaleprice ?? 0;
+
         <div class="product-item">
             <div class="item-inner">
-                <div class="icon-new-label new-right">Hot</div>
+                <div class="icon-new-label new-right"><span class="price">-@CommonFunctions.FormatNumber(saleprice, 0)&#8363;</span></div>
                 <div class="product-thumbnail">
-                    <div class="pr-img-area img-height-250 zoomindex">
+                    <div class="pr-img-area img-height-188 zoomindex">
                         @if (item.ProductImages.Count() != 0)
                         {
                             bool valid = false;
