@@ -99,3 +99,7 @@
 .bootbox.modal {
     z-index: 2000 !important;
 }
+
+.from-group__center {
+    text-align: center;
+}
