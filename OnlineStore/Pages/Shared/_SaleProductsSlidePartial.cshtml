@@ -4,11 +4,11 @@
 
 @if (Model != null)
 {
-    var hotitems = Model.OrderByDescending(x => (x.Price-x.OriginalPrice));
+    var hotitems = Model.OrderByDescending(x => (x.OriginalPrice-x.Price));
 
     @foreach (var item in hotitems.Take(9))
     {
-        decimal? nullsaleprice = item.Price - item.OriginalPrice;
+        decimal? nullsaleprice = item.OriginalPrice - item.Price;
         decimal saleprice = nullsaleprice ?? 0;
 
         <div class="product-item">
