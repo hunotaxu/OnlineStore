@@ -108,8 +108,11 @@
                             <p class="productnamedetail">@Html.Raw(Model.Item.Name)</p>
                         </div>
                         <div class="price-box">
+                            @{
+                                decimal saleprice = Model.Item.OriginalPrice ?? Model.Item.Price;
+                            }
                             <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"> @CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363; </span> </p>
-                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price">@CommonFunctions.FormatNumber(Model.Item.Price, 0)&#8363; </span> </p>
+                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price">@CommonFunctions.FormatNumber(saleprice, 0)&#8363; </span> </p>
                         </div>
                         <div class="ratings">
 
