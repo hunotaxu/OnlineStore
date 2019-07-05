@@ -1,8 +1,16 @@
 ﻿@page
 @model OnlineStore.Pages.Home.IndexModel
+@using Utilities.Extensions
+@using Microsoft.AspNetCore.Identity
+@using DAL.Data.Entities
+@inject UserManager<ApplicationUser> UserManager
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
+
+}
+@{
+    var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
 
 @section StyleS{
@@ -86,6 +94,10 @@
     <script>
         jshome.init();
     </script>}
+@if (cus != null)
+{
+    <input data-customerid="@cus.Id" id="data-cus-hidden-index" hidden />
+}
 <!-- Slideshow  -->
 <div class="main-slider" id="home">
     <div class="container">
@@ -162,7 +174,7 @@
             <div class="col col-md-3 col-sm-6 col-xs-12">
                 <div class="block-wrapper support">
                     <div class="text-des">
-                        <div class="icon-wrapper"><i class="fa fa-umbrella icon-service" ></i></div>
+                        <div class="icon-wrapper"><i class="fa fa-umbrella icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Hỗ trợ 24/7</h3>
                             <p>Điện thoại: 016769276</p>

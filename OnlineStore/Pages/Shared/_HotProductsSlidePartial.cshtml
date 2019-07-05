@@ -10,7 +10,7 @@
     {
         <div class="product-item">
             <div class="item-inner">
-                <div class="icon-new-label new-right">Hot</div>
+                <div class="icon-hot-label new-right">Hot</div>
                 <div class="product-thumbnail">
                     <div class="pr-img-area img-height-250 zoomindex">
                         @if (item.ProductImages.Count() != 0)
@@ -71,7 +71,7 @@
                                 <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
                             </div>
                             <div class="pro-action">
-                                <button type="button" class="btnAddToCart add-to-cart addtocart-layout"><span>Thêm vào giỏ hàng</span> </button>
+                                <button data-id="@item.Id" type="button" class="btnAddToCart add-to-cart addtocart-layout"><span>Thêm vào giỏ hàng</span> </button>
                             </div>
                         </div>
                     </div>
