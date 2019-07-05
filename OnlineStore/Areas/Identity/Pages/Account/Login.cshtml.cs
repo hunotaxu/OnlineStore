@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -43,15 +43,11 @@ namespace OnlineStore.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            //[Required]
-            //[EmailAddress]
-            //public string Email { get; set; }
-
-            [Required]
-            [DisplayName("Số điện thoại")]
+            [Required(ErrorMessage = "Vui lòng nhập email hoặc số điện thoại")]
+            [DisplayName("Email hoặc số điện thoại")]
             public string UserName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
             [DataType(DataType.Password)]
             [DisplayName("Mật khẩu")]
             public string Password { get; set; }
@@ -79,6 +75,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             returnUrl = returnUrl ?? Url.Content("~/");
 
             if (!ModelState.IsValid)
@@ -90,6 +87,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.UserName) ?? await _userManager.FindByNameAsync(Input.UserName);
             if (user == null)
             {
+                ModelState.AddModelError(string.Empty, "Đăng nhập không thành công.");
                 return Page();
             }
             var result = await _signInManager.PasswordSignInAsync(user, Input.Password, Input.RememberMe, lockoutOnFailure: false);
@@ -114,7 +112,8 @@ namespace OnlineStore.Areas.Identity.Pages.Account
                 return RedirectToPage("./Lockout");
             }
 
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            //ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Đăng nhập không thành công.");
             return Page();
 
             // If we got this far, something failed, redisplay form
