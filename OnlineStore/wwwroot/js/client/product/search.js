@@ -81,7 +81,7 @@
             if (this.checked) {
                 listBrandNamesSelected.push(brand);
             } else {
-                listBrandNamesSelected.splice(listBrandNamesSelected.indexOf(brand, 1));
+                listBrandNamesSelected.splice($.inArray(brand, listBrandNamesSelected), 1);
             }
             loadData(true);
         });
