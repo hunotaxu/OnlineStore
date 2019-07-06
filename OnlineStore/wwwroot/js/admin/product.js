@@ -27,6 +27,8 @@ var itemPage = (function () {
             clearDropzone();
         }
         $("#dzUpload").dropzone({
+            autoProcessQueue: true,
+            parallelUploads: 1,
             init: function () {
                 var myDropzone = this;
                 //Call the action method to load the images from the server
