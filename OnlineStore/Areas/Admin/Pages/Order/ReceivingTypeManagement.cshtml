@@ -1,0 +1,103 @@
+﻿@page
+@model OnlineStore.Areas.Admin.Pages.Order.ReceivingTypeManagementModel
+@{
+
+}
+
+@section Scripts{
+    <script src="~/lib/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+    <script src="~/js/admin/receiving-type.js" asp-append-version="true"></script>
+    <script>
+        receivingType.init();
+    </script>
+}
+
+<form method="post">
+    <div class="page-title">
+        <div class="title_left">
+            <h3>Danh sách các phương thức giao hàng</h3>
+        </div>
+
+        <div class="title_right">
+            @*<div class="col-md-3 col-sm-5 col-xs-12 form-group pull-right">
+                <div class="input-group">
+                    <input type="text" id="txtKeyword" class="form-control" placeholder="Tên sản phẩm">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" id="btnSearch" type="button">Tìm</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-12  form-group pull-right">
+                <select class="form-control" id="ddlCategorySearch"></select>
+            </div>*@
+            <div class="col-md-6 col-sm-12  form-group pull-right">
+                <button id="btnCreate" type="button" class="btn btn-success">Tạo</button>
+                @*<a class="btn btn-danger" href="~/templates/ProductImportTemplate.xlsx">Tải mẫu nhập</a>
+                <button class="btn btn-primary" id="btn-import" type="button">Nhập sản phẩm từ file</button>*@
+                @*<button class="btn btn-default" id="btn-export" type="button">Xuất sản phẩm ra file</button>*@
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_content">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên phương thức</th>
+                            <th>Phí giao hàng (VNĐ)</th>
+                            <th>Số ngày giao hàng</th>
+                            @*<th>Số lượng</th>
+                            <th>Giá</th>*@
+                            <th>Ngày tạo</th>
+                            <th width="10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbl-content"></tbody>
+                </table>
+                <!--Pagination-->
+                @*<div class="row">
+                    <div class="col-sm-5">
+                        <div class="dataTables_info" id="datatable-checkbox_info" role="status" aria-live="polite">
+                            <select id="ddlShowPage">
+                                <option value="10" selected="selected">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                            </select>
+                            <span class="item-per-page">
+                                bản ghi/trang.
+                            </span>
+                            Tổng số bản ghi: <strong id="lblTotalRecords"></strong>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="dataTables_paginate paging_simple_numbers" id="datatable-checkbox_paginate">
+                            <ul id="paginationUL"></ul>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+    <script id="table-template" type="x-tmpl-mustache">
+        <tr>
+            <td>{{Name}}</td>
+            <td>{{Value}}</td>
+            <td>{{NumberShipDay}}</td>
+            @*<td>{{Quantity}}</td>
+            <td>{{Price}}</td>*@
+            <td>{{CreatedDate}}</td>
+            <th>
+                <a class="btn btn-sm btn-edit" data-id="{{Id}}"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-sm btn-delete" data-id="{{Id}}"><i class="fa fa-trash"></i></a>
+                @*<a href="#" data-id="{{Id}}" class="btn btn-xs btn-images"><i class="fa fa-image"></i></a>
+                    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-quantity"><i class="fa fa-hourglass-start"></i></a>
+                    <a href="#" data-id="{{Id}}" class="btn btn-xs btn-whole-price"><i class="fa fa-money"></i></a>*@
+            </th>
+        </tr>
+    </script>
+</form>
+<partial name="_AddEditReceivingType" />
