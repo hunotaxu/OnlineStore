@@ -213,3 +213,7 @@ body .no-padding {
 .previews-img:hover{
     border: solid 1px red !important;
 }
+
+.col-main-fb{
+    padding-bottom: 0 !important;
+}

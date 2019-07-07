@@ -65,7 +65,7 @@ namespace OnlineStore.Pages.Home
                 var laptop = _itemRepository.GetByCategory(item.Id);
                 foreach (var _laptop in laptop)
                 {
-                    Phones.Add(_laptop);
+                    Laptops.Add(_laptop);
                 }
             }
             var chuildTabletCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 3);
@@ -74,7 +74,7 @@ namespace OnlineStore.Pages.Home
                 var tablet = _itemRepository.GetByCategory(item.Id);
                 foreach (var _tablet in tablet)
                 {
-                    Phones.Add(_tablet);
+                    Tablets.Add(_tablet);
                 }
             }
             var chuildAccessorieCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 4);
@@ -83,7 +83,7 @@ namespace OnlineStore.Pages.Home
                 var accessorie = _itemRepository.GetByCategory(item.Id);
                 foreach (var _accessorie in accessorie)
                 {
-                    Phones.Add(_accessorie);
+                    Accessories.Add(_accessorie);
                 }
             }
             var cus = _userManager.GetUserAsync(HttpContext.User).Result;
