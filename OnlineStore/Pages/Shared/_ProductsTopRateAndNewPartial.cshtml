@@ -29,7 +29,7 @@
                         {
                             <a class="product-image" title=@item.Name href="~/Product/Detail?id=@item.Id">
                                 <figure>
-                                    <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                                    <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Không thể hiển thị hình ảnh" />
                                 </figure>
                             </a>
                         }
@@ -40,7 +40,7 @@
                     {
                         <a class="product-image" title=@item.Name href="~/Product/Detail?id=@item.Id">
                             <figure>
-                                <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                                <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Không thể hiển thị hình ảnh" />
                             </figure>
                         </a>
                     }
@@ -63,13 +63,13 @@
                         <div class="item-price">
                             <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
                         </div>
-                        <div class="pro-action">
+                        @*<div class="pro-action">
                             <button data-id="@item.Id" type="button" class="btnAddToCart add-to-cart"><i class="fa fa-shopping-cart"></i></button>
-                        </div>
-                        <div class="pr-button-hover">
+                        </div>*@
+                        @*<div class="pr-button-hover">
                             <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart-o"></i> </a> </div>
                             <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-link"></i> </a> </div>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>

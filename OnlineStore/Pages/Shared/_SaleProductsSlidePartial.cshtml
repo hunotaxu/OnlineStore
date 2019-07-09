@@ -4,7 +4,7 @@
 
 @if (Model != null)
 {
-    var hotitems = Model.OrderByDescending(x => (x.OriginalPrice-x.Price));
+    var hotitems = Model.OrderByDescending(x => (x.OriginalPrice - x.Price));
 
     @foreach (var item in hotitems.Take(9))
     {
@@ -36,7 +36,7 @@
                             {
                                 <a title=@item.Name href="~/Product/Detail?id=@item.Id">
                                     <figure>
-                                        <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                                        <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Không thể hiển thị hình ảnh" />
                                     </figure>
                                 </a>
                             }
@@ -47,17 +47,17 @@
                         {
                             <a title=@item.Name href="~/Product/Detail?id=@item.Id">
                                 <figure>
-                                    <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh" />
+                                    <img class="first-img" src="~/images/client/ProductImages/no-image.jpg" alt="Không thể hiển thị hình ảnh" />
                                 </figure>
                             </a>
                         }
                     </div>
                     <div class="pr-info-area">
-                        <div class="pr-button">
-                            <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
-                            <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
-                            <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
-                        </div>
+                        @*<div class="pr-button">
+                                <div class="mt-button add_to_wishlist"> <a href="wishlist.html"> <i class="fa fa-heart-o"></i> </a> </div>
+                                <div class="mt-button add_to_compare"> <a href="compare.html"> <i class="fa fa-link"></i> </a> </div>
+                                <div class="mt-button quick-view"> <a href="quick_view.html"> <i class="fa fa-search"></i> </a> </div>
+                            </div>*@
                     </div>
                 </div>
                 <div class="item-info">
@@ -78,8 +78,8 @@
                                 <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
                             </div>
                             @*<div class="pro-action">
-                                <button data-id="@item.Id" type="button" class="btnAddToCart add-to-cart addtocart-layout"><span>Thêm vào giỏ hàng</span> </button>
-                            </div>*@
+                                    <button data-id="@item.Id" type="button" class="btnAddToCart add-to-cart addtocart-layout"><span>Thêm vào giỏ hàng</span> </button>
+                                </div>*@
                         </div>
                     </div>
                 </div>

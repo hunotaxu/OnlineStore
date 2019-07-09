@@ -1,6 +1,6 @@
 ﻿var commons = {
     configs: {
-        pageSize: 10,
+        pageSize: 9,
         pageIndex: 1
     },
 

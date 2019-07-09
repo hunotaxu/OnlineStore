@@ -5,7 +5,6 @@ using DAL.Data.Enums;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels;
 using OnlineStore.Models.ViewModels.Item;

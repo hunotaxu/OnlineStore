@@ -55,7 +55,7 @@
                                 foreach (var item in _productImages)
                                 {
                                     <a href="~/images/client/ProductImages/@item.Name" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                        <img class="zoom-img" src="~/images/client/ProductImages/@item.Name" alt="Hình ảnh">
+                                        <img class="zoom-img" src="~/images/client/ProductImages/@item.Name" alt="Không thể hiển thị Không thể hiển thị hình ảnh">
                                     </a>
                                     break;
                                 }
@@ -63,7 +63,7 @@
                             else
                             {
                                 <a href="~/images/client/ProductImages/no-image.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20">
-                                    <img class="zoom-img" src="~/images/client/ProductImages/no-image.jpg" alt="Hình ảnh">
+                                    <img class="zoom-img" src="~/images/client/ProductImages/no-image.jpg" alt="Không thể hiển thị Không thể hiển thị hình ảnh">
                                 </a>
                             }
                         </div>
@@ -72,13 +72,13 @@
                                 @if (_productImages.Count() == 0)
                                 {
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Không thể hiển thị hình ảnh" /></a>
                                     </li>
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Không thể hiển thị hình ảnh" /></a>
                                     </li>
                                     <li>
-                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh" /></a>
+                                        <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Không thể hiển thị hình ảnh" /></a>
                                     </li>
                                 }
                                 else
@@ -86,16 +86,16 @@
                                     @foreach (var item in _productImages)
                                     {
                                         <li>
-                                            <a href='@Url.Content("~/images/client/ProductImages/"+item.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+item.Name)' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/"+item.Name)" alt="Hình ảnh" /></a>
+                                            <a href='@Url.Content("~/images/client/ProductImages/"+item.Name)' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: '@Url.Content("~/images/client/ProductImages/"+item.Name)' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/"+item.Name)" alt="Không thể hiển thị hình ảnh" /></a>
                                         </li>
                                     }
                                     @if (_productImages.Count() <= 2)
                                     {
                                         <li>
-                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh"></a>
+                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Không thể hiển thị hình ảnh"></a>
                                         </li>
                                         <li>
-                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Hình ảnh"></a>
+                                            <a href='@Url.Content("~/images/client/ProductImages/no-image.jpg")' class='cloud-zoom-gallery' rel="usezoom: 'zoom1', smallimage: '@Url.Content("~/images/client/ProductImages/no-image.jpg")' "><img class="previews-img" src="@Url.Content("~/images/client/ProductImages/no-image.jpg")" alt="Không thể hiển thị hình ảnh"></a>
                                         </li>
                                     }
                                 }
