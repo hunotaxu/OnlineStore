@@ -25,7 +25,6 @@
 }
 
 @section Styles{
-    <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
     <link href="~/css/client/layout/style.css" rel="stylesheet" />
     <link href="~/css/client/product/detail.css" rel="stylesheet" />
 }
@@ -115,9 +114,15 @@
                             <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price">@CommonFunctions.FormatNumber(saleprice, 0)&#8363; </span> </p>
                         </div>
                         <div class="ratings">
-
                             <!--Đánh giá sao trung bình-->
-                            <div class="rateit" data-rateit-value=@Html.Raw(Model.Average) data-rateit-readonly="true"> </div>
+                            @if (Model.Item.AverageEvaluation != null)
+                            {
+                                <div class="rateit" data-rateit-value=@Html.Raw(Model.Item.AverageEvaluation) data-rateit-readonly="true"> </div> <span style="font-size: 18px; font-weight: 700; color: #e83f33">(@Html.Raw(Model.Item.AverageEvaluation)/5)</span>
+                            }
+                            else
+                            {
+                                <span>Chưa có đánh giá nào</span>
+                            }
                             <!--Đánh giá sao trung bình-->
                             @*<div class="rating"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>*@
                             @*<p class="rating-links"> <a href="#">@Html.Raw(Model._countComment) Bình luận: (s)</a> <span class="separator">|</span> <a href="#">Thêm bình luận của bạn</a> </p>*@
@@ -200,7 +205,7 @@
                                             @foreach (var item in Model.CustomerCommentViewModel)
                                             {
                                                 <div class="review-ratting">
-                                                    <p>@item.Content</p>
+                                                    <p style="font-weight: 400">@item.Content</p>
                                                     <table>
                                                         <tbody>
                                                             <tr>
@@ -212,7 +217,7 @@
                                                         </tbody>
                                                     </table>
                                                     <p class="author">
-                                                        <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"/images/shared/avatar/{item.CustomerAvatar}" : "  /images/admin/user.png")">  @item.CustomerName
+                                                        <img class="avatar" src="@(string.IsNullOrEmpty(item.CustomerAvatar) == false ? $"/images/shared/avatar/{item.CustomerAvatar}" : "/images/admin/user.png")">  @item.CustomerName
                                                         <small> (Đăng lên vào @item.DateCreated)</small>
                                                     </p>
                                                     <hr />
@@ -294,7 +299,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-main col-sm-3 col-xs-12 col-main-fb">                
+            <div class="col-main col-sm-3 col-xs-12 col-main-fb">
                 <div class="fb-page" data-href="https://www.facebook.com/TimiShop-2115751742057581/" data-tabs="timeline" data-width="290" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/TimiShop-2115751742057581/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/TimiShop-2115751742057581/"></a></blockquote></div>
             </div>
         </div>

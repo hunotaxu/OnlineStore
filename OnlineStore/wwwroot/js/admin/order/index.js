@@ -30,8 +30,7 @@ var order = (function () {
     //    if (_ref) {
     //        _ref.parentNode.removeChild(file.previewElement);
     //    }
-    //};
-
+    //};    
     var onSearchEvents = function () {
         $('#btnSearch').on('click',
             function () {
@@ -76,6 +75,13 @@ var order = (function () {
                 commons.configs.pageIndex = 1;
                 loadData(true);
             });
+            $('#ddlReceivingType').on('change', function () {
+                loadData(true);
+            });
+            $('#ddlOrderStatus').on('change', function () {
+                loadData(true);
+            });
+
 
             $('#btnSearch').on('click', function () {
                 loadData();

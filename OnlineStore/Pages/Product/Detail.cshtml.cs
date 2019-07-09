@@ -33,7 +33,6 @@ namespace OnlineStore.Pages.Product
         [BindProperty]
         public List<ItemViewModel> Items { get; set; }
         
-        public double Average { get; set; }
         public int ItemId;
         public double _countComment = 0;
         public int _countItemCart = 0;
@@ -106,12 +105,10 @@ namespace OnlineStore.Pages.Product
 
                     });
                 }
-                Average = sumEvaluation / _countComment;
             }
             else
             {
                 CustomerCommentViewModel = null;
-                Average = 0;
             }
 
             if (_userManager.GetUserAsync(HttpContext.User).Result != null)

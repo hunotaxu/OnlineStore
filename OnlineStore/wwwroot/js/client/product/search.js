@@ -193,7 +193,7 @@
                                 Image: (item.productImages !== undefined && item.productImages.length > 0) ?
                                     `/images/client/ProductImages/${item.productImages[0].name}` : `/images/client/ProductImages/no-image.jpg`,
                                 ProductName: item.name,
-                                ProductId: item.id,
+                                ProductId: item.id,                                
                                 AvgRating: (item.averageEvaluation !== undefined && item.averageEvaluation !== '' && item.averageEvaluation !== null) ?
                                     `Đánh giá: ${item.averageEvaluation}/5` : 'Chưa có đánh giá nào',
                                 OriginalPrice: `${commons.formatNumber(item.originalPrice, 0)}đ`,
