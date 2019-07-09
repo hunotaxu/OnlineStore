@@ -59,12 +59,16 @@
                     <div class="info-inner">
                         <div class="item-title"> <a title=@item.Name href="~/Product/Detail?id=@item.Id">@item.Name </a> </div>
                         <div class="item-content">
-                            @*<div class="rating">
-                                    @await Component.InvokeAsync("EvaluationStarPartial")
-                                </div>*@
-                            <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                            @*<div class="rateit" data-rateit-value=@Html.Raw() data-rateit-readonly="true"> </div>*@
-
+                            <div class="ratings">
+                                @if (@item.AverageEvaluation != null)
+                                {
+                                    <div class="rateit" data-rateit-value=@Html.Raw(@item.AverageEvaluation) data-rateit-readonly="true"> </div>
+                                }
+                                else
+                                {
+                                    <span>Chưa có đánh giá nào</span>
+                                }
+                            </div>
                             <div class="item-price">
                                 <div class="price-box"> <span class="regular-price"> <span class="price">@CommonFunctions.FormatNumber(item.Price, 0)&#8363;</span> </span> </div>
                             </div>

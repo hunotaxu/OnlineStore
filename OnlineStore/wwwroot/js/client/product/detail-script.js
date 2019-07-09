@@ -26,8 +26,8 @@
             //resetFormMaintainance();
             commons.stopLoading();
             $('#txtContent').val('');
+            //calculateEval();
             location.reload();
-
             //loadData(true);
         },
         error: function () {
@@ -35,6 +35,7 @@
             commons.stopLoading();
         }
     });
+
     return false;
 });
 
@@ -112,40 +113,3 @@ $("#txtQuantity").on("keypress keyup", function (event) {
         $(this).val(x);
     }
 });
-
-//$.ajax({
-    
-//    type: "POST",
-//    url: "/Product/Detail?handler=LoadPreviewImage",
-//    data: JSON.stringify({        
-//        Id: $('#datahidden-item').data('itemid')
-//    }),
-//    contentType: 'application/json;charset=utf-8',
-//    dataType: "json",
-//    beforeSend: function (xhr) {
-//        commons.startLoading();
-//    },
-//    success: function (response) {
-//        debugger;
-//        var render = '';
-//        if (response !== undefined) {
-//            $.each(response, function (i, item) {
-//                render += Mustache.render($('#script-previews-list-images').html(),
-//                    {                        
-//                        ItemId: item.id,                        
-//                        Name: item.name,
-//                        Image: (item.image !== undefined && item.image.length > 0) ?
-//                            `/images/client/ProductImages/${item.image}` : `/images/client/ProductImages/default-iamge.jpg$`
-//                    });
-//            });
-//        }
-//        if (render !== '') {
-//            $('#previews-list-images').html(render);
-//        }
-//        commons.stopLoading();
-//    },
-//    error: function () {
-//        commons.notify('Không thể tải địa chỉ', 'error');
-//        commons.stopLoading();
-//    }
-//});
