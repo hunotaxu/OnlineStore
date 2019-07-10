@@ -1,6 +1,7 @@
 ﻿@page
 @using DAL.Data.Enums
 @using DAL.Data.Entities
+@using Utilities.Commons
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @model OnlineStore.Pages.Product.SearchModel
@@ -29,6 +30,7 @@
 <input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
 <input type="hidden" id="category-id" value="@Model.SearchProductViewModel.CategoryId" />
 <input type="hidden" id="user-id" value="@(cus != null ? cus.Id.ToString() : "")" />
+<input id="is-customer" data-is-customer="@(await UserManager.IsInRoleAsync(cus, CommonConstants.CustomerRoleName))" hidden />
 <form method="post"></form>
 <!-- Main Container -->
 <div class="main-container col2-left-layout">
@@ -297,7 +299,7 @@
                 </div>
                 <div class="block shop-by-side">
                     @*<div class="sidebar-bar-title">
-                            <h3>Shop By</h3>    
+                            <h3>Shop By</h3>
                         </div>*@
                     <div class="block-content" id="block-content-search">
                         @*<p class="block-subtitle">Shopping Options</p>*@

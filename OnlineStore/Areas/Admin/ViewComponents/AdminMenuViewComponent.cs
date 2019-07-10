@@ -20,7 +20,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            var isProductManager = await _userManager.IsInRoleAsync(user, CommonConstants.ProductManagerRoleName);
+            //var isProductManager = await _userManager.IsInRoleAsync(user, CommonConstants.ProductManagerRoleName);
             var viewModel = new IsAdminRolesViewModel
             {
                 IsProductManager = user != null ? await _userManager.IsInRoleAsync(user, CommonConstants.ProductManagerRoleName) : false,

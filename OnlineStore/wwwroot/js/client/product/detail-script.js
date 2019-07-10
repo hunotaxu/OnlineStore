@@ -48,8 +48,8 @@ $('#gotocomment1').on('click', function (e) {
 $('#btnAddToCart').on('click', function (e) {
     e.preventDefault();
     var id = parseInt($(this).data('id'));
-    if ($('#data-cus-hidden').data('customerid') === '' || $('#data-cus-hidden').data('customerid') === undefined) {
-        commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
+    if ($('#data-cus-hidden').data('customerid') === '' || $('#data-cus-hidden').data('customerid') === undefined || ($('#data-cus-hidden').data('customerid') !== '' && $('#is-customer').data('is-customer') === "False")){
+            commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
             window.location.replace(`/Identity/Account/Login?returnUrl=/Product/Detail?id=${id}`);
         });
     }

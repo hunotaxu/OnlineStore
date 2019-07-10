@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-xs-12">
                 <ul>
-                    <li class="home"> <a title="Go to Home Page" href="#">Trang chủ</a><span>&raquo;</span></li>
+                    <li class="home"> <a title="Go to Home Page" href="/">Trang chủ</a><span>&raquo;</span></li>
                     <li><strong>@Model.Item.BrandName</strong></li>
                 </ul>
             </div>
@@ -166,20 +166,20 @@
                                 <button class="button pro-add-to-cart" id="btnAddToCart" data-id="@Model.ItemId" title="Thêm vào giỏ" type="button"><span><i class="fa fa-shopping-basket"></i>Thêm vào giỏ</span></button>
                             </form>
                         </div>
-                        <div class="product-cart-option">
+                        @*<div class="product-cart-option">
                             x
                             <ul>
                                 <li><a href="#"><i class="fa fa-heart-o"></i><span>Thêm vào danh sách yêu thích</span></a></li>
                             </ul>
-                        </div>
+                        </div>*@
                     </div>
                 </div>
                 <div class="products-view">
                     <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
                         <li id="description" class="active"> <a class="tabproduct" href="#descriptions" data-toggle="tab"> Mô tả sản phẩm </a> </li>
                         <li id="review"> <a class="tabproduct" href="#reviews" data-toggle="tab">Đánh giá</a> </li>
-                        <li id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Thẻ</a></li>
-                        <li id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Tùy chỉnh</a> </li>
+                        @*<li id="product_tag"><a class="tabproduct" href="#product_tags" data-toggle="tab">Thẻ</a></li>
+                        <li id="custom_tag"> <a class="tabproduct" href="#custom_tabs" data-toggle="tab">Tùy chỉnh</a> </li>*@
                     </ul>
                 </div>
                 <div class="product-overview-tab ">
@@ -198,6 +198,7 @@
                                         @if (cus != null)
                                         {
                                             <input data-customerid="@cus.Id" id="data-cus-hidden" hidden />
+                                            <input id="is-customer" data-is-customer="@(await UserManager.IsInRoleAsync(cus, CommonConstants.CustomerRoleName))" hidden />
                                         }
                                         <input data-itemid="@Model.ItemId" id="data-item-hidden" hidden />
                                         @if (Model.CustomerCommentViewModel != null)
@@ -251,7 +252,7 @@
                                                         @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
                                                         <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
                                                         @*
-                                                            </div>*@
+                                                    </div>*@
                                                     </div>
                                                 </form>
 
@@ -311,7 +312,7 @@
     <div class="container">
         <div class="row">
             <div class="col col-md-3 col-sm-6 col-xs-12">
-                <div class="block-wrapper ship">
+                @*<div class="block-wrapper ship">
                     <div class="text-des">
                         <div class="icon-wrapper"><i class="fa fa-paper-plane icon-service"></i></div>
                         <div class="service-wrapper">
@@ -319,7 +320,7 @@
                             <p>Đơn hàng trên 50k</p>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
             <div class="col col-md-3 col-sm-6 col-xs-12 ">
                 <div class="block-wrapper return">
@@ -327,7 +328,7 @@
                         <div class="icon-wrapper"><i class="fa fa-rotate-right icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Bảo mật thanh toán</h3>
-                            <p>Momo, ATM, Paypal</p>
+                            <p>Paypal</p>
                         </div>
                     </div>
                 </div>
@@ -338,13 +339,13 @@
                         <div class="icon-wrapper"><i class="fa fa-umbrella icon-service"></i></div>
                         <div class="service-wrapper">
                             <h3>Hỗ trợ 24/7</h3>
-                            <p>Điện thoại: 016769276</p>
+                            <p>Điện thoại: +84 367 167 648</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col col-md-3 col-sm-6 col-xs-12">
-                <div class="block-wrapper user">
+                @*<div class="block-wrapper user">
                     <div class="text-des">
                         <div class="icon-wrapper"><i class="fa fa-tags icon-service"></i></div>
                         <div class="service-wrapper">
@@ -352,7 +353,7 @@
                             <p>25% cho đơn hàng trên 200k</p>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

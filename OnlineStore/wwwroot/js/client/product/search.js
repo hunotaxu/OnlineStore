@@ -93,7 +93,7 @@
             e.preventDefault();
             var id = parseInt($(this).data('id'));
             //if ($('#datahidden-cus').data('customerid') === '' || $('#datahidden-cus').data('customerid') === undefined) {
-            if ($('#user-id').val() === '' || $('#user-id').val() === undefined) {
+            if ($('#user-id').val() === '' || $('#user-id').val() === undefined || ($('#user-id').val() !== '' && $('#is-customer').data('is-customer') === "False")) {
                 commons.confirm('Bạn chưa đăng nhập, bạn có muốn chuyển tiếp sang trang đăng nhập?', function () {
                     window.location.replace(`/Identity/Account/Login?returnUrl=/Product/Detail?id=${id}`);
                 });
