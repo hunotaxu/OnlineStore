@@ -667,8 +667,8 @@
                 beforeSend: function () {
                     commons.startLoading();
                 },
-                success: function () {
-
+                success: function (response) {
+                    $('#addressId').val(response.id);
                     commons.stopLoading();
 
                 },

@@ -342,10 +342,6 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult(allErrors);
             }
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user != null && !_userRepository.IsAdmin())
-            //if (user != null && !HttpContext.User.IsInRole(CommonConstants.CustomerRoleName))
-            //{
-
             var newAddress = new Address
             {
                 PhoneNumber = model.PhoneNumber,
@@ -359,15 +355,7 @@ namespace OnlineStore.Pages.Order
                 CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id
             };
             _addressRepository.Add(newAddress);
-            //_userAddressRepository.Add(new UserAddress
-            //{
-            //    CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
-            //    AddressId = newAddress.Id,
-            //    PhoneNumber = model.PhoneNumber,
-            //    RecipientName = model.RecipientName,
-            //});
-            //}
-            return new OkObjectResult(model);
+            return new OkObjectResult(newAddress);
         }
         public IActionResult OnGetLoadShowroom()
         {
