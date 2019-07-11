@@ -30,7 +30,10 @@
 <input type="hidden" id="search-string" value="@Model.SearchProductViewModel.SearchString" />
 <input type="hidden" id="category-id" value="@Model.SearchProductViewModel.CategoryId" />
 <input type="hidden" id="user-id" value="@(cus != null ? cus.Id.ToString() : "")" />
-<input id="is-customer" data-is-customer="@(await UserManager.IsInRoleAsync(cus, CommonConstants.CustomerRoleName))" hidden />
+@if (cus != null)
+{
+    <input id="is-customer" data-is-customer="@(await UserManager.IsInRoleAsync(cus, CommonConstants.CustomerRoleName))" hidden />
+}
 <form method="post"></form>
 <!-- Main Container -->
 <div class="main-container col2-left-layout">
