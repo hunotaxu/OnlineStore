@@ -42,8 +42,6 @@ namespace OnlineStore.Pages.Product
             }
 
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (user != null && !_userRepository.IsAdmin())
-            //{
             var cart = _cartRepository.GetCartByCustomerId(user.Id);
             var _item = _itemRepository.Find(model.ItemId);
             if (cart == null)
@@ -69,9 +67,14 @@ namespace OnlineStore.Pages.Product
                     if (item.ItemId == model.ItemId)
                     {
                         item.Quantity = item.IsDeleted == true ? model.Quantity : item.Quantity + model.Quantity;
-                        //item.Quantity += model.Quantity;
+                        if (_item.Quantity == 0)
+                        {
+                            return new BadRequestObjectResult("Sản phẩm đã hết hàng");
+                        }
                         if (item.Quantity > _item.Quantity)
-                            return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép! " + _item.Quantity.ToString());
+                        {
+                            return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép là: " + _item.Quantity.ToString());
+                        }
                         item.IsDeleted = false;
                         _cartDetailRepository.Update(item);
                         isMatch = true;
@@ -87,7 +90,6 @@ namespace OnlineStore.Pages.Product
                     });
                 }
             }
-            //}
             return new OkObjectResult(model);
         }
     }
