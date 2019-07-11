@@ -103,3 +103,17 @@
 .from-group__center {
     text-align: center;
 }
+
+/*scroll cartlayout*/
+#cart-scrollbar {
+    /*border: 1px solid #c810ca;*/
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+#container-pay-cart-layout {
+    height: 150px;
+    overflow: auto;
+    position: absolute;
+}
