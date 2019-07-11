@@ -46,7 +46,10 @@ namespace OnlineStore.Areas.Admin.ViewComponents
             var address = order.Address;
             if (userAddress != null && address != null)
             {
-                deliveryInfoVM.Address = $"{address.Detail}, {address.Ward}, {address.District}, {address.Province}";
+                var detail = !string.IsNullOrEmpty(address.Detail) ? $"{address.Detail}, " : "";
+                var district = !string.IsNullOrEmpty(address.District) ? $"{address.District}, " : "";
+                var province = !string.IsNullOrEmpty(address.Province) ? $"{address.Province}" : "";
+                deliveryInfoVM.Address = $"{detail}{district}{province}";
             }
             else
             {

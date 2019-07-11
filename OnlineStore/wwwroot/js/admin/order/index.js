@@ -361,6 +361,9 @@ var order = (function () {
                 "pageIndex": commons.configs.pageIndex,
                 "pageSize": commons.configs.pageSize
             },
+            beforeSend: function () {
+                commons.startLoading();
+            },
             dataType: 'JSON',
             url: '/Admin/Order/Index?handler=AllPaging',
             success: function (response) {
@@ -389,6 +392,9 @@ var order = (function () {
             },
             error: function (status) {
                 commons.notify('Không thể tải dữ liệu', 'error');
+            },
+            complete: function () {
+                commons.stopLoading();
             }
         });
     };
