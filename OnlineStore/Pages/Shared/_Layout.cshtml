@@ -27,7 +27,7 @@
     <link href="~/node_modules/parsleyjs/src/parsley.css" rel="stylesheet" />
     <link href="~/css/client/style.css" rel="stylesheet" />
     <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
-
+    <link href="~/node_modules/gentelella/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" rel="stylesheet" />
     @RenderSection("Styles", false)
 </head>
 
@@ -172,12 +172,19 @@
                                                 
 
 
-                                                <div id="cart-scrollbar">
+                                                <div class="mCustomScrollbar" data-mcs-theme="dark">
                                                     <div id="container-pay-cart-layout" class="mini-products-list">
 
                                                     </div>
                                                 </div>
-                                                
+                                                <script>
+                                                    (function ($) {
+                                                        $(window).on("load", function () {
+                                                            $("#container-pay-cart-layout").mCustomScrollbar();
+                                                        });
+                                                    })(jQuery);
+
+                                                </script>
                                                 <p class="productnamecheckout error-load-cart-layout"></p>
                                                 <script id="template-cart-layout" type="x-tmpl-mustache">
                                                     <div class="col-sm-12 border-box-cartmini none-padding">
@@ -656,6 +663,7 @@
     <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
     <script src="~/node_modules/parsleyjs/dist/parsley.min.js"></script>
     <script src="~/lib/parsley/vi.js"></script>
+    <script src="~/node_modules/gentelella/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
     <script>
         loadItemMyCart.init();
     </script>

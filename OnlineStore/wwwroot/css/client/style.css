@@ -105,15 +105,15 @@
 }
 
 /*scroll cartlayout*/
-#cart-scrollbar {
-    /*border: 1px solid #c810ca;*/
-    height: 150px;
+/*#cart-scrollbar {
+    border: 1px solid #c810ca;
+    height:200px;
     overflow: hidden;
     position: relative;
 }
 
 #container-pay-cart-layout {
-    height: 150px;
+    height: 200px;
     overflow: auto;
     position: absolute;
-}
+}*/
