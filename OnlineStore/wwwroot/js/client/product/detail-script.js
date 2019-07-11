@@ -41,6 +41,20 @@ $('#btnReview').on('click', function (e) {
 
     return false;
 });
+// giữ tab active sau khi reload
+$(document).ready(function () {
+    if (location.hash) {
+        $("a[href='" + location.hash + "']").tab("show");
+    }
+    $(document.body).on("click", "a[data-toggle='tab']", function (event) {
+        location.hash = this.getAttribute("href");
+    });
+});
+$(window).on("popstate", function () {
+    var anchor = location.hash || $("a[data-toggle='tab']").first().attr("href");
+    $("a[href='" + anchor + "']").tab("show");
+});
+//
 
 $('#gotocomment').on('click', function (e) {
     $("#review a").trigger('click');
