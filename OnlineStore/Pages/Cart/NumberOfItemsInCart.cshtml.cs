@@ -38,7 +38,10 @@ namespace OnlineStore.Pages.Cart
                     var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
                     foreach (var item in items)
                     {
-                        itemnumbercart += item.Quantity;
+                        if (item.Item.Quantity > 0)
+                        {
+                            itemnumbercart += item.Quantity;
+                        }
                     };
                 }
             }

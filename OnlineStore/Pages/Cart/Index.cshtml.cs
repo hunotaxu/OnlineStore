@@ -81,19 +81,20 @@ namespace OnlineStore.Pages.Cart
                     {
                         foreach (var item in items)
                         {
-
-                            var itemCartViewModel = new ItemCartViewModel
+                            if (item.Item.Quantity > 0)
                             {
-                                ItemId = item.ItemId,
-                                //Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
-                                Image = (item.Item.ProductImages.Count() > 0) ?
-                                    $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
-                                Price = item.Item.Price,
-                                ProductName = item.Item.Name,
-                                Quantity = item.Quantity,
-                            };
-                            ItemInCarts.Add(itemCartViewModel);
-
+                                var itemCartViewModel = new ItemCartViewModel
+                                {
+                                    ItemId = item.ItemId,
+                                    //Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
+                                    Image = (item.Item.ProductImages.Count() > 0) ?
+                                        $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
+                                    Price = item.Item.Price,
+                                    ProductName = item.Item.Name,
+                                    Quantity = item.Quantity,
+                                };
+                                ItemInCarts.Add(itemCartViewModel);
+                            }
                         }
                     }
                 }
@@ -104,7 +105,7 @@ namespace OnlineStore.Pages.Cart
         public IActionResult OnGetConfirmOrder()
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if(user == null)
+            if (user == null)
             {
                 return new BadRequestObjectResult("Giỏ hàng không tồn tại");
             }
