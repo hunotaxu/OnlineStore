@@ -1,4 +1,7 @@
-﻿$('#btnReview').on('click', function (e) {
+﻿$('#rateit_star').rateit({
+    step: 1, min: 0, max: 5, resetable: false
+});
+$('#btnReview').on('click', function (e) {
     //if ($('#frmEvaluation').valid()) {
     e.preventDefault();
     var star = $('#rateit_star').rateit('value');
