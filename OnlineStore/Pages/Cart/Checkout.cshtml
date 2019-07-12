@@ -52,13 +52,11 @@
                     <label class="credit-label four col" for="{{ReceivingId}}-receivingthod">
                         <p>{{ReceivingName}}</p>
                         <p>{{ReceivingValue}}</p>
-                        @*<p>Nhận hàng sau {{NumberShipDay}} ngày </p>*@
                         <p>Dự kiến nhận hàng vào ngày {{NumberShipDay}}</p>
                     </label>
                 </script>
                 <div class="row" id="select-showroom-receiving">
                     <div class="col-sm-12">
-                        @*<br /><label for="frmselectshowroom" class="required">Nhận hàng tại: </label>*@
                         <div class="page-title">
                             <h2>Lựa chọn địa chỉ nhận hàng</h2>
                         </div>
@@ -69,14 +67,11 @@
                                         <br />
                                         <input type="hidden" value="" id="addressId" />
                                         <div>
-                                            @*<i class="fa fa-user-circle-o" aria-hidden="true"></i> <h id="labelName"></h><a id="btneditaddress" class="linkchange " href="#">Chỉnh sửa</a>*@
                                             Tên người nhận: <h id="labelName"></h>
                                             <a id="btneditaddress" class="linkchange " href="javascript:;">Chỉnh sửa</a>
                                         </div>
                                         <br />
-                                        @*<div style="padding: 0 25% 0 3%" id="labelAddress">*@
                                         <div>
-                                            @*<i class="fa fa-phone-square" aria-hidden="true"></i> <h id="labelPhoneNumber"></h>*@
                                             Số điện thoại: <h id="labelPhoneNumber"></h>
                                         </div>
                                         <br />
@@ -86,7 +81,6 @@
                                     </address>
                                 </dd>
                             </dl>
-                            @*<button id="btnorder" type="button" class="btnPay col-md-12" disabled>ĐẶT HÀNG</button>*@
                         </div>
                         <br />
                         <div class="custom_select">
@@ -94,16 +88,12 @@
                                 <div class="col-sm-12">
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            @*<br /><br />*@
-                                            @*<label for="txtHoTen" class="required">Họ tên</label>*@
-                                            @*<input class="input form-control" type="text" name="txtHoTen" id="txtHoTen" placeholder="Họ và tên" data-parsley-required="true" data-parsley-trigger="change">*@
                                             <input class="input form-control" type="text" id="txtRecipientName" placeholder="Nhập họ và tên người nhận" data-parsley-required data-parsley-trigger="change">
                                             <br />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12">
-                                            @*<label for="txtPhoneNumber" class="required">Số điện thoại</label>*@
                                             <input class="input form-control" name="txtPhoneNumber" id="txtRecipientPhoneNumber" placeholder="Nhập số điện thoại người nhận" data-parsley-required data-parsley-type="digits" data-parsley-length="[10, 11]" data-parsley-trigger="change">
                                             <br />
                                         </div>
@@ -121,7 +111,6 @@
                         {{Detail}}, {{WardType}} {{WardName}}, {{DistrictType}} {{DistrictName}}, {{ProvinceType}} {{ProvinceName}}
                     </option>
                 </script>
-                @*<button id="btn-continue-payment" type="button" class="btnPay col-md-4">Tiếp tục</button>*@
                 <div id="frmPayment">
                     <div class="page-title">
                         <h2>Lựa chọn hình thức thanh toán</h2>

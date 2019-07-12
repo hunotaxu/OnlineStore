@@ -18,7 +18,6 @@
     </script>
 }
 @section Styles{
-    @*<link href="~/css/client/cart/checkout.css" rel="stylesheet" />*@
 }
 
 @{
@@ -70,26 +69,6 @@
                                 <td class="order-number">Hình thức thanh toán</td>
                                 <td data-title="Order Status">@Model.MyOrderViewModel.Order.PaymentType.GetDisplayName()</td>
                             </tr>
-                            @*<tr>
-                                    <td class="order-number">Last Updated</td>
-                                    <td data-title="Last Update">2017-03-13</td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number">Shipment</td>
-                                    <td data-title="Shipment">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number">Payment</td>
-                                    <td data-title="Payment">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number">Comment</td>
-                                    <td data-title="Comment">&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="order-number">Total</td>
-                                    <td data-title="Total"><p>$89.00</p></td>
-                                </tr>*@
                         </table>
                     </div>
                     <div class="row">
@@ -99,18 +78,6 @@
                             </div>
 
                             <table class="table table-bordered cart_summary">
-                                @*<tr>
-                                        <td>E-Mail</td>
-                                        <td data-title="E-Mail"><a href="mailto:#" class="color_dark">support@themes.com</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Company Name</td>
-                                        <td data-title="Company Name">Company Name</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Title</td>
-                                        <td data-title="Title">Mr</td>
-                                    </tr>*@
                                 <tr>
                                     <td>Tên người nhận</td>
                                     <td data-title="">@Model.MyOrderViewModel.Order.Address.RecipientName</td>
@@ -139,11 +106,9 @@
                     @foreach (var orderItem in Model.MyOrderViewModel.Order.OrderItems)
                     {
                         <div class="col-sm-12 border-box-cartmini none-padding">
-                            @*<input type="hidden" id="itemId" value="{{ItemId}}" />*@
                             <input type="hidden" id="itemId" value="@orderItem.ItemId" />
                             <div class="col-sm-2 none-padding product-image-cartmini img-height-58">
-                                @*<a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>*@
-                                @if (orderItem.Item.ProductImages != null && string.IsNullOrEmpty(orderItem.Item.ProductImages.FirstOrDefault()?.Name))
+                                @if (orderItem.Item.ProductImages != null && !string.IsNullOrEmpty(orderItem.Item.ProductImages.FirstOrDefault()?.Name))
                                 {
                                     <a href="/Product/Detail?id=@orderItem.ItemId" title=""><img src="/images/client/ProductImages/@orderItem.Item.ProductImages?.FirstOrDefault()?.Name" alt="Hình ảnh không thể hiển thị"></a>
                                 }
@@ -167,22 +132,6 @@
                         </div>
                     }
                 </div>
-                @*<script id="template-cart" type="x-tmpl-mustache">
-                        <div class="col-sm-12 border-box-cartmini none-padding">
-                            <input type="hidden" id="itemId" value="{{ItemId}}" />
-                            <div class="col-sm-2 none-padding product-image-cartmini img-height-58">
-                                <a href="/Product/Detail?id={{ItemId}}" title=""><img src="{{Image}}" alt="html Template"></a>
-                            </div>
-                            <div class="product-details col-sm-10">
-                                <a href="/Product/Detail?id={{ItemId}}">
-                                    <h4 class="nomargin productnamecheckout">{{ProductName}}</h4>
-                                </a>
-                                <span class="text-danger">{{OutOfStockNotifyCation}}</span>
-                                @*<strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{TotalPrice}}</strong></span>
-                                <strong>{{Quantity}}</strong> x <span class="price productnamecheckout"><strong>{{Price}}</strong></span>
-                            </div>
-                        </div>
-                    </script>*@
                 <div class="sidebar-checkout block main-container col-sm-12">
                     <div style="border-bottom: 5px solid #e5e5e5; margin-top: 5%"></div>
                     <div class="block-content">

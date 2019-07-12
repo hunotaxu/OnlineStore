@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.modal.fade {
+    z-index: 10000000 !important;
+}
+
 .red {
     color: #E74C3C;
 }
