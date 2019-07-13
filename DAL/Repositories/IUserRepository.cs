@@ -13,6 +13,8 @@ namespace DAL.Repositories
 
         bool IsDuplicatePhoneNumber(string phoneNumber);
 
+        bool IsDuplicateEmail(string email, Guid userId);
+
         bool IsDuplicateEmail(string email);
 
         bool IsAdmin(ApplicationUser user);

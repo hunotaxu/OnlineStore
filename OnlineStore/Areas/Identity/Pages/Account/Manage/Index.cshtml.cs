@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DAL.Data.Entities;
 using DAL.Data.Enums;
 using DAL.EF;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,16 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailSender _emailSender;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUserRepository userRepository)
         {
+            _userRepository = userRepository;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -110,11 +114,18 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             var email = await _userManager.GetEmailAsync(user);
             if (Input.Email != email)
             {
+                if(_userRepository.IsDuplicateEmail(Input.Email, user.Id))
+                {
+                    StatusMessage = "Lỗi: Email này đã được đăng ký";
+                    return RedirectToPage();
+                }
                 var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
                 if (!setEmailResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                    StatusMessage = "Lỗi khi cập nhật email";
+                    return RedirectToPage();
+                    //throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
                 }
             }
 
@@ -140,14 +151,16 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    StatusMessage = "Lỗi khi cập nhật số điện thoại";
+                    return RedirectToPage();
+                    //throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
                 }
             }
 
             await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Thông tin đã được cập nhật";
             return RedirectToPage();
         }
 

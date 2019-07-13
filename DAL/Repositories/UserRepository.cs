@@ -31,13 +31,13 @@ namespace DAL.Repositories
         public List<ApplicationUser> GetUsersByRole(Guid roleId)
         {
             var userIds = _userRoletable.Where(ur => ur.RoleId == roleId).Select(ur => ur.UserId);
-            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte) UserStatus.Active).ToList();
+            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte)UserStatus.Active).ToList();
         }
 
         public List<ApplicationUser> GetEmployees()
         {
             var userIds = _userRoletable.Where(ur => ur.RoleId != CommonConstants.StoreOwnerRoleId && ur.RoleId != CommonConstants.CustomerRoleId).Select(ur => ur.UserId);
-            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte) UserStatus.Active).ToList();
+            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte)UserStatus.Active).ToList();
         }
 
         public ApplicationUser FindUserByUserName(string userName)
@@ -56,8 +56,19 @@ namespace DAL.Repositories
 
         public bool IsDuplicateEmail(string email)
         {
-            if (string.IsNullOrEmpty(email)) return false;
+            if (string.IsNullOrEmpty(email)) {
+                return false;
+            }
             return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)) != null;
+        }
+
+        public bool IsDuplicateEmail(string email, Guid userId)
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(userId.ToString()))
+            {
+                return false;
+            }
+            return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase) && u.Id != userId) != null;
         }
 
         public bool IsProductManager(string userName)
@@ -70,7 +81,7 @@ namespace DAL.Repositories
         public bool IsAdmin(ApplicationUser user)
         {
             if (user == null)
-            { 
+            {
                 return false;
             }
             return !_userRoletable.Where(u => u.UserId == user.Id)

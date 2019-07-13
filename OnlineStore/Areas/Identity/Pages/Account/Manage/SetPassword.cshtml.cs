@@ -93,7 +93,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Mật khẩu của bạn đã được thiệt lập.";
 
             return RedirectToPage();
         }
