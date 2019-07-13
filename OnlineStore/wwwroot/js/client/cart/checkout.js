@@ -13,21 +13,6 @@
     var registerEvents = function () {
         $('#frmselectshowroom').parsley();
         $('#frmaddaddress').parsley();
-        //$(document).ready(function () {
-        //$('#frmaddaddress').validate({
-        //    errorClass: 'red',
-        //    ignore: [],
-        //    lang: 'en',
-        //    rules: {
-        //        txtHoTen: { required: true },
-        //        txtDetail: { required: true },
-        //        txtPhoneNumber: { required: true },
-        //        frmselectprovince: { required: true },
-        //        frmselectward: { required: true },
-        //        frmselectdistrict: { required: true }
-        //    }
-        //});
-
         var Province, District, Ward, Detail, RecipientName, PhoneNumber;
         var selectedAddressId;
         $('#frmselectaddress').click(function () {
@@ -52,10 +37,8 @@
             $('#modal-select-address').modal('hide');
         });
         $("#btnSaveAddAddress").on('click', function () {
-            //if ($('#frmaddaddress').valid()) {
             if ($('#frmaddaddress').parsley().validate()) {
                 document.getElementById('labelName').innerHTML = $('#txtHoTen').val();
-                //document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectprovince').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectward').val();
                 document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectward').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectprovince').val();
                 document.getElementById('labelPhoneNumber').innerHTML = $('#txtPhoneNumber').val();
                 saveAddress();
@@ -83,25 +66,11 @@
             loadProvince();
         });
 
-        //$('#btneditdeliveryMethod').off('click').on('click', function (e) {
-        //    e.preventDefault();
-        //    $("#deliveryMethod").css({
-        //        "display": "block"
-        //    });
-        //});
-
         $('#radio_button_creditcard').on('change', function () {
             $("#btnorder").prop('disabled', true);
         });
 
         $('#frmPaypalCheckout').submit(function () {
-            //var addressId = $('#addressId').val();
-            //if (receivingType === "1" || receivingType === "2") {
-            //    if (addressId === undefined || addressId === '') {
-            //        commons.notify('Bạn phải chọn địa chỉ nhận hàng hợp lệ', 'error');
-            //        return false;
-            //    }
-            //}
             var addressObj = {
                 PhoneNumber: $('#txtRecipientPhoneNumber').val(),
                 RecipientName: $('#txtRecipientName').val(),
@@ -109,7 +78,6 @@
             };
             var orderObj = {
                 AddressId: $('#addressId').val(),
-                //DeliveryDate: $('input[name="radio-receivingthod"]:checked').data('deliverydate'),
                 ShippingFee: $('input[name="radio-receivingthod"]:checked').data('receivingfee'),
                 PaymentType: $('input[name="paymentType"]:checked').val(),
                 ReceivingTypeId: 1,
@@ -120,7 +88,6 @@
                 Order: orderObj,
                 Address: addressObj
             };
-            debugger;
             $.ajax({
                 type: "POST",
                 url: "/Cart/Checkout?handler=SaveOrder",
@@ -191,13 +158,7 @@
             var districtid = $(this.options[this.selectedIndex]).attr('data-districtid');
             loadWard(districtid);
         });
-        //$('#btn-continue-payment').on('click', function (e) {
-        //    e.preventDefault();
-        //    $("#frmPayment").css({
-        //        "display": "block"
-        //    });
 
-        //});
         $('#btn-payment-continue').on('click', function (e) {
             e.preventDefault();
             document.getElementById("btnorder").disabled = false;
@@ -216,7 +177,6 @@
                 saveOrder(x);
             }
         });
-        //});
     };
     var loadAddress = function () {
         $.ajax({

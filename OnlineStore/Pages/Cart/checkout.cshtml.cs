@@ -342,6 +342,19 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult(allErrors);
             }
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if(model.AddressId > 0)
+            {
+                var existAddress = _addressRepository.Find(model.AddressId);
+                existAddress.PhoneNumber = model.PhoneNumber;
+                existAddress.RecipientName = model.RecipientName;
+                existAddress.Ward = model.Ward;
+                existAddress.District = model.District;
+                existAddress.Province = model.Province;
+                existAddress.Detail = model.Detail;
+                existAddress.DateModified = DateTime.Now;
+                _addressRepository.Update(existAddress);
+                return new OkObjectResult(existAddress);
+            }
             var newAddress = new Address
             {
                 PhoneNumber = model.PhoneNumber,

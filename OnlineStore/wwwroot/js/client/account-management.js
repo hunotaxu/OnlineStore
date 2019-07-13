@@ -11,93 +11,6 @@
         });
     };
 
-    //var clearDropzone = function () {
-    //    $('.dropzone').each(function () {
-    //        let dropzoneControl = $(this)[0].dropzone;
-    //        if (dropzoneControl) {
-    //            dropzoneControl.destroy();
-    //        }
-    //    });
-    //};
-
-    //var initDropzone = function (productId) {
-    //    Dropzone.autoDiscover = false;
-    //    var existDropzone = $("#dzUpload")[0].dropzone;
-    //    if (existDropzone) {
-    //        clearDropzone();
-    //    }
-    //    $("#dzUpload").dropzone({
-    //        init: function () {
-    //            var myDropzone = this;
-    //            //Call the action method to load the images from the server
-    //            if (productId !== 0 && productId !== null && productId !== undefined) {
-    //                $.getJSON('/Admin/Product/Index?handler=LoadAttachments', { 'productId': productId }).done(function (data) {
-    //                    if (data.attachmentsList !== undefined && data.attachmentsList.length > 0) {
-    //                        $.each(data.attachmentsList, function (index, item) {
-    //                            //// Create the mock file:
-    //                            var mockFile = {
-    //                                name: item.name
-    //                            };
-    //                            // Call the default addedfile event handler
-    //                            myDropzone.emit("addedfile", mockFile);
-    //                            // And optionally show the thumbnail of the file:
-    //                            myDropzone.emit("thumbnail", mockFile, `/images/client/ProductImages/${item.name}`);
-    //                            $(".dz-size").remove();
-    //                            $('.dz-progress').remove();
-    //                            myDropzone.files.push(mockFile);
-    //                        });
-    //                    }
-    //                });
-    //            }
-    //        },
-    //        url: "/Admin/Upload/TemporaryStoreAttachment",
-    //        maxFiles: 5,
-    //        maxFilesize: 10, // MB
-    //        thumbnailWidth: 80,
-    //        thumbnailHeight: 80,
-    //        acceptedFiles: "image/*",
-    //        addRemoveLinks: true,
-    //        success: function (file, response) {
-    //            if (response === "duplicated") {
-    //                var _ref = file.previewElement;
-    //                if (_ref) {
-    //                    removeThumbnail(file);
-    //                }
-    //            } else {
-    //                file.previewElement.classList.add("dz-success");
-    //            }
-    //        },
-    //        removedfile: function (file) { removeAttachment(file); },
-    //        error: function (file, response) {
-    //            removeThumbnail(file);
-    //            //$(generalError).text(response);
-    //        }
-    //    });
-    //};
-
-    //var removeAttachment = function (file) {
-    //    if (file) {
-    //        $.ajax({
-    //            url: '/Admin/Upload/TemporaryRemoveAttachment',
-    //            data: { fileName: file.name },
-    //            success: function () {
-    //                removeThumbnail(file);
-    //                //$(generalError).text("");
-    //            },
-    //            error: function (file, response) {
-    //                //$(generalError).text(response);
-    //            }
-    //        });
-    //    }
-    //};
-
-    //var removeThumbnail = function (file) {
-    //    var _ref = file.previewElement;
-    //    if (_ref) {
-    //        _ref.parentNode.removeChild(file.previewElement);
-    //    }
-    //};
-
     var registerEvents = function () {
         $('#frmselectprovince').change(function () {
             var provinceid = $(this.options[this.selectedIndex]).attr('data-provinceid');
@@ -111,26 +24,22 @@
 
         $('#btnaddaddress').off('click').on('click', function (e) {
             e.preventDefault();
-            //$('#modal-select-address').modal('hide');
             $('#modal-add-address').modal('show');
+            $('#txtHoTen').val('');
+            $('#txtPhoneNumber').val('');
+            $('#txtDetail').val('');
             loadProvince();
         });
 
         $("#btnSaveAddAddress").on('click', function () {
             if ($('#frmaddaddress').parsley().validate()) {
-                //document.getElementById('labelName').innerHTML = $('#txtHoTen').val();
-                ////document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectprovince').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectward').val();
-                //document.getElementById('labelAddress').innerHTML = $('#txtDetail').val() + ', ' + $('#frmselectward').val() + ', ' + $('#frmselectdistrict').val() + ', ' + $('#frmselectprovince').val();
-                //document.getElementById('labelPhoneNumber').innerHTML = $('#txtPhoneNumber').val();
                 saveAddress();
-                //$('#modal-add-address').modal('hide');
             }
             return false;
         });
 
         $('body').on('click', '.btn-edit', function (e) {
             e.preventDefault();
-            //$('#frmMaintainance').parsley().reset();
             var that = $(this).data('id');
             $('#modal-add-address').modal('show');
             loadDetails(that);
@@ -165,12 +74,13 @@
 
     var saveAddress = function () {
         if ($('#frmaddaddress').parsley().validate()) {
-            var recipientName = $('#txtHoTen').val(),
-                phoneNumber = $('#txtPhoneNumber').val(),
-                detail = $('#txtDetail').val(),
-                province = $('#frmselectprovince').val(),
-                district = $('#frmselectdistrict').val(),
-                ward = $('#frmselectward').val();
+            var recipientName = $('#txtHoTen').val();
+            var phoneNumber = $('#txtPhoneNumber').val();
+            var detail = $('#txtDetail').val();
+            var province = $('#frmselectprovince').val();
+            var district = $('#frmselectdistrict').val();
+            var ward = $('#frmselectward').val();
+            var addressId = $('#address-id').val() === undefined || $('#address-id').val() === '' ? 0 : $('#address-id').val();
             $.ajax({
                 type: "POST",
                 url: "/Cart/Checkout?handler=SaveAddress",
@@ -182,7 +92,8 @@
                     Detail: detail,
                     Province: province,
                     District: district,
-                    Ward: ward
+                    Ward: ward,
+                    AddressId: addressId
                 }),
                 beforeSend: function () {
                     commons.startLoading();
@@ -190,7 +101,6 @@
                 success: function () {
                     window.location.href = window.location.href;
                     commons.stopLoading();
-
                 },
                 error: function () {
                     commons.notify('Không thể thêm địa chỉ mới', 'error');
@@ -201,40 +111,31 @@
     };
 
     function loadDetails(that) {
-        console.log('that = ' + that);
         $.ajax({
             type: "GET",
             url: "/Identity/Account/Manage/AddressBook?handler=ById",
             data: { id: that },
-            //dataType: "json",
             beforeSend: function () {
                 commons.startLoading();
             },
             success: function (response) {
-                debugger;
-                //initDropzone(that);
                 var data = response;
                 $('#txtHoTen').val(data.recipientName);
                 $('#txtPhoneNumber').val(data.phoneNumber);
                 $('#txtDetail').val(data.detail);
-                loadProvince(data.province);
-                //$(`#frmselectprovince option[data-name='${data.province}']`).attr('selected', true);
-                //initTreeDropDownCategory(data.categoryId);
-                //$('#frmselectdistrict').val(data.ward);
-                //$('#txtOriginalPriceM').val(`${commons.formatNumber(data.originalPrice, 0)}`);
-                //CKEDITOR.instances.txtDescM.setData(data.description);
-                //$('#modal-add-edit').modal('show');
-                commons.stopLoading();
+                $('#address-id').val(data.id);
+                loadProvince(data.province, data.district, data.ward);
             },
-            error: function (status) {
+            error: function () {
                 commons.notify('Có lỗi xảy ra', 'error');
+            },
+            complete: function () {
                 commons.stopLoading();
             }
         });
     }
 
-    var loadProvince = function (province) {
-        debugger;
+    var loadProvince = function (provinceName, districtName, wardName) {
         $.ajax({
             type: "GET",
             url: "/Cart/Checkout?handler=LoadProvince",
@@ -259,8 +160,13 @@
                 } else {
                     $('.error-loaddiprovince').html(`<div style='text-align: center;'><h3>Dữ liệu tỉnh/ thành phố không khả dụng</h3>`);
                 }
-                $(`#frmselectprovince option[data-name='${province}']`).attr('selected', true);
-                loadDistrict($('#frmselectprovince').children('option:selected').data('provinceid'));
+                if (provinceName !== undefined && provinceName !== '') {
+                    $('#frmselectprovince').val(provinceName);
+                }
+                else {
+                    $("#frmselectprovince option[data-name='Hà Nội']").attr('selected', true);
+                }
+                loadDistrict($('#frmselectprovince').children('option:selected').data('provinceid'), districtName, wardName);
                 commons.stopLoading();
             },
             error: function () {
@@ -270,7 +176,7 @@
         });
     };
 
-    var loadDistrict = function (provinceid) {
+    var loadDistrict = function (provinceid, districtName, wardName) {
         $.ajax({
             type: "POST",
             url: "/Cart/Checkout?handler=LoadDistrict",
@@ -297,7 +203,10 @@
                 } else {
                     $('.error-loaddistrict').html(`<div style='text-align: center;'><h3>Dữ liệu quận/huyện không khả dụng</h3>`);
                 }
-                loadWard($('#frmselectdistrict').children('option:selected').data('districtid'));
+                if (districtName !== undefined && districtName !== '') {
+                    $('#frmselectdistrict').val(districtName);
+                }
+                loadWard($('#frmselectdistrict').children('option:selected').data('districtid'), wardName);
                 commons.stopLoading();
 
             },
@@ -308,7 +217,7 @@
         });
     };
 
-    var loadWard = function (districtid) {
+    var loadWard = function (districtid, wardName) {
         $.ajax({
             type: "POST",
             url: "/Cart/Checkout?handler=LoadWard",
@@ -330,11 +239,17 @@
                         });
                     });
                 }
+
                 if (render !== '') {
                     $('#frmselectward').html(render);
                 } else {
                     $('.error-loadward').html(`<div style='text-align: center;'><h3>Dữ liệu phường/ xã không khả dụng</h3>`);
                 }
+
+                if (wardName !== undefined && wardName !== '') {
+                    $('#frmselectward').val(wardName);
+                }
+
                 commons.stopLoading();
             },
             error: function () {
@@ -344,56 +259,56 @@
         });
     };
 
-    var loadData = function (isPageChanged) {
-        var template = $('#table-template').html();
-        var render = '';
-        $.ajax({
-            type: 'GET',
-            data: {
-                "categoryId": $('#ddlCategorySearch').val(),
-                "keyword": $('#txtKeyword').val(),
-                "pageIndex": commons.configs.pageIndex,
-                "pageSize": commons.configs.pageSize
-            },
-            beforeSend: function () {
-                commons.startLoading();
-            },
-            dataType: 'JSON',
-            url: '/Admin/Product/Index?handler=AllPaging',
-            success: function (response) {
-                if (response.authenticate === false) {
-                    window.location.href = "/Identity/Account/AccessDenied";
-                }
-                $('#tbl-content').empty();
-                $.each(response.results, function (i, item) {
-                    render += Mustache.render(template,
-                        {
-                            Id: item.id,
-                            Name: item.name,
-                            CategoryName: item.category.name,
-                            BrandName: item.brandName,
-                            Quantity: item.quantity,
-                            Price: `${commons.formatNumber(item.price, 0)}đ`,
-                            CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
-                        });
-                });
-                $('#lblTotalRecords').text(response.rowCount);
-                if (render !== '') {
-                    $('#tbl-content').html(render);
-                }
-                wrapPaging(response.rowCount,
-                    function () {
-                        loadData();
-                    }, isPageChanged);
-            },
-            error: function (status) {
-                commons.notify('Không thể tải dữ liệu', 'error');
-            },
-            complete: function () {
-                commons.stopLoading();
-            }
-        });
-    };
+    //var loadData = function (isPageChanged) {
+    //    var template = $('#table-template').html();
+    //    var render = '';
+    //    $.ajax({
+    //        type: 'GET',
+    //        data: {
+    //            "categoryId": $('#ddlCategorySearch').val(),
+    //            "keyword": $('#txtKeyword').val(),
+    //            "pageIndex": commons.configs.pageIndex,
+    //            "pageSize": commons.configs.pageSize
+    //        },
+    //        beforeSend: function () {
+    //            commons.startLoading();
+    //        },
+    //        dataType: 'JSON',
+    //        url: '/Admin/Product/Index?handler=AllPaging',
+    //        success: function (response) {
+    //            if (response.authenticate === false) {
+    //                window.location.href = "/Identity/Account/AccessDenied";
+    //            }
+    //            $('#tbl-content').empty();
+    //            $.each(response.results, function (i, item) {
+    //                render += Mustache.render(template,
+    //                    {
+    //                        Id: item.id,
+    //                        Name: item.name,
+    //                        CategoryName: item.category.name,
+    //                        BrandName: item.brandName,
+    //                        Quantity: item.quantity,
+    //                        Price: `${commons.formatNumber(item.price, 0)}đ`,
+    //                        CreatedDate: commons.dateTimeFormatJson(item.dateCreated)
+    //                    });
+    //            });
+    //            $('#lblTotalRecords').text(response.rowCount);
+    //            if (render !== '') {
+    //                $('#tbl-content').html(render);
+    //            }
+    //            wrapPaging(response.rowCount,
+    //                function () {
+    //                    loadData();
+    //                }, isPageChanged);
+    //        },
+    //        error: function (status) {
+    //            commons.notify('Không thể tải dữ liệu', 'error');
+    //        },
+    //        complete: function () {
+    //            commons.stopLoading();
+    //        }
+    //    });
+    //};
 
     //function wrapPaging(recordCount, callBack, changePageSize) {
     //    var totalSize = 1;

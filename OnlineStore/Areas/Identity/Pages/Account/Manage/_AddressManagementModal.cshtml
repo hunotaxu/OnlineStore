@@ -83,12 +83,12 @@
                             <script id="script-select-ward" type="x-tmpl-mustache">
                                 <option data-districtid="{{WardId}}" data-type="{{Type}}" data-name="{{Name}}">{{Type}} {{Name}}</option>
                             </script>
-
                         </div>
                     </form>
                 </div>
             </div>
             <div class="modal-footer">
+                <input type="hidden" id="address-id" value=""/>
                 <button type="button" id="btnCancelAddAddress" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                 <button type="button" id="btnSaveAddAddress" class="btn btn-primary">Lưu</button>
             </div>
@@ -96,7 +96,7 @@
     </div>
 </div>
 
-<div id="modal-select-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+@*<div id="modal-select-address" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -150,4 +150,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
