@@ -464,7 +464,6 @@ namespace OnlineStore.Pages.Order
                                 DateCreated = DateTime.Now,
                                 DateModified = DateTime.Now
                             };
-                            //_addressRepository.Add(newAddress);
                             context.Address.Add(newAddress);
                             context.SaveChanges();
                         }
@@ -474,7 +473,6 @@ namespace OnlineStore.Pages.Order
                             AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId,
                             DateCreated = DateTime.Now,
                             DateModified = DateTime.Now,
-                            //DeliveryDate = model.Order.DeliveryDate,
                             DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
                             ShippingFee = model.Order.ShippingFee,
                             //SubTotal = model.Order.SubTotal,

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using DAL.Repositories;
@@ -51,7 +51,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                return new BadRequestObjectResult("Đã xãy ra lỗi");
             }
 
             if (model.Id == 0)

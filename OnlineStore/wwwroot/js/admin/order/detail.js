@@ -86,7 +86,7 @@
             var id = $('#orderId').text();
             //var deliveryDate = Date.parse($('#divDeliveryDate').data('date'));
             var parts = $('#divDeliveryDate').data('date').split(" ")[0].split("/");
-            var deliveryDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+            var deliveryDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10) + 1);
             $.ajax({
                 type: "POST",
                 url: "/Admin/Order/Details?handler=SaveEntity",
