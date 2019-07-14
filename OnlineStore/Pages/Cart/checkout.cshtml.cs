@@ -105,23 +105,16 @@ namespace OnlineStore.Pages.Order
                 {
                     foreach (var item in items)
                     {
-                        //if (item.Item.Quantity == 0 || item.Item.Quantity < item.Quantity)
-                        //{
-                        //    return new BadRequestObjectResult("Số lượng sản phẩm của cửa hàng không còn đủ cho đơn hàng. Vui lòng xác nhận lại giỏ hàng.");
-                        //}
                         if (item.Item.Quantity != 0 && item.Item.Quantity >= item.Quantity)
                         {
                             var itemCartViewModel = new ItemCartViewModel
                             {
                                 ItemId = item.ItemId,
-                                //Image = $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}",
                                 Image = (item.Item.ProductImages.Count() > 0) ?
                                     $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
                                 Price = item.Item.Price,
                                 ProductName = item.Item.Name,
-                                //Quantity = item.Quantity < item.Item.Quantity || item.Item.Quantity == 0) ? item.Quantity : item.Item.Quantity,
                                 Quantity = item.Quantity,
-                                //MaxQuantity = item.Item.Quantity
                             };
                             ItemInCarts.Add(itemCartViewModel);
                         }
@@ -341,7 +334,7 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult(allErrors);
             }
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            if(model.AddressId > 0)
+            if (model.AddressId > 0)
             {
                 var existAddress = _addressRepository.Find(model.AddressId);
                 existAddress.PhoneNumber = model.PhoneNumber;
@@ -475,17 +468,14 @@ namespace OnlineStore.Pages.Order
                             DateModified = DateTime.Now,
                             DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
                             ShippingFee = model.Order.ShippingFee,
-                            //SubTotal = model.Order.SubTotal,
                             SubTotal = cart.CartDetails.Sum(x => x.Item.Price * x.Quantity),
                             OrderDate = DateTime.Now,
                             PaymentType = model.Order.PaymentType,
-                            //Total = model.Order.Total,
                             ReceivingTypeId = model.Order.ReceivingTypeId,
                             SaleOff = model.Order.SaleOff,
                             Status = model.Order.Status == OrderStatus.ReadyToDeliver ? OrderStatus.ReadyToDeliver : OrderStatus.Pending,
                         };
                         newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
-                        //_unitOfWork.OrderRepository.Add(newOrder);
                         context.Order.Add(newOrder);
                         context.SaveChanges();
 
@@ -499,13 +489,26 @@ namespace OnlineStore.Pages.Order
                         foreach (var itemInCart in items)
                         {
                             var item = _itemRepository.Find(itemInCart.ItemId);
-                            if (item.IsDeleted == false && item.Quantity > 0)
+                            if (item.IsDeleted == false)
                             {
+                                if (itemInCart.Price != item.Price)
+                                {
+                                    transaction.Rollback();
+                                    return new BadRequestObjectResult("Sản phẩm bạn đang đặt đã có sự thay đổi về giá. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng.");
+                                }
+
+                                if (item.Quantity <= 0)
+                                {
+                                    transaction.Rollback();
+                                    return new BadRequestObjectResult("Sản phẩm bạn đang đặt đã hết hàng. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng.");
+                                }
+
                                 if (itemInCart.Quantity > item.Quantity)
                                 {
                                     transaction.Rollback();
-                                    return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại.");
+                                    return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng");
                                 }
+
                                 var newOrderItem = new OrderItem
                                 {
                                     OrderId = newOrder.Id,

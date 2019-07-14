@@ -60,7 +60,7 @@ namespace OnlineStore.Pages.Product
             }
             else
             {
-                var cartDetails = cart.CartDetails;
+                var cartDetails = cart.CartDetails.Where(cd => cd.IsDeleted == false);
                 bool isMatch = false;
                 foreach (var item in cart.CartDetails)
                 {
