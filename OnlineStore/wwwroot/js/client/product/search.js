@@ -55,15 +55,26 @@
 
     var preventNegativeNumber = function () {
         $("body").delegate('#min-price', 'focusout', function () {
-            if ($('#min-price').val() < 0) {
-                $('#min-price').val('0');
+            if ($('#max-price').val() !== undefined && $('#min-price').val() !== '') {
+                if ($('#min-price').val() !== undefined && $('#min-price').val() !== '') {
+                    if ($('#max-price').val() < $('#min-price').val()) {
+                        $('#min-price').val($('#max-price').val());
+                    }
+                }
+            }
+            else {
+                if ($('#min-price').val() < 0) {
+                    $('#min-price').val('0');
+                }
             }
         });
 
         $("body").delegate('#max-price', 'focusout', function () {
             if ($('#min-price').val() !== undefined && $('#min-price').val() !== '') {
-                if ($('#max-price').val() < $('#min-price').val()) {
-                    $('#max-price').val($('#min-price').val());
+                if ($('#max-price').val() !== undefined && $('#max-price').val() !== '') {
+                    if ($('#max-price').val() < $('#min-price').val()) {
+                        $('#max-price').val($('#min-price').val());
+                    }
                 }
             }
             else {
@@ -193,7 +204,7 @@
                                 Image: (item.productImages !== undefined && item.productImages.length > 0) ?
                                     `/images/client/ProductImages/${item.productImages[0].name}` : `/images/client/ProductImages/no-image.jpg`,
                                 ProductName: item.name,
-                                ProductId: item.id,                                
+                                ProductId: item.id,
                                 AvgRating: (item.averageEvaluation !== undefined && item.averageEvaluation !== '' && item.averageEvaluation !== null) ?
                                     `Đánh giá: ${item.averageEvaluation}/5` : 'Chưa có đánh giá nào',
                                 OriginalPrice: `${commons.formatNumber(item.originalPrice, 0)}đ`,
