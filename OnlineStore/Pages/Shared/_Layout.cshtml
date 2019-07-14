@@ -78,20 +78,28 @@
                                 <!-- Default Welcome Message -->
                                 <!-- Language &amp; Currency wrapper -->
                                 <div class="language-currency-wrapper">
-                                        <div class="inner-cl">                                           
-                                            <div class="block block-language form-language">
+                                    <div class="inner-cl">
+                                        @*<div class="block block-language form-language">
                                                 <div class="lg-cur">
-                                                    <i class="fa fa-phone-square" aria-hidden="true" style="color:#e83f33"></i>
+                                                    <i class="fa fa-phone-square" aria-hidden="true"></i>
                                                     <span class="phone  hidden-xs hidden-sm">Đường dây nóng: +84 367 167 648</span>
-                                                </div>                                                
-                                            </div>                                       
-                                        </div>
+                                                </div>
+                                                <ul>
+                                                    <li><a class="selected" href="#"><img src="~/images/client/layout/flag-english.jpg" alt="english"><span>English</span></a></li>
+                                                    <li><a href="#"><img src="~/images/client/layout/flag-default.jpg" alt="French"><span>French</span></a></li>
+                                                    <li><a href="#"><img src="~/images/client/layout/flag-german.jpg" alt="German"><span>German</span></a></li>
+                                                    <li><a href="#"><img src="~/images/client/layout/flag-brazil.jpg" alt="Brazil"><span>Brazil</span></a></li>
+                                                    <li><a href="#"><img src="~/images/client/layout/flag-chile.jpg" alt="Chile"><span>Chile</span></a></li>
+                                                    <li><a href="#"><img src="~/images/client/layout/flag-spain.jpg" alt="Spain"><span>Spain</span></a></li>
+                                                </ul>
+                                            </div>*@
                                     </div>
+                                </div>
                             </div>
 
                             <!-- top links -->
                             <div class="headerlinkmenu col-md-8 col-sm-8 col-xs-12">
-                                
+
                                 <ul class="links">
                                     <li class="hidden-xs">
                                         <a target="_blank" href="https://www.facebook.com/TimiShop-2115751742057581/" title="Trung tâm trợ giúp khách hàng" >
@@ -151,11 +159,11 @@
                                             <div class="top-cart-content">
                                                 <div class="block-subtitle hidden">Recently added items</div>
                                                 @*<div style="height:150px;overflow-y:scroll">
-                                                    <div id="container-pay-cart-layout" class="mini-products-list">
+                                                        <div id="container-pay-cart-layout" class="mini-products-list">
 
-                                                    </div>
-                                                </div>*@
-                                                
+                                                        </div>
+                                                    </div>*@
+
 
 
                                                 <div class="mCustomScrollbar" data-mcs-theme="dark">
@@ -221,7 +229,7 @@
                             <!-- Shop by category -->
                             <div class="mega-menu-category mega-menu-index">
                                 <ul class="nav">
-                                    @await Component.InvokeAsync("MenuPartial")                                    
+                                    @await Component.InvokeAsync("MenuPartial")
                                 </ul>
                             </div>
                         </div>
@@ -237,13 +245,13 @@
                                     </div>
                                 </li>
 
-                                <li class="mt-root">
-                                    <div class="mt-root-item">
-                                        <a href="#new-product-homepage">
-                                            <div class="title title_font"><span class="title-text">Sản phẩm mới</span> </div>
-                                        </a>
-                                    </div>
-                                </li>
+                                @*<li class="mt-root">
+                                        <div class="mt-root-item">
+                                            <a href="#new-product-homepage">
+                                                <div class="title title_font"><span class="title-text">Sản phẩm mới</span> </div>
+                                            </a>
+                                        </div>
+                                    </li>*@
                                 @*
                                     <li class="mt-root demo_custom_link_cms">
                                         <div class="mt-root-item">
@@ -266,194 +274,196 @@
                                             </li>
                                         </ul>
                                     </li>*@
-                                <li class="mt-root">
-                                    <div class="mt-root-item">
-                                        <a href="#hot-product-homepage">
-                                            <div class="title title_font"><span class="title-text">Sản phẩm được quan tâm</span></div>
-                                        </a>
-                                    </div>
-                                    @*<div class="mt-root-item">
-                                            <div class="title title_font"><span class="title-text">Bán chạy nhất</span></div>
-                                        </div>*@
-                                    @*<ul class="menu-items col-xs-12">
-                                            <li class="menu-item depth-1 product menucol-1-3 withimage">
-                                                <div class="product-item">
-                                                    <div class="item-inner">
-                                                        <div class="product-thumbnail">
-                                                            <div class="icon-sale-label sale-left">Sale</div>
-                                                            <div class="pr-img-area">
-                                                                <a title="Product title here" >
-                                                                    <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html theme"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
-                                                                </a>
-                                                            </div>
-                                                            <div class="pr-info-area">
-                                                                <div class="pr-button">
-                                                                    <div class="mt-button add_to_wishlist"> <a > <i class="fa fa-heart"></i> </a> </div>
-                                                                    <div class="mt-button add_to_compare"> <a > <i class="fa fa-signal"></i> </a> </div>
-                                                                    <div class="mt-button quick-view"> <a > <i class="fa fa-search"></i> </a> </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a title="Product title here" >Product title here </a> </div>
-                                                                <div class="item-content">
-                                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                                    <div class="item-price">
-                                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                                    </div>
-                                                                    <div class="pro-action">
-                                                                        <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="menu-item depth-1 product menucol-1-3 withimage">
-                                                <div class="product-item">
-                                                    <div class="item-inner">
-                                                        <div class="product-thumbnail">
-                                                            <div class="icon-sale-label sale-left">Sale</div>
-                                                            <div class="pr-img-area">
-                                                                <a title="Product title here" >
-                                                                    <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
-                                                                </a>
-                                                            </div>
-                                                            <div class="pr-info-area">
-                                                                <div class="pr-button">
-                                                                    <div class="mt-button add_to_wishlist"> <a > <i class="fa fa-heart"></i> </a> </div>
-                                                                    <div class="mt-button add_to_compare"> <a > <i class="fa fa-signal"></i> </a> </div>
-                                                                    <div class="mt-button quick-view"> <a > <i class="fa fa-search"></i> </a> </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a title="Product title here" >Product title here </a> </div>
-                                                                <div class="item-content">
-                                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                                    <div class="item-price">
-                                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                                    </div>
-                                                                    <div class="pro-action">
-                                                                        <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="menu-item depth-1 product menucol-1-3 withimage">
-                                                <div class="product-item">
-                                                    <div class="item-inner">
+                                @*<li class="mt-root">
+                                        <div class="mt-root-item">
+                                            <a href="#hot-product-homepage">
+                                                <div class="title title_font"><span class="title-text">Sản phẩm được quan tâm</span></div>
+                                            </a>
+                                        </div>
+                                    </li>*@
+                                @*<div class="mt-root-item">
+                                        <div class="title title_font"><span class="title-text">Bán chạy nhất</span></div>
+                                    </div>*@
+                                @*<ul class="menu-items col-xs-12">
+                                        <li class="menu-item depth-1 product menucol-1-3 withimage">
+                                            <div class="product-item">
+                                                <div class="item-inner">
+                                                    <div class="product-thumbnail">
                                                         <div class="icon-sale-label sale-left">Sale</div>
-                                                        <div class="icon-new-label new-right">New</div>
-                                                        <div class="product-thumbnail">
-                                                            <div class="icon-sale-label sale-left">Sale</div>
-                                                            <div class="pr-img-area">
-                                                                <a title="Product title here" >
-                                                                    <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
-                                                                </a>
-                                                            </div>
-                                                            <div class="pr-info-area">
-                                                                <div class="pr-button">
-                                                                    <div class="mt-button add_to_wishlist"> <a > <i class="fa fa-heart"></i> </a> </div>
-                                                                    <div class="mt-button add_to_compare"> <a > <i class="fa fa-signal"></i> </a> </div>
-                                                                    <div class="mt-button quick-view"> <a > <i class="fa fa-search"></i> </a> </div>
-                                                                </div>
+                                                        <div class="pr-img-area">
+                                                            <a title="Product title here" href="#">
+                                                                <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html theme"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
+                                                            </a>
+                                                        </div>
+                                                        <div class="pr-info-area">
+                                                            <div class="pr-button">
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
                                                             </div>
                                                         </div>
-                                                        <div class="item-info">
-                                                            <div class="info-inner">
-                                                                <div class="item-title"> <a title="Product title here" >Product title here </a> </div>
-                                                                <div class="item-content">
-                                                                    <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
-                                                                    <div class="item-price">
-                                                                        <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                                                                    </div>
-                                                                    <div class="pro-action">
-                                                                        <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
-                                                                    </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
+                                                                </div>
+                                                                <div class="pro-action">
+                                                                    <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </li>
-                                        </ul>*@
-                                </li>
+                                            </div>
+                                        </li>
+                                        <li class="menu-item depth-1 product menucol-1-3 withimage">
+                                            <div class="product-item">
+                                                <div class="item-inner">
+                                                    <div class="product-thumbnail">
+                                                        <div class="icon-sale-label sale-left">Sale</div>
+                                                        <div class="pr-img-area">
+                                                            <a title="Product title here" href="#">
+                                                                <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
+                                                            </a>
+                                                        </div>
+                                                        <div class="pr-info-area">
+                                                            <div class="pr-button">
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
+                                                                </div>
+                                                                <div class="pro-action">
+                                                                    <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="menu-item depth-1 product menucol-1-3 withimage">
+                                            <div class="product-item">
+                                                <div class="item-inner">
+                                                    <div class="icon-sale-label sale-left">Sale</div>
+                                                    <div class="icon-new-label new-right">New</div>
+                                                    <div class="product-thumbnail">
+                                                        <div class="icon-sale-label sale-left">Sale</div>
+                                                        <div class="pr-img-area">
+                                                            <a title="Product title here" href="#">
+                                                                <figure> <img class="first-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"> <img class="hover-img" src="~/images/client/layout/products/product-1.jpg" alt="html Template"></figure>
+                                                            </a>
+                                                        </div>
+                                                        <div class="pr-info-area">
+                                                            <div class="pr-button">
+                                                                <div class="mt-button add_to_wishlist"> <a href="#"> <i class="fa fa-heart"></i> </a> </div>
+                                                                <div class="mt-button add_to_compare"> <a href="#"> <i class="fa fa-signal"></i> </a> </div>
+                                                                <div class="mt-button quick-view"> <a href="#"> <i class="fa fa-search"></i> </a> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-info">
+                                                        <div class="info-inner">
+                                                            <div class="item-title"> <a title="Product title here" href="#">Product title here </a> </div>
+                                                            <div class="item-content">
+                                                                <div class="rating"> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i> </div>
+                                                                <div class="item-price">
+                                                                    <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
+                                                                </div>
+                                                                <div class="pro-action">
+                                                                    <button type="button" class="add-to-cart"><span> Add to Cart</span> </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>*@
+
                                 <li class="mt-root">
                                     <div class="mt-root-item">
                                         <a target="_blank" href="https://wego.here.com/directions/mix//TimiShop,-1-V%C3%B5-V%C4%83n-Ng%C3%A2n,-700000-Ho-Chi-Minh-City:e-eyJuYW1lIjoiVGltaVNob3AiLCJhZGRyZXNzIjoiMSBWXHUwMGY1IFZcdTAxMDNuIE5nXHUwMGUybiwgSG8gQ2hpIE1pbmggQ2l0eSwgVmlldG5hbSIsImxhdGl0dWRlIjoxMC44NTEwNjk3LCJsb25naXR1ZGUiOjEwNi43NTUyNDMxLCJwcm92aWRlck5hbWUiOiJmYWNlYm9vayIsInByb3ZpZGVySWQiOjIxMTU3NTE3NDIwNTc1ODF9?map=10.85107,106.75524,15,normal&fb_locale=en_US">
                                             <div class="title title_font"><span class="title-text">Hệ thống cửa hàng</span></div>
                                         </a>
                                     </div>
-                                    @*<ul class="menu-items col-xs-12">
-                                            <li class="menu-item depth-1 menucol-1-3 ">
-                                                <div class="title title_font"> <a >Miền Bắc</a></div>
-                                                <ul class="submenu">
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Hà Nội</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Hải Phòng</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Phú Thọ</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Quảng Ninh</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Thái Bình</a></div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu-item depth-1 menucol-1-3 ">
-                                                <div class="title title_font"> <a >Miền Trung </a></div>
-                                                <ul class="submenu">
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Thanh Hóa</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Nghệ An</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Huế</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Đà Nẵng</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Nha Trang</a></div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="menu-item depth-1 menucol-1-3 ">
-                                                <div class="title title_font"> <a >Miền Nam</a></div>
-                                                <ul class="submenu">
-                                                    <li class="menu-item depth-2 category ">
-                                                        <div class="title"> <a >TP.Hồ Chí Minh</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Bình Dương</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Cần Thơ</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Cà Mau</a></div>
-                                                    </li>
-                                                    <li class="menu-item">
-                                                        <div class="title"> <a >Đồng Tháp</a></div>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>*@
                                 </li>
+                                @*<ul class="menu-items col-xs-12">
+                                        <li class="menu-item depth-1 menucol-1-3 ">
+                                            <div class="title title_font"> <a href="#">Miền Bắc</a></div>
+                                            <ul class="submenu">
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Hà Nội</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Hải Phòng</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Phú Thọ</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Quảng Ninh</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Thái Bình</a></div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item depth-1 menucol-1-3 ">
+                                            <div class="title title_font"> <a href="#">Miền Trung </a></div>
+                                            <ul class="submenu">
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Thanh Hóa</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Nghệ An</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Huế</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Đà Nẵng</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Nha Trang</a></div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="menu-item depth-1 menucol-1-3 ">
+                                            <div class="title title_font"> <a href="#">Miền Nam</a></div>
+                                            <ul class="submenu">
+                                                <li class="menu-item depth-2 category ">
+                                                    <div class="title"> <a href="#">TP.Hồ Chí Minh</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Bình Dương</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Cần Thơ</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Cà Mau</a></div>
+                                                </li>
+                                                <li class="menu-item">
+                                                    <div class="title"> <a href="#">Đồng Tháp</a></div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>*@
+
 
                                 <li>  </li>
                             </ul>
