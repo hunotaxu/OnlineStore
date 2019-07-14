@@ -7,24 +7,13 @@
         @if (parentMenu.ParentId == null)
         {
             <a class="color1" asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@parentMenu.Id">@parentMenu.Name</a>
-            @*@foreach (var menu in Model)
-                {
-                    @if (menu.ParentId == parentMenu.Id)
-                    {*@
-            @*<div class="wrap-popup column1">
-                <div class="popup">*@
             <ul class="nav popup wrap-popup column1">
                 @foreach (var menu in Model)
                 {
                     @if (menu.ParentId == parentMenu.Id)
                     {
                         <li>
-
-
                             <a asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@menu.Id"><span>@menu.Name</span></a>
-
-                            @*<div class="wrap-popup column1">
-                                <div class="popup">*@
                             <ul class="nav popup wrap-popup column1">
                                 @foreach (var subMenu in Model)
                                 {
@@ -38,16 +27,10 @@
                                     }
                                 }
                             </ul>
-                            @*</div>
-                                </div>*@
                         </li>
                     }
                 }
             </ul>
-            @*</div>
-                </div>*@
-            @*}
-                }*@
         }
     </li>
 }

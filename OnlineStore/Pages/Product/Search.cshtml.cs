@@ -22,7 +22,7 @@ namespace OnlineStore.Pages.Product
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
-                _ = cfg.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
+                _ = cfg.CreateMap<Category, CategoryViewModel>();
             });
             _itemRepository = itemRepository;
         }

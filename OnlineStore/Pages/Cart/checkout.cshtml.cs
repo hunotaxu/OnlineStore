@@ -11,7 +11,6 @@ using OnlineStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using DAL.Data.Enums;
 using DAL.EF;
-using OnlineStore.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace OnlineStore.Pages.Order
@@ -131,6 +130,7 @@ namespace OnlineStore.Pages.Order
             }
             return new OkObjectResult(ItemInCarts);
         }
+
         public IActionResult OnGetLoadDefaultAddress()
         {
             //var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
@@ -186,6 +186,7 @@ namespace OnlineStore.Pages.Order
             //}
             return new OkObjectResult(DefaultAddress);
         }
+
         public IActionResult OnGetLoadAddress(int? availableAddressId)
         {
             //var useraddress = _userAddressRepository.GetByUserId(_userManager.GetUserAsync(HttpContext.User).Result.Id);
@@ -257,8 +258,6 @@ namespace OnlineStore.Pages.Order
             }
             return new OkObjectResult(Provinces);
         }
-
-
 
         public IActionResult OnPostLoadDistrict([FromBody] District model)
         {
@@ -370,6 +369,7 @@ namespace OnlineStore.Pages.Order
             _addressRepository.Add(newAddress);
             return new OkObjectResult(newAddress);
         }
+
         public IActionResult OnGetLoadShowroom()
         {
             var showroom = _showRoomAddressRepository.GetAll();
