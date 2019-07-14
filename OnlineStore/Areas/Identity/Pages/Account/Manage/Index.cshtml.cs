@@ -61,10 +61,9 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Số điện thoại")]
             public string PhoneNumber { get; set; }
 
-            //[Phone]
             [Required(ErrorMessage = "Vui lòng chọn giới tính")]
             [Display(Name = "Giới tính")]
             public Gender Gender { get; set; }
