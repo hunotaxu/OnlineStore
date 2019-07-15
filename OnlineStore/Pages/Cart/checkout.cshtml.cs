@@ -491,11 +491,11 @@ namespace OnlineStore.Pages.Order
                             var item = _itemRepository.Find(itemInCart.ItemId);
                             if (item.IsDeleted == false)
                             {
-                                if (itemInCart.Price != item.Price)
-                                {
-                                    transaction.Rollback();
-                                    return new BadRequestObjectResult("Sản phẩm bạn đang đặt đã có sự thay đổi về giá. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng.");
-                                }
+                                //if (itemInCart.Price != item.Price)
+                                //{
+                                //    transaction.Rollback();
+                                //    return new BadRequestObjectResult("Sản phẩm bạn đang đặt đã có sự thay đổi về giá. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng.");
+                                //}
 
                                 if (item.Quantity <= 0)
                                 {
