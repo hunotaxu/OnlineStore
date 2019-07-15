@@ -46,7 +46,6 @@ namespace OnlineStore.Pages.Home
             Laptops = new List<Item>();
             Tablets = new List<Item>();
             Accessories = new List<Item>();
-
         }
         public void OnGet()
         {
