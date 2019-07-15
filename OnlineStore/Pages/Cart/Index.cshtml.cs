@@ -39,8 +39,6 @@ namespace OnlineStore.Pages.Cart
         public IActionResult OnGetLoadCart()
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
-            //if (!_userRepository.IsAdmin())
-            //{
             var cart = _cartRepository.GetCartByCustomerId(user.Id);
             if (cart != null)
             {
@@ -58,13 +56,13 @@ namespace OnlineStore.Pages.Cart
                             Price = item.Item.Price,
                             ProductName = item.Item.Name,
                             Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity <= 0) ? item.Quantity : item.Item.Quantity,
-                            MaxQuantity = item.Item.Quantity
+                            MaxQuantity = item.Item.Quantity,
+                            BrandName = item.Item.BrandName
                         };
                         ItemInCarts.Add(itemCartViewModel);
                     }
                 }
             }
-            //}
             return new OkObjectResult(ItemInCarts);
         }
 

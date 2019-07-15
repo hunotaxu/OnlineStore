@@ -31,12 +31,13 @@ namespace OnlineStore.Pages.Product
         public IList<CustomerCommentViewModel> CustomerCommentViewModel { get; set; }
         [BindProperty]
         public List<ItemViewModel> Items { get; set; }
-        
+
         public int ItemId;
         public double _countComment = 0;
         public int _countItemCart = 0;
         public bool isordered = false;
-        public DetailModel(IProductImagesRepository productImagesRepository,IOrderItemRepository orderItemRepository,IAddressRepository addressRepository, IOrderRepository orderRepository, UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
+        public Comment Reviewed;
+        public DetailModel(IProductImagesRepository productImagesRepository, IOrderItemRepository orderItemRepository, IAddressRepository addressRepository, IOrderRepository orderRepository, UserManager<ApplicationUser> userManager, ICartRepository cartRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository, DAL.EF.OnlineStoreDbContext context)
         {
             _productImagesRepository = productImagesRepository;
             _orderItemRepository = orderItemRepository;
@@ -78,9 +79,7 @@ namespace OnlineStore.Pages.Product
             Item.View++;
             _itemRepository.Update(Item);
 
-
-
-            List<Comment> comments = _commentRepository.GetSome(y => y.ItemId == id).ToList();
+            List<Comment> comments = _commentRepository.GetSome(y => y.ItemId == id && y.IsDeleted == false).ToList();
 
             if (comments.Any())
             {
@@ -109,23 +108,25 @@ namespace OnlineStore.Pages.Product
             {
                 CustomerCommentViewModel = null;
             }
-
-            if (_userManager.GetUserAsync(HttpContext.User).Result != null)
+            var user = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (user != null)
             {
-                var orders = _orderRepository.GetSome(o => o.Status == OrderStatus.Delivered);
+                Reviewed = _commentRepository.GetSome(c => c.IsDeleted == false && c.CustomerId == user.Id).FirstOrDefault();
+                var orders = _orderRepository.GetSome(o => o.Status == OrderStatus.Delivered && o.IsDeleted == false);
                 foreach (var order in orders)
                 {
-                    var address = _addressRepository.GetSome(a => a.Id == order.AddressId);
-                    foreach(var _address in address)
+                    var address = _addressRepository.GetSome(a => a.Id == order.AddressId && a.IsDeleted == false);
+                    foreach (var _address in address)
                     {
-                        if(_address.Id == order.AddressId && _address.CustomerId == _userManager.GetUserAsync(HttpContext.User).Result.Id)
+                        if (_address.Id == order.AddressId && _address.CustomerId == user.Id)
                         {
                             var orderitems = _orderItemRepository.GetSome(cd => cd.IsDeleted == false && cd.ItemId == id).ToList();
-                            foreach( var orderitem in orderitems)
+                            foreach (var orderitem in orderitems)
                             {
-                                if(orderitem.OrderId == order.Id)
+                                if (orderitem.OrderId == order.Id)
                                 {
-                                    isordered = true; break;
+                                    isordered = true;
+                                    break;
                                 }
                             }
                         }

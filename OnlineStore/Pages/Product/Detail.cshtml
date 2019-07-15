@@ -210,7 +210,7 @@
                                                     <table>
                                                         <tbody>
                                                             <tr>
-                                                                <th>Hài lòng:</th>
+                                                                <th>Mức độ hài lòng:</th>
                                                                 <td>
                                                                     <div class="rateit" data-rateit-value=@Html.Raw(item.Evaluation) data-rateit-readonly="true"> </div>
                                                                 </td>
@@ -237,22 +237,33 @@
                                         @if (Model.isordered)
                                         {
                                             <div id="frmreview">
-
-                                                <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Viết đánh giá của bạn:</h2>
+                                                <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Đánh giá của bạn:</h2>
                                                 <form class="frmEvaluation" method="post">
                                                     <!--Đánh giá sao-->
-                                                    <div id="rateit_star" class="rateit" data-rateit-value="5" data-rateit-readonly="false" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
+                                                    @if (Model.Reviewed != null)
+                                                    {
+                                                        <div id="rateit_star" class="rateit" data-rateit-value="@Model.Reviewed.Evaluation" data-rateit-readonly="true" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="rateit_star" class="rateit" data-rateit-value="5" data-rateit-readonly="false" data-customerid="@cus.Id" data-itemid="@Model.ItemId"> </div>
+                                                    }
                                                     <!--Đánh giá sao-->
                                                     <div class="form-area">
                                                         <div class="form-element">
-                                                            <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
+                                                            @if (Model.Reviewed != null)
+                                                            {
+                                                                <textarea name="txtConten" id="txtContent" class="textarea-comment" disabled placeholder="Mời bạn để lại bình luận...">@Model.Reviewed.Content</textarea>
+                                                            }
+                                                            else
+                                                            {
+                                                                <textarea name="txtConten" id="txtContent" class="textarea-comment" placeholder="Mời bạn để lại bình luận..."></textarea>
+                                                            }
                                                         </div>
-                                                        @*<div class="buttons-set">
-                                                        *@
-                                                        @*<button id="btnReview" class="button submit" title="Submit Review" type="submit"><span><i class="fa fa-thumbs-up"></i> &nbsp;Review</span></button>*@
-                                                        <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
-                                                        @*
-                                                            </div>*@
+                                                        @if (Model.Reviewed == null)
+                                                        {
+                                                            <button id="btnReview" class="button submit" title="Submit Review" type="button"><span><i class="fa fa-thumbs-up"></i> &nbsp;Đăng</span></button>
+                                                        }
                                                     </div>
                                                 </form>
 
@@ -262,7 +273,7 @@
                                         {
                                             <h2 class="center-block">
                                                 <i class="fa fa-hand-o-right" aria-hidden="true"></i>
-                                                Vui lòng mua sản phẩm để đánh giá!
+                                                Chức năng đánh giá chỉ được cho phép với các khách hàng đã mua thành công sản phẩm.
                                             </h2>
                                         }
                                         <!--//Đánh giá của bạn-->

@@ -44,9 +44,9 @@ namespace OnlineStore.Pages.Product
 
                 //Tính trung bình cộng đánh giá
                 var item = _itemRepository.Find(model.ItemId);
-                if (item.Comments.Count() != 0)
+                if (item.Comments != null && item.Comments.Count() != 0)
                 {
-                    decimal avg = Convert.ToDecimal(String.Format("{0:0.##}",((decimal)item.Comments.Sum(x => x.Evaluation) / item.Comments.Count())));
+                    decimal avg = Convert.ToDecimal(string.Format("{0:0.##}", (decimal)item.Comments.Sum(x => x.Evaluation) / item.Comments.Count()));
                     item.Id = model.ItemId;
                     item.AverageEvaluation = avg;
                     _itemRepository.Update(item);
@@ -59,6 +59,6 @@ namespace OnlineStore.Pages.Product
             comment.Content = model.Content;
             comment.DateModified = DateTime.Now;
             return new OkObjectResult(comment);
-        }       
+        }
     }
 }

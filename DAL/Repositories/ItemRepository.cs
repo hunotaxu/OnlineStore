@@ -51,15 +51,8 @@ namespace DAL.Repositories
 
             if (brandNames?.Any() == true)
             {
-                //if (brandNames.Count() != query.Count())
-                //{
                 List<Item> itemFilters = query.Where(x => brandNames.Contains(x.BrandName)).ToList();
-                //List<Item> itemFilters = (from c in brandNames
-                //                          from i in query
-                //                          where !string.IsNullOrEmpty(c) && i.BrandName.Equals(c, StringComparison.InvariantCultureIgnoreCase)
-                //                          select i).ToList();
                 query = itemFilters;
-                //}
             }
 
             switch ((SortType)sortType)

@@ -110,7 +110,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                return new BadRequestObjectResult("Đã xãy ra lỗi");
             }
 
             if (model.Id == 0)

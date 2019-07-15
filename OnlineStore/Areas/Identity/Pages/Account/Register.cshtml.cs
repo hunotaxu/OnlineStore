@@ -55,7 +55,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
             public DateTime DOB { get; set; }
 
             [Required(ErrorMessage = "Vui lòng nhập email.")]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "Vui lòng nhập đúng định dạng email")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 

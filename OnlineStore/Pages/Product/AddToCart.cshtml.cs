@@ -33,12 +33,12 @@ namespace OnlineStore.Pages.Product
 
         }
 
-        public IActionResult OnPostAddToCart([FromBody] DAL.Data.Entities.CartDetail model)
+        public IActionResult OnPostAddToCart([FromBody] CartDetail model)
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                //IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+                return new BadRequestObjectResult("Đã xãy ra lỗi");
             }
 
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
@@ -60,7 +60,7 @@ namespace OnlineStore.Pages.Product
             }
             else
             {
-                var cartDetails = cart.CartDetails;
+                var cartDetails = cart.CartDetails.Where(cd => cd.IsDeleted == false);
                 bool isMatch = false;
                 foreach (var item in cart.CartDetails)
                 {

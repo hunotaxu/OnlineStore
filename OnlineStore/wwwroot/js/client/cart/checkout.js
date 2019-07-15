@@ -643,7 +643,7 @@
     var saveOrder = function (receivingType) {
         var addressId = $('#addressId').val();
         if (receivingType === "1" || receivingType === "2") {
-            if (addressId === undefined || addressId === '') {
+            if (addressId === undefined || addressId === '' || addressId === '0') {
                 commons.notify('Bạn phải chọn địa chỉ nhận hàng hợp lệ', 'error');
                 return false;
             }
