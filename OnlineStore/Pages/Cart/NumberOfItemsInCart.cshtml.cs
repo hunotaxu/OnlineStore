@@ -40,7 +40,14 @@ namespace OnlineStore.Pages.Cart
                     {
                         if (item.Item.Quantity > 0)
                         {
-                            itemnumbercart += item.Quantity;
+                            if(item.Quantity < item.Item.Quantity)
+                            {
+                                itemnumbercart += item.Quantity;
+                            }
+                            else
+                            {
+                                itemnumbercart += item.Item.Quantity;
+                            }
                         }
                     };
                 }

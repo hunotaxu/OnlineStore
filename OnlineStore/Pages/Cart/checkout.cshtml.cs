@@ -11,7 +11,9 @@ using OnlineStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using DAL.Data.Enums;
 using DAL.EF;
+using Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Utilities.Commons;
 
 namespace OnlineStore.Pages.Order
 {
@@ -100,22 +102,37 @@ namespace OnlineStore.Pages.Order
                 {
                     foreach (var item in items)
                     {
-                        if (item.Item.Quantity != 0 && item.Item.Quantity >= item.Quantity)
+                        if (item.Item.Quantity > 0)
                         {
                             var itemCartViewModel = new ItemCartViewModel
                             {
                                 ItemId = item.ItemId,
                                 Image = (item.Item.ProductImages.Count() > 0) ?
-                                    $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
+                                        $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
                                 Price = item.Item.Price,
                                 ProductName = item.Item.Name,
-                                Quantity = item.Quantity,
+                                //Quantity = item.Quantity,
                             };
+                            if (item.Item.Quantity > item.Quantity)
+                            {
+                                itemCartViewModel.Quantity = item.Quantity;
+                            }
+                            else
+                            {
+                                itemCartViewModel.Quantity = item.Item.Quantity;
+                            }
                             ItemInCarts.Add(itemCartViewModel);
                         }
                     }
                 }
             }
+            if (TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout) != null)
+            {
+                TempData.Set<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout, null);
+            }
+
+            TempData.Set("ItemsCheckout", ItemInCarts);
+            TempData.Keep();
             return new OkObjectResult(ItemInCarts);
         }
 
@@ -422,10 +439,9 @@ namespace OnlineStore.Pages.Order
                             context.SaveChanges();
                         }
                         var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
-                        
+
                         var newOrder = new DAL.Data.Entities.Order
                         {
-                            //AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId,
                             DateCreated = DateTime.Now,
                             DateModified = DateTime.Now,
                             DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
@@ -437,7 +453,7 @@ namespace OnlineStore.Pages.Order
                             SaleOff = model.Order.SaleOff,
                             Status = model.Order.Status == OrderStatus.ReadyToDeliver ? OrderStatus.ReadyToDeliver : OrderStatus.Pending,
                         };
-                        
+
                         if (model.Order.PaymentType == PaymentType.CreditDebitCard)
                         {
                             Address addressForOnlinePayment = new Address
@@ -456,9 +472,16 @@ namespace OnlineStore.Pages.Order
                         {
                             newOrder.AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId;
                         }
+
                         newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
                         context.Order.Add(newOrder);
                         context.SaveChanges();
+                        var a = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
+                        //if (TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout) != null)
+                        //{
+                        //    //TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
+                        //    <List<ItemCartViewModel>> async = 
+                        //}
 
                         var items = cart.CartDetails.Where(cd => cd.IsDeleted == false && cd.Item.Quantity > 0).ToList();
 
