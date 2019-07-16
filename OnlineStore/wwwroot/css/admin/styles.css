@@ -89,3 +89,7 @@
 .bootbox.modal {
     z-index: 2000 !important;
 }
+
+.dataTables_info {
+    width: 100%;
+}
