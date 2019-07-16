@@ -57,7 +57,7 @@
                         <th>Loại sản phẩm</th>
                         <th>Số lượng bán</th>
                         <th>Doanh thu</th>
-                        <th width="10%"></th>
+                        @*<th width="10%"></th>*@
                     </tr>
                 </thead>
                 <tbody id="tbl-content"></tbody>
@@ -94,10 +94,10 @@
         <td>{{CategoryName}}</td>
         <td>{{QuantityTotal}}</td>
         <td>{{{AmountTotal}}}</td>
-        <th>
+        @*<th>
             <a class="btn btn-sm" data-id="{{Id}}" href="/Admin/Order/Details?id={{Id}}" title="Xem chi tiết"><i class="fa fa-info-circle"></i></a>
-            @*<a class="btn btn-sm" data-id="{{Id}}" title="Xem chi tiết" asp-area="Admin" asp-page="/Order" asp-route-id="{{Id}}"><i class="fa fa-info-circle"></i></a>*@
-            @*<a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>*@
-        </th>
+            @*<a class="btn btn-sm" data-id="{{Id}}" title="Xem chi tiết" asp-area="Admin" asp-page="/Order" asp-route-id="{{Id}}"><i class="fa fa-info-circle"></i></a>
+            <a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>
+        </th>*@
     </tr>
 </script>

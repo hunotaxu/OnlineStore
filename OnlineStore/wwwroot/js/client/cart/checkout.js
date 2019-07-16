@@ -95,20 +95,21 @@
                 dataType: "json",
                 data: JSON.stringify(sendObj),
                 beforeSend: function () {
-                    //commons.startLoading();
+                    commons.startLoading();
                 },
-                success: function (response) {
-                    //commons.stopLoading();
-                    //window.location.href = `/Order/ConfirmAndThanksForOrder?orderId=${response.orderId}`;
+                success: function () {
                 },
                 error: function (response) {
-                    //if (response.responseText !== undefined && response.responseText !== '') {
-                    //    commons.notify(response.responseText, 'error');
-                    //}
-                    //else {
-                    //    commons.notify('Đặt hàng thất bại', 'error');
-                    //}
-                    //commons.stopLoading();
+                    if (response.responseText !== undefined && response.responseText !== '') {
+                        commons.notify(response.responseText, 'error');
+                    }
+                    else {
+                        commons.notify('Đặt hàng thất bại', 'error');
+                    }
+                    return false;
+                },
+                complete: function () {
+                    commons.stopLoading();
                 }
             });
         });

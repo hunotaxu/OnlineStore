@@ -15,7 +15,6 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         private readonly IAddressRepository _addressRepository;
         //private readonly IUserAddressRepository _userAddressRepository;
 
-        //public DeliveryInfoViewComponent(IOrderRepository orderRepository, IUserAddressRepository userAddressRepository)
         public DeliveryInfoViewComponent(IOrderRepository orderRepository, IAddressRepository addressRepository)
         {
             _orderRepository = orderRepository;
@@ -42,7 +41,6 @@ namespace OnlineStore.Areas.Admin.ViewComponents
                 //ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat)
                 ShippingFee = CommonFunctions.FormatPrice(order.ShippingFee.Value.ToString())
             };
-            //deliveryInfoVM.PhoneNumber = userAddress == null ? string.Empty : userAddress.PhoneNumber;
             var address = order.Address;
             if (userAddress != null && address != null)
             {
