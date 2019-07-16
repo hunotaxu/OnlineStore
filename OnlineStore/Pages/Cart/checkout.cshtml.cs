@@ -476,12 +476,7 @@ namespace OnlineStore.Pages.Order
                         newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
                         context.Order.Add(newOrder);
                         context.SaveChanges();
-                        var a = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
-                        //if (TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout) != null)
-                        //{
-                        //    //TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
-                        //    <List<ItemCartViewModel>> async = 
-                        //}
+
 
                         var items = cart.CartDetails.Where(cd => cd.IsDeleted == false && cd.Item.Quantity > 0).ToList();
 
@@ -490,17 +485,24 @@ namespace OnlineStore.Pages.Order
                             transaction.Rollback();
                             return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
                         }
+
+                        var itemsCheckout = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
+                        if (itemsCheckout.Sum(x => x.Quantity) != items.Sum(x => x.Item.Quantity))
+                        {
+                            transaction.Rollback();
+                            return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                        }
+
+                        if (itemsCheckout.Sum(x => x.Price) != items.Sum(x => x.Item.Price))
+                        {
+                            transaction.Rollback();
+                            return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về giá từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                        }
                         foreach (var itemInCart in items)
                         {
                             var item = _itemRepository.Find(itemInCart.ItemId);
                             if (item.IsDeleted == false)
                             {
-                                //if (item.Quantity <= 0)
-                                //{
-                                //    transaction.Rollback();
-                                //    return new BadRequestObjectResult("Sản phẩm bạn đang đặt đã hết hàng. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng.");
-                                //}
-
                                 if (itemInCart.Quantity > item.Quantity)
                                 {
                                     transaction.Rollback();

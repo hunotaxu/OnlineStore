@@ -55,7 +55,6 @@ namespace OnlineStore.Pages.Cart
                                     $"/images/client/ProductImages/{item.Item.ProductImages?.FirstOrDefault()?.Name}" : $"/images/client/ProductImages/no-image.jpg",
                             Price = item.Item.Price,
                             ProductName = item.Item.Name,
-                            //Quantity = (item.Quantity < item.Item.Quantity || item.Item.Quantity <= 0) ? item.Quantity : item.Item.Quantity,
                             MaxQuantity = item.Item.Quantity,
                             BrandName = item.Item.BrandName
                         };
@@ -68,6 +67,11 @@ namespace OnlineStore.Pages.Cart
                             itemCartViewModel.Quantity = item.Item.Quantity;
                         }
 
+                        if(item.Item.Quantity > 0 && item.Quantity > item.Item.Quantity)
+                        {
+                            item.Quantity = item.Item.Quantity;
+                            _cartDetailRepository.Update(item);
+                        }
                         ItemInCarts.Add(itemCartViewModel);
                     }
                 }

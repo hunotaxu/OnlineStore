@@ -17,5 +17,6 @@ namespace Utilities.Commons
         public static string CustomerRoleName = "Customer";
         public static string ProductManagerRoleName = "ProductManager";
         public static string Attachments = "attachments";
+        public static string ItemsCheckout = "ItemsCheckout";
     }
 }
