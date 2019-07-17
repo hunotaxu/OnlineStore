@@ -487,11 +487,12 @@ namespace OnlineStore.Pages.Order
                         }
 
                         var itemsCheckout = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
-                        if (itemsCheckout.Sum(x => x.Quantity) != items.Sum(x => x.Item.Quantity))
-                        {
-                            transaction.Rollback();
-                            return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
-                        }
+
+                        //if (itemsCheckout.Sum(x => x.Quantity) != items.Sum(x => x.Item.Quantity))
+                        //{
+                        //    transaction.Rollback();
+                        //    return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                        //}
 
                         if (itemsCheckout.Sum(x => x.Price) != items.Sum(x => x.Item.Price))
                         {
@@ -500,6 +501,12 @@ namespace OnlineStore.Pages.Order
                         }
                         foreach (var itemInCart in items)
                         {
+                            if (itemsCheckout.Any(x => x.Quantity > itemInCart.Item.Quantity))
+                            {
+                                transaction.Rollback();
+                                return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                            }
+
                             var item = _itemRepository.Find(itemInCart.ItemId);
                             if (item.IsDeleted == false)
                             {
@@ -519,7 +526,7 @@ namespace OnlineStore.Pages.Order
                                     DateModified = DateTime.Now,
                                     SaleOff = 0,
                                     IsDeleted = false,
-                                    Amount = item.Price * item.Quantity
+                                    Amount = item.Price * itemInCart.Quantity
                                 };
                                 context.OrderItem.Add(newOrderItem);
                                 context.SaveChanges();
