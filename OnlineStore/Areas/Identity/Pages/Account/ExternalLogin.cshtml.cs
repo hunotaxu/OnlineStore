@@ -48,7 +48,7 @@ namespace OnlineStore.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Vui lòng nhập email")]
             [EmailAddress]
             public string Email { get; set; }
         }
