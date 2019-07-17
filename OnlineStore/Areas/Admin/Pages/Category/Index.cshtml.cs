@@ -57,7 +57,14 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             if (model.Id == 0)
             {
                 model.DateCreated = DateTime.Now;
-                //model.DateModified = DateTime.Now;
+                model.DateModified = DateTime.Now;
+                var maxSortOrderForInsert = _categoryRepository.GetSome(c => c.ParentId == null && c.IsDeleted == false).Max(x => x.SortOrder);
+                if (model.ParentId != null)
+                {
+                    maxSortOrderForInsert = _categoryRepository.GetSome(c => c.ParentId == model.ParentId && c.IsDeleted == false).Max(x => x.SortOrder);
+                }
+                model.SortOrder = (byte)(maxSortOrderForInsert + 1);
+                model.ParentId = model.ParentId;
                 _categoryRepository.Add(model);
                 return new OkObjectResult(model);
             }
@@ -65,6 +72,12 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             var category = _categoryRepository.Find(model.Id);
             category.Name = model.Name;
             category.ParentId = model.ParentId;
+            var maxSortOrder = _categoryRepository.GetSome(c => c.ParentId == null && c.IsDeleted == false).Max(x => x.SortOrder);
+            if (model.ParentId != null)
+            {
+                maxSortOrder = _categoryRepository.GetSome(c => c.ParentId == model.ParentId && c.IsDeleted == false).Max(x => x.SortOrder);
+            }
+            model.SortOrder = (byte)(maxSortOrder + 1);
             category.DateModified = DateTime.Now;
             _categoryRepository.Update(category);
 
