@@ -6,7 +6,7 @@
             loadShowroom();
             loadReceivingType();
             loadData();
-            //loadDefaultValue();
+            //loadDefaultValue();            
         });
     };
 
@@ -142,6 +142,13 @@
                 $('#frmselectreceivingtype').attr('data-receivingValue', x.attr("data-receivingValue"));
                 $('#frmselectreceivingtype').attr('data-receivingTypeId', x.attr("data-receivingId"));
                 $('#ShippingFee').text(x.attr("data-receivingValue"));
+
+               // chèn phí ship vào form thanh toán paypal
+                var fee = x.attr("data-receivingfee");
+                var _shippingfee = parseFloat(fee / 23000).toFixed(2);
+                $('#paypal_shippingfee').attr('value', _shippingfee);
+
+
                 var total = parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1"));
                 //$('#Total1').attr('data-Total', parseInt(x.attr("data-receivingValue")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")));
                 //document.getElementById('Total1').innerHTML = `${commons.formatNumber(parseInt(x.attr("data-receivingValue")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")), 0)}đ`;
@@ -362,6 +369,12 @@
         $('#Total1').attr('data-Total', total);
         //document.getElementById('Total1').innerHTML = `${commons.formatNumber(parseInt(x.attr("data-receivingFee")) + parseInt($('#PriceTotaltmp1').data("priceTotaltmp1")), 0)}đ`;
         $('#Total1').text(`${commons.formatNumber(total, 0)}đ`);
+        //chèn phí ship vào form thanh toán paypal
+        debugger;
+
+        var fee = $('input[name="radio-receivingthod"]:checked').data('receivingfee');
+        var _shippingfee = parseFloat(fee / 23000).toFixed(2);
+        $('#paypal_shippingfee').attr('value', _shippingfee);
     };
 
     //var loadProvinceDistrictWard = function () {
@@ -470,6 +483,9 @@
                     $('#PriceTotaltmp1').html(`${commons.formatNumber(PriceTotaltmp, 0)}đ`);
                     $('#PriceTotaltmp1').data('priceTotaltmp1', PriceTotaltmp);
                     $('#PriceTotaltmp1').attr('data-priceTotaltmp1', PriceTotaltmp);
+                    var n = parseFloat(PriceTotaltmp / 23000).toFixed(2);
+                    $('#paypal_price').attr('value', n);
+
                     loadDefaultValue();
                 } else {
                     $('.order-detail-contentr').html(`<div style='text-align: center;'><h3>Không có sản phẩm nào trong giỏ hàng</h3><a href='/' class='btn btn-warning'>Tiếp tục mua sắm</a></div>`);

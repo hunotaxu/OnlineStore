@@ -29,5 +29,11 @@ namespace Utilities.Commons
         {
             return dateTime.ToString("dd/MM/yyyy");
         }
+        //public static string FormatUSD(string price)
+        //{
+        //    decimal _price = Convert.ToDecimal(price);
+        //    string usd = string.Format("{0:0.##}", _price/23);
+        //    return (usd);
+        //}
     }
 }
