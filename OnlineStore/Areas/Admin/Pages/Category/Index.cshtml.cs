@@ -63,7 +63,16 @@ namespace OnlineStore.Areas.Admin.Pages.Category
                 {
                     maxSortOrderForInsert = _categoryRepository.GetSome(c => c.ParentId == model.ParentId && c.IsDeleted == false).Max(x => x.SortOrder);
                 }
-                model.SortOrder = (byte)(maxSortOrderForInsert + 1);
+
+                if (maxSortOrderForInsert.HasValue)
+                {
+                    model.SortOrder = (byte)(maxSortOrderForInsert.Value + 1);
+                }
+                else
+                {
+                    model.SortOrder = 1;
+                }
+
                 model.ParentId = model.ParentId;
                 _categoryRepository.Add(model);
                 return new OkObjectResult(model);

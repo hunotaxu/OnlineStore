@@ -1,36 +1,36 @@
 ﻿@using DAL.Data.Entities
-@model IEnumerable<DAL.Data.Entities.Category>
+@*@model IEnumerable<DAL.Data.Entities.Category>*@
+@using OnlineStore.Models.ViewModels
+@model MenuCategoryViewModel
 
-@foreach (Category parentMenu in Model.Take(10))
+@foreach (Category parentMenu in Model.ParentCategories)
 {
     <li>
-        @if (parentMenu.ParentId == null)
-        {
-            <a class="color1" asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@parentMenu.Id">@parentMenu.Name</a>
-            <ul class="nav popup wrap-popup column1">
-                @foreach (var menu in Model)
+        @*@if (parentMenu.ParentId == null)
+            {*@
+        <a class="color1" asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@parentMenu.Id">@parentMenu.Name</a>
+        <ul class="nav popup wrap-popup column1">
+            @foreach (var menu in Model.ChildCategories)
+            {
+                @if (menu.ParentId == parentMenu.Id)
                 {
-                    @if (menu.ParentId == parentMenu.Id)
-                    {
-                        <li>
-                            <a asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@menu.Id"><span>@menu.Name</span></a>
-                            <ul class="nav popup wrap-popup column1">
-                                @foreach (var subMenu in Model)
+                    <li>
+                        <a asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@menu.Id"><span>@menu.Name</span></a>
+                        <ul class="nav popup wrap-popup column1">
+                            @foreach (var subMenu in Model.ChildCategories)
+                            {
+                                if (subMenu.ParentId == menu.Id)
                                 {
-                                    if (subMenu.ParentId == menu.Id)
-                                    {
-                                        <li>
-
-                                            <a asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@subMenu.Id"><span>@subMenu.Name</span></a>
-
-                                        </li>
-                                    }
+                                    <li>
+                                        <a asp-page="/Product/Search" asp-page-handler="Category" asp-route-categoryId="@subMenu.Id"><span>@subMenu.Name</span></a>
+                                    </li>
                                 }
-                            </ul>
-                        </li>
-                    }
+                            }
+                        </ul>
+                    </li>
                 }
-            </ul>
-        }
+            }
+        </ul>
+        @*}*@
     </li>
 }
