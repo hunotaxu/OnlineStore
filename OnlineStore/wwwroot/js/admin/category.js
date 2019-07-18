@@ -173,7 +173,11 @@ var category = (function () {
                 treeArr.sort(function (a, b) {
                     return a.sortOrder - b.sortOrder;
                 });
-
+                treeArr.forEach(function (element) {
+                    element.children.sort(function (a, b) {
+                        return a.sortOrder - b.sortOrder;
+                    });
+                });
                 $('#treeProductCategory').tree({
                     data: treeArr,
                     dnd: true,
