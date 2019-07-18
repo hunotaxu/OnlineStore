@@ -55,7 +55,7 @@
 
     var preventNegativeNumber = function () {
         $("body").delegate('#min-price', 'focusout', function () {
-            if ($('#max-price').val() !== undefined && $('#min-price').val() !== '') {
+            if ($('#max-price').val() !== undefined && $('#max-price').val() !== '') {
                 if ($('#min-price').val() !== undefined && $('#min-price').val() !== '') {
                     if ($('#max-price').val() < $('#min-price').val()) {
                         $('#min-price').val($('#max-price').val());
