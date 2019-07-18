@@ -158,7 +158,7 @@
                 if (render !== '') {
                     $('#frmselectprovince').html(render);
                 } else {
-                    $('.error-loaddiprovince').html(`<div style='text-align: center;'><h3>Dữ liệu tỉnh/ thành phố không khả dụng</h3>`);
+                    //$('.error-loaddiprovince').html(`<div style='text-align: center;'><h3>Dữ liệu tỉnh/ thành phố không khả dụng</h3>`);
                 }
                 if (provinceName !== undefined && provinceName !== '') {
                     $('#frmselectprovince').val(provinceName);
@@ -201,7 +201,7 @@
                 if (render !== '') {
                     $('#frmselectdistrict').html(render);
                 } else {
-                    $('.error-loaddistrict').html(`<div style='text-align: center;'><h3>Dữ liệu quận/huyện không khả dụng</h3>`);
+                    //$('.error-loaddistrict').html(`<div style='text-align: center;'><h3>Dữ liệu quận/huyện không khả dụng</h3>`);
                 }
                 if (districtName !== undefined && districtName !== '') {
                     $('#frmselectdistrict').val(districtName);
@@ -243,7 +243,7 @@
                 if (render !== '') {
                     $('#frmselectward').html(render);
                 } else {
-                    $('.error-loadward').html(`<div style='text-align: center;'><h3>Dữ liệu phường/ xã không khả dụng</h3>`);
+                    //$('.error-loadward').html(`<div style='text-align: center;'><h3>Dữ liệu phường/ xã không khả dụng</h3>`);
                 }
 
                 if (wardName !== undefined && wardName !== '') {

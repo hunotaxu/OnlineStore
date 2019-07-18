@@ -44,6 +44,17 @@ namespace OnlineStore.Pages.Product
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
             var cart = _cartRepository.GetCartByCustomerId(user.Id);
             var _item = _itemRepository.Find(model.ItemId);
+
+            if (model.Quantity == 0)
+            {
+                return new BadRequestObjectResult("Số lượng sản phẩm không hợp lệ");
+            }
+
+            if (model.Quantity > _item.Quantity)
+            {
+                return new BadRequestObjectResult("Số lượng sản phẩm trong giỏ vượt quá số lượng cho phép là: " + _item.Quantity.ToString());
+            }
+
             if (cart == null)
             {
                 var newCart = new DAL.Data.Entities.Cart
@@ -51,6 +62,7 @@ namespace OnlineStore.Pages.Product
                     CustomerId = _userManager.GetUserAsync(HttpContext.User).Result.Id,
                 };
                 _cartRepository.Add(newCart);
+                
                 _cartDetailRepository.Add(new CartDetail
                 {
                     CartId = newCart.Id,

@@ -55,30 +55,32 @@
 
     var preventNegativeNumber = function () {
         $("body").delegate('#min-price', 'focusout', function () {
+            debugger;
             if ($('#max-price').val() !== undefined && $('#max-price').val() !== '') {
                 if ($('#min-price').val() !== undefined && $('#min-price').val() !== '') {
-                    if ($('#max-price').val() < $('#min-price').val()) {
+                    if (parseInt($('#max-price').val()) < parseInt($('#min-price').val())) {
                         $('#min-price').val($('#max-price').val());
                     }
                 }
             }
             else {
-                if ($('#min-price').val() < 0) {
+                if (parseInt($('#min-price').val()) < 0) {
                     $('#min-price').val('0');
                 }
             }
         });
 
         $("body").delegate('#max-price', 'focusout', function () {
+            debugger;
             if ($('#min-price').val() !== undefined && $('#min-price').val() !== '') {
                 if ($('#max-price').val() !== undefined && $('#max-price').val() !== '') {
-                    if ($('#max-price').val() < $('#min-price').val()) {
+                    if (parseInt($('#max-price').val()) < parseInt($('#min-price').val())) {
                         $('#max-price').val($('#min-price').val());
                     }
                 }
             }
             else {
-                if ($('#max-price').val() < 0) {
+                if (parseInt($('#max-price').val()) < 0) {
                     $('#max-price').val('0');
                 }
             }
