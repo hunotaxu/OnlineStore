@@ -3,6 +3,7 @@
         $(document).ready(function () {
             commons.initDateRangePicker();
             loadCategories();
+            registerEvents();
             applyDateRange();
             onChangeCategory();
             onSearch();
@@ -19,6 +20,14 @@
 
     var onChangeCategory = function () {
         $('#ddlCategorySearch').on('change', function () {
+            loadData(true);
+        });
+    };
+
+    var registerEvents = function () {
+        $('#ddlShowPage').on('change', function () {
+            commons.configs.pageSize = $(this).val();
+            commons.configs.pageIndex = 1;
             loadData(true);
         });
     };
