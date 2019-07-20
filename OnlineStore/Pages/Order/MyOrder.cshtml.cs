@@ -26,7 +26,7 @@ namespace OnlineStore.Pages.Order
         }
         public void OnGet(int orderId)
         {
-            var order = _orderRepository.Find(orderId);
+            var order = _orderRepository.GetSome(x => x.Id == orderId && x.IsDeleted == false).FirstOrDefault();
             MyOrderViewModel.Order = order;
         }
 
@@ -35,7 +35,8 @@ namespace OnlineStore.Pages.Order
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                return new BadRequestObjectResult(allErrors);
+                //return new BadRequestObjectResult(allErrors);
+                return new BadRequestObjectResult("Đã có lỗi xãy ra");
             }
 
             if (model.Id == 0)

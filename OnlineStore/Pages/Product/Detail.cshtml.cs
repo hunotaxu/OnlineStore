@@ -60,7 +60,8 @@ namespace OnlineStore.Pages.Product
             //Kiểm tra tham số truyền vào có rỗng hay không
             if (id == null)
             {
-                return BadRequest();
+                //return BadRequest();
+                return RedirectToPage("/NotFound");
             }
 
             //Nếu không thì truy xuất csdl lấy ra sản phẩm tương ứng
@@ -71,7 +72,7 @@ namespace OnlineStore.Pages.Product
             if (Item == null)
             {
                 //Thông báo nếu như không có sản phẩm đó
-                return NotFound();
+                return RedirectToPage("/NotFound");
             }
 
             ItemId = Item.Id;
@@ -100,7 +101,6 @@ namespace OnlineStore.Pages.Product
                         ItemId = comment.ItemId,
                         DateCreated = comment.DateCreated,
                         DateModified = comment.DateModified
-
                     });
                 }
             }

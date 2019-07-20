@@ -459,7 +459,7 @@ namespace OnlineStore.Pages.Order
                             Address addressForOnlinePayment = new Address
                             {
                                 CustomerId = user.Id,
-                                Detail = "Kiểm tra thông tin tài khoản paypal để biết địa chỉ nhận hàng",
+                                Detail = "",
                                 DateCreated = DateTime.Now,
                                 RecipientName = user.Name ?? "",
                                 PhoneNumber = user.PhoneNumber ?? ""
