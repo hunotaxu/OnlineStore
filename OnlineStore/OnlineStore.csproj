@@ -15,6 +15,11 @@
     <None Remove="Pages\Shared\Components\BannerPartial\**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Remove="Pages\Emails\ConfirmAccount\ConfirmAccountEmail.cshtml" />
+    <Content Remove="Pages\Emails\ConfirmAccount\ConfirmOrderEmail.cshtml" />
+    <Content Remove="Pages\Emails\_ViewStart.cshtml" />
+    <Content Remove="Pages\Shared\EmailButton.cshtml" />
+    <Content Remove="Pages\Shared\EmailLayout.cshtml" />
     <Content Remove="wwwroot\css\admin\style_form_dangnhap.css" />
     <Content Remove="wwwroot\images\logo.png" />
   </ItemGroup>
@@ -38,6 +43,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="1.0.163" />
+    <PackageReference Include="SendGrid" Version="9.11.0" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +79,11 @@
   <ItemGroup>
     <None Include="node_modules\gentelella\build\js\custom.js" />
     <None Include="node_modules\jquery-validation\dist\localization\messages_vi.js" />
+    <None Include="Pages\Emails\ConfirmOrderEmail.cshtml" />
+    <None Include="Pages\Emails\ConfirmAccount\ConfirmAccountEmail.cshtml" />
+    <None Include="Pages\Emails\_ViewStart.cshtml" />
+    <None Include="Pages\Shared\EmailButton.cshtml" />
+    <None Include="Pages\Shared\EmailLayout.cshtml" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.svg" />
     <None Include="wwwroot\fonts\font-awesome\fontawesome-webfont.woff2" />
     <None Include="wwwroot\fonts\pe-icon-7-stroke\Pe-icon-7-stroke.svg" />

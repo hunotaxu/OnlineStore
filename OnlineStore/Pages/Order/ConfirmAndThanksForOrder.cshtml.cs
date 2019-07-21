@@ -7,9 +7,12 @@ namespace OnlineStore.Pages.Order
     {
         [BindProperty]
         public int OrderId { get; set; }
-        public void OnGet(int orderId)
+        [BindProperty]
+        public string Email { get; set; }
+        public void OnGet(int orderId, string email)
         {
             OrderId = orderId;
+            Email = email;
         }
     }
 }

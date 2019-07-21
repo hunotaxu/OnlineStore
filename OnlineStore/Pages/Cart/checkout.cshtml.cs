@@ -14,12 +14,14 @@ using DAL.EF;
 using Utilities.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Utilities.Commons;
+using OnlineStore.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace OnlineStore.Pages.Order
 {
     public class CheckoutModel : PageModel
     {
-        //private readonly IUserAddressRepository _userAddressRepository;
+        private readonly IEmailSender _emailSender;
         private readonly IItemRepository _itemRepository;
         private readonly IDefaultAddressRepository _defaultAddressRepository;
         private readonly ICartRepository _cartRepository;
@@ -34,7 +36,7 @@ namespace OnlineStore.Pages.Order
         public readonly IOrderRepository _orderRepository;
         public readonly IShowRoomAddressRepository _showRoomAddressRepository;
         public readonly IReceivingTypeRepository _receivingTypeRepository;
-        public readonly IUnitOfWork _unitOfWork;
+        private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
         protected readonly DbContextOptions<OnlineStoreDbContext> _options;
 
         public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository, IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
@@ -43,12 +45,14 @@ namespace OnlineStore.Pages.Order
             IDefaultAddressRepository defaultAddressRepository,
             IOrderItemRepository orderItemRepository,
             IOrderRepository orderRepository,
-            IUnitOfWork unitOfWork,
+            IEmailSender emailSender,
+            IRazorViewToStringRenderer razorViewToStringRenderer,
             DbContextOptions<OnlineStoreDbContext> options)
         {
             _options = options;
+            _emailSender = emailSender;
             _itemRepository = itemRepository;
-            _unitOfWork = unitOfWork;
+            _razorViewToStringRenderer = razorViewToStringRenderer;
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
             _defaultAddressRepository = defaultAddressRepository;
@@ -398,7 +402,7 @@ namespace OnlineStore.Pages.Order
             return new OkObjectResult(ReceivingTypes);
         }
 
-        public IActionResult OnPostSaveOrder([FromBody] OrderAddressViewModel model)
+        public async System.Threading.Tasks.Task<IActionResult> OnPostSaveOrderAsync([FromBody] OrderAddressViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -549,7 +553,17 @@ namespace OnlineStore.Pages.Order
                             context.SaveChanges();
                         }
                         transaction.Commit();
-                        return new OkObjectResult(new { orderId = newOrder.Id });
+                        var url = Url.Page("/Order/MyOrder", pageHandler: null, values: new { orderId = newOrder.Id }, protocol: Request.Scheme);
+                        var confirmAccountModel = new OrderEmailViewModel
+                        {
+                            Url = url,
+                            LetterDescription = $@"Yêu cầu đặt hàng cho đơn hàng #{newOrder.Id} của bạn đã được tiếp nhận và đang chờ nhà bán hàng xử lý. 
+                                                  Thời gian đặt hàng vào lúc {string.Format("{0:HH:mm}", newOrder.OrderDate)} ngày {string.Format("{0:d/M/yyyy}", newOrder.OrderDate)}. 
+                                                  Chúng tôi sẽ tiếp tục cập nhật với bạn về trạng thái tiếp theo của đơn hàng."
+                        };
+                        string body = await _razorViewToStringRenderer.RenderViewToStringAsync("~/Pages/Emails/ConfirmOrderEmail.cshtml", confirmAccountModel);
+                        await _emailSender.SendEmailAsync(user.Email, "Xác nhận đơn hàng từ TimiShop", body);
+                        return new OkObjectResult(new { orderId = newOrder.Id, email = user.Email });
                     }
                     catch (Exception ex)
                     {

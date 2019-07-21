@@ -693,7 +693,7 @@
             },
             success: function (response) {
                 commons.stopLoading();
-                window.location.href = `/Order/ConfirmAndThanksForOrder?orderId=${response.orderId}`;
+                window.location.href = `/Order/ConfirmAndThanksForOrder?orderId=${response.orderId}&email=${response.email}`;
             },
             error: function (response) {
                 if (response.responseText !== undefined && response.responseText !== '') {

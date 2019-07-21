@@ -50,7 +50,10 @@ namespace OnlineStore
 
             services.AddMemoryCache();
             // using Microsoft.AspNetCore.Identity.UI.Services;
-            services.AddSingleton<IEmailSender, EmailSender>();
+            //services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             //services.AddSingleton<IItemService, ItemService>();
 
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
@@ -151,9 +154,6 @@ namespace OnlineStore
             {
                 option.IterationCount = 12000;
             });
-
-            // using Microsoft.AspNetCore.Identity.UI.Services;
-            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IShowRoomAddressRepository, ShowRoomAddressRepository>();
