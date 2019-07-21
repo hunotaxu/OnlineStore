@@ -21,14 +21,14 @@ namespace OnlineStore.Pages.Order
             _userManager = userManager;
             _orderRepository = orderRepository;
         }
+
         public void OnGet()
         {
             var user = _userManager.GetUserAsync(HttpContext.User).Result;
             if (user != null)
             {
-                Orders = _orderRepository.GetSome(o => o.IsDeleted == false && o.Address.CustomerId == user.Id).ToList();
+                Orders = _orderRepository.GetSome(o => o.IsDeleted == false && o.Address.CustomerId == user.Id).OrderByDescending(o => o.Id).ToList();
             }
-            
         }
     }
 }
