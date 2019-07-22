@@ -7,6 +7,7 @@ namespace OnlineStore.Models.ViewModels
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
+        public DateTime DeliveryDate { get; set; }
         //public byte ReceivingType { get; set; }
         public virtual ReceivingType ReceivingType { get; set; }
         public byte Status { get; set; }

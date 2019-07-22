@@ -7,7 +7,7 @@
 @using DAL.Data.Entities
 @using Microsoft.AspNetCore.Identity
 @using OnlineStore.Areas.Admin.ViewModels
-@model IsAdminRolesViewModel
+@model AdminMenuViewModel
 
 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
     <div class="menu_section">
@@ -63,7 +63,7 @@
             <li>
                 @if (Model.IsOrderManager || Model.IsStoreOwner)
                 {
-                    <a><i class="fa fa-shopping-cart"></i> Bán hàng<span class="fa fa-chevron-down"></span></a>
+                    <a><i class="fa fa-shopping-cart"></i> Bán hàng<strong class="fa-stack-1x">(@Model.NumberOfOrdersInProgress)</strong><span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a asp-area="Admin" asp-page="/Order/Index"> Đơn hàng</a></li>
                         <li><a asp-area="Admin" asp-page="/Order/ReceivingTypeManagement"> Phương thức giao hàng</a></li>
