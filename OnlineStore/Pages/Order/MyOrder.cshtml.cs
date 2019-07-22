@@ -1,6 +1,8 @@
-﻿using DAL.Data.Enums;
+﻿using DAL.Data.Entities;
+using DAL.Data.Enums;
 using DAL.EF;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,19 +17,32 @@ namespace OnlineStore.Pages.Order
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
         [BindProperty]
         public MyOrderViewModel MyOrderViewModel { get; set; }
         public MyOrderModel(IOrderRepository orderRepository,
-            IItemRepository itemRepository)
+            IItemRepository itemRepository,
+            UserManager<ApplicationUser> userManager)
         {
             MyOrderViewModel = new MyOrderViewModel();
             _orderRepository = orderRepository;
+            _userManager = userManager;
             _itemRepository = itemRepository;
         }
-        public void OnGet(int orderId)
+        public ActionResult OnGet(int orderId)
         {
             var order = _orderRepository.GetSome(x => x.Id == orderId && x.IsDeleted == false).FirstOrDefault();
+            var customer = _userManager.GetUserAsync(HttpContext.User).Result;
+            if (customer == null)
+            {
+                return RedirectToPage("/NotFound");
+            }
+            if (order.Address.CustomerId != customer.Id)
+            {
+                return RedirectToPage("/NotFound");
+            }
             MyOrderViewModel.Order = order;
+            return Page();
         }
 
         public IActionResult OnPostCancelOrder([FromBody] DAL.Data.Entities.Order model)
