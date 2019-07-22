@@ -13,6 +13,8 @@ namespace OnlineStore.Models.ViewModels.Item
         [StringLength(255)]
         [Required]
         public string Name { get; set; }
+        [Required]
+        public string SKU { get; set; }
 
         [Required]
         public int CategoryId { get; set; }

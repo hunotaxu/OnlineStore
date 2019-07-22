@@ -40,7 +40,7 @@
                 commons.startLoading();
             },
             success: function (response) {
-                var render = `<option value=''>Chọn loại sản phẩm</option>`;
+                var render = `<option value=''>Tất cả loại sản phẩm</option>`;
                 $.each(response, function (i, item) {
                     render += `<option value=${item.id}>${item.name}</option>`;
                 });

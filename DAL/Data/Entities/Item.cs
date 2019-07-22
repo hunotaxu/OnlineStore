@@ -51,6 +51,8 @@ namespace DAL.Data.Entities
 
         [Display(Name = "Thương hiệu")]
         public string BrandName { get; set; }
+        [Display(Name = "Mã SKU")]
+        public string SKU { get; set; }
 
         [Display(Name = "Đánh giá")]
         public decimal? AverageEvaluation { get; set; }

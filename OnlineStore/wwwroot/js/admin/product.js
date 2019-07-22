@@ -270,6 +270,7 @@ var itemPage = (function () {
             e.preventDefault();
             var id = $('#hidIdM').val();
             var name = $('#txtNameM').val();
+            var SKU = $('#txtSKU').val();
             var categoryId = $('#ddlCategoryIdM').combotree('getValue');
             var description = CKEDITOR.instances.txtDescM.getData();
             var price = $('#txtPriceM').val();
@@ -283,6 +284,7 @@ var itemPage = (function () {
                 data: JSON.stringify({
                     Id: id,
                     Name: name,
+                    SKU: SKU,
                     CategoryId: categoryId,
                     Image: image,
                     BrandName: brandName,
@@ -326,6 +328,7 @@ var itemPage = (function () {
                 var data = response;
                 $('#hidIdM').val(data.id);
                 $('#txtNameM').val(data.name);
+                $('#txtSKU').val(data.sku);
                 $('#txtBrandName').val(data.brandName);
                 $('#txtQuantity').val(data.quantity);
                 initTreeDropDownCategory(data.categoryId);
@@ -390,6 +393,7 @@ var itemPage = (function () {
     function resetFormMaintainance() {
         $('#hidIdM').val(0);
         $('#txtNameM').val('');
+        $('#txtSKU').val('');
         $('#txtBrandName').val('');
         $('#txtQuantity').val('');
         initTreeDropDownCategory('');
@@ -404,7 +408,7 @@ var itemPage = (function () {
             dataType: 'JSON',
             url: '/Admin/Product/Index?handler=AllCategories',
             success: function (response) {
-                var render = `<option value=''>Chọn loại sản phẩm</option>`;
+                var render = `<option value=''>Tất cả loại sản phẩm</option>`;
                 $.each(response, function (i, item) {
                     render += `<option value='${item.id}'>${item.name}</option>`;
                 });
