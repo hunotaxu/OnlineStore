@@ -80,11 +80,51 @@
         });
     };
 
-    var saveOrderDeliveryInfo = function (e) {
-        if ($('#frmOrderDeliveryInfo').valid()) {
+    //var saveOrderDeliveryInfo = function (e) {
+    //    if ($('#frmOrderDeliveryInfo').valid()) {
+    //        e.preventDefault();
+    //        var id = $('#orderId').text();
+    //        var parts = $('#divDeliveryDate').data('date').split(" ")[0].split("/");
+    //        var deliveryDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10) + 1);
+    //        $.ajax({
+    //            type: "POST",
+    //            url: "/Admin/Order/Details?handler=SaveEntity",
+    //            data: JSON.stringify({
+    //                Id: id,
+    //                DeliveryDate: deliveryDate
+    //            }),
+    //            contentType: 'application/json;charset=utf-8',
+    //            dataType: "json",
+    //            beforeSend: function () {
+    //                commons.startLoading();
+    //            },
+    //            success: function (response) {
+    //                commons.notify('Thành công', 'success');
+    //                $('#modal-add-edit').modal('hide');
+    //                commons.stopLoading();
+    //            },
+    //            error: function (response) {
+    //                if (response.responseText !== undefined && response.responseText !== '') {
+    //                    commons.notify(response.responseText, 'error');
+    //                }
+    //                else {
+    //                    commons.notify('Đã có lỗi xãy ra', 'error');
+    //                }
+    //                var deliveryDate = new Date($('#DeliveryDate').val());
+    //                var defaultDeliveryDate = new Date(deliveryDate.getFullYear(), deliveryDate.getMonth() + 1, deliveryDate.getDate(), deliveryDate.getHours(), deliveryDate.getMinutes());
+    //                $('#divDeliveryDate').data("DateTimePicker").date(defaultDeliveryDate).format('DD/MM/YYYY HH:mm');
+    //                commons.stopLoading();
+    //            }
+    //        });
+    //        return false;
+    //    }
+    //};
+
+    var saveOrderGeneralInfo = function (e) {
+        if ($('#frmOrderGeneralInfo').valid()) {
             e.preventDefault();
             var id = $('#orderId').text();
-            //var deliveryDate = Date.parse($('#divDeliveryDate').data('date'));
+            var status = $("input[name='Status']:checked").val();
             var parts = $('#divDeliveryDate').data('date').split(" ")[0].split("/");
             var deliveryDate = new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10) + 1);
             $.ajax({
@@ -92,6 +132,7 @@
                 url: "/Admin/Order/Details?handler=SaveEntity",
                 data: JSON.stringify({
                     Id: id,
+                    Status: status,
                     DeliveryDate: deliveryDate
                 }),
                 contentType: 'application/json;charset=utf-8',
@@ -100,46 +141,7 @@
                     commons.startLoading();
                 },
                 success: function (response) {
-                    commons.notify('Thành công', 'success');
-                    $('#modal-add-edit').modal('hide');
-                    commons.stopLoading();
-                },
-                error: function (response) {
-                    if (response.responseText !== undefined && response.responseText !== '') {
-                        commons.notify(response.responseText, 'error');
-                    }
-                    else {
-                        commons.notify('Đã có lỗi xãy ra', 'error');
-                    }
-                    var deliveryDate = new Date($('#DeliveryDate').val());
-                    var defaultDeliveryDate = new Date(deliveryDate.getFullYear(), deliveryDate.getMonth() + 1, deliveryDate.getDate(), deliveryDate.getHours(), deliveryDate.getMinutes());
-                    $('#divDeliveryDate').data("DateTimePicker").date(defaultDeliveryDate).format('DD/MM/YYYY HH:mm');
-                    commons.stopLoading();
-                }
-            });
-            return false;
-        }
-    };
-
-    var saveOrderGeneralInfo = function (e) {
-        if ($('#frmOrderGeneralInfo').valid()) {
-            e.preventDefault();
-            var id = $('#orderId').text();
-            var status = $("input[name='Status']:checked").val();
-            $.ajax({
-                type: "POST",
-                url: "/Admin/Order/Details?handler=SaveEntity",
-                data: JSON.stringify({
-                    Id: id,
-                    Status: status
-                }),
-                contentType: 'application/json;charset=utf-8',
-                dataType: "json",
-                beforeSend: function () {
-                    commons.startLoading();
-                },
-                success: function (response) {
-                    commons.notify('Thành công', 'success');
+                    commons.notify('Cập nhật thành công', 'success');
                     $('#modal-add-edit').modal('hide');
                     commons.stopLoading();
                 },

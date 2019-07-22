@@ -89,20 +89,41 @@
                     </div>
                 </div>
             </div>
-            @*<div class="form-group">
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                    Ngày giao dự kiến <span class="required">*</span>
+                    Thời gian giao <span class="required">*</span>
                     <input type='hidden' asp-for="@Model.DeliveryDate" />
                 </label>
                 <div class="col-md-3 col-sm-3 col-xs-6">
                     <div class='input-group date' id="divDeliveryDate">
-                        <input type='text' class="form-control col-md-7 col-xs-12" required="required" />
+                        @if (Model.Status != (byte)DAL.Data.Enums.OrderStatus.Pending)
+                        {
+                            <input type='text' class="form-control col-md-7 col-xs-12" required="required" readonly="readonly" />
+                        }
+                        else
+                        {
+                            <input type='text' class="form-control col-md-7 col-xs-12" required="required" />
+                        }
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
                     </div>
                 </div>
-            </div>*@
+            </div>
+            @*<div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                        Ngày giao dự kiến <span class="required">*</span>
+                        <input type='hidden' asp-for="@Model.DeliveryDate" />
+                    </label>
+                    <div class="col-md-3 col-sm-3 col-xs-6">
+                        <div class='input-group date' id="divDeliveryDate">
+                            <input type='text' class="form-control col-md-7 col-xs-12" required="required" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>*@
             <div class="ln_solid"></div>
             <div class="form-group">
                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
