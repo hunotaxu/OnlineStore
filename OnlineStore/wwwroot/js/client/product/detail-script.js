@@ -114,19 +114,20 @@ if (x < 1) {
         "pointer-events": "none"
     });
 }
-$("#txtQuantity").on("keypress keyup", function (event) {
-    $(this).val($(this).val().replace(/[^\d].+/, ""));
-    if ((event.which < 48 || event.which > 57)) {
-        event.preventDefault();
-    }
-    $("#txtQuantity").val();
 
-    var y = document.getElementById('txtQuantity').value;
-    if (y > x) {
-        commons.notify('Số sản phẩm bạn nhập quá số lượng tồn', 'error');
+//$("#txtQuantity").on("keypress keyup", function (event) {
+//    $(this).val($(this).val().replace(/[^\d].+/, ""));
+//    if ((event.which < 48 || event.which > 57)) {
+//        event.preventDefault();
+//    }
+//    $("#txtQuantity").val();
+
+//    var y = document.getElementById('txtQuantity').value;
+//    if (y > x) {
+//        commons.notify('Số sản phẩm bạn nhập quá số lượng tồn', 'error');
 
 
-        $(this).val('');
-        $(this).val(x);
-    }
-});
+//        $(this).val('');
+//        $(this).val(x);
+//    }
+//});
