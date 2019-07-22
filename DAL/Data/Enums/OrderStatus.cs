@@ -4,7 +4,7 @@ namespace DAL.Data.Enums
 {
     public enum OrderStatus : byte
     {
-        [Display(Name="Chọn trạng thái đơn hàng")]
+        [Display(Name="Tất cả trạng thái đơn hàng")]
         None,
         [Display(Name = "Đang chờ xử lý")]
         Pending,

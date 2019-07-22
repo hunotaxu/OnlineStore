@@ -40,7 +40,7 @@
                 @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="@(new SelectList(Model.ReceivingTypes,"Id","Name"))"></select>*@
                 @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="Model.ReceivingTypes"></select>*@
                 <select class="form-control" id="ddlReceivingType">
-                    <option value="">Chọn phương thức thanh toán</option>
+                    <option value="">Tất cả phương thức thanh toán</option>
                     @foreach (var item in Model.ReceivingTypes)
                     {
                         <option value="@item.Id">@item.Name</option>
