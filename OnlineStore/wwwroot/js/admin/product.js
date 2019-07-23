@@ -53,24 +53,37 @@ var itemPage = (function () {
                 }
             },
             url: "/Admin/Upload/TemporaryStoreAttachment",
-            maxFiles: 5,
+            //maxFiles: 5,
             maxFilesize: 10, // MB
             thumbnailWidth: 80,
             thumbnailHeight: 80,
             acceptedFiles: "image/*",
             addRemoveLinks: true,
             success: function (file, response) {
-                if (response === "duplicated") {
-                    var _ref = file.previewElement;
+                var _ref = file.previewElement;
+                if (response === 'maxfilesexceeded') {
                     if (_ref) {
                         removeThumbnail(file);
                     }
+                    commons.notify('Xin lỗi, bạn chỉ được upload tối đa 5 tệp hình ảnh', 'error');
+                }
+                if (response === "duplicated") {
+                    if (_ref) {
+                        removeThumbnail(file);
+                    }
+                    commons.notify('Tệp đính kèm hình ảnh đã bị trùng', 'error');
                 } else {
                     file.previewElement.classList.add("dz-success");
                 }
             },
             removedfile: function (file) { removeAttachment(file); },
             error: function (file, response) {
+                if (file.size > 10 * 1024 * 1024) {
+                    commons.notify('Tệp hình ảnh vượt quá dung lượng cho phép là 10MB', 'error');
+                }
+                if (!file.type.match('image.*')) {
+                    commons.notify('Tệp đính kèm không đúng định dạng', 'error');
+                }
                 removeThumbnail(file);
                 //$(generalError).text(response);
             }
