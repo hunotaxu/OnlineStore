@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace OnlineStore
 {
@@ -16,26 +17,43 @@ namespace OnlineStore
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
-            AddRange(items);
+            this.AddRange(items);
         }
 
-        public bool HasPreviousPage => (PageIndex > 1);
-        
-        public bool HasNextPage => (PageIndex < TotalPages);
+        public bool HasPreviousPage
+        {
+            get
+            {
+                return (PageIndex > 1);
+            }
+        }
+
+        public bool HasNextPage
+        {
+            get
+            {
+                return (PageIndex < TotalPages);
+            }
+        }
 
         public static PaginatedList<T> CreateAsync(
-            List<T> source, int pageIndex, int pageSize)
+            IEnumerable<T> source, int pageIndex, int pageSize)
         {
             var count = source.Count();
-            List<T> items = source.Skip(
+            var items = source.Skip(
                 (pageIndex - 1) * pageSize)
                 .Take(pageSize).ToList();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
 
-        internal static Task<PaginatedList<Item>> CreateAsync(object p, int v, int pageSize)
+        public static async Task<PaginatedList<T>> CreateAsync(
+            IQueryable<T> source, int pageIndex, int pageSize)
         {
-            throw new NotImplementedException();
+            var count = await source.CountAsync();
+            var items = await source.Skip(
+                (pageIndex - 1) * pageSize)
+                .Take(pageSize).ToListAsync();
+            return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }
 }

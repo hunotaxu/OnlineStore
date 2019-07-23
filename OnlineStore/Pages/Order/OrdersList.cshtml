@@ -10,7 +10,7 @@
     <div class="main container">
         <div class="row">
             <div class="col-main col-sm-12 col-xs-12">
-                <div class="my-account">
+                <div class="my-account text-center">
                     <div class="page-title">
                         <h2>Danh sách đơn hàng của tôi</h2>
                     </div>
@@ -51,6 +51,20 @@
                             </table>
                         }
                     </div>
+                    @{
+                        var prevDisabled = !Model.Orders.HasPreviousPage ? "disabled" : "";
+                        var nextDisabled = !Model.Orders.HasNextPage ? "disabled" : "";
+                    }
+                    <a asp-page="/Order/OrdersList"
+                       asp-route-pageIndex="@(Model.Orders.PageIndex - 1)"
+                       class="btn btn-default @prevDisabled">
+                        Trước
+                    </a>
+                    <a asp-page="/Order/OrdersList"
+                       asp-route-pageIndex="@(Model.Orders.PageIndex + 1)"
+                       class="btn btn-default @nextDisabled">
+                        Tiếp
+                    </a>
                 </div>
             </div>
         </div>
