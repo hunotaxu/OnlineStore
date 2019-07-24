@@ -12,9 +12,10 @@ var receivingType = (function () {
     };
 
     var registerEvents = function () {
-        $("#btnCreate").on('click', function () {
+        $('body').on('click', '#btnCreate', function (e) {
+            e.preventDefault();
             //initDropzone(0);
-            //resetFormMaintainance();
+            resetFormMaintainance();
             //resetImageTemporary();
             //initTreeDropDownCategory();
             $('#modal-add-edit').modal('show');
@@ -42,6 +43,17 @@ var receivingType = (function () {
         //    $('#modal-import-excel').modal('show');
         //});
     };
+
+    function resetFormMaintainance() {
+        $('#hidIdM').val(0);
+        $('#txtNameM').val('');
+        $('#txtValue').val('');
+        $('#txtNumberShipDay').val('');
+        //initTreeDropDownCategory('');
+        //$('#txtPriceM').val('0');
+        //$('#txtPromotionPriceM').val('0');
+        //CKEDITOR.instances.txtDescM.setData('');
+    }
 
     function deleteReceivingType(that) {
         commons.confirm('Bạn có chắc chắn muốn xóa phương thức nhận hàng này và các đơn hàng đã sử dụng phương thức này?', function () {
@@ -143,7 +155,7 @@ var receivingType = (function () {
         });
     }
 
-    
+
     var loadData = function () {
         var template = $('#table-template').html();
         var render = '';

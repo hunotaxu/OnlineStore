@@ -157,7 +157,7 @@ namespace DAL.Repositories
                         decimal.TryParse(workSheet.Cells[i, 6].Value.ToString(), out var price); // Trong C# 7 không cần khai báo trước price
                         item.Price = price;
                         decimal.TryParse(workSheet.Cells[i, 7].Value.ToString(), out var promotionPrice);
-                        item.PromotionPrice = promotionPrice;
+                        item.OriginalPrice = promotionPrice;
                         item.DateCreated = DateTime.Now;
                         Add(item);
                     }

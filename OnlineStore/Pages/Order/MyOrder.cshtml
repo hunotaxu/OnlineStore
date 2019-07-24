@@ -88,7 +88,9 @@
                                 </tr>
                                 <tr>
                                     <td>Địa chỉ chi tiết</td>
-                                    <td data-title="Last Name">@Model.MyOrderViewModel.Order.Address.Detail</td>
+                                    <td data-title="Last Name">
+                                        @Model.MyOrderViewModel.Order.Address.Detail, @Model.MyOrderViewModel.Order.Address.Ward, @Model.MyOrderViewModel.Order.Address.District, @Model.MyOrderViewModel.Order.Address.Province
+                                    </td>
                                 </tr>
                             </table>
                         </div>

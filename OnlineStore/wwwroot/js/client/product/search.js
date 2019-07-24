@@ -163,7 +163,6 @@
                 "MinPrice": minPrice,
                 "MaxPrice": maxPrice
             },
-            //dataType: 'JSON',
             contentType: 'application/json; charset=utf-8',
             url: '/Product/Search?handler=AllPaging',
             beforeSend: function () {
@@ -208,7 +207,7 @@
                                 ProductName: item.name,
                                 ProductId: item.id,
                                 AvgRating: (item.averageEvaluation !== undefined && item.averageEvaluation !== '' && item.averageEvaluation !== null) ?
-                                    `Đánh giá: ${item.averageEvaluation}/5` : 'Chưa có đánh giá nào',
+                                    `Đánh giá trung bình: ${item.averageEvaluation}/5` : 'Chưa có đánh giá nào',
                                 OriginalPrice: `${commons.formatNumber(item.originalPrice, 0)}đ`,
                                 Price: `${commons.formatNumber(item.price, 0)}đ`
                             });

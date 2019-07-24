@@ -45,7 +45,7 @@ namespace OnlineStore.Pages.Product
             var cart = _cartRepository.GetCartByCustomerId(user.Id);
             var _item = _itemRepository.Find(model.ItemId);
 
-            if (model.Quantity == 0)
+            if (model.Quantity <= 0)
             {
                 return new BadRequestObjectResult("Số lượng sản phẩm không hợp lệ");
             }

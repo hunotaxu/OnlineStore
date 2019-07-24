@@ -79,7 +79,11 @@ namespace OnlineStore.Areas.Identity.Pages.Account.Manage
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
-
+            if(string.CompareOrdinal(Input.OldPassword, Input.NewPassword) == 0)
+            {
+                StatusMessage = "Lỗi: Mật khẩu mới phải khác mật khẩu cũ";
+                return Page();
+            }
             var changePasswordResult = await _userManager.ChangePasswordAsync(user, Input.OldPassword, Input.NewPassword);
             if (!changePasswordResult.Succeeded)
             {

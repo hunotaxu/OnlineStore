@@ -103,11 +103,11 @@ namespace OnlineStore.Controllers
                     TempData.Set(CommonConstants.Attachments, new List<ProductImages>());
                 }
                 var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments);
-                if(listAttachment.Count >= 5)
+                TempData.Keep();
+                if (listAttachment.Count >= 5)
                 {
                     return Json("maxfilesexceeded");
                 }
-                TempData.Keep();
                 if (listAttachment.Exists(x => x.Name == file.FileName))
                 {
                     return Json("duplicated");

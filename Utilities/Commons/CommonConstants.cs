@@ -4,7 +4,7 @@ namespace Utilities.Commons
 {
     public class CommonConstants
     {
-        public static string ErrorDuplicatePhoneNumer = "Email hoặc số điện thoại đã đã được đăng ký";
+        public static string ErrorDuplicatePhoneNumer = "Email hoặc số điện thoại đã được đăng ký";
         public static string CannotLoadData = "Không thể tải dữ liệu";
         public static string UserSession = "UserSession";
         public static string UrlHomePage = "/Home/Index";

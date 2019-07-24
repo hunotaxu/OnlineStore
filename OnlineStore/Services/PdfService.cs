@@ -827,8 +827,16 @@ namespace OnlineStore.Services
             //if (_addressSettings.StreetAddressEnabled)
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address", indent, lang, font, order.BillingAddress.Address1));
             //billingAddress.AddCell(GetParagraph("Địa chỉ: {0}", indent, font, order.Address.Detail));
-            cellBilling.Phrase.Add(GetParagraph("Địa chỉ: {0}", string.Empty, font, order.Address != null ? order.Address.Detail : string.Empty));
-            cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
+            if(order.Address != null)
+            {
+                var detail = !string.IsNullOrEmpty(order.Address.Detail) ? $"{order.Address.Detail}, " : "";
+                var ward = !string.IsNullOrEmpty(order.Address.Ward) ? $"{order.Address.Ward}, " : "";
+                var district = !string.IsNullOrEmpty(order.Address.District) ? $"{order.Address.District}, " : "";
+                var province = !string.IsNullOrEmpty(order.Address.Province) ? $"{order.Address.Province}" : "";
+                cellBilling.Phrase.Add(GetParagraph("Địa chỉ: {0}", string.Empty, font, $"{detail}{ward}{district}{province}"));
+                cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
+            }
+            
             //if (_addressSettings.StreetAddress2Enabled && !string.IsNullOrEmpty(order.BillingAddress.Address2))
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address2", indent, lang, font, order.BillingAddress.Address2));
             //if (_addressSettings.CityEnabled || _addressSettings.StateProvinceEnabled ||

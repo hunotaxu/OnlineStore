@@ -110,7 +110,8 @@ namespace OnlineStore.Areas.Identity.Pages.Account
                 PhoneNumber = Input.PhoneNumber,
                 Gender = (byte)Input.Gender,
                 DateCreated = DateTime.Now,
-                DateModified = DateTime.Now
+                DateModified = DateTime.Now,
+                Status = 1
             };
 
             var result = await _userManager.CreateAsync(user, Input.Password);

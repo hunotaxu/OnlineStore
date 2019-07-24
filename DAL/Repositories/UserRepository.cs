@@ -31,7 +31,7 @@ namespace DAL.Repositories
         public List<ApplicationUser> GetUsersByRole(Guid roleId)
         {
             var userIds = _userRoletable.Where(ur => ur.RoleId == roleId).Select(ur => ur.UserId);
-            return _userTable.Where(u => userIds.Contains(u.Id) && u.Status == (byte)UserStatus.Active).ToList();
+            return _userTable.Where(u => userIds.Any(uid => uid.Equals(u.Id)) && u.Status == (byte)UserStatus.Active).ToList();
         }
 
         public List<ApplicationUser> GetEmployees()
@@ -56,7 +56,8 @@ namespace DAL.Repositories
 
         public bool IsDuplicateEmail(string email)
         {
-            if (string.IsNullOrEmpty(email)) {
+            if (string.IsNullOrEmpty(email))
+            {
                 return false;
             }
             return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase)) != null;
