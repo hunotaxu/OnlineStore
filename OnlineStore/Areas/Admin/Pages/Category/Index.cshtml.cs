@@ -115,7 +115,7 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             var sourceCategory = _categoryRepository.Find(input.sourceId);
             var targetCategory = _categoryRepository.Find(input.targetId);
             var tempOrder = sourceCategory.SortOrder;
-            sourceCategory.ParentId = targetCategory.ParentId;
+            //sourceCategory.ParentId = targetCategory.ParentId;
             sourceCategory.SortOrder = targetCategory.SortOrder;
             _categoryRepository.Update(sourceCategory);
             targetCategory.SortOrder = tempOrder;

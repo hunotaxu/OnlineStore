@@ -88,9 +88,18 @@
                                 </tr>
                                 <tr>
                                     <td>Địa chỉ chi tiết</td>
-                                    <td data-title="Last Name">
-                                        @Model.MyOrderViewModel.Order.Address.Detail, @Model.MyOrderViewModel.Order.Address.Ward, @Model.MyOrderViewModel.Order.Address.District, @Model.MyOrderViewModel.Order.Address.Province
-                                    </td>
+                                    @if (Model.MyOrderViewModel.Order.ReceivingType.Id == 3)
+                                    {
+                                        <td data-title="Last Name">
+                                            @Model.MyOrderViewModel.Order.Address.ShowRoomAddress.Detail, @Model.MyOrderViewModel.Order.Address.ShowRoomAddress.Ward.Name, @Model.MyOrderViewModel.Order.Address.ShowRoomAddress.District.Name, @Model.MyOrderViewModel.Order.Address.ShowRoomAddress.Province.Name
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td data-title="Last Name">
+                                            @Model.MyOrderViewModel.Order.Address.Detail, @Model.MyOrderViewModel.Order.Address.Ward, @Model.MyOrderViewModel.Order.Address.District, @Model.MyOrderViewModel.Order.Address.Province
+                                        </td>
+                                    }
                                 </tr>
                             </table>
                         </div>

@@ -41,7 +41,7 @@ namespace DAL.Repositories
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                query = query.Where(i => i.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase));
+                query = query.Where(i => i.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) && i.Quantity > 0);
             }
 
             if (categoryId.HasValue)
