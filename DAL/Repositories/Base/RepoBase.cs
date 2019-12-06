@@ -27,11 +27,11 @@ namespace DAL.Repositories.Base
 
         public int Count => Table.Count();
 
-        public string GetTableName()
-        {
-            var metaData = Db.Model.FindEntityType(typeof(T).FullName).SqlServer();
-            return $"{metaData.Schema}.{metaData.TableName}";
-        }
+        //public string GetTableName()
+        //{
+        //    var metaData = Db.Model.FindEntityType(typeof(T).FullName).SqlServer();
+        //    return $"{metaData.Schema}.{metaData.TableName}";
+        //}
 
         public T Find(int? id) => Table.Find(id);
         public T Find(Expression<Func<T, bool>> where) 

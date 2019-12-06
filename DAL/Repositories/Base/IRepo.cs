@@ -11,7 +11,7 @@ namespace DAL.Repositories.Base
     {
         int Count { get; }
         bool HasChanges { get; }
-        string GetTableName();
+        //string GetTableName();
         T Find(int? id);
         T Find(Expression<Func<T, bool>> where);
         T Find<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, ICollection<TIncludeField>>> include);

@@ -34,7 +34,7 @@ namespace OnlineStore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddRazorPages();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -46,7 +46,6 @@ namespace OnlineStore
             {
                 options.Cookie.IsEssential = true;
             });
-
 
             services.AddMemoryCache();
             // using Microsoft.AspNetCore.Identity.UI.Services;
@@ -63,13 +62,14 @@ namespace OnlineStore
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(options =>
+
+            //services.AddAuthentication().AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //});
+            services.AddControllers()
+                .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 })
@@ -77,7 +77,7 @@ namespace OnlineStore
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AddPageRoute("/Home/Index", "");
-                    options.AllowAreas = true;
+                    //options.AllowAreas = true;
                     options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
                     options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
                     options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
@@ -88,19 +88,45 @@ namespace OnlineStore
                     options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
                     options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
                 });
+
+            //services.AddAuthentication().AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //});
+            //services.AddMvc()
+            //    .AddJsonOptions(options =>
+            //    {
+            //        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            //    })
+            //    .AddSessionStateTempDataProvider()
+            //    .AddRazorPagesOptions(options =>
+            //    {
+            //        options.Conventions.AddPageRoute("/Home/Index", "");
+            //        options.AllowAreas = true;
+            //        options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+            //        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+            //        options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
+            //        options.Conventions.AuthorizeFolder("/Order", "RequireCustomerRole");
+            //        options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
+            //        options.Conventions.AuthorizeAreaFolder("Admin", "/Product", "RequireProductManagerRole");
+            //        options.Conventions.AuthorizeAreaFolder("Admin", "/Category", "RequireProductManagerRole");
+            //        options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
+            //        options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
+            //    });
             services.AddAuthorization(options =>
             {
                 //options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
                 //options.AddPolicy("AtLeast21", policy => policy.Requirements.Add(new MinimumAgeRequirement(21)));
-                options.AddPolicy("RequireCustomerRole", 
+                options.AddPolicy("RequireCustomerRole",
                     policy => policy.RequireRole(CommonConstants.CustomerRoleName));
-                options.AddPolicy("RequireProductManagerRole", 
+                options.AddPolicy("RequireProductManagerRole",
                     policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
-                options.AddPolicy("RequireStoreOwnerRole", 
+                options.AddPolicy("RequireStoreOwnerRole",
                     policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
-                options.AddPolicy("RequireOrderManagerRole", 
+                options.AddPolicy("RequireOrderManagerRole",
                     policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.OrderManagerRoleName }));
-                options.AddPolicy("RequireAdminRole", 
+                options.AddPolicy("RequireAdminRole",
                     policy => policy.RequireRole(new string[] { CommonConstants.OrderManagerRoleName, CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
             });
 
@@ -136,7 +162,6 @@ namespace OnlineStore
                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
@@ -168,7 +193,7 @@ namespace OnlineStore
             services.AddScoped<IWardRepository, WardRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICartDetailRepository, CartDetailRepository>();
-            services.AddScoped<IAddressRepository, AddressRepository>();  
+            services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();
             services.AddScoped<IReceivingTypeRepository, ReceivingTypeRepository>();
             services.AddScoped<IDefaultAddressRepository, DefaultAddressRepository>();
@@ -200,18 +225,21 @@ namespace OnlineStore
             app.UseHttpsRedirection();
             //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
-
+            app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
             app.UseCookiePolicy();
-            app.UseSession();
-            app.UseMvc(routes =>
+            //app.UseSession();
+            
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
                     name: "MyArea",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
