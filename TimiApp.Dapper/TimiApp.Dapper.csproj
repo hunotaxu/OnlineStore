@@ -2,11 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.1</RuntimeFrameworkVersion>
+    <!--<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>-->
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.1" />
     <PackageReference Include="ckeditor-full" Version="4.11.4" />
     <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
   </ItemGroup>
 

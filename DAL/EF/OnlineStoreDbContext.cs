@@ -46,7 +46,7 @@ namespace DAL.EF
 #pragma warning disable 1030
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 #pragma warning restore 1030
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=MYLANDO\\SQLEXPRESS;Database=OnlineStoreDB;User Id=sa;Password=123456;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=den1.mssql7.gear.host;Database=timishop;User Id=timishop;Password=Pt93!1n~83RK\t;Trusted_Connection=False;Integrated Security=False;MultipleActiveResultSets=true");
             }
         }
 

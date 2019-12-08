@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
+    <!--<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>-->
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RuntimeFrameworkVersion>2.1.1</RuntimeFrameworkVersion>
+    <!--<TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>-->
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <UserSecretsId>7b9b8e7b-efd9-441e-8795-192e6f71e9d9</UserSecretsId>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
@@ -28,9 +32,10 @@
     <PackageReference Include="ckeditor-full" Version="4.11.4" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="iTextSharp" Version="5.5.13" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.1" />
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="2.1.0" />

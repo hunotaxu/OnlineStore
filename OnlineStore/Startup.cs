@@ -63,11 +63,11 @@ namespace OnlineStore
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddRoleManager<RoleManager<ApplicationRole>>()
                 .AddEntityFrameworkStores<OnlineStoreDbContext>()
                 .AddDefaultTokenProviders();
-            services.AddAuthentication().AddFacebook(facebookOptions =>
-            {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
-            });
+            //services.AddAuthentication().AddFacebook(facebookOptions =>
+            //{
+            //    facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+            //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            //});
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddJsonOptions(options =>
                 {
