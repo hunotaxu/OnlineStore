@@ -410,7 +410,7 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult("Đặt hàng không thành công");
             }
 
-            using (var context = new OnlineStoreDbContext())
+            using (var context = new OnlineStoreDbContext(_options))
             {
                 using (var transaction = context.Database.BeginTransaction())
                 {
@@ -422,7 +422,8 @@ namespace OnlineStore.Pages.Order
                             return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
                         }
 
-                        var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                        // var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                        var cart = context.Cart.FirstOrDefault(c => c.CustomerId == user.Id && c.IsDeleted == false);
                         if (cart == null)
                         {
                             return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
@@ -440,9 +441,10 @@ namespace OnlineStore.Pages.Order
                                 DateModified = DateTime.Now
                             };
                             context.Address.Add(newAddress);
-                            context.SaveChanges();
+                            await context.SaveChangesAsync();
                         }
-                        var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
+                        //var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
+                        var receivingType = context.ReceivingType.Find(model.Order.ReceivingTypeId);
 
                         var newOrder = new DAL.Data.Entities.Order
                         {
@@ -479,9 +481,8 @@ namespace OnlineStore.Pages.Order
 
                         newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
                         context.Order.Add(newOrder);
-                        context.SaveChanges();
-
-
+                        await context.SaveChangesAsync();
+                        
                         var items = cart.CartDetails.Where(cd => cd.IsDeleted == false && cd.Item.Quantity > 0).ToList();
 
                         if (items == null || items.Count() == 0)
@@ -511,7 +512,8 @@ namespace OnlineStore.Pages.Order
                                 return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
                             }
 
-                            var item = _itemRepository.Find(itemInCart.ItemId);
+                            //var item = _itemRepository.Find(itemInCart.ItemId);
+                            var item = context.Item.Find(itemInCart.ItemId);
                             if (item.IsDeleted == false)
                             {
                                 if (itemInCart.Quantity > item.Quantity)
@@ -533,16 +535,16 @@ namespace OnlineStore.Pages.Order
                                     Amount = item.Price * itemInCart.Quantity
                                 };
                                 context.OrderItem.Add(newOrderItem);
-                                context.SaveChanges();
+                                await context.SaveChangesAsync();
 
                                 item.Quantity -= itemInCart.Quantity;
                                 context.Item.Update(item);
-                                context.SaveChanges();
+                                await context.SaveChangesAsync();
                             }
                         }
                         cart.IsDeleted = true;
                         context.Cart.Update(cart);
-                        context.SaveChanges();
+                        await context.SaveChangesAsync();
 
                         var cartDetails = cart.CartDetails;
                         foreach (var cartDetail in cartDetails)
@@ -550,19 +552,20 @@ namespace OnlineStore.Pages.Order
                             cartDetail.IsDeleted = true;
                             cartDetail.Quantity = 0;
                             context.CartDetail.Update(cartDetail);
-                            context.SaveChanges();
+                            await context.SaveChangesAsync();
                         }
+
+                        //var url = Url.Page("/Order/MyOrder", pageHandler: null, values: new { orderId = newOrder.Id }, protocol: Request.Scheme);
+                        //var confirmAccountModel = new OrderEmailViewModel
+                        //{
+                        //    Url = url,
+                        //    LetterDescription = $@"Yêu cầu đặt hàng cho đơn hàng #{newOrder.Id} của bạn đã được tiếp nhận và đang chờ nhà bán hàng xử lý. 
+                        //                          Thời gian đặt hàng vào lúc {string.Format("{0:HH:mm}", newOrder.OrderDate)} ngày {string.Format("{0:d/M/yyyy}", newOrder.OrderDate)}. 
+                        //                          Chúng tôi sẽ tiếp tục cập nhật với bạn về trạng thái tiếp theo của đơn hàng."
+                        //};
+                        //string body = await _razorViewToStringRenderer.RenderViewToStringAsync("~/Pages/Emails/ConfirmOrderEmail.cshtml", confirmAccountModel);
+                        //await _emailSender.SendEmailAsync(user.Email, "Xác nhận đơn hàng từ TimiShop", body);
                         transaction.Commit();
-                        var url = Url.Page("/Order/MyOrder", pageHandler: null, values: new { orderId = newOrder.Id }, protocol: Request.Scheme);
-                        var confirmAccountModel = new OrderEmailViewModel
-                        {
-                            Url = url,
-                            LetterDescription = $@"Yêu cầu đặt hàng cho đơn hàng #{newOrder.Id} của bạn đã được tiếp nhận và đang chờ nhà bán hàng xử lý. 
-                                                  Thời gian đặt hàng vào lúc {string.Format("{0:HH:mm}", newOrder.OrderDate)} ngày {string.Format("{0:d/M/yyyy}", newOrder.OrderDate)}. 
-                                                  Chúng tôi sẽ tiếp tục cập nhật với bạn về trạng thái tiếp theo của đơn hàng."
-                        };
-                        string body = await _razorViewToStringRenderer.RenderViewToStringAsync("~/Pages/Emails/ConfirmOrderEmail.cshtml", confirmAccountModel);
-                        await _emailSender.SendEmailAsync(user.Email, "Xác nhận đơn hàng từ TimiShop", body);
                         return new OkObjectResult(new { orderId = newOrder.Id, email = user.Email });
                     }
                     catch (Exception ex)
