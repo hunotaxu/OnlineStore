@@ -231,7 +231,7 @@ namespace OnlineStore
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
             app.UseCookiePolicy();
-            //app.UseSession();
+            app.UseSession();
             
             app.UseEndpoints(endpoints =>
             {
