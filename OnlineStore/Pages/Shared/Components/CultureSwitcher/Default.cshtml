@@ -1,0 +1,39 @@
+﻿@model CultureSwitcherModel
+@using OnlineStore.Services
+@inject CommonLocalizationService localizer
+
+<div>
+    @*<form id="culture-switcher">
+        <select name="culture" id="culture-options">
+        @foreach (var culture in Model.SupportedCultures)
+        {
+        <option value="@culture.Name" selected="@(Model.CurrentUICulture.Name == culture.Name)">@culture.DisplayName</option>
+        }
+        </select>
+        </form>*@
+    <form id="culture-switcher">
+        <div class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">@localizer.Get("Thay đổi ngôn ngữ")</a>
+            <div class="dropdown-menu">
+                @foreach (var culture in Model.SupportedCultures)
+                {
+                    <div class="dropdown-item" href="#">
+                        <input type="radio" name="culture" value="@culture.Name" checked="@(Model.CurrentUICulture.Name == culture.Name)">
+                        @{
+                            switch (culture.ToString())
+                            {
+                                case "vi":
+                                    <span class="flag-icon flag-icon-vn"></span>
+                                    break;
+                                case "en":
+                                    <span class="flag-icon flag-icon-us"></span>
+                                    break;
+                            }
+                        }
+                        @culture.DisplayName
+                    </div>
+                }
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DAL.Data.Entities;
+﻿using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels.Item;
+using System.Collections.Generic;
 
 namespace OnlineStore.Pages.Home
 {
@@ -14,78 +13,59 @@ namespace OnlineStore.Pages.Home
     {
         private readonly IItemRepository _itemRepository;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ICartRepository _cartRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ICartDetailRepository _cartDetailRepository;
         private readonly ICategoryRepository _categoryRepository;
         public int _numbercartitem;
-
-        //public IEnumerable<Item> _Phones { get; set; }
-        //public IEnumerable<Item> _Laptops { get; set; }
-        //public IEnumerable<Item> _Tablets { get; set; }
-        //public IEnumerable<Item> _Accessories { get; set; }
 
         public List<Item> Phones { get; set; }
         public List<Item> Laptops { get; set; }
         public List<Item> Tablets { get; set; }
         public List<Item> Accessories { get; set; }
 
-
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
 
-        public IndexModel(ICategoryRepository categoryRepository,ICartRepository cartRepository, IUserRepository userRepository, ICartDetailRepository cartDetailRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
+        public IndexModel(ICategoryRepository categoryRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _userRepository = userRepository;
             _itemRepository = itemRepository;
-            _cartDetailRepository = cartDetailRepository;
-            _cartRepository = cartRepository;
             _categoryRepository = categoryRepository;
             Phones = new List<Item>();
             Laptops = new List<Item>();
             Tablets = new List<Item>();
             Accessories = new List<Item>();
         }
+
         public void OnGet()
         {
-            var chuildPhoneCategory = _categoryRepository.GetSome(x=>x.IsDeleted == false && x.ParentId == 1);
-            foreach (var item in chuildPhoneCategory)
-            {               
-                var phone = _itemRepository.GetByCategory(item.Id);
-                foreach(var _phone in phone)
+            foreach (Category item in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 1))
+            {
+                foreach (Item _phone in _itemRepository.GetByCategory(item.Id))
                 {
                     Phones.Add(_phone);
                 }
             }
-            var chuildLaptopCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 2);
-            foreach (var item in chuildLaptopCategory)
+            foreach (Category item in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 2))
             {
-                var laptop = _itemRepository.GetByCategory(item.Id);
-                foreach (var _laptop in laptop)
+                foreach (Item _laptop in _itemRepository.GetByCategory(item.Id))
                 {
                     Laptops.Add(_laptop);
                 }
             }
-            var chuildTabletCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 3);
-            foreach (var item in chuildTabletCategory)
+            foreach (Category item in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 3))
             {
-                var tablet = _itemRepository.GetByCategory(item.Id);
-                foreach (var _tablet in tablet)
+                foreach (Item _tablet in _itemRepository.GetByCategory(item.Id))
                 {
                     Tablets.Add(_tablet);
                 }
             }
-            var chuildAccessorieCategory = _categoryRepository.GetSome(x => x.IsDeleted == false && x.ParentId == 4);
-            foreach (var item in chuildAccessorieCategory)
+            foreach (Category item in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 4))
             {
-                var accessorie = _itemRepository.GetByCategory(item.Id);
-                foreach (var _accessorie in accessorie)
+                foreach (Item _accessorie in _itemRepository.GetByCategory(item.Id))
                 {
                     Accessories.Add(_accessorie);
                 }
             }
-            var cus = _userManager.GetUserAsync(HttpContext.User).Result;
-        }       
+            ApplicationUser cus = _userManager.GetUserAsync(HttpContext.User).Result;
+        }
     }
 }

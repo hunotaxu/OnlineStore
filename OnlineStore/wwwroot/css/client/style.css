@@ -121,3 +121,12 @@
     overflow: auto;
     position: absolute;
 }*/
+
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu {
+    margin-top: 0;
+}

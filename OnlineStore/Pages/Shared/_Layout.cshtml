@@ -1,4 +1,5 @@
-﻿
+﻿@using OnlineStore.Services
+@inject CommonLocalizationService localizer
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +29,13 @@
     <link href="~/css/client/style.css" rel="stylesheet" />
     <link href="~/node_modules/rateit-npm/src/rateit.css" rel="stylesheet" />
     <link href="~/node_modules/gentelella/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" rel="stylesheet" type="text/css">
     @RenderSection("Styles", false)
 </head>
-
 
 <body class="shop_grid_full_width_page">
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v3.3&appId=362654884350782&autoLogAppEvents=1"></script>
-
-
 
     <!--[if lt IE 8]>
           <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -51,57 +50,35 @@
     <div id="mobile-menu">
         <ul>
             @await Component.InvokeAsync("MenuPartial")
-            @*
-                <li><a >Games &amp; Video</a></li>
-                <li>
-                    <a >Blog</a>
-                    <ul>
-                        <li><a > Blog – Right Sidebar </a></li>
-                        <li><a > Blog – Left Sidebar </a></li>
-                        <li><a > Blog – Full-Width </a></li>
-                        <li><a > Single post </a></li>
-                    </ul>
-                </li>
-                <li><a >Accessories</a></li>*@
         </ul>
     </div>
     <!-- end mobile menu -->
     <div id="page">
-
         <!-- Header -->
         <header>
             <div class="header-container">
                 <div class="header-top">
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-4 col-md-4 col-xs-12">
-                                <!-- Default Welcome Message -->
-                                <!-- Language &amp; Currency wrapper -->
-                                <div class="language-currency-wrapper">
+                            <!--<div class="col-sm-4 col-md-4 col-xs-12">-->
+                            <!-- Default Welcome Message -->
+                            <!--<div class="language-currency-wrapper">
                                     <div class="inner-cl">
                                         <div class="block block-language form-language">
                                             <div class="lg-cur">
                                                 <i class="fa fa-phone-square" aria-hidden="true"></i>
-                                                <span class="phone  hidden-xs hidden-sm">Đường dây nóng: +84 367 167 648</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div>-->
                             <!-- top links -->
                             <div class="headerlinkmenu col-md-8 col-sm-8 col-xs-12">
-
                                 <ul class="links">
-                                    <li class="hidden-xs">
-                                        <a target="_blank" href="https://www.facebook.com/TimiShop-2115751742057581/" title="Trung tâm trợ giúp khách hàng">
-                                            <span>
-                                                <i class="fa fa-question-circle" aria-hidden="true"></i>
-                                                Trợ giúp
-                                            </span>
-                                        </a>
-                                    </li>
                                     <partial name="_LoginPartial" />
+                                    <li>
+                                        @await Component.InvokeAsync("CultureSwitcher")
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -123,7 +100,7 @@
                                     <div id="search">
                                         <form asp-page="/Product/Search" method="get">
                                             <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Bạn muốn tìm gì?..." name="SearchString">
+                                                <input type="text" class="form-control" placeholder="@localizer.Get("Bạn đang tìm gì?")" name="SearchString">
                                                 <button class="btn-search" type="submit"><i class="fa fa-search"></i></button>
                                             </div>
                                         </form>
@@ -141,10 +118,10 @@
                                                 <div class="cart-icon">
                                                     <i class="icon-basket-loaded icons"></i>
                                                     <span id="cart-itemtotal" class="cart-total">
-
                                                     </span>
                                                 </div>
-                                                <div class="shoppingcart-inner hidden-xs"><span id="mycart" class="cart-title">Giỏ hàng</span> </div>
+                                                @*<div class="shoppingcart-inner hidden-xs"><span id="mycart" class="cart-title">Giỏ hàng</span> </div>*@
+                                                <div class="shoppingcart-inner hidden-xs"><span id="mycart" class="cart-title">@localizer.Get("Giỏ hàng")</span> </div>
                                             </a>
                                         </div>
                                         <div>
@@ -152,15 +129,11 @@
                                                 <div class="block-subtitle hidden">Recently added items</div>
                                                 @*<div style="height:150px;overflow-y:scroll">
                                                         <div id="container-pay-cart-layout" class="mini-products-list">
-
                                                         </div>
                                                     </div>*@
 
-
-
                                                 <div class="mCustomScrollbar" data-mcs-theme="dark">
                                                     <div id="container-pay-cart-layout" class="mini-products-list">
-
                                                     </div>
                                                 </div>
                                                 <script>
@@ -170,8 +143,7 @@
                                                         });
                                                     })(jQuery);
 
-
-/**/</script>
+                                                    /**/</script>
                                                 <p class="productnamecheckout error-load-cart-layout"></p>
                                                 <script id="template-cart-layout" type="x-tmpl-mustache">
                                                     <div class="col-sm-12 border-box-cartmini none-padding">
@@ -248,7 +220,7 @@
                                 @*
                                     <li class="mt-root demo_custom_link_cms">
                                         <div class="mt-root-item">
-                                            <a >
+                                            <a>
                                                 <div class="title title_font"><span class="title-text">Blog</span></div>
                                             </a>
                                         </div>
@@ -457,10 +429,8 @@
                                         </li>
                                     </ul>*@
 
-
                                 <li>  </li>
                             </ul>
-
                         </div>
                     </div>
                 </div>
@@ -481,7 +451,6 @@
                                 <div class="footer-contact-text"> + (800) 0123 456 789 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -582,41 +551,19 @@
                     </div>
                 </div>
             </div>
-
-
-
         </footer>
         <a id="back-to-top" title="Back to top"><i class="fa fa-angle-up"></i></a>
     </div>
 
     <!-- JS -->
-    <!-- jquery js -->
     <script type="text/javascript" src="~/js/client/layout/jquery.min.js"></script>
-
-    <!-- bootstrap js -->
-    @*
-        <script type="text/javascript" src="~/js/client/layout/bootstrap.min.js"></script>*@
     <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="~/js/client/layout/jquery.flexslider.js"></script>
     <script src="~/node_modules/mustache/mustache.min.js"></script>
-
-    <!-- owl.carousel.min js -->
     <script type="text/javascript" src="~/js/client/layout/owl.carousel.min.js"></script>
-
-    <!-- jquery.mobile-menu js -->
     <script type="text/javascript" src="~/js/client/layout/mobile-menu.js"></script>
-
-    <!--jquery-ui.min js -->
     <script type="text/javascript" src="~/js/client/layout/jquery-ui.js"></script>
-
-    <!-- main js -->
     <script type="text/javascript" src="~/js/client/layout/main.js"></script>
-    @*
-        <script>
-            jslayout.init();
-        </script>*@
-
-    <!-- Slider Js -->
     <script type="text/javascript" src="~/js/client/layout/revolution-slider.js"></script>
     <script type="text/javascript" src="~/js/client/layout/jquery.bxslider.js"></script>
     <script type="text/javascript" src="~/js/client/layout/countdown.js"></script>
@@ -629,19 +576,16 @@
     <script src="~/node_modules/jquery-validation/dist/localization/messages_vi.js"></script>
     <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
     <script type="text/javascript" src="~/js/client/layout/header.js"></script>
-    <script>
-        loadItemMyCart.init()
-    </script>
     <script src="~/node_modules/twbs-pagination/jquery.twbsPagination.min.js"></script>
     <script src="~/node_modules/parsleyjs/dist/parsley.min.js"></script>
     <script src="~/lib/parsley/vi.js"></script>
     <script src="~/node_modules/gentelella/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/js/client/culture-switcher.js" rel="stylesheet" asp-append-version="true"></script>
+    <script src="~/node_modules/rateit-npm/src/jquery.rateit.js"></script>
     <script>
         loadItemMyCart.init();
+        cultureSwitcher.init();
     </script>
-    <!--js đánh giá sản phẩm-->
-    <script src="~/node_modules/rateit-npm/src/jquery.rateit.js"></script>
-
     @RenderSection("Scripts", required: false)
 </body>
 </html>

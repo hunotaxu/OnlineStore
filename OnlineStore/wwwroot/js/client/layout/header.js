@@ -20,29 +20,29 @@
 
 var loadItemMyCart = (function () {
     var init = function () {
-        loadItemCart(); 
+        loadItemCart();
         loadCartLayout();
-    };   
-    var loadItemCart = function () {       
+    };
+    var loadItemCart = function () {
         $.ajax({
             type: "GET",
             url: "/Cart/NumberOfItemsInCart?handler=LoadNumberItemCart",
             //beforeSend: function () {
             //    commons.startLoading();
-            //},            
+            //},
             success: function (response) {
                 if (response !== '') {
                     //$('#cart-itemtotal').html(`${commons.formatNumber((response), 0)}đ`);
                     $('#cart-itemtotal').html(response);
                 } else {
-                    $('#cart-itemtotal').html(``);
+                    $('#cart-itemtotal').html(`0`);
                 }
                 //commons.stopLoading();
                 document.getElementById("cart-itemtotal").innerHTML.replace;
             },
             error: function () {
                 //commons.stopLoading();
-                $('#cart-itemtotal').html(``);
+                $('#cart-itemtotal').html(`0`);
             }
         });
     };
@@ -94,4 +94,3 @@ var loadItemMyCart = (function () {
         init
     };
 })();
-

@@ -9,12 +9,24 @@
   <ItemGroup>
     <Compile Remove="Logs\**" />
     <Compile Remove="Pages\Shared\Components\BannerPartial\**" />
+    <Compile Remove="Views\Shared\**" />
+    <Compile Remove="wwwroot\js\client\order\**" />
+    <Compile Remove="wwwroot\js\client\shared\**" />
     <Content Remove="Logs\**" />
     <Content Remove="Pages\Shared\Components\BannerPartial\**" />
+    <Content Remove="Views\Shared\**" />
+    <Content Remove="wwwroot\js\client\order\**" />
+    <Content Remove="wwwroot\js\client\shared\**" />
     <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="Pages\Shared\Components\BannerPartial\**" />
+    <EmbeddedResource Remove="Views\Shared\**" />
+    <EmbeddedResource Remove="wwwroot\js\client\order\**" />
+    <EmbeddedResource Remove="wwwroot\js\client\shared\**" />
     <None Remove="Logs\**" />
     <None Remove="Pages\Shared\Components\BannerPartial\**" />
+    <None Remove="Views\Shared\**" />
+    <None Remove="wwwroot\js\client\order\**" />
+    <None Remove="wwwroot\js\client\shared\**" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Pages\Emails\ConfirmAccount\ConfirmAccountEmail.cshtml" />
@@ -76,11 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\images\admin\ProductImages\" />
-    <Folder Include="wwwroot\js\client\shared\" />
-    <Folder Include="wwwroot\js\client\order\" />
-    <Folder Include="wwwroot\js\client\order\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="node_modules\gentelella\build\js\custom.js" />
@@ -501,5 +509,19 @@
     <None Include="wwwroot\lib\notifyjs\styles\metro\notify-metro.js" />
     <None Include="wwwroot\templates\BillTemplate.xlsx" />
     <None Include="wwwroot\templates\ProductImportTemplate.xlsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\CommonResources.vi.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Home\IndexModel.en.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Pages\Home\IndexModel.vi.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -1,99 +1,26 @@
-﻿@page
+@page
 @model OnlineStore.Pages.Home.IndexModel
-@using Utilities.Extensions
 @using Microsoft.AspNetCore.Identity
 @using DAL.Data.Entities
-@inject UserManager<ApplicationUser>    UserManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IStringLocalizer<IndexModel> localizer
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_Layout.cshtml";
-
 }
 @{
     var cus = await UserManager.GetUserAsync(HttpContext.User);
 }
 
-@section StyleS{
+@section Styles{
     <link href="~/css/client/home.css" rel="stylesheet" />
 }
 @section Scripts{
-    <script type='text/javascript'>
-        jQuery(document).ready(function () {
-            jQuery('#rev_slider_4').show().revolution({
-                dottedOverlay: 'none',
-                delay: 5000,
-                startwidth: 865,
-                startheight: 450,
-
-                hideThumbs: 200,
-                thumbWidth: 200,
-                thumbHeight: 50,
-                thumbAmount: 2,
-
-                navigationType: 'thumb',
-                navigationArrows: 'solo',
-                navigationStyle: 'round',
-
-                touchenabled: 'on',
-                onHoverStop: 'on',
-
-                swipe_velocity: 0.7,
-                swipe_min_touches: 1,
-                swipe_max_touches: 1,
-                drag_block_vertical: false,
-
-                spinner: 'spinner0',
-                keyboardNavigation: 'off',
-
-                navigationHAlign: 'center',
-                navigationVAlign: 'bottom',
-                navigationHOffset: 0,
-                navigationVOffset: 20,
-
-                soloArrowLeftHalign: 'left',
-                soloArrowLeftValign: 'center',
-                soloArrowLeftHOffset: 20,
-                soloArrowLeftVOffset: 0,
-
-                soloArrowRightHalign: 'right',
-                soloArrowRightValign: 'center',
-                soloArrowRightHOffset: 20,
-                soloArrowRightVOffset: 0,
-
-                shadow: 0,
-                fullWidth: 'on',
-                fullScreen: 'off',
-
-                stopLoop: 'off',
-                stopAfterLoops: -1,
-                stopAtSlide: -1,
-
-                shuffle: 'off',
-
-                autoHeight: 'off',
-                forceFullWidth: 'on',
-                fullScreenAlignForce: 'off',
-                minFullScreenHeight: 0,
-                hideNavDelayOnMobile: 1500,
-
-                hideThumbsOnMobile: 'off',
-                hideBulletsOnMobile: 'off',
-                hideArrowsOnMobile: 'off',
-                hideThumbsUnderResolution: 0,
-
-
-                hideSliderAtLimit: 0,
-                hideCaptionAtLimit: 0,
-                hideAllCaptionAtLilmit: 0,
-                startWithSlide: 0,
-                fullScreenOffsetContainer: ''
-            });
-        });
-    </script>
     <script src="~/js/client/home.js" rel="stylesheet" asp-append-version="true"></script>
     <script>
-        jshome.init();
-    </script>}
+        home.init();
+    </script>
+}
 @if (cus != null)
 {
     <input data-customerid="@cus.Id" id="data-cus-hidden-index" hidden />
@@ -111,35 +38,16 @@
                                 <li data-transition='fade' data-slotamount='7' data-masterspeed='1000' data-thumb=''>
                                     <a target="_blank" asp-page="/Product/Detail" asp-route-id="14">
                                         <img class="img-slideshow" src='~/images/client/layout/slider/banelocmonileiphone.jpg' data-bgposition='left top' data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner" />
-                                        @*<div class="caption-inner">
-                                                <div class='tp-caption LargeTitle sft  tp-resizeme' data-x='250' data-y='110' data-endspeed='500' data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3; white-space:nowrap;'>Uy tín hàng đầu Việt Nam</div>
-                                                <div class='tp-caption ExtraLargeTitle sft  tp-resizeme' data-x='200' data-y='160' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap; color:#fff; text-shadow:none;'>TimiShop</div>
-                                                <div class='tp-caption' data-x='310' data-y='230' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap; color:#f8f8f8;'>Chuyên sản phẩm công nghệ</div>
-                                                <div class='tp-caption sfb  tp-resizeme ' data-x='370' data-y='280' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4; white-space:nowrap;'><a href='#' class="buy-btn">Mua ngay</a> </div>
-                                            </div>*@
                                     </a>
                                 </li>
                                 <li data-transition='fade' data-slotamount='7' data-masterspeed='1000' data-thumb=''>
                                     <a target="_blank" asp-page="/Product/Detail" asp-route-id="6">
                                         <img class="img-slideshow" src='~/images/client/layout/slider/banerlocmonile5.jpg' data-bgposition='left top' data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner" />
-                                        @*<div class="caption-inner left">
-                                                <div class='tp-caption LargeTitle sft  tp-resizeme' data-x='50' data-y='110' data-endspeed='500' data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3; white-space:nowrap;'>Smooth, Rich & Loud Audio</div>
-                                                <div class='tp-caption ExtraLargeTitle sft  tp-resizeme' data-x='50' data-y='160' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'>headphone</div>
-                                                <div class='tp-caption' data-x='72' data-y='230' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'>World's Most advanced Wireless earbuds.</div>
-                                                <div class='tp-caption sfb  tp-resizeme ' data-x='72' data-y='280' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4; white-space:nowrap;'><a href='#' class="buy-btn">EXPLORE NOW</a> </div>
-                                            </div>*@
                                     </a>
                                 </li>
                                 <li data-transition='fade' data-slotamount='7' data-masterspeed='1000' data-thumb=''>
                                     <a target="_blank" asp-page="/Product/Detail" asp-route-id="26">
                                         <img class="img-slideshow" src='~/images/client/layout/slider/banerlocmonile1.jpg' data-bgposition='left top' data-bgfit='cover' data-bgrepeat='no-repeat' alt="banner" />
-                                        @*<div class="caption-inner left">
-                                                <div class='tp-caption LargeTitle sft  tp-resizeme' data-x='350' data-y='100' data-endspeed='500' data-speed='500' data-start='1300' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:3; white-space:nowrap;'>It’s Time To Look</div>
-                                                <div class='tp-caption ExtraLargeTitle sft  tp-resizeme' data-x='350' data-y='140' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'>The New</div>
-                                                <div class='tp-caption ExtraLargeTitle sft  tp-resizeme' data-x='350' data-y='185' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'>Standard</div>
-                                                <div class='tp-caption' data-x='375' data-y='245' data-endspeed='500' data-speed='500' data-start='1100' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:2; white-space:nowrap;'>The New Standard. under favorable smartwatches</div>
-                                                <div class='tp-caption sfb  tp-resizeme ' data-x='375' data-y='290' data-endspeed='500' data-speed='500' data-start='1500' data-easing='Linear.easeNone' data-splitin='none' data-splitout='none' data-elementdelay='0.1' data-endelementdelay='0.1' style='z-index:4; white-space:nowrap;'><a href='#' class="buy-btn">Start Buying </a> </div>
-                                            </div>*@
                                     </a>
                                 </li>
                             </ul>
@@ -171,7 +79,7 @@
                     <div class="text-des">
                         <div class="icon-wrapper"><i class="fa fa-rotate-right icon-service"></i></div>
                         <div class="service-wrapper">
-                            <h3>Bảo mật thanh toán</h3>
+                            <h3>@localizer["Bảo mật thanh toán"]</h3>
                             <p>Paypal</p>
                         </div>
                     </div>
@@ -262,7 +170,6 @@
                         <div id="computer-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
                                 @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Phones)
-
                             </div>
                         </div>
                     </div>
@@ -275,7 +182,6 @@
                             <div class="slider-items slider-width-col4 ">
 
                                 @await Html.PartialAsync("~/Pages/Shared/_HotProductsSlidePartial.cshtml", Model.Laptops)
-
                             </div>
                         </div>
                     </div>
@@ -327,7 +233,6 @@
                         <div id="computer-slider" class="product-flexslider hidden-buttons">
                             <div class="slider-items slider-width-col4">
                                 @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Phones)
-
                             </div>
                         </div>
                     </div>
@@ -340,7 +245,6 @@
                             <div class="slider-items slider-width-col4 ">
 
                                 @await Html.PartialAsync("~/Pages/Shared/_NewProductsSlidePartial.cshtml", Model.Laptops)
-
                             </div>
                         </div>
                     </div>
@@ -373,7 +277,6 @@
     </div>
 </div>
 @*//Slide sản phẩm mới *@
-
 
 @*<div class="container">
         <div class="row">
@@ -483,11 +386,9 @@
                                     </ul>
                                     <ul class="products-grid">
                                         @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Phones)
-
                                     </ul>
                                     <ul class="products-grid">
                                         @await Html.PartialAsync("~/Pages/Shared/_ProductsTopRateAndNewPartial.cshtml", Model.Accessories)
-
                                     </ul>
                                 </div>
                             </div>
@@ -501,7 +402,8 @@
 <!-- brand hot -->
 <h3><span class="col-md-12" style="text-align:center;">Sản phẩm đến từ các thương hiệu hàng đầu</span></h3>
 <div class="title-divider"><span></span></div>
-<br /><br />
+<br />
+<br />
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12">
@@ -530,55 +432,5 @@
 
 <br />
 <div class="title-divider"><span></span></div>
-<br /><br />
-
-<!-- BANNER-AREA-END -->
-@*<div class="footer-newsletter">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3"></div>
-                <div class="col-sm-6 col-xs-12 testimonials">
-                    <div class="page-header">
-                        <h2>Giới thiệu về chúng tôi</h2>
-                    </div>
-                    <div class="slider-items-products">
-                        <div id="testimonials-slider" class="product-flexslider hidden-buttons home-testimonials">
-                            <div class="slider-items slider-width-col4 ">
-                                <div class="holder">
-                                    <blockquote>
-                                        © 2019 - Công ty Cổ Phần Thương mại điện tử TimiShop - 1 Võ Văn Ngân, phường Linh Chiểu, quận Thủ Đức, TP. Hồ Chí Minh
-                                    </blockquote>
-                                    <div class="thumb"> <img src="~/images/shared/avatar/7c154ad0-fa1b-4774-65df-08d705ceb658.jpg" alt="testimonials img"> </div>
-                                    <div class="holder-info"> <strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Công ty</strong></div>
-                                </div>
-                                <div class="holder">
-                                    <blockquote>
-                                        © 2019 - Công ty Cổ Phần Thương mại điện tử TimiShop - 1 Võ Văn Ngân, phường Linh Chiểu, quận Thủ Đức, TP. Hồ Chí Minh
-
-                                    </blockquote>
-                                    <div class="thumb"> <img src="~/images/shared/avatar/e3ad53c6-5be2-46db-2a7d-08d6c5692d9b.PNG" alt="testimonials img"> </div>
-                                    <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Công ty</strong> </div>
-                                </div>
-                                <div class="holder">
-                                    <blockquote>
-                                        MST:0105815899 (Số giấy chứng nhận đăng ký kinh doanh thương nhân) - Ngày cấp lần đầu: 12/03/2018
-                                        Đăng ký thay đổi lần 2: 04/4/2019 - Nơi cấp: Sở kế hoạch và đầu tư thành phố Hồ Chí Minh
-                                    </blockquote>
-                                    <div class="thumb"> <img src="~/images/shared/avatar/7c154ad0-fa1b-4774-65df-08d705ceb658.jpg" alt="testimonials img"> </div>
-                                    <div class="holder-info"><strong class="name">T.V.Cong</strong> <strong class="designation">CEO, Nhà báo</strong></div>
-                                </div>
-                                <div class="holder">
-                                    <blockquote>
-                                        © 2019 - Công ty Cổ Phần Thương mại điện tử TimiShop - 1 Võ Văn Ngân, phường Linh Chiểu, quận Thủ Đức, TP. Hồ Chí Minh
-                                    </blockquote>
-                                    <div class="thumb"> <img src="~/images/shared/avatar/e3ad53c6-5be2-46db-2a7d-08d6c5692d9b.PNG" alt="testimonials img"> </div>
-                                    <div class="holder-info"> <strong class="name">H.N.T.Xuan</strong> <strong class="designation">CEO, Nhà văn</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3"></div>
-            </div>
-        </div>
-    </div>*@
+<br />
+<br />

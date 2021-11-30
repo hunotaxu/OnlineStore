@@ -1,4 +1,3 @@
-using System;
 using DAL.Data.Entities;
 using DAL.EF;
 using DAL.Repositories;
@@ -8,14 +7,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OnlineStore.Middleware;
 using OnlineStore.Services;
+using System;
+using System.Globalization;
 using TimiApp.Dapper.Implementation;
 using TimiApp.Dapper.Interfaces;
 using Utilities.Commons;
@@ -114,6 +117,8 @@ namespace OnlineStore
             //        options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
             //        options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
             //    });
+            services.AddLocalization(opts => opts.ResourcesPath = "Resources");
+            services.AddSingleton<CommonLocalizationService>();
             services.AddAuthorization(options =>
             {
                 //options.AddPolicy("EmployeeOnly", policy => policy.RequireClaim("EmployeeNumber"));
@@ -169,7 +174,7 @@ namespace OnlineStore
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 options.LoginPath = "/Identity/Account/Login";
-                // ReturnUrlParameter requires 
+                // ReturnUrlParameter requires
                 //using Microsoft.AspNetCore.Authentication.Cookies;
                 options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
                 options.SlidingExpiration = true;
@@ -179,6 +184,20 @@ namespace OnlineStore
             {
                 option.IterationCount = 12000;
             });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                CultureInfo[] supportedCultures = new[]
+                {
+                    new CultureInfo("vi"),
+                    new CultureInfo("en")
+                };
+                //options.DefaultRequestCulture = new RequestCulture("en-GB");
+                options.DefaultRequestCulture = new RequestCulture("vi-VN");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IShowRoomAddressRepository, ShowRoomAddressRepository>();
@@ -226,13 +245,15 @@ namespace OnlineStore
             //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
             app.UseRouting();
+            RequestLocalizationOptions localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value;
+            app.UseRequestLocalization(localizationOptions);
             app.UseAuthentication();
             app.UseAuthorization();
             ////serve up files from the node_modules folder
             app.UseNodeModules(env.ContentRootPath);
             app.UseCookiePolicy();
             app.UseSession();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

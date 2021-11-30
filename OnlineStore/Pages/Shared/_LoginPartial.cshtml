@@ -1,7 +1,9 @@
 ﻿@using DAL.Data.Entities
 @using DAL.Repositories
+@using OnlineStore.Services
 @using Utilities.Commons
 @using Microsoft.AspNetCore.Identity
+@inject CommonLocalizationService localizer
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserRepository UserRepository
@@ -55,13 +57,13 @@
         }
         else
         {
-            <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
-            <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+            <li><a asp-area="Identity" asp-page="/Account/Register">@localizer.Get("Đăng ký")</a></li>
+            <li><a asp-area="Identity" asp-page="/Account/Login">@localizer.Get("Đăng nhập")</a></li>
         }
     }
     else
     {
-        <li><a asp-area="Identity" asp-page="/Account/Register">Đăng ký</a></li>
-        <li><a asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Register">@localizer.Get("Đăng ký")</a></li>
+        <li><a asp-area="Identity" asp-page="/Account/Login">@localizer.Get("Đăng nhập")</a></li>
     }
 }
