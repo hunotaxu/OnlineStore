@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using DAL.Data.Entities.Base;
+﻿using DAL.Data.Entities.Base;
 using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace DAL.Repositories.Base
 {
@@ -34,50 +34,64 @@ namespace DAL.Repositories.Base
         //}
 
         public T Find(int? id) => Table.Find(id);
-        public T Find(Expression<Func<T, bool>> where) 
+
+        public T Find(Expression<Func<T, bool>> where)
             => Table.FirstOrDefault(where);
-        public T Find<TIncludeField>(Expression<Func<T, bool>> where,Expression<Func<T,ICollection<TIncludeField>>> include ) 
+
+        public T Find<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, ICollection<TIncludeField>>> include)
             => Table.Where(where).Include(include).FirstOrDefault();
-        public T Find<TIncludeField>(Expression<Func<T, bool>> where,Expression<Func<T,TIncludeField>> include ) 
+
+        public T Find<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, TIncludeField>> include)
             => Table.Where(where).Include(include).FirstOrDefault();
 
         public virtual IEnumerable<T> GetAll() => Table.Where(x => x.IsDeleted == false);
+
         public IEnumerable<T> GetAll<TIncludeField>(Expression<Func<T, ICollection<TIncludeField>>> include)
             => Table.Include(include);
+
         public IEnumerable<T> GetAll<TIncludeField>(Expression<Func<T, TIncludeField>> include)
             => Table.Include(include);
+
         public IEnumerable<T> GetAll<TSortField>(Expression<Func<T, TSortField>> orderBy, bool ascending)
             => ascending ? Table.OrderBy(orderBy) : Table.OrderByDescending(orderBy);
+
         public IEnumerable<T> GetAll<TIncludeField, TSortField>(
-            Expression<Func<T,ICollection<TIncludeField>>> include, Expression<Func<T, TSortField>> orderBy,bool ascending) 
+            Expression<Func<T, ICollection<TIncludeField>>> include, Expression<Func<T, TSortField>> orderBy, bool ascending)
             => ascending ? Table.Include(include).OrderBy(orderBy) : Table.Include(include).OrderByDescending(orderBy);
+
         public IEnumerable<T> GetAll<TIncludeField, TSortField>(
-            Expression<Func<T,TIncludeField>> include, Expression<Func<T, TSortField>> orderBy,bool ascending) 
+            Expression<Func<T, TIncludeField>> include, Expression<Func<T, TSortField>> orderBy, bool ascending)
             => ascending ? Table.Include(include).OrderBy(orderBy) : Table.Include(include).OrderByDescending(orderBy);
 
         public IEnumerable<T> GetSome(Expression<Func<T, bool>> where) => Table.Where(where);
-        public IEnumerable<T> GetSome<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, ICollection<TIncludeField>>> include) 
+
+        public IEnumerable<T> GetSome<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, ICollection<TIncludeField>>> include)
             => Table.Where(where).Include(include);
-        public IEnumerable<T> GetSome<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, TIncludeField>> include) 
+
+        public IEnumerable<T> GetSome<TIncludeField>(Expression<Func<T, bool>> where, Expression<Func<T, TIncludeField>> include)
             => Table.Where(where).Include(include);
+
         public IEnumerable<T> GetSome<TSortField>(
-            Expression<Func<T, bool>> where, Expression<Func<T, TSortField>> orderBy, bool ascending) 
-            => ascending ? Table.Where(where).OrderBy(orderBy): Table.Where(where).OrderByDescending(orderBy);
+            Expression<Func<T, bool>> where, Expression<Func<T, TSortField>> orderBy, bool ascending)
+            => ascending ? Table.Where(where).OrderBy(orderBy) : Table.Where(where).OrderByDescending(orderBy);
+
         public IEnumerable<T> GetSome<TIncludeField, TSortField>(
             Expression<Func<T, bool>> where, Expression<Func<T, ICollection<TIncludeField>>> include,
-            Expression<Func<T, TSortField>> orderBy, bool ascending) 
-            => ascending ? 
-            Table.Where(where).OrderBy(orderBy).Include(include) : 
+            Expression<Func<T, TSortField>> orderBy, bool ascending)
+            => ascending ?
+            Table.Where(where).OrderBy(orderBy).Include(include) :
             Table.Where(where).OrderByDescending(orderBy).Include(include);
+
         public IEnumerable<T> GetSome<TIncludeField, TSortField>(
             Expression<Func<T, bool>> where, Expression<Func<T, TIncludeField>> include,
-            Expression<Func<T, TSortField>> orderBy, bool ascending) 
-            => ascending ? 
-            Table.Where(where).OrderBy(orderBy).Include(include) : 
+            Expression<Func<T, TSortField>> orderBy, bool ascending)
+            => ascending ?
+            Table.Where(where).OrderBy(orderBy).Include(include) :
             Table.Where(where).OrderByDescending(orderBy).Include(include);
 
         public virtual IEnumerable<T> GetRange(int skip, int take)
             => GetRange(Table, skip, take);
+
         public IEnumerable<T> GetRange(IQueryable<T> query, int skip, int take)
             => query.Skip(skip).Take(take);
 
@@ -86,27 +100,32 @@ namespace DAL.Repositories.Base
             Table.Add(entity);
             return persist ? SaveChanges() : 0;
         }
+
         public virtual int AddRange(IEnumerable<T> entities, bool persist = true)
         {
             Table.AddRange(entities);
             return persist ? SaveChanges() : 0;
         }
+
         public virtual int Update(T entity, bool persist = true)
         {
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
+
         public virtual int UpdateRange(IEnumerable<T> entities, bool persist = true)
         {
             Table.UpdateRange(entities);
             return persist ? SaveChanges() : 0;
         }
+
         public virtual int Delete(T entity, bool persist = true)
         {
             entity.IsDeleted = true;
             Table.Update(entity);
             return persist ? SaveChanges() : 0;
         }
+
         public virtual int DeleteRange(IEnumerable<T> entities, bool persist = true)
         {
             foreach (T entity in entities)
@@ -167,7 +186,7 @@ namespace DAL.Repositories.Base
             }
         }
 
-        bool _disposed;
+        private bool _disposed;
 
         public void Dispose()
         {
@@ -182,12 +201,11 @@ namespace DAL.Repositories.Base
 
             if (disposing)
             {
-                // Free any other managed objects here. 
+                // Free any other managed objects here.
                 //
             }
             Db.Dispose();
             _disposed = true;
         }
-
     }
 }

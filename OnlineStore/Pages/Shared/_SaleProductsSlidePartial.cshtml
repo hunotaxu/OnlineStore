@@ -16,7 +16,7 @@
                 <div class="icon-new-label new-right"><span class="price">-@CommonFunctions.FormatNumber(saleprice, 0)&#8363;</span></div>
                 <div class="product-thumbnail">
                     <div class="pr-img-area img-height-188 zoomindex">
-                        @if (item.ProductImages.Count() != 0)
+                        @if (item.ProductImages?.Any() == true)
                         {
                             bool valid = false;
                             foreach (var _item in item.ProductImages)

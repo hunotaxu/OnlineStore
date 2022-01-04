@@ -2,8 +2,6 @@
 using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 
 namespace DAL.Repositories
 {
@@ -11,9 +9,6 @@ namespace DAL.Repositories
     {
         public AddressRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
-
         }
-       
-
     }
 }

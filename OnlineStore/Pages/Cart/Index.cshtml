@@ -1,4 +1,5 @@
 ﻿@page
+@inject IStringLocalizer<IndexModel> localizer
 @model OnlineStore.Pages.Cart.IndexModel
 @{
     ViewData["Title"] = "Giỏ hàng";
@@ -60,8 +61,7 @@
                                     </tbody>
                                 </table>
                                 <div class="text-center">
-                                    <a class="btn btn-success" id="btnConfirmOrder">Xác nhận giỏ hàng</a>
-                                    @*<button class="btn btn-success" type="submit" hr>Tiến hành đặt hàng</button>*@
+                                    <a class="btn btn-success" id="btnConfirmOrder">@localizer["Tiến hành đặt hàng"]</a>
                                 </div>
                             </div>
                         </div>

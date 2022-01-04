@@ -4,8 +4,10 @@
 @using Microsoft.AspNetCore.Identity
 @using DAL.Data.Enums
 
+@using OnlineStore.Pages.Order
 @using  Utilities.Extensions
 @inject UserManager<ApplicationUser> UserManager
+@inject IStringLocalizer<CheckoutModel> localizer
 @model OnlineStore.Pages.Order.CheckoutModel
 @{
     ViewData["Title"] = "Checkout";
@@ -58,7 +60,7 @@
                 <div class="row" id="select-showroom-receiving">
                     <div class="col-sm-12">
                         <div class="page-title">
-                            <h2>Lựa chọn địa chỉ nhận hàng</h2>
+                            <h2>@localizer["Lựa chọn địa chỉ nhận hàng"]</h2>
                         </div>
                         <div class="block-content" id="user-address">
                             <dl>
@@ -131,12 +133,12 @@
                                             @PaymentType.LocalATM.GetDisplayName()
                                         </label>
                                     </div>*@
-                                <div>
+                                @*<div>
                                     <label for="radio_button_creditcard">
                                         <input type="radio" name='paymentType' id="radio_button_creditcard" data-toggle="collapse" data-target=".collapseOne:not(.in)" value="@((byte)PaymentType.CreditDebitCard)" />
                                         @PaymentType.CreditDebitCard.GetDisplayName()
                                     </label>
-                                </div>
+                                </div>*@
                                 <div class="collapseOne panel-collapse collapse">
                                     <form id="frmPaypalCheckout" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
                                         <input type="hidden" name="cmd" value="_xclick">

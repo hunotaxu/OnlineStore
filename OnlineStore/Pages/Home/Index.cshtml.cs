@@ -37,9 +37,9 @@ namespace OnlineStore.Pages.Home
 
         public void OnGet()
         {
-            foreach (Category item in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 1))
+            foreach (Category category in _categoryRepository.GetSome(x => !x.IsDeleted && x.ParentId == 1))
             {
-                foreach (Item _phone in _itemRepository.GetByCategory(item.Id))
+                foreach (Item _phone in _itemRepository.GetByCategory(category.Id))
                 {
                     Phones.Add(_phone);
                 }

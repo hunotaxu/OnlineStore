@@ -1,32 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DAL.Data.Entities;
-using DAL.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Models.ViewModels.Item;
-using OnlineStore.Models.ViewModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using DAL.Data.Entities;
 using DAL.Data.Enums;
 using DAL.EF;
-using Utilities.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Utilities.Commons;
-using OnlineStore.Services;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging;
+using OnlineStore.Models.ViewModels;
+using OnlineStore.Models.ViewModels.Item;
+using OnlineStore.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Utilities.Commons;
+using Utilities.Extensions;
 
 namespace OnlineStore.Pages.Order
 {
     public class CheckoutModel : PageModel
     {
+        private readonly ILogger<CheckoutModel> _logger;
+        private readonly OnlineStoreDbContext _context;
         private readonly IEmailSender _emailSender;
-        private readonly IItemRepository _itemRepository;
         private readonly IDefaultAddressRepository _defaultAddressRepository;
         private readonly ICartRepository _cartRepository;
-        private readonly IUserRepository _userRepository;
-        private readonly ICartDetailRepository _cartDetailRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IProvinceRepository _provinceRepository;
         private readonly IDistrictRepository _districtRepository;
@@ -37,7 +38,6 @@ namespace OnlineStore.Pages.Order
         public readonly IShowRoomAddressRepository _showRoomAddressRepository;
         public readonly IReceivingTypeRepository _receivingTypeRepository;
         private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
-        protected readonly DbContextOptions<OnlineStoreDbContext> _options;
 
         public CheckoutModel(IReceivingTypeRepository receivingTypeRepository, IShowRoomAddressRepository showRoomAddressRepository, IAddressRepository addressRepository, IWardRepository wardRepository, IDistrictRepository districtRepository, IProvinceRepository provinceRepository, IItemRepository itemRepository, UserManager<ApplicationUser> userManager,
             ICartRepository cartRepository, ICartDetailRepository cartDetailRepository,
@@ -47,17 +47,16 @@ namespace OnlineStore.Pages.Order
             IOrderRepository orderRepository,
             IEmailSender emailSender,
             IRazorViewToStringRenderer razorViewToStringRenderer,
-            DbContextOptions<OnlineStoreDbContext> options)
+            ILogger<CheckoutModel> logger,
+            OnlineStoreDbContext context)
         {
-            _options = options;
+            _logger = logger;
             _emailSender = emailSender;
-            _itemRepository = itemRepository;
             _razorViewToStringRenderer = razorViewToStringRenderer;
             _orderItemRepository = orderItemRepository;
             _orderRepository = orderRepository;
+            _context = context;
             _defaultAddressRepository = defaultAddressRepository;
-            _userRepository = userRepository;
-            _cartDetailRepository = cartDetailRepository;
             _cartRepository = cartRepository;
             _userManager = userManager;
             _provinceRepository = provinceRepository;
@@ -70,18 +69,25 @@ namespace OnlineStore.Pages.Order
 
         [BindProperty]
         public List<ItemCartViewModel> ItemInCarts { get; set; }
+
         [BindProperty]
         public List<UserAddressViewModel> UserAddresses { get; set; }
+
         [BindProperty]
         public UserAddressViewModel DefaultAddress { get; set; }
+
         [BindProperty]
         public List<Province> Provinces { get; set; }
+
         [BindProperty]
         public List<District> Districts { get; set; }
+
         [BindProperty]
         public List<Ward> Wards { get; set; }
+
         [BindProperty]
         public List<ShowRoomAddress> Showrooms { get; set; }
+
         [BindProperty]
         public List<ReceivingType> ReceivingTypes { get; set; }
 
@@ -101,8 +107,8 @@ namespace OnlineStore.Pages.Order
             if (cart != null)
             {
                 ItemInCarts = new List<ItemCartViewModel>();
-                var items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
-                if (items.Count > 0)
+                List<CartDetail> items = cart.CartDetails.Where(cd => cd.IsDeleted == false).ToList();
+                if (items?.Any() == true)
                 {
                     foreach (var item in items)
                     {
@@ -240,7 +246,6 @@ namespace OnlineStore.Pages.Order
 
         public IActionResult OnPostLoadDistrict([FromBody] District model)
         {
-
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -277,7 +282,6 @@ namespace OnlineStore.Pages.Order
 
         public IActionResult OnPostLoadWard([FromBody] Ward model)
         {
-
             if (!ModelState.IsValid)
             {
                 IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
@@ -402,7 +406,7 @@ namespace OnlineStore.Pages.Order
             return new OkObjectResult(ReceivingTypes);
         }
 
-        public async System.Threading.Tasks.Task<IActionResult> OnPostSaveOrderAsync([FromBody] OrderAddressViewModel model)
+        public async Task<IActionResult> OnPostSaveOrderAsync([FromBody] OrderAddressViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -410,167 +414,155 @@ namespace OnlineStore.Pages.Order
                 return new BadRequestObjectResult("Đặt hàng không thành công");
             }
 
-            using (var context = new OnlineStoreDbContext())
+            using IDbContextTransaction transaction = _context.Database.BeginTransaction();
+            try
             {
-                using (var transaction = context.Database.BeginTransaction())
+                var user = _userManager.GetUserAsync(HttpContext.User).Result;
+                if (user == null)
                 {
-                    try
+                    return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
+                }
+
+                var cart = _cartRepository.GetCartByCustomerId(user.Id);
+                if (cart == null)
+                {
+                    return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
+                }
+                cart.IsDeleted = true;
+                _context.Cart.Update(cart);
+                _context.SaveChanges();
+
+                var newAddress = new Address();
+                if (model.Order.ReceivingTypeId == 3)
+                {
+                    newAddress = new Address
                     {
-                        var user = _userManager.GetUserAsync(HttpContext.User).Result;
-                        if (user == null)
-                        {
-                            return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
-                        }
+                        CustomerId = user.Id,
+                        PhoneNumber = model.Address.PhoneNumber,
+                        RecipientName = model.Address.RecipientName,
+                        ShowRoomAddressId = model.Address.ShowRoomAddressId,
+                        DateCreated = DateTime.Now,
+                        DateModified = DateTime.Now
+                    };
+                    _context.Address.Add(newAddress);
+                    _context.SaveChanges();
+                }
+                var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
 
-                        var cart = _cartRepository.GetCartByCustomerId(user.Id);
-                        if (cart == null)
-                        {
-                            return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
-                        }
-                        var newAddress = new Address();
-                        if (model.Order.ReceivingTypeId == 3)
-                        {
-                            newAddress = new Address
-                            {
-                                CustomerId = user.Id,
-                                PhoneNumber = model.Address.PhoneNumber,
-                                RecipientName = model.Address.RecipientName,
-                                ShowRoomAddressId = model.Address.ShowRoomAddressId,
-                                DateCreated = DateTime.Now,
-                                DateModified = DateTime.Now
-                            };
-                            context.Address.Add(newAddress);
-                            context.SaveChanges();
-                        }
-                        var receivingType = _receivingTypeRepository.Find(model.Order.ReceivingTypeId);
+                var newOrder = new DAL.Data.Entities.Order
+                {
+                    DateCreated = DateTime.Now,
+                    DateModified = DateTime.Now,
+                    DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
+                    ShippingFee = model.Order.ShippingFee,
+                    SubTotal = cart.CartDetails.Sum(x => x.Item.Price * x.Quantity),
+                    OrderDate = DateTime.Now,
+                    PaymentType = model.Order.PaymentType,
+                    ReceivingTypeId = model.Order.ReceivingTypeId,
+                    SaleOff = model.Order.SaleOff,
+                    Status = model.Order.Status == OrderStatus.ReadyToDeliver ? OrderStatus.ReadyToDeliver : OrderStatus.Pending,
+                };
 
-                        var newOrder = new DAL.Data.Entities.Order
-                        {
-                            DateCreated = DateTime.Now,
-                            DateModified = DateTime.Now,
-                            DeliveryDate = DateTime.Now.AddDays(receivingType.NumberShipDay),
-                            ShippingFee = model.Order.ShippingFee,
-                            SubTotal = cart.CartDetails.Sum(x => x.Item.Price * x.Quantity),
-                            OrderDate = DateTime.Now,
-                            PaymentType = model.Order.PaymentType,
-                            ReceivingTypeId = model.Order.ReceivingTypeId,
-                            SaleOff = model.Order.SaleOff,
-                            Status = model.Order.Status == OrderStatus.ReadyToDeliver ? OrderStatus.ReadyToDeliver : OrderStatus.Pending,
-                        };
+                if (model.Order.PaymentType == PaymentType.CreditDebitCard)
+                {
+                    Address addressForOnlinePayment = new Address
+                    {
+                        CustomerId = user.Id,
+                        Detail = "",
+                        DateCreated = DateTime.Now,
+                        RecipientName = user.Name ?? "",
+                        PhoneNumber = user.PhoneNumber ?? ""
+                    };
+                    _context.Address.Add(addressForOnlinePayment);
+                    _context.SaveChanges();
+                    newOrder.AddressId = addressForOnlinePayment.Id;
+                }
+                else
+                {
+                    newOrder.AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId;
+                }
 
-                        if (model.Order.PaymentType == PaymentType.CreditDebitCard)
-                        {
-                            Address addressForOnlinePayment = new Address
-                            {
-                                CustomerId = user.Id,
-                                Detail = "",
-                                DateCreated = DateTime.Now,
-                                RecipientName = user.Name ?? "",
-                                PhoneNumber = user.PhoneNumber ?? ""
-                            };
-                            context.Address.Add(addressForOnlinePayment);
-                            context.SaveChanges();
-                            newOrder.AddressId = addressForOnlinePayment.Id;
-                        }
-                        else
-                        {
-                            newOrder.AddressId = model.Order.ReceivingTypeId == 3 ? newAddress.Id : model.Order.AddressId;
-                        }
+                newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
+                _context.Order.Add(newOrder);
+                _context.SaveChanges();
 
-                        newOrder.Total = newOrder.SubTotal + newOrder.ShippingFee - newOrder.SaleOff;
-                        context.Order.Add(newOrder);
-                        context.SaveChanges();
+                List<CartDetail> itemsInCart = cart.CartDetails.Where(cd => !cd.IsDeleted && cd.Item.Quantity > 0).ToList();
+                var cartDetails = cart.CartDetails.Where(cd => !cd.IsDeleted);
+                foreach (CartDetail cartDetail in cartDetails)
+                {
+                    cartDetail.IsDeleted = true;
+                    cartDetail.Quantity = 0;
+                    _context.CartDetail.Update(cartDetail);
+                    _context.SaveChanges();
+                }
+                if (itemsInCart == null || itemsInCart.Count() == 0)
+                {
+                    transaction.Rollback();
+                    return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
+                }
 
+                var itemsCheckout = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
 
-                        var items = cart.CartDetails.Where(cd => cd.IsDeleted == false && cd.Item.Quantity > 0).ToList();
-
-                        if (items == null || items.Count() == 0)
-                        {
-                            transaction.Rollback();
-                            return new BadRequestObjectResult("Tất cả sản phẩm trong giỏ không thể đặt. Vui lòng kiểm tra lại giỏ hàng.");
-                        }
-
-                        var itemsCheckout = TempData.Get<List<ItemCartViewModel>>(CommonConstants.ItemsCheckout);
-
-                        //if (itemsCheckout.Sum(x => x.Quantity) != items.Sum(x => x.Item.Quantity))
-                        //{
-                        //    transaction.Rollback();
-                        //    return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
-                        //}
-
-                        if (itemsCheckout.Sum(x => x.Price) != items.Sum(x => x.Item.Price))
-                        {
-                            transaction.Rollback();
-                            return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về giá từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
-                        }
-                        foreach (var itemInCart in items)
-                        {
-                            if (itemsCheckout.Any(x => x.Quantity > itemInCart.Item.Quantity))
-                            {
-                                transaction.Rollback();
-                                return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
-                            }
-
-                            var item = _itemRepository.Find(itemInCart.ItemId);
-                            if (item.IsDeleted == false)
-                            {
-                                if (itemInCart.Quantity > item.Quantity)
-                                {
-                                    transaction.Rollback();
-                                    return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng");
-                                }
-
-                                var newOrderItem = new OrderItem
-                                {
-                                    OrderId = newOrder.Id,
-                                    Price = item.Price,
-                                    ItemId = itemInCart.ItemId,
-                                    Quantity = itemInCart.Quantity,
-                                    DateCreated = DateTime.Now,
-                                    DateModified = DateTime.Now,
-                                    SaleOff = 0,
-                                    IsDeleted = false,
-                                    Amount = item.Price * itemInCart.Quantity
-                                };
-                                context.OrderItem.Add(newOrderItem);
-                                context.SaveChanges();
-
-                                item.Quantity -= itemInCart.Quantity;
-                                context.Item.Update(item);
-                                context.SaveChanges();
-                            }
-                        }
-                        cart.IsDeleted = true;
-                        context.Cart.Update(cart);
-                        context.SaveChanges();
-
-                        var cartDetails = cart.CartDetails;
-                        foreach (var cartDetail in cartDetails)
-                        {
-                            cartDetail.IsDeleted = true;
-                            cartDetail.Quantity = 0;
-                            context.CartDetail.Update(cartDetail);
-                            context.SaveChanges();
-                        }
-                        transaction.Commit();
-                        var url = Url.Page("/Order/MyOrder", pageHandler: null, values: new { orderId = newOrder.Id }, protocol: Request.Scheme);
-                        var confirmAccountModel = new OrderEmailViewModel
-                        {
-                            Url = url,
-                            LetterDescription = $@"Yêu cầu đặt hàng cho đơn hàng #{newOrder.Id} của bạn đã được tiếp nhận và đang chờ nhà bán hàng xử lý. 
-                                                  Thời gian đặt hàng vào lúc {string.Format("{0:HH:mm}", newOrder.OrderDate)} ngày {string.Format("{0:d/M/yyyy}", newOrder.OrderDate)}. 
-                                                  Chúng tôi sẽ tiếp tục cập nhật với bạn về trạng thái tiếp theo của đơn hàng."
-                        };
-                        string body = await _razorViewToStringRenderer.RenderViewToStringAsync("~/Pages/Emails/ConfirmOrderEmail.cshtml", confirmAccountModel);
-                        await _emailSender.SendEmailAsync(user.Email, "Xác nhận đơn hàng từ TimiShop", body);
-                        return new OkObjectResult(new { orderId = newOrder.Id, email = user.Email });
-                    }
-                    catch (Exception ex)
+                if (itemsCheckout.Sum(x => x.Price) != itemsInCart.Sum(x => x.Item.Price))
+                {
+                    transaction.Rollback();
+                    return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về giá từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                }
+                foreach (var itemInCart in itemsInCart)
+                {
+                    if (itemsCheckout.Any(x => x.Quantity > itemInCart.Item.Quantity))
                     {
                         transaction.Rollback();
-                        return new BadRequestObjectResult("Đặt hàng không thành công");
+                        return new BadRequestObjectResult("Các sản phẩm trong giỏ đã có sự thay đổi về số lượng từ hệ thống. Vui lòng kiểm tra lại giỏ hàng.");
+                    }
+
+                    if (!itemInCart.Item.IsDeleted)
+                    {
+                        if (itemInCart.Quantity > itemInCart.Item.Quantity)
+                        {
+                            transaction.Rollback();
+                            return new BadRequestObjectResult("Sản phẩm không còn đủ số lượng cho đơn hàng. Quá trình đặt hàng thất bại. Vui lòng kiểm tra lại giỏ hàng");
+                        }
+
+                        itemInCart.Item.Quantity -= itemInCart.Quantity;
+                        _context.Item.Update(itemInCart.Item);
+                        _context.SaveChanges();
+
+                        var newOrderItem = new OrderItem
+                        {
+                            OrderId = newOrder.Id,
+                            Price = itemInCart.Item.Price,
+                            ItemId = itemInCart.ItemId,
+                            Quantity = itemInCart.Quantity,
+                            DateCreated = DateTime.Now,
+                            DateModified = DateTime.Now,
+                            SaleOff = 0,
+                            IsDeleted = false,
+                            Amount = itemInCart.Item.Price * itemInCart.Quantity
+                        };
+                        _context.OrderItem.Add(newOrderItem);
+                        _context.SaveChanges();
                     }
                 }
+                transaction.Commit();
+                var url = Url.Page("/Order/MyOrder", pageHandler: null, values: new { orderId = newOrder.Id }, protocol: Request.Scheme);
+                var confirmAccountModel = new OrderEmailViewModel
+                {
+                    Url = url,
+                    LetterDescription = $@"Yêu cầu đặt hàng cho đơn hàng #{newOrder.Id} của bạn đã được tiếp nhận và đang chờ nhà bán hàng xử lý.
+                                                  Thời gian đặt hàng vào lúc {string.Format("{0:HH:mm}", newOrder.OrderDate)} ngày {string.Format("{0:d/M/yyyy}", newOrder.OrderDate)}.
+                                                  Chúng tôi sẽ tiếp tục cập nhật với bạn về trạng thái tiếp theo của đơn hàng."
+                };
+                string body = await _razorViewToStringRenderer.RenderViewToStringAsync("~/Pages/Emails/ConfirmOrderEmail.cshtml", confirmAccountModel);
+                await _emailSender.SendEmailAsync(user.Email, "Xác nhận đơn hàng từ TimiShop", body);
+                return new OkObjectResult(new { orderId = newOrder.Id, email = user.Email });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                transaction.Rollback();
+                _context.Dispose();
+                return new BadRequestObjectResult("Đặt hàng không thành công");
             }
         }
     }

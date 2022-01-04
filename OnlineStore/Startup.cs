@@ -61,10 +61,14 @@ namespace OnlineStore
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")).UseLazyLoadingProxies());
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")).UseLazyLoadingProxies();
+                options.EnableSensitiveDataLogging();
+            });
+
             services.AddIdentity<ApplicationUser, ApplicationRole>().AddRoleManager<RoleManager<ApplicationRole>>()
-                .AddEntityFrameworkStores<OnlineStoreDbContext>()
-                .AddDefaultTokenProviders();
+                    .AddEntityFrameworkStores<OnlineStoreDbContext>()
+                    .AddDefaultTokenProviders();
 
             //services.AddAuthentication().AddFacebook(facebookOptions =>
             //{
@@ -72,25 +76,25 @@ namespace OnlineStore
             //    facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             //});
             services.AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                })
-                .AddSessionStateTempDataProvider()
-                .AddRazorPagesOptions(options =>
-                {
-                    options.Conventions.AddPageRoute("/Home/Index", "");
-                    //options.AllowAreas = true;
-                    options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
-                    options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
-                    options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
-                    options.Conventions.AuthorizeFolder("/Order", "RequireCustomerRole");
-                    options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
-                    options.Conventions.AuthorizeAreaFolder("Admin", "/Product", "RequireProductManagerRole");
-                    options.Conventions.AuthorizeAreaFolder("Admin", "/Category", "RequireProductManagerRole");
-                    options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
-                    options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
-                });
+                    .AddNewtonsoftJson(options =>
+                    {
+                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    })
+                    .AddSessionStateTempDataProvider()
+                    .AddRazorPagesOptions(options =>
+                    {
+                        options.Conventions.AddPageRoute("/Home/Index", "");
+                        //options.AllowAreas = true;
+                        options.Conventions.AuthorizeAreaFolder("Identity", "/Account/Manage");
+                        options.Conventions.AuthorizeAreaPage("Identity", "/Account/Logout");
+                        options.Conventions.AuthorizeFolder("/Cart", "RequireCustomerRole");
+                        options.Conventions.AuthorizeFolder("/Order", "RequireCustomerRole");
+                        options.Conventions.AuthorizeAreaFolder("Admin", "/Home", "RequireAdminRole");
+                        options.Conventions.AuthorizeAreaFolder("Admin", "/Product", "RequireProductManagerRole");
+                        options.Conventions.AuthorizeAreaFolder("Admin", "/Category", "RequireProductManagerRole");
+                        options.Conventions.AuthorizeAreaFolder("Admin", "/Order", "RequireOrderManagerRole");
+                        options.Conventions.AuthorizeAreaFolder("Admin", "/Reports", "RequireStoreOwnerRole");
+                    });
 
             //services.AddAuthentication().AddFacebook(facebookOptions =>
             //{
@@ -126,11 +130,13 @@ namespace OnlineStore
                 options.AddPolicy("RequireCustomerRole",
                     policy => policy.RequireRole(CommonConstants.CustomerRoleName));
                 options.AddPolicy("RequireProductManagerRole",
-                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
+                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName
+    }));
                 options.AddPolicy("RequireStoreOwnerRole",
                     policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
                 options.AddPolicy("RequireOrderManagerRole",
-                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.OrderManagerRoleName }));
+                    policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.OrderManagerRoleName
+}));
                 options.AddPolicy("RequireAdminRole",
                     policy => policy.RequireRole(new string[] { CommonConstants.OrderManagerRoleName, CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName }));
             });
@@ -164,7 +170,7 @@ namespace OnlineStore
 
                 // Default User settings.
                 options.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
             });
             services.ConfigureApplicationCookie(options =>
@@ -204,7 +210,6 @@ namespace OnlineStore
             services.AddScoped<IReceivingTypeRepository, ReceivingTypeRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IEventRepository, EventRepository>();
-            services.AddScoped<IItemRepository, ItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProvinceRepository, ProvinceRepository>();

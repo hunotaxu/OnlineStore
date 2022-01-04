@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <!--<TargetFramework>netcoreapp2.1</TargetFramework>-->
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>7b9b8e7b-efd9-441e-8795-192e6f71e9d9</UserSecretsId>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -38,7 +37,6 @@
     <Content Remove="wwwroot\images\logo.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="ckeditor-full" Version="4.13.0" />
     <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />

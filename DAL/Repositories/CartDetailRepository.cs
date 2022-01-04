@@ -1,11 +1,11 @@
-﻿using DAL.EF;
+﻿using DAL.Data.Entities;
+using DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using DAL.Data.Entities;
 
 namespace DAL.Repositories
 {
@@ -16,8 +16,8 @@ namespace DAL.Repositories
 
         public CartDetailRepository()
         {
-
         }
+
         public CartDetailRepository(DbContextOptions<OnlineStoreDbContext> options)
         {
             Db = new OnlineStoreDbContext(options);
@@ -64,6 +64,7 @@ namespace DAL.Repositories
             //Table.Attach(cartDetail).State = EntityState.IsDeleted;
             return persist ? SaveChanges() : 0;
         }
+
         public void DeleteRangeWithoutSave(IEnumerable<CartDetail> entities)
         {
             foreach (CartDetail cartDetail in entities)
@@ -75,6 +76,7 @@ namespace DAL.Repositories
             //Table.RemoveRange(entities);
             //return persist ? SaveChanges() : 0;
         }
+
         public int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true)
         {
             foreach (CartDetail cartDetail in entities)

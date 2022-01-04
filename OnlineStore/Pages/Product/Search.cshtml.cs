@@ -22,6 +22,7 @@ namespace OnlineStore.Pages.Product
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Item, ItemViewModel>();
+                cfg.CreateMap<PagedResult<Item>, PagedResult<ItemViewModel>>();
                 _ = cfg.CreateMap<Category, CategoryViewModel>();
             });
             _itemRepository = itemRepository;
@@ -29,7 +30,7 @@ namespace OnlineStore.Pages.Product
 
         public void OnGet()
         {
-            
+
         }
 
         public void OnGetCategory(int categoryId)
@@ -39,10 +40,10 @@ namespace OnlineStore.Pages.Product
 
         public IActionResult OnGetAllPaging()
         {
-            var model = _itemRepository.GetAllPaging(SearchProductViewModel.MaxPrice, SearchProductViewModel.MinPrice,
+            PagedResult<Item> model = _itemRepository.GetAllPaging(SearchProductViewModel.MaxPrice, SearchProductViewModel.MinPrice,
                 SearchProductViewModel.CategoryId, SearchProductViewModel.Rating, SearchProductViewModel.Sort, SearchProductViewModel.SearchString,
                 SearchProductViewModel.Brand, SearchProductViewModel.PageIndex, SearchProductViewModel.PageSize);
-            var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
+            PagedResult<ItemViewModel> itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);
         }
     }

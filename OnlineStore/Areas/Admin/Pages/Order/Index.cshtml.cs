@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using AutoMapper;
+using DAL.Data.Entities;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using Utilities.DTOs;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using OnlineStore.Models.ViewModels;
-using DAL.Data.Entities;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Utilities.DTOs;
 
 namespace OnlineStore.Pages.Admin.Orders
 {
@@ -32,6 +31,7 @@ namespace OnlineStore.Pages.Admin.Orders
 
         [BindProperty]
         public DAL.Data.Entities.Order Order { get; set; }
+
         [BindProperty]
         public IEnumerable<ReceivingType> ReceivingTypes { get; set; }
 

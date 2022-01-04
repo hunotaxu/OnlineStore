@@ -1,8 +1,8 @@
-﻿using System;
-using DAL.Data.Entities;
+﻿using DAL.Data.Entities;
 using DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DAL.EF
 {
@@ -18,7 +18,6 @@ namespace DAL.EF
         public OnlineStoreDbContext(DbContextOptions<OnlineStoreDbContext> options)
             : base(options)
         {
-
         }
 
         public virtual DbSet<Address> Address { get; set; }
@@ -46,7 +45,7 @@ namespace DAL.EF
 #pragma warning disable 1030
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
 #pragma warning restore 1030
-                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-2PB4PNA\\SQLEXPRESS;Database=OnlineStoreDB;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=DESKTOP-VN7T2R2;Database=OnlineStoreDB;User Id=sa;password=123456;Trusted_Connection=False;MultipleActiveResultSets=true");
             }
         }
 
