@@ -10,7 +10,6 @@ namespace OnlineStore.Areas.Admin.ViewComponents
 {
     public class DeliveryInfoViewComponent : ViewComponent
     {
-        private readonly MapperConfiguration _mapperConfiguration;
         private readonly IOrderRepository _orderRepository;
         private readonly IAddressRepository _addressRepository;
         //private readonly IUserAddressRepository _userAddressRepository;
@@ -18,9 +17,7 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         public DeliveryInfoViewComponent(IOrderRepository orderRepository, IAddressRepository addressRepository)
         {
             _orderRepository = orderRepository;
-            //_userAddressRepository = userAddressRepository;
             _addressRepository = addressRepository;
-            _mapperConfiguration = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderDeliveryInfoViewModel>());
         }
 
         public Task<IViewComponentResult> InvokeAsync(int orderId)
@@ -38,7 +35,6 @@ namespace OnlineStore.Areas.Admin.ViewComponents
                 PaymentType = order.PaymentType,
                 Status = order.Status,
                 DeliveryDate = order.DeliveryDate ?? order.OrderDate,
-                //ShippingFee = double.Parse(order.ShippingFee.ToString()).ToString("#,###", cul.NumberFormat)
                 ShippingFee = CommonFunctions.FormatPrice(order.ShippingFee.Value.ToString())
             };
             var address = order.Address;

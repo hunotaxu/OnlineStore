@@ -13,19 +13,14 @@ namespace OnlineStore.Pages.Product
     public class SearchModel : PageModel
     {
         private readonly IItemRepository _itemRepository;
-        private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IMapper _mapper;
         public string SearchString { get; set; }
         [BindProperty(SupportsGet = true)]
         public SearchProductViewModel SearchProductViewModel { get; set; }
-        public SearchModel(IItemRepository itemRepository)
+        public SearchModel(IItemRepository itemRepository, IMapper mapper)
         {
-            _mapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Item, ItemViewModel>();
-                cfg.CreateMap<PagedResult<Item>, PagedResult<ItemViewModel>>();
-                _ = cfg.CreateMap<Category, CategoryViewModel>();
-            });
             _itemRepository = itemRepository;
+            _mapper = mapper;
         }
 
         public void OnGet()
@@ -43,7 +38,7 @@ namespace OnlineStore.Pages.Product
             PagedResult<Item> model = _itemRepository.GetAllPaging(SearchProductViewModel.MaxPrice, SearchProductViewModel.MinPrice,
                 SearchProductViewModel.CategoryId, SearchProductViewModel.Rating, SearchProductViewModel.Sort, SearchProductViewModel.SearchString,
                 SearchProductViewModel.Brand, SearchProductViewModel.PageIndex, SearchProductViewModel.PageSize);
-            PagedResult<ItemViewModel> itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
+            PagedResult<ItemViewModel> itemsPagination = _mapper.Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);
         }
     }

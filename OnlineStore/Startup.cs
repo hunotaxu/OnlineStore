@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -19,6 +20,7 @@ using OnlineStore.Middleware;
 using OnlineStore.Services;
 using System;
 using System.Globalization;
+using System.IO;
 using TimiApp.Dapper.Implementation;
 using TimiApp.Dapper.Interfaces;
 using Utilities.Commons;
@@ -38,6 +40,7 @@ namespace OnlineStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddAutoMapper(typeof(Startup));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,7 +65,7 @@ namespace OnlineStore
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("OnlineStoreContextConnection")).UseLazyLoadingProxies();
+                options.UseSqlServer(Configuration.GetConnectionString("xuhustoredb")).UseLazyLoadingProxies();
                 options.EnableSensitiveDataLogging();
             });
 
@@ -131,7 +134,7 @@ namespace OnlineStore
                     policy => policy.RequireRole(CommonConstants.CustomerRoleName));
                 options.AddPolicy("RequireProductManagerRole",
                     policy => policy.RequireRole(new string[] { CommonConstants.StoreOwnerRoleName, CommonConstants.ProductManagerRoleName
-    }));
+}));
                 options.AddPolicy("RequireStoreOwnerRole",
                     policy => policy.RequireRole(CommonConstants.StoreOwnerRoleName));
                 options.AddPolicy("RequireOrderManagerRole",
@@ -232,6 +235,7 @@ namespace OnlineStore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [Obsolete]
         public void Configure(IApplicationBuilder app,
                               IHostingEnvironment env,
                               ILoggerFactory loggerFactory)
@@ -247,6 +251,14 @@ namespace OnlineStore
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseNodeModules();
+            //app.UseFileServer(new FileServerOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"node_modules")),
+            //    RequestPath = new PathString("/node_modules"),
+            //    EnableDirectoryBrowsing = true
+            //});
+
             //app.UseRewriter(new RewriteOptions().AddRedirectToHttpsPermanent());
             app.UseStaticFiles();
             app.UseRouting();

@@ -30,8 +30,8 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         private readonly IGoodsReceiptDetailRepository _goodsReceiptDetailRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly ICommentRepository _commentRepository;
-        private readonly MapperConfiguration _mapperConfiguration;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IMapper _mapper;
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(IHostingEnvironment hostingEnvironment, ILogger<IndexModel> logger,
@@ -40,9 +40,11 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                           ICommentRepository commentRepository,
                           IGoodsReceiptDetailRepository goodsReceiptDetailRepository,
                           ICartDetailRepository cartDetailRepository,
-                          IOrderItemRepository orderItemRepository)
+                          IOrderItemRepository orderItemRepository,
+                          IMapper mapper)
         {
             _logger = logger;
+            _mapper = mapper;
             _hostingEnvironment = hostingEnvironment;
             _itemRepository = itemRepository;
             _cartDetailRepository = cartDetailRepository;
@@ -51,11 +53,6 @@ namespace OnlineStore.Areas.Admin.Pages.Product
             _goodsReceiptDetailRepository = goodsReceiptDetailRepository;
             _categoryRepository = categoryRepository;
             _productImagesRepository = productImagesRepository;
-            _mapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<Item, ItemViewModel>();
-                _ = cfg.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
-            });
         }
 
         public IEnumerable<ItemViewModel> Items { get; set; }
@@ -68,40 +65,39 @@ namespace OnlineStore.Areas.Admin.Pages.Product
         public ActionResult OnGetLoadAttachments(int productId)
         {
             TempData.Remove(CommonConstants.Attachments);
-            var attachmentsList = _productImagesRepository.GetSome(x => x.ItemId == productId && x.IsDeleted == false);
+            IEnumerable<ProductImages> attachmentsList = _productImagesRepository.GetSome(x => x.ItemId == productId && x.IsDeleted == false);
             if (attachmentsList != null)
             {
                 List<ProductImages> list = attachmentsList.ToList();
                 TempData.Set(CommonConstants.Attachments, list);
                 TempData.Keep();
             }
-            return new JsonResult(new { attachmentsList = attachmentsList });
+            return new JsonResult(new { attachmentsList });
         }
 
         public IActionResult OnGetAll()
         {
-            var model = _itemRepository.GetAll(i => i.Category);
-            Items = _mapperConfiguration.CreateMapper().Map<IEnumerable<ItemViewModel>>(model);
+            IEnumerable<Item> model = _itemRepository.GetAll(i => i.Category);
+            Items = _mapper.Map<IEnumerable<ItemViewModel>>(model);
             return new OkObjectResult(Items);
         }
 
         public IActionResult OnGetById(int id)
         {
-            var model = _mapperConfiguration.CreateMapper().Map<ItemViewModel>(_itemRepository.Find(id));
+            ItemViewModel model = _mapper.Map<ItemViewModel>(_itemRepository.Find(id));
             return new OkObjectResult(model);
         }
 
         public IActionResult OnGetAllCategories()
         {
-            var categories = _mapperConfiguration.CreateMapper()
-                .Map<IEnumerable<CategoryViewModel>>(_categoryRepository.GetAll());
+            IEnumerable<CategoryViewModel> categories = _mapper.Map<IEnumerable<CategoryViewModel>>(_categoryRepository.GetAll());
             return new OkObjectResult(categories);
         }
 
         public IActionResult OnGetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
         {
-            var model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
-            var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
+            PagedResult<Item> model = _itemRepository.GetAllPaging(categoryId, keyword, pageIndex, pageSize);
+            PagedResult<ItemViewModel> itemsPagination = _mapper.Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(itemsPagination);
         }
 
@@ -213,7 +209,7 @@ namespace OnlineStore.Areas.Admin.Pages.Product
                     file.CopyTo(fs); // Copy the contents of the uploaded file to the FileStream object
                     fs.Flush(); // clears buffer
                 }
-                if(_itemRepository.ImportExcel(filePath, categoryId))
+                if (_itemRepository.ImportExcel(filePath, categoryId))
                 {
                     return new OkObjectResult(filePath);
                 }

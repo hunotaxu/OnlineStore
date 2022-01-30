@@ -15,7 +15,8 @@ namespace OnlineStore.Areas.Admin.Pages.Category
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IItemRepository _itemRepository;
-        private readonly MapperConfiguration _mapperConfiguration;
+        //private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IMapper _mapper;
         public class InputModel
         {
             public int sourceId { get; set; }
@@ -26,23 +27,25 @@ namespace OnlineStore.Areas.Admin.Pages.Category
         {
             _categoryRepository = categoryRepository;
             _itemRepository = itemRepository;
-            _mapperConfiguration = new MapperConfiguration(config =>
-            {
-                config.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
-                config.CreateMap<CategoryViewModel, DAL.Data.Entities.Category>();
-            });
+            //_mapperConfiguration = new MapperConfiguration(config =>
+            //{
+            //    config.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
+            //    config.CreateMap<CategoryViewModel, DAL.Data.Entities.Category>();
+            //});
         }
 
         public IActionResult OnGetAll()
         {
             var categories = _categoryRepository.GetAll();
-            var model = _mapperConfiguration.CreateMapper().Map<IEnumerable<CategoryViewModel>>(categories);
+            //var model = _mapperConfiguration.CreateMapper().Map<IEnumerable<CategoryViewModel>>(categories);
+            IEnumerable<CategoryViewModel> model = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
             return new OkObjectResult(model);
         }
 
         public IActionResult OnGetById(int id)
         {
-            var model = _mapperConfiguration.CreateMapper().Map<CategoryViewModel>(_categoryRepository.Find(id));
+            //var model = _mapperConfiguration.CreateMapper().Map<CategoryViewModel>(_categoryRepository.Find(id));
+            CategoryViewModel model = _mapper.Map<CategoryViewModel>(_categoryRepository.Find(id));
             return new OkObjectResult(model);
         }
 

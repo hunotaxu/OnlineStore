@@ -3,14 +3,6 @@
 @inject CommonLocalizationService localizer
 
 <div>
-    @*<form id="culture-switcher">
-        <select name="culture" id="culture-options">
-        @foreach (var culture in Model.SupportedCultures)
-        {
-        <option value="@culture.Name" selected="@(Model.CurrentUICulture.Name == culture.Name)">@culture.DisplayName</option>
-        }
-        </select>
-        </form>*@
     <form id="culture-switcher">
         <div class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">@localizer.Get("Thay đổi ngôn ngữ")</a>

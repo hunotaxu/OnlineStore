@@ -11,7 +11,6 @@ using OnlineStore.Services;
 using Microsoft.Extensions.Logging;
 using OnlineStore.Models.ViewModels;
 using Microsoft.AspNetCore.Identity.UI.Services;
-//using Core;
 
 namespace OnlineStore.Pages.Admin.Orders
 {
@@ -61,7 +60,7 @@ namespace OnlineStore.Pages.Admin.Orders
                 if (!ModelState.IsValid)
                 {
                     IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
-                    return new BadRequestObjectResult("Đã xãy ra lỗi");
+                    return new BadRequestObjectResult("Đã xảy ra lỗi");
                 }
 
                 if (model.Id == 0)

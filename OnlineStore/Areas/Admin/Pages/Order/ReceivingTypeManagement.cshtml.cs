@@ -28,11 +28,9 @@ namespace OnlineStore.Areas.Admin.Pages.Order
 
         }
 
-        //public IActionResult OnGetAllPaging(int? categoryId, string keyword, int pageIndex, int pageSize)
         public IActionResult OnGetAllPaging()
         {
             var model = _receivingTypeRepository.GetAll();
-            //var itemsPagination = _mapperConfiguration.CreateMapper().Map<PagedResult<ItemViewModel>>(model);
             return new OkObjectResult(model);
         }
 
@@ -62,33 +60,8 @@ namespace OnlineStore.Areas.Admin.Pages.Order
                 receivingType.Value = model.Value;
                 receivingType.NumberShipDay = model.NumberShipDay;
                 receivingType.DateModified = DateTime.Now;
-                //item.Description = model.Description;
-                //item.Price = model.Price;
-                //item.OriginalPrice = model.OriginalPrice;
-                //item.DateModified = DateTime.Now;
                 _receivingTypeRepository.Update(receivingType);
             }
-            //var listImages = _productImagesRepository.GetSome(x => x.ItemId == model.Id);
-            //_productImagesRepository.DeleteRange(listImages);
-            //var listAttachment = TempData.Get<List<ProductImages>>(CommonConstants.Attachments);
-            //if (listAttachment != null && listAttachment.Count > 0)
-            //{
-            //    foreach (var attachment in listAttachment)
-            //    {
-            //        string fileName = SaveAttachment(attachment);
-
-            //        if (!string.IsNullOrEmpty(fileName))
-            //        {
-            //            _productImagesRepository.Add(new ProductImages()
-            //            {
-            //                ItemId = model.Id,
-            //                Name = fileName,
-            //                Path = attachment.Path,
-            //                Contents = attachment.Contents
-            //            });
-            //        }
-            //    }
-            //}
 
             return new OkObjectResult(model);
         }

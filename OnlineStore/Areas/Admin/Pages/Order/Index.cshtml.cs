@@ -14,19 +14,17 @@ namespace OnlineStore.Pages.Admin.Orders
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderItemRepository _orderItemRepository;
         private readonly IReceivingTypeRepository _receivingTypeRepository;
-        private readonly MapperConfiguration _mapperConfiguration;
+        private readonly IMapper _mapper;
 
         public IndexModel(IOrderRepository orderRepository,
             IOrderItemRepository orderItemRepository,
-            IReceivingTypeRepository receivingTypeRepository)
+            IReceivingTypeRepository receivingTypeRepository,
+            IMapper mapper)
         {
             _orderRepository = orderRepository;
+            _mapper = mapper;
             _receivingTypeRepository = receivingTypeRepository;
             _orderItemRepository = orderItemRepository;
-            _mapperConfiguration = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<DAL.Data.Entities.Order, OrderInfoViewModel>();
-            });
         }
 
         [BindProperty]
@@ -43,16 +41,16 @@ namespace OnlineStore.Pages.Admin.Orders
         public IActionResult OnGetAllPaging(byte? receivingTypeId, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
             ReceivingTypes = _receivingTypeRepository.GetAll();
-            var order = _orderRepository.GetAllPaging(receivingTypeId, orderStatus, keyword, pageIndex, pageSize);
-            var orderVM = _mapperConfiguration.CreateMapper().Map<PagedResult<OrderInfoViewModel>>(order);
+            PagedResult<DAL.Data.Entities.Order> order = _orderRepository.GetAllPaging(receivingTypeId, orderStatus, keyword, pageIndex, pageSize);
+            PagedResult<OrderInfoViewModel> orderVM = _mapper.Map<PagedResult<OrderInfoViewModel>>(order);
             return new OkObjectResult(orderVM);
         }
 
         public IActionResult OnPostDelete([FromBody] DAL.Data.Entities.Order model)
         {
-            var order = _orderRepository.Find(model.Id);
+            DAL.Data.Entities.Order order = _orderRepository.Find(model.Id);
             _orderRepository.Delete(order);
-            var lineItem = _orderItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
+            List<OrderItem> lineItem = _orderItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
             _orderItemRepository.DeleteRange(lineItem);
             return new OkResult();
         }

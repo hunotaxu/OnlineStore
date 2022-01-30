@@ -10,18 +10,18 @@ namespace OnlineStore.Areas.ViewComponents
     public class OrderInfoViewComponent : ViewComponent
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly MapperConfiguration _mapper;
+        private readonly IMapper _mapper;
 
-        public OrderInfoViewComponent(IOrderRepository orderRepository)
+        public OrderInfoViewComponent(IOrderRepository orderRepository, IMapper mapper)
         {
             _orderRepository = orderRepository;
-            _mapper = new MapperConfiguration(cfg => cfg.CreateMap<DAL.Data.Entities.Order, OrderInfoViewModel>());
+            _mapper = mapper;
         }
 
         public Task<IViewComponentResult> InvokeAsync(int orderId)
         {
-            var model = _orderRepository.Find(orderId);
-            var vm = _mapper.CreateMapper().Map<OrderInfoViewModel>(model);
+            DAL.Data.Entities.Order model = _orderRepository.Find(orderId);
+            OrderInfoViewModel vm = _mapper.Map<OrderInfoViewModel>(model);
             return Task.FromResult<IViewComponentResult>(View(vm));
         }
     }

@@ -6,16 +6,16 @@
 }
 
 @section Styles{
-    <link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
-    <link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />
+<link href="~/lib/jquery-easyui-1.7.6/themes/bootstrap/easyui.css" rel="stylesheet" />
+<link href="~/lib/jquery-easyui-1.7.6/themes/icon.css" rel="stylesheet" />
 }
 
 @section Scripts{
-    <script src="~/lib/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
-    <script src="~/js/admin/order/index.js"></script>
-    <script>
-        order.init();
-    </script>
+<script src="~/lib/jquery-easyui-1.7.6/jquery.easyui.min.js"></script>
+<script src="~/js/admin/order/index.js"></script>
+<script>
+    order.init();
+</script>
 }
 
 <form method="post">
@@ -37,8 +37,6 @@
                 <select class="form-control" id="ddlOrderStatus" asp-for="Order.Status" asp-items="Html.GetEnumSelectList<DAL.Data.Enums.OrderStatus>()"></select>
             </div>
             <div class="col-md-3 col-sm-12  form-group pull-right">
-                @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="@(new SelectList(Model.ReceivingTypes,"Id","Name"))"></select>*@
-                @*<select class="form-control" id="ddlReceivingType" asp-for="@Model.ReceivingTypes" asp-items="Model.ReceivingTypes"></select>*@
                 <select class="form-control" id="ddlReceivingType">
                     <option value="">Tất cả phương thức nhận hàng</option>
                     @foreach (var item in Model.ReceivingTypes)
@@ -100,10 +98,7 @@
             <td>{{{Status}}}</td>
             <th>
                 <a class="btn btn-sm" data-id="{{Id}}" href="/Admin/Order/Details?id={{Id}}" title="Xem chi tiết"><i class="fa fa-info-circle"></i></a>
-                @*<a class="btn btn-sm" data-id="{{Id}}" title="Xem chi tiết" asp-area="Admin" asp-page="/Order" asp-route-id="{{Id}}"><i class="fa fa-info-circle"></i></a>*@
-                @*<a class="btn btn-sm btn-delete" data-id="{{Id}}" title="Hủy đơn hàng"><i class="fa fa-trash"></i></a>*@
             </th>
         </tr>
     </script>
 </form>
-@*<partial name="_OrderDetailModal" />*@

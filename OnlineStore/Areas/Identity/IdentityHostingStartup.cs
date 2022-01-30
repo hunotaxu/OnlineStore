@@ -15,7 +15,7 @@ namespace OnlineStore.Areas.Identity
             {
                 //services.AddDbContext<OnlineStoreDbContext>(options =>
                 //    options.UseSqlServer(
-                //        context.Configuration.GetConnectionString("OnlineStoreContextConnection")));
+                //        context.Configuration.GetConnectionString("xuhustoredb")));
 
                 //services.AddDefaultIdentity<OnlineStoreUser>()
                 //    .AddEntityFrameworkStores<OnlineStoreDbContext>();
