@@ -19,7 +19,7 @@
     <div class="title_right">
         <div class="col-md-12 col-sm-12  form-group pull-right">
             <a class="btn btn-info" asp-page="./Index">Quay về danh sách đơn hàng</a>
-            <button class="btn btn-default" id="btn-export" data-order-id="@Model.Order.Id" type="button">In thông tin đơn hàng</button>
+            <a class="btn btn-info" asp-page-handler="PdfInvoice" asp-route-orderId="@Model.Order.Id">In thông tin đơn hàng</a>
         </div>
     </div>
 </div>

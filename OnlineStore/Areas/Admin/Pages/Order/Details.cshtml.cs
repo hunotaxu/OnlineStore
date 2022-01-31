@@ -120,38 +120,21 @@ namespace OnlineStore.Pages.Admin.Orders
                 _logger.LogError("Error when send email", ex);
                 return new BadRequestObjectResult("Đã xãy ra lỗi");
             }
-            
+
         }
 
-        public virtual IActionResult OnGetPdfInvoice(int orderId)
+        public FileResult OnGetPdfInvoice(int orderId)
         {
-            //if (!_permissionService.Authorize(StandardPermissionProvider.ManageOrders)) { 
-            //    return AccessDeniedView();
-            //}
-
-            //a vendor should have access only to his products
-            //var vendorId = 0;
-            //if (_workContext.CurrentVendor != null)
-            //{
-            //    vendorId = _workContext.CurrentVendor.Id;
-            //}
-
-            //var order = _orderService.GetOrderById(orderId);
             var order = _orderRepository.Find(orderId);
-            var orders = new List<DAL.Data.Entities.Order>
-            {
-                order
-            };
 
             byte[] bytes;
             using (var stream = new MemoryStream())
             {
-                //_pdfService.PrintOrdersToPdf(stream, orders, _orderSettings.GeneratePdfInvoiceInCustomerLanguage ? 0 : _workContext.WorkingLanguage.Id, vendorId);
-                _pdfService.PrintOrdersToPdf(stream, orders);
+                _pdfService.PrintOrdersToPdf(stream, order);
                 bytes = stream.ToArray();
             }
 
-            return File(bytes, MimeTypes.ApplicationPdf, $"order_{order.Id}_{DateTime.Now.ToString("dd/MM/yyyy")}.pdf");
+            return File(bytes, MimeTypes.ApplicationPdf, $"DonHang_{order.Id}_Ngay_{DateTime.Now:yyyyMMdd}.pdf");
         }
     }
 }

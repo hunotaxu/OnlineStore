@@ -57,26 +57,15 @@ namespace OnlineStore.Services
             return font;
         }
 
-        /// <summary>
-        /// Print orders to PDF
-        /// </summary>
-        /// <param name="stream">Stream</param>
-        /// <param name="orders">Orders</param>
-        /// <param name="languageId">Language identifier; 0 to use a language used when placing an order</param>
-        /// <param name="vendorId">Vendor identifier to limit products; 0 to print all products. If specified, then totals won't be printed</param>
-        public virtual void PrintOrdersToPdf(Stream stream, IList<Order> orders, int languageId = 0, int vendorId = 0)
+        public virtual void PrintOrdersToPdf(Stream stream, Order order, int languageId = 0, int vendorId = 0)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
-
-            if (orders == null)
-                throw new ArgumentNullException(nameof(orders));
 
             var pageSize = PageSize.A4;
 
             if (_pdfSettings.LetterPageSizeEnabled)
             {
-                //pageSize = PageSize.Letter;
                 pageSize = PageSize.LETTER;
             }
 
@@ -92,68 +81,60 @@ namespace OnlineStore.Services
             var attributesFont = GetFont();
             attributesFont.SetStyle(Font.ITALIC);
 
-            var ordCount = orders.Count;
-            var ordNum = 0;
+            //var ordCount = orders.Count;
+            //var ordNum = 0;
 
-            foreach (var order in orders)
-            {
-                //by default _pdfSettings contains settings for the current active store
-                //and we need PdfSettings for the store which was used to place an order
-                //so let's load it based on a store of the current order
-                //var pdfSettingsByStore = _settingService.LoadSetting<PdfSettings>(order.StoreId);
-                //var pdfSettingsByStore = _settingService.LoadSetting<PdfSettings>(0);
+            //by default _pdfSettings contains settings for the current active store
+            //and we need PdfSettings for the store which was used to place an order
+            //so let's load it based on a store of the current order
+            //var pdfSettingsByStore = _settingService.LoadSetting<PdfSettings>(order.StoreId);
+            //var pdfSettingsByStore = _settingService.LoadSetting<PdfSettings>(0);
 
-                //var lang = _languageService.GetLanguageById(languageId == 0 ? order.CustomerLanguageId : languageId);
-                //if (lang == null || !lang.Published)
-                //    lang = _workContext.WorkingLanguage; PrintBillingInfo
+            //var lang = _languageService.GetLanguageById(languageId == 0 ? order.CustomerLanguageId : languageId);
+            //if (lang == null || !lang.Published)
+            //    lang = _workContext.WorkingLanguage; PrintBillingInfo
 
-                //header
-                //PrintHeader(pdfSettingsByStore, lang, order, font, titleFont, doc);
-                //PrintBillingInfo(titleFont, order, font, doc);
-                PrintHeader(order, font, titleFont, doc);
-                PrintBillingInfo(titleFont, order, font, doc);
+            //header
+            //PrintHeader(pdfSettingsByStore, lang, order, font, titleFont, doc);
+            //PrintBillingInfo(titleFont, order, font, doc);
+            PrintHeader(order, font, titleFont, doc);
+            PrintBillingInfo(titleFont, order, font, doc);
 
-                //addresses
-                //PrintAddresses(vendorId, lang, titleFont, order, font, doc);
-                //PrintAddresses(titleFont, order, font, doc);
+            //addresses
+            //PrintAddresses(vendorId, lang, titleFont, order, font, doc);
+            //PrintAddresses(titleFont, order, font, doc);
 
-                //products
-                //PrintProducts(vendorId, lang, titleFont, doc, order, font, attributesFont);
-                PrintProducts(titleFont, doc, order, font, attributesFont);
+            //products
+            //PrintProducts(vendorId, lang, titleFont, doc, order, font, attributesFont);
+            PrintProducts(titleFont, doc, order, font, attributesFont);
 
-                //checkout attributes
-                //PrintCheckoutAttributes(vendorId, order, doc, lang, font);
-                //PrintCheckoutAttributes(vendorId, order, doc, font);
+            //checkout attributes
+            //PrintCheckoutAttributes(vendorId, order, doc, lang, font);
+            //PrintCheckoutAttributes(vendorId, order, doc, font);
 
-                //totals
-                //PrintTotals(vendorId, lang, order, font, titleFont, doc);
-                PrintTotals(order, font, titleFont, doc);
+            //totals
+            //PrintTotals(vendorId, lang, order, font, titleFont, doc);
+            PrintTotals(order, font, titleFont, doc);
 
-                //order notes
-                //PrintOrderNotes(pdfSettingsByStore, order, lang, titleFont, doc, font);
-                //PrintOrderNotes(order, titleFont, doc, font);
+            //order notes
+            //PrintOrderNotes(pdfSettingsByStore, order, lang, titleFont, doc, font);
+            //PrintOrderNotes(order, titleFont, doc, font);
 
-                //footer
-                //PrintFooter(pdfSettingsByStore, pdfWriter, pageSize, lang, font);
-                //PrintFooter(pdfWriter, pageSize, font);
+            //footer
+            //PrintFooter(pdfSettingsByStore, pdfWriter, pageSize, lang, font);
+            //PrintFooter(pdfWriter, pageSize, font);
 
-                ordNum++;
-                if (ordNum < ordCount)
-                {
-                    doc.NewPage();
-                }
-            }
+            //ordNum++;
+            //if (ordNum < ordCount)
+            //{
+            //    doc.NewPage();
+            //}
 
             doc.Close();
         }
 
-        //protected virtual void PrintTotals(int vendorId, Language lang, Order order, Font font, Font titleFont, Document doc)
         protected virtual void PrintTotals(Order order, Font font, Font titleFont, Document doc)
         {
-            //vendors cannot see totals
-            //if (vendorId != 0)
-            //    return;
-
             //subtotal
             var totalsTable = new PdfPTable(1)
             {
@@ -463,13 +444,8 @@ namespace OnlineStore.Services
                 { 6, new[] { 40, 13, 13, 12, 10, 12 } }
             };
 
-            //productsTable.SetWidths(lang.Rtl ? widths[count].Reverse().ToArray() : widths[count]);
             productsTable.SetWidths(widths[count]);
-
-            //product name
-            //var cellProductItem = GetPdfCell("PDFInvoice.ProductName", lang, font);
             var cellProductItem = GetPdfCell("Tên", font);
-            //cellProductItem.BackgroundColor = BaseColor.LightGray;
             cellProductItem.BackgroundColor = BaseColor.LIGHT_GRAY;
             cellProductItem.HorizontalAlignment = Element.ALIGN_CENTER;
             productsTable.AddCell(cellProductItem);
@@ -827,7 +803,7 @@ namespace OnlineStore.Services
             //if (_addressSettings.StreetAddressEnabled)
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address", indent, lang, font, order.BillingAddress.Address1));
             //billingAddress.AddCell(GetParagraph("Địa chỉ: {0}", indent, font, order.Address.Detail));
-            if(order.Address != null)
+            if (order.Address != null)
             {
                 var detail = !string.IsNullOrEmpty(order.Address.Detail) ? $"{order.Address.Detail}, " : "";
                 var ward = !string.IsNullOrEmpty(order.Address.Ward) ? $"{order.Address.Ward}, " : "";
@@ -836,7 +812,7 @@ namespace OnlineStore.Services
                 cellBilling.Phrase.Add(GetParagraph("Địa chỉ: {0}", string.Empty, font, $"{detail}{ward}{district}{province}"));
                 cellBilling.Phrase.Add(new Phrase(Environment.NewLine));
             }
-            
+
             //if (_addressSettings.StreetAddress2Enabled && !string.IsNullOrEmpty(order.BillingAddress.Address2))
             //    billingAddress.AddCell(GetParagraph("PDFInvoice.Address2", indent, lang, font, order.BillingAddress.Address2));
             //if (_addressSettings.CityEnabled || _addressSettings.StateProvinceEnabled ||
