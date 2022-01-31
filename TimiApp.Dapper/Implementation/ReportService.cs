@@ -100,9 +100,8 @@ namespace TimiApp.Dapper.Implementation
                 };
 
                 return paginationSet;
-                //return await sqlConnection.QueryAsync<ProductsHasNotBeenPurchasedViewModel>("ListProductsHasNotBeenPurchased", dynamicParams, commandType: CommandType.StoredProcedure);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -113,10 +112,10 @@ namespace TimiApp.Dapper.Implementation
             using SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("xuhustoredb"));
             await sqlConnection.OpenAsync();
             var dynamicParameters = new DynamicParameters();
-            var now = DateTime.Now;
 
-            var firstDayOfMonth = new DateTime(now.Year, now.Month, 1);
-            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var now = DateTime.Now;
+            var firstDayOfMonth = now.AddDays(-30);
+            var lastDayOfMonth = now;
 
             fromDate = !string.IsNullOrEmpty(fromDate) == true ?
                 DateTime.ParseExact(fromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)
@@ -148,7 +147,7 @@ namespace TimiApp.Dapper.Implementation
                 IEnumerable<MostReceivingMethodViewModel> a = await sqlConnection.QueryAsync<MostReceivingMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
                 return await sqlConnection.QueryAsync<MostReceivingMethodViewModel>("GetBestDeliveryMethod", commandType: CommandType.StoredProcedure);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

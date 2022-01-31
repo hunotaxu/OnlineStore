@@ -16,10 +16,8 @@ namespace OnlineStore.Areas.Admin.Pages.Home
         private readonly IUserRepository _userRepository;
         private readonly IItemRepository _itemRepository;
         private readonly IOrderRepository _orderRepository;
-        private readonly ICategoryRepository _categoryRepository;
-        public IndexModel(IReportService reportService, IOrderRepository orderRepository, IUserRepository userRepository, IItemRepository itemRepository, ICategoryRepository categoryRepository)
+        public IndexModel(IReportService reportService, IOrderRepository orderRepository, IUserRepository userRepository, IItemRepository itemRepository)
         {
-            _categoryRepository = categoryRepository;
             _reportService = reportService;
             _orderRepository = orderRepository;
             _userRepository = userRepository;
@@ -40,7 +38,6 @@ namespace OnlineStore.Areas.Admin.Pages.Home
             NumberOfOrders = _orderRepository.GetSome(i => i.IsDeleted == false).Count();
             var listOrderDelivered = _orderRepository.GetSome(x => x.Status == DAL.Data.Enums.OrderStatus.Delivered).SelectMany(o => o.OrderItems);
             var items = _itemRepository.GetSome(c => listOrderDelivered.Any(x => x.ItemId == c.Id));
-            //var category = _categoryRepository.GetSome(c => c.Item.Id);
             BestSoldCategories = await _reportService.GetBestSellerOfCategory();
             NumberOfDeliveredItem = BestSoldCategories.Sum(x => x.NumberOfDeliverdItems);
             NumberOfOtherDeliveredItem = NumberOfDeliveredItem - BestSoldCategories.Take(3).Sum(x => x.NumberOfDeliverdItems);
@@ -48,18 +45,17 @@ namespace OnlineStore.Areas.Admin.Pages.Home
         public async Task<IActionResult> OnGetCategories()
         {
             BestSoldCategories = await _reportService.GetBestSellerOfCategory();
-            //NumberOfDeliveredItem = BestSoldCategories.Sum(x => x.NumberOfDeliverdItems);
-            //NumberOfOtherDeliveredItem = NumberOfDeliveredItem - BestSoldCategories.Take(3).Sum(x => x.NumberOfDeliverdItems);
             return new OkObjectResult(await _reportService.GetBestSellerOfCategory());
         }
         public async Task<IActionResult> OnGetDeliverMethod()
         {
-            var a = await _reportService.GetTopMostOfCategoryAsync();
-            return new OkObjectResult(await _reportService.GetTopMostOfCategoryAsync());
+            IEnumerable<MostReceivingMethodViewModel> result = await _reportService.GetTopMostOfCategoryAsync();
+            return new OkObjectResult(result);
         }
         public async Task<IActionResult> OnGetRevenue(string fromDate, string toDate)
         {
-            return new OkObjectResult(await _reportService.GetRevenueReportAsync(fromDate, toDate));
+            IEnumerable<RevenueReportViewModel> result = await _reportService.GetRevenueReportAsync(fromDate, toDate);
+            return new OkObjectResult(result);
         }
     }
 }

@@ -62,24 +62,10 @@
             }
         };
 
-        //$('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
         $('#reportrange span').html(moment().subtract(30, 'days').format('DD/MM/YYYY') + ' - ' + moment().format('DD/MM/YYYY'));
         $('#reportrange').daterangepicker(optionSet1, cb);
-        //$('#reportrange').on('show.daterangepicker', function () {
-        //    console.log("show event fired");
-        //});
-        //$('#reportrange').on('hide.daterangepicker', function () {
-        //    console.log("hide event fired");
-        //});
-        //$('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-        //    //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-        //    //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
-        //    loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
-        //});
         $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
-            console.log("cancel event fired");
             $("#reportrange span").html('');
-            //$('#reportrange').data('daterangepicker').remove();
         });
         $('#options1').click(function () {
             $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
@@ -91,13 +77,6 @@
             $('#reportrange').data('daterangepicker').remove();
         });
     },
-    //applyDateRangePicker: function () {
-    //    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-    //        //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-    //        //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
-    //        loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
-    //    });
-    //},
 
     notify: function (message, type) {
         $.notify(message, {

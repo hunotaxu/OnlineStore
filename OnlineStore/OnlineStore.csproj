@@ -405,7 +405,7 @@
     <None Include="wwwroot\images\client\ProductImages\vaio_2.png" />
     <None Include="wwwroot\images\client\ProductImages\vaio_3.png" />
     <None Include="wwwroot\images\client\ProductImages\vaio_4.png" />
-    <None Include="wwwroot\js\shared\moment.min.js" />
+    <None Include="wwwroot\lib\moment.min.js" />
     <None Include="wwwroot\lib\jquery-easyui-1.7.6\easyloader.js" />
     <None Include="wwwroot\lib\jquery-easyui-1.7.6\jquery.easyui.min.js" />
     <None Include="wwwroot\lib\jquery-easyui-1.7.6\jquery.easyui.mobile.js" />

@@ -299,14 +299,8 @@
                 mode: "time",
                 minTickSize: [1, "day"],
                 timeformat: "%d/%m/%y",
-                //min: chart_plot_02_data[0][0],
-                //max: chart_plot_02_data[20][0]
-                //min: data[0] !== undefined ? new Date(data[0].fromDate).getTime() : "",
-                //min: $('#reportrange').data('daterangepicker').startDate.format("DD/MM/YY"),
                 min: $('#reportrange').data('daterangepicker').startDate,
                 max: $('#reportrange').data('daterangepicker').endDate
-                //min: new Date(fromDate).getTime(),
-                //max: new Date(toDate).getTime()
             }
         };
         if ($("#chart_plot_02").length) {
@@ -322,105 +316,15 @@
                     points: {
                         fillColor: "#fff"
                     }
-                }
-                    //{
-                    //    label: "Lợi nhuận",
-                    //    data: arrProfit,
-                    //    lines: {
-                    //        fillColor: "rgba(140, 232, 289, 0.12)"
-                    //    },
-                    //    points: {
-                    //        fillColor: "#fff"
-                    //    }
-                    //}
-                ], chart_plot_02_settings);
+                }], chart_plot_02_settings);
         }
     }
 
     var applyDateRange = function () {
         $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-            //console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-            //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
             loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
         });
     };
-
-    //function initDateRangePicker() {
-    //    if (typeof ($.fn.daterangepicker) === 'undefined') { return; }
-    //    console.log('init_daterangepicker');
-
-    //    var cb = function (start, end, label) {
-    //        console.log(start.toISOString(), end.toISOString(), label);
-    //        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-    //    };
-
-    //    var optionSet1 = {
-    //        startDate: moment().subtract(29, 'days'), // ngày hiện tại trừ cho 29 ngày
-    //        endDate: moment(), // ngày hiện tại
-    //        minDate: '01/01/2012',
-    //        //maxDate: moment().format('MM/DD/YYYY'),
-    //        maxDate: moment().format('DD/MM/YYYY'),
-    //        dateLimit: {
-    //            days: 60
-    //        },
-    //        showDropdowns: true,
-    //        showWeekNumbers: true,
-    //        timePicker: false,
-    //        timePickerIncrement: 1,
-    //        timePicker12Hour: true,
-    //        ranges: {
-    //            'Hôm nay': [moment(), moment()],
-    //            'Ngày hôm qua': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    //            '7 ngày qua': [moment().subtract(6, 'days'), moment()],
-    //            '30 ngày qua': [moment().subtract(29, 'days'), moment()],
-    //            'Tháng này': [moment().startOf('month'), moment().endOf('month')],
-    //            'Tháng trước': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    //        },
-    //        opens: 'left',
-    //        buttonClasses: ['btn btn-default'],
-    //        applyClass: 'btn-small btn-primary',
-    //        cancelClass: 'btn-small',
-    //        //format: 'MM/DD/YYYY',
-    //        format: 'DD/MM/YYYY',
-    //        separator: ' to ',
-    //        locale: {
-    //            applyLabel: 'Submit',
-    //            cancelLabel: 'Clear',
-    //            fromLabel: 'From',
-    //            toLabel: 'To',
-    //            customRangeLabel: 'Custom',
-    //            daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-    //            monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-    //            firstDay: 1
-    //        }
-    //    };
-
-    //    $('#reportrange span').html(moment().subtract(29, 'days').format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
-    //    $('#reportrange').daterangepicker(optionSet1, cb);
-    //    $('#reportrange').on('show.daterangepicker', function () {
-    //        console.log("show event fired");
-    //    });
-    //    $('#reportrange').on('hide.daterangepicker', function () {
-    //        console.log("hide event fired");
-    //    });
-    //    $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-    //        console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-    //        //loadData(picker.startDate.format("MM/DD/YYYY"), picker.endDate.format('MM/DD/YYYY'));
-    //        loadData(picker.startDate.format("DD/MM/YYYY"), picker.endDate.format('DD/MM/YYYY'));
-    //    });
-    //    $('#reportrange').on('cancel.daterangepicker', function (ev, picker) {
-    //        console.log("cancel event fired");
-    //    });
-    //    $('#options1').click(function () {
-    //        $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
-    //    });
-    //    $('#options2').click(function () {
-    //        $('#reportrange').data('daterangepicker').setOptions(optionSet2, cb);
-    //    });
-    //    $('#destroy').click(function () {
-    //        $('#reportrange').data('daterangepicker').remove();
-    //    });
-    //}
 
     return {
         init
