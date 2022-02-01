@@ -65,7 +65,7 @@ namespace TimiApp.Dapper.Implementation
 
                 return paginationSet;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
                 throw;
             }

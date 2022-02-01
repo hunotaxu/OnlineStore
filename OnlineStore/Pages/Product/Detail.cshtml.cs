@@ -32,7 +32,7 @@ namespace OnlineStore.Pages.Product
         public int ItemId;
         public double _countComment = 0;
         public int _countItemCart = 0;
-        public bool isordered = false;
+        public bool isOrdered = false;
         public Comment Reviewed;
         public DetailModel(IProductImagesRepository productImagesRepository, IOrderItemRepository orderItemRepository, IAddressRepository addressRepository, IOrderRepository orderRepository, UserManager<ApplicationUser> userManager, IItemRepository itemRepository, ICommentRepository commentRepository, IUserRepository userRepository)
         {
@@ -53,7 +53,6 @@ namespace OnlineStore.Pages.Product
 
             if (id == null)
             {
-                //return BadRequest();
                 return RedirectToPage("/NotFound");
             }
 
@@ -98,17 +97,17 @@ namespace OnlineStore.Pages.Product
                 var orders = _orderRepository.GetSome(o => o.Status == OrderStatus.Delivered && o.IsDeleted == false);
                 foreach (var order in orders)
                 {
-                    var address = _addressRepository.GetSome(a => a.Id == order.AddressId && a.IsDeleted == false);
-                    foreach (var _address in address)
+                    var addresses = _addressRepository.GetSome(a => a.Id == order.AddressId && a.IsDeleted == false);
+                    foreach (var _address in addresses)
                     {
                         if (_address.Id == order.AddressId && _address.CustomerId == user.Id)
                         {
-                            var orderitems = _orderItemRepository.GetSome(cd => cd.IsDeleted == false && cd.ItemId == id).ToList();
-                            foreach (var orderitem in orderitems)
+                            var orderItems = _orderItemRepository.GetSome(cd => cd.IsDeleted == false && cd.ItemId == id).ToList();
+                            foreach (var item in orderItems)
                             {
-                                if (orderitem.OrderId == order.Id)
+                                if (item.OrderId == order.Id)
                                 {
-                                    isordered = true;
+                                    isOrdered = true;
                                     break;
                                 }
                             }
