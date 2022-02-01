@@ -35,7 +35,7 @@
                     }),
                     success: function () {
                         commons.notify('Thêm vào giỏ hàng thành công', 'success');
-                        loadItemMyCart.init();
+                        header.init();
                         commons.stopLoading();
                     },
                     error: function (response) {

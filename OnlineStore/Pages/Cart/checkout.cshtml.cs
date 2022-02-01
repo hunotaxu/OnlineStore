@@ -491,7 +491,6 @@ namespace OnlineStore.Pages.Order
                 foreach (CartDetail cartDetail in cartDetails)
                 {
                     cartDetail.IsDeleted = true;
-                    cartDetail.Quantity = 0;
                     _context.CartDetail.Update(cartDetail);
                     _context.SaveChanges();
                 }

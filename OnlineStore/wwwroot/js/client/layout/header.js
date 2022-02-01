@@ -1,28 +1,25 @@
-﻿jQuery(document).ready(function ($) {
-    var $filter = $('.header-inner');
-    var $filterSpacer = $('<div />', {
-        "class": "vnkings-spacer",
-        "height": $filter.outerHeight()
-    });
-    if ($filter.size()) {
-        $(window).scroll(function () {
-            if (!$filter.hasClass('fix') && $(window).scrollTop() > $filter.offset().top) {
-                $filter.before($filterSpacer);
-                $filter.addClass("fix");
-            }
-            else if ($filter.hasClass('fix') && $(window).scrollTop() < $filterSpacer.offset().top) {
-                $filter.removeClass("fix");
-                $filterSpacer.remove();
-            }
-        });
-    }
-});
-
-var loadItemMyCart = (function () {
+﻿var header = (function () {
     var init = function () {
+        var $filter = $('.header-inner');
+        var $filterSpacer = $('<div />', {
+            "class": "vnkings-spacer",
+            "height": $filter.outerHeight()
+        });
+        if ($filter.size()) {
+            $(window).scroll(function () {
+                if (!$filter.hasClass('fix') && $(window).scrollTop() > $filter.offset().top) {
+                    $filter.before($filterSpacer);
+                    $filter.addClass("fix");
+                }
+                else if ($filter.hasClass('fix') && $(window).scrollTop() < $filterSpacer.offset().top) {
+                    $filter.removeClass("fix");
+                    $filterSpacer.remove();
+                }
+            });
+        }
         loadItemCart();
         loadCartLayout();
-    };
+    }
     var loadItemCart = function () {
         $.ajax({
             type: "GET",
@@ -32,16 +29,13 @@ var loadItemMyCart = (function () {
             //},
             success: function (response) {
                 if (response !== '') {
-                    //$('#cart-itemtotal').html(`${commons.formatNumber((response), 0)}đ`);
                     $('#cart-itemtotal').html(response);
                 } else {
                     $('#cart-itemtotal').html(`0`);
                 }
-                //commons.stopLoading();
                 document.getElementById("cart-itemtotal").innerHTML.replace;
             },
             error: function () {
-                //commons.stopLoading();
                 $('#cart-itemtotal').html(`0`);
             }
         });
@@ -63,7 +57,6 @@ var loadItemMyCart = (function () {
                             ProductName: item.productName,
                             Image: item.image,
                             Price: `${commons.formatNumber(item.price, 0)}đ`,
-                            //TotalPrice: `${commons.formatNumber(item.price * item.quantity, 0)}đ`,
                             Quantity: item.quantity
                         });
                         PriceTotaltmp += item.price * item.quantity;

@@ -37,32 +37,27 @@ namespace OnlineStore.Services
 
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
         {
-            //var actionContext = GetActionContext();
             var actionContext = new ActionContext(_contextAccessor.HttpContext, _contextAccessor.HttpContext.GetRouteData(), new ActionDescriptor());
             var view = FindView(actionContext, viewName);
 
-            using (var output = new StringWriter())
-            {
-                var viewContext = new ViewContext(
-                    actionContext,
-                    view,
-                    new ViewDataDictionary<TModel>(
-                        metadataProvider: new EmptyModelMetadataProvider(),
-                        modelState: new ModelStateDictionary())
-                    {
-                        Model = model
-                    },
-                    new TempDataDictionary(
-                        actionContext.HttpContext,
-                        _tempDataProvider),
-                    output,
-                    new HtmlHelperOptions());
+            using var output = new StringWriter();
+            var viewContext = new ViewContext(
+                actionContext,
+                view,
+                new ViewDataDictionary<TModel>(
+                    metadataProvider: new EmptyModelMetadataProvider(),
+                    modelState: new ModelStateDictionary())
+                {
+                    Model = model
+                },
+                new TempDataDictionary(
+                    actionContext.HttpContext,
+                    _tempDataProvider),
+                output,
+                new HtmlHelperOptions());
 
-                await view.RenderAsync(viewContext);
-                //view.RenderAsync(viewContext);
-
-                return output.ToString();
-            }
+            await view.RenderAsync(viewContext);
+            return output.ToString();
         }
 
         private IView FindView(ActionContext actionContext, string viewName)
