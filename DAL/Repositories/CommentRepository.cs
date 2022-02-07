@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 
 namespace DAL.Repositories
 {
-    public class CommentRepository : RepoBase<Comment>, ICommentRepository
+    public class CommentRepository : BaseRepository<Comment>, ICommentRepository
     {
         public CommentRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {

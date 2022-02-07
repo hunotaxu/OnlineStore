@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DAL.Data.Entities.Base;
 using DAL.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Data.Entities
 {
-    public class GoodsReceiptDetail
+    public class GoodsReceiptDetail : EntityBase
     {
         public int GoodsReceiptId { get; set; }
 
@@ -12,11 +13,6 @@ namespace DAL.Data.Entities
 
         [Display(Name = "Số lượng")]
         public int Quantity { get; set; }
-
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
-
-        public bool IsDeleted { get; set; }
 
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual Item Item { get; set; }

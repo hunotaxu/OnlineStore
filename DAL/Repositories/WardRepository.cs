@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DAL.Repositories
 {
-    public class WardRepository : RepoBase<Ward>, IWardRepository
+    public class WardRepository : BaseRepository<Ward>, IWardRepository
     {
         public WardRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {

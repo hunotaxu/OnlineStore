@@ -1,28 +1,21 @@
-﻿using System;
+﻿using DAL.Data.Entities;
+using DAL.Data.Enums;
+using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using DAL.Data.Entities;
-using DAL.EF;
-using Utilities.DTOs;
 using OfficeOpenXml;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using Microsoft.Extensions.Logging;
-using DAL.Data.Enums;
+using System.Linq;
+using Utilities.DTOs;
 
 namespace DAL.Repositories
 {
-    public class ItemRepository : RepoBase<Item>, IItemRepository
+    public class ItemRepository : BaseRepository<Item>, IItemRepository
     {
-        private readonly ILogger<ItemRepository> _logger;
-        //public ItemRepository(ILogger logger)
-        //{
-        //    _logger = logger;
-        //}
-        public ItemRepository(DbContextOptions<OnlineStoreDbContext> options, ILogger<ItemRepository> logger) : base(options)
+        public ItemRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null) : base(options, context)
         {
-            _logger = logger;
         }
 
         public IEnumerable<Item> GetByCategory(int categoryId)
@@ -41,6 +34,7 @@ namespace DAL.Repositories
 
             if (!string.IsNullOrEmpty(searchString))
             {
+                searchString = searchString.Trim();
                 query = query.Where(i => i.Name.Contains(searchString, StringComparison.InvariantCultureIgnoreCase) && i.Quantity > 0);
             }
 
@@ -60,9 +54,14 @@ namespace DAL.Repositories
                 case SortType.PriceLowToHigh:
                     query = new List<Item>(query.OrderBy(s => s.Price));
                     break;
+
                 case SortType.PriceHighToLow:
                     query = new List<Item>(query.OrderByDescending(s => s.Price));
                     break;
+
+                case SortType.Popularity:
+                    break;
+
                 default:
                     query = new List<Item>(query.OrderByDescending(s => s.View));
                     break;
@@ -87,7 +86,6 @@ namespace DAL.Repositories
 
             var All = query.ToList();
 
-            //query = query.OrderByDescending(x => x.DateCreated).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             query = query.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
             var paginationSet = new PagedResult<Item>
@@ -146,12 +144,14 @@ namespace DAL.Repositories
                     Item item;
                     for (int i = workSheet.Dimension.Start.Row + 1; i <= workSheet.Dimension.End.Row; i++)
                     {
-                        item = new Item();
-                        item.CategoryId = categoryId;
-                        item.SKU = workSheet.Cells[i, 1].Value.ToString();
-                        item.Name = workSheet.Cells[i, 2].Value.ToString();
-                        item.Description = workSheet.Cells[i, 3].Value.ToString();
-                        item.BrandName = workSheet.Cells[i, 4].Value.ToString();
+                        item = new Item
+                        {
+                            CategoryId = categoryId,
+                            SKU = workSheet.Cells[i, 1].Value.ToString(),
+                            Name = workSheet.Cells[i, 2].Value.ToString(),
+                            Description = workSheet.Cells[i, 3].Value.ToString(),
+                            BrandName = workSheet.Cells[i, 4].Value.ToString()
+                        };
                         decimal.TryParse(workSheet.Cells[i, 5].Value.ToString(), out var quantity);
                         item.Quantity = Convert.ToInt32(quantity);
                         decimal.TryParse(workSheet.Cells[i, 6].Value.ToString(), out var price); // Trong C# 7 không cần khai báo trước price
@@ -166,7 +166,6 @@ namespace DAL.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError("Cannot import file", ex.Message);
                 return false;
             }
         }

@@ -5,11 +5,10 @@ using DAL.EF;
 
 namespace DAL.Repositories
 {
-    public class CategoryRepository : RepoBase<Category>, ICategoryRepository
+    public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         public CategoryRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {
-
         }
     }
 }

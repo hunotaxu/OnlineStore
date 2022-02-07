@@ -1,10 +1,10 @@
+using DAL.Data.Entities.Base;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Data.Entities.Base;
-using Newtonsoft.Json;
 
 namespace DAL.Data.Entities
 {
@@ -18,9 +18,12 @@ namespace DAL.Data.Entities
             OrderItems = new HashSet<OrderItem>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [DisplayName("Tên sản phẩm")]
         [Required]
-        [Column(TypeName="nvarchar(100)")]
+        [Column(TypeName = "nvarchar(100)")]
         public string Name { get; set; }
 
         [Display(Name = "Giá")]
@@ -51,6 +54,7 @@ namespace DAL.Data.Entities
 
         [Display(Name = "Thương hiệu")]
         public string BrandName { get; set; }
+
         [Display(Name = "Mã SKU")]
         public string SKU { get; set; }
 
@@ -73,6 +77,7 @@ namespace DAL.Data.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual ICollection<OrderItem> OrderItems { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<ProductImages> ProductImages { get; set; }
     }

@@ -10,13 +10,13 @@ using System.Linq.Expressions;
 
 namespace DAL.Repositories.Base
 {
-    public abstract class RepoBase<T> : IRepo<T> where T : EntityBase, new()
+    public class BaseRepository<T> : IRepo<T> where T : EntityBase
     {
         protected readonly OnlineStoreDbContext Db;
 
-        protected RepoBase(DbContextOptions<OnlineStoreDbContext> options)
+        public BaseRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null)
         {
-            Db = new OnlineStoreDbContext(options);
+            Db = context ?? new OnlineStoreDbContext(options);
             Table = Db.Set<T>();
         }
 
@@ -136,27 +136,27 @@ namespace DAL.Repositories.Base
             return persist ? SaveChanges() : 0;
         }
 
-        internal T GetEntryFromChangeTracker(int? id)
-        {
-            return Db.ChangeTracker.Entries<T>()
-                .Select((EntityEntry e) => (T)e.Entity)
-                    .FirstOrDefault(x => x.Id == id);
-        }
+        //internal T GetEntryFromChangeTracker(int? id)
+        //{
+        //    return Db.ChangeTracker.Entries<T>()
+        //        .Select((EntityEntry e) => (T)e.Entity)
+        //            .FirstOrDefault(x => x.Id == id);
+        //}
 
-        public int Delete(int id, byte[] timeStamp, bool persist = true)
-        {
-            var entry = GetEntryFromChangeTracker(id);
-            if (entry != null)
-            {
-                if (entry.Timestamp.SequenceEqual(timeStamp))
-                {
-                    return Delete(entry, persist);
-                }
-                throw new Exception("Unable to delete due to concurrency violation.");
-            }
-            Db.Entry(new T { Id = id, Timestamp = timeStamp }).State = EntityState.Deleted;
-            return persist ? SaveChanges() : 0;
-        }
+        //public int Delete(int id, byte[] timeStamp, bool persist = true)
+        //{
+        //    var entry = GetEntryFromChangeTracker(id);
+        //    if (entry != null)
+        //    {
+        //        if (entry.Timestamp.SequenceEqual(timeStamp))
+        //        {
+        //            return Delete(entry, persist);
+        //        }
+        //        throw new Exception("Unable to delete due to concurrency violation.");
+        //    }
+        //    Db.Entry(new T { Id = id, Timestamp = timeStamp }).State = EntityState.Deleted;
+        //    return persist ? SaveChanges() : 0;
+        //}
 
         public int SaveChanges()
         {

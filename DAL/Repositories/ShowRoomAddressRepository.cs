@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ShowRoomAddressRepository : RepoBase<ShowRoomAddress>, IShowRoomAddressRepository
+    public class ShowRoomAddressRepository : BaseRepository<ShowRoomAddress>, IShowRoomAddressRepository
     {
         public ShowRoomAddressRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {

@@ -252,7 +252,7 @@ var itemPage = (function () {
                     loadData(true);
                 },
                 error: function (status) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.notify('Đã xảy ra lỗi', 'error');
                     commons.stopLoading();
                 }
             });
@@ -319,7 +319,7 @@ var itemPage = (function () {
                     loadData(true);
                 },
                 error: function (response) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.notify('Đã xảy ra lỗi', 'error');
                     commons.stopLoading();
                 }
             });

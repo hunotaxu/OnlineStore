@@ -50,7 +50,7 @@ namespace OnlineStore.Pages.Admin.Orders
         {
             DAL.Data.Entities.Order order = _orderRepository.Find(model.Id);
             _orderRepository.Delete(order);
-            List<OrderItem> lineItem = _orderItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
+            IEnumerable<OrderItem> lineItem = _orderItemRepository.GetSome(x => x.OrderId == model.Id && x.IsDeleted == false);
             _orderItemRepository.DeleteRange(lineItem);
             return new OkResult();
         }

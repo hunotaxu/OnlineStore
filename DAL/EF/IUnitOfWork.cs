@@ -6,9 +6,17 @@ namespace DAL.EF
     public interface IUnitOfWork : IDisposable
     {
         IOrderRepository OrderRepository { get; }
-        /// <summary>
-        /// Call save change from db context
-        /// </summary>
+        IOrderItemRepository OrderItemRepository { get; }
+        IAddressRepository AddressRepository { get; }
+        ICartRepository CartRepository { get; }
+        IItemRepository ItemRepository { get; }
+        ICartDetailRepository CartDetailRepository { get; }
+        IReceivingTypeRepository ReceivingTypeRepository { get; }
+
         void Save();
+
+        void Commit();
+
+        void Rollback();
     }
 }

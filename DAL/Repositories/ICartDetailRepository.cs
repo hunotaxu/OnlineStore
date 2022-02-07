@@ -1,22 +1,9 @@
-﻿using DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using DAL.Data.Entities;
+﻿using DAL.Data.Entities;
+using DAL.Repositories.Base;
 
 namespace DAL.Repositories
 {
-    public interface ICartDetailRepository
+    public interface ICartDetailRepository : IRepo<CartDetail>
     {
-        CartDetail Find(Expression<Func<CartDetail, bool>> where);
-        IEnumerable<CartDetail> GetSome(Expression<Func<CartDetail, bool>> where);
-        int Add(CartDetail entity, bool persist = true);
-        int Update(CartDetail entity, bool persist = true);
-        //int Update(int itemId, int cartId, int newQuantity, bool persist = true);
-        int Delete(CartDetail entity, bool persist = true);
-        void DeleteRangeWithoutSave(IEnumerable<CartDetail> entities);
-        int Delete(int itemId, int cartId, bool persist = true);
-        int DeleteRange(IEnumerable<CartDetail> entities, bool persist = true);
-        int SaveChanges();
     }
 }

@@ -56,7 +56,7 @@
                             commons.notify(response.responseText, 'error');
                         }
                         else {
-                            commons.notify('Đã có lỗi xãy ra', 'error');
+                            commons.notify('Đã xảy ra lỗi', 'error');
                         }
                         commons.stopLoading();
                     }
@@ -129,7 +129,7 @@
                     //loadData(true);
                 },
                 error: function () {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.notify('Đã xảy ra lỗi', 'error');
                     commons.stopLoading();
                 }
             });

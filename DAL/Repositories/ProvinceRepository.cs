@@ -8,7 +8,7 @@ using System.Text;
 
 namespace DAL.Repositories  
 {   
-    public class ProvinceRepository : RepoBase<Province>, IProvinceRepository
+    public class ProvinceRepository : BaseRepository<Province>, IProvinceRepository
     {
         public ProvinceRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {

@@ -71,7 +71,7 @@ var category = (function () {
                         loadData();
                     },
                     error: function (status) {
-                        commons.notify('Đã có lỗi xãy ra', 'error');
+                        commons.notify('Đã xảy ra lỗi', 'error');
                         commons.stopLoading();
                     }
                 });
@@ -109,7 +109,7 @@ var category = (function () {
                         loadData(true);
                     },
                     error: function () {
-                        commons.notify('Đã có lỗi xãy ra', 'error');
+                        commons.notify('Đã xảy ra lỗi', 'error');
                         commons.stopLoading();
                     }
                 });
@@ -212,7 +212,7 @@ var category = (function () {
                                     loadData();
                                 },
                                 failure: function (res) {
-                                    commons.notify('Đã có lỗi xãy ra', 'error');
+                                    commons.notify('Đã xảy ra lỗi', 'error');
                                 }
                             });
                         }
@@ -235,7 +235,7 @@ var category = (function () {
                                     loadData();
                                 },
                                 failure: function (res) {
-                                    commons.notify('Đã có lỗi xãy ra', 'error');
+                                    commons.notify('Đã xảy ra lỗi', 'error');
                                 }
                             });
                         }

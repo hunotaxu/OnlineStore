@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ReceivingTypeRepository : RepoBase<ReceivingType>, IReceivingTypeRepository
+    public class ReceivingTypeRepository : BaseRepository<ReceivingType>, IReceivingTypeRepository
     {
-        public ReceivingTypeRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
+        public ReceivingTypeRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null) : base(options, context)
         {
-
         }
     }
 }

@@ -134,7 +134,7 @@
                             commons.notify(response.responseText, 'error');
                         }
                         else {
-                            commons.notify('Đã có lỗi xãy ra', 'error');
+                            commons.notify('Đã xảy ra lỗi', 'error');
                         }
                     },
                     complete: function () {

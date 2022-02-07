@@ -7,11 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class CartRepository : RepoBase<Cart>, ICartRepository
+    public class CartRepository : BaseRepository<Cart>, ICartRepository
     {
-        public CartRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
+        public CartRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null) : base(options, context)
         {
-
         }
 
         public int Add(Cart cart)

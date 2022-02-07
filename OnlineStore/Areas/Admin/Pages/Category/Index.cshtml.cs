@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
+﻿using AutoMapper;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OnlineStore.Models.ViewModels.Item;
-using System;
 using OnlineStore.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OnlineStore.Areas.Admin.Pages.Category
 {
@@ -15,36 +14,31 @@ namespace OnlineStore.Areas.Admin.Pages.Category
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IItemRepository _itemRepository;
-        //private readonly MapperConfiguration _mapperConfiguration;
         private readonly IMapper _mapper;
+
         public class InputModel
         {
-            public int sourceId { get; set; }
-            public int targetId { get; set; }
-            public List<string> items { get; set; }
+            public int SourceId { get; set; }
+            public int TargetId { get; set; }
+            public List<string> Items { get; set; }
         }
-        public IndexModel(ICategoryRepository categoryRepository, IItemRepository itemRepository)
+
+        public IndexModel(ICategoryRepository categoryRepository, IItemRepository itemRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _itemRepository = itemRepository;
-            //_mapperConfiguration = new MapperConfiguration(config =>
-            //{
-            //    config.CreateMap<DAL.Data.Entities.Category, CategoryViewModel>();
-            //    config.CreateMap<CategoryViewModel, DAL.Data.Entities.Category>();
-            //});
+            _mapper = mapper;
         }
 
         public IActionResult OnGetAll()
         {
             var categories = _categoryRepository.GetAll();
-            //var model = _mapperConfiguration.CreateMapper().Map<IEnumerable<CategoryViewModel>>(categories);
             IEnumerable<CategoryViewModel> model = _mapper.Map<IEnumerable<CategoryViewModel>>(categories);
             return new OkObjectResult(model);
         }
 
         public IActionResult OnGetById(int id)
         {
-            //var model = _mapperConfiguration.CreateMapper().Map<CategoryViewModel>(_categoryRepository.Find(id));
             CategoryViewModel model = _mapper.Map<CategoryViewModel>(_categoryRepository.Find(id));
             return new OkObjectResult(model);
         }
@@ -105,20 +99,19 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             return new OkResult();
         }
 
-        public IActionResult OnPostReOrder([FromBody]InputModel input)
+        public IActionResult OnPostReOrder([FromBody] InputModel input)
         {
             if (!ModelState.IsValid)
             {
                 return new BadRequestObjectResult(ModelState);
             }
-            if (input.sourceId == input.targetId)
+            if (input.SourceId == input.TargetId)
             {
                 return new BadRequestResult();
             }
-            var sourceCategory = _categoryRepository.Find(input.sourceId);
-            var targetCategory = _categoryRepository.Find(input.targetId);
+            var sourceCategory = _categoryRepository.Find(input.SourceId);
+            var targetCategory = _categoryRepository.Find(input.TargetId);
             var tempOrder = sourceCategory.SortOrder;
-            //sourceCategory.ParentId = targetCategory.ParentId;
             sourceCategory.SortOrder = targetCategory.SortOrder;
             _categoryRepository.Update(sourceCategory);
             targetCategory.SortOrder = tempOrder;
@@ -127,22 +120,22 @@ namespace OnlineStore.Areas.Admin.Pages.Category
             return new OkResult();
         }
 
-        public IActionResult OnPostUpdateParentId([FromBody]InputModel input)
+        public IActionResult OnPostUpdateParentId([FromBody] InputModel input)
         {
             if (!ModelState.IsValid)
             {
                 return new BadRequestObjectResult(ModelState);
             }
-            if (input.sourceId == input.targetId)
+            if (input.SourceId == input.TargetId)
             {
                 return new BadRequestResult();
             }
-            var sourceCategory = _categoryRepository.Find(input.sourceId);
-            sourceCategory.ParentId = input.targetId;
+            var sourceCategory = _categoryRepository.Find(input.SourceId);
+            sourceCategory.ParentId = input.TargetId;
             _categoryRepository.Update(sourceCategory);
-            for (byte i = 0; i < input.items.Count; i++)
+            for (byte i = 0; i < input.Items.Count; i++)
             {
-                var child = _categoryRepository.Find(int.Parse(input.items[i]));
+                var child = _categoryRepository.Find(int.Parse(input.Items[i]));
                 child.SortOrder = i;
                 _categoryRepository.Update(child);
             }

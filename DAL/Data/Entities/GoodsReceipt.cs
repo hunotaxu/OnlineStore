@@ -13,7 +13,9 @@ namespace DAL.Models
             GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
         }
 
-        //public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Mã nhà cung cấp")]
         public int SupplierId { get; set; }
 

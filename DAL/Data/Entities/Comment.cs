@@ -1,12 +1,15 @@
-﻿using System;
+﻿using DAL.Data.Entities.Base;
+using System;
 using System.ComponentModel.DataAnnotations;
-using DAL.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Data.Entities
 {
     public class Comment : EntityBase
     {
-        //public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         public string Content { get; set; }
 
         public int ItemId { get; set; }
@@ -22,6 +25,5 @@ namespace DAL.Data.Entities
 
         public virtual ApplicationUser Customer { get; set; }
         public virtual Item Item { get; set; }
-
     }
 }

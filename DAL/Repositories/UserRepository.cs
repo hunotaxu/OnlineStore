@@ -69,7 +69,7 @@ namespace DAL.Repositories
             {
                 return false;
             }
-            return FindUser(u => string.Equals(u.Email, email, StringComparison.OrdinalIgnoreCase) && u.Id != userId) != null;
+            return FindUser(u => u.Email == email && u.Id != userId) != null;
         }
 
         public bool IsProductManager(string userName)

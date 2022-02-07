@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DAL.Data.Entities.Base;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Data.Entities.Base;
-using Newtonsoft.Json;
 
 namespace DAL.Data.Entities
 {
@@ -14,8 +14,11 @@ namespace DAL.Data.Entities
             Item = new HashSet<Item>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Column(TypeName = "nvarchar(200)")]
-        [Display(Name="Tên loại")]
+        [Display(Name = "Tên loại")]
         [Required]
         public string Name { get; set; }
 

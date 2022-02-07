@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using DAL.Data.Entities.Base;
+using DAL.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using DAL.Data.Entities.Base;
-using DAL.Models;
 
 namespace DAL.Data.Entities
 {
@@ -13,7 +13,9 @@ namespace DAL.Data.Entities
             GoodsReceipts = new HashSet<GoodsReceipt>();
         }
 
-        //public int Id { get; set; }
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Tên")]
         [Column(TypeName = "nvarchar(200)")]
         public string Name { get; set; }

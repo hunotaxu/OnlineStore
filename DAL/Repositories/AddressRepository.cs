@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class AddressRepository : RepoBase<Address>, IAddressRepository
+    public class AddressRepository : BaseRepository<Address>, IAddressRepository
     {
-        public AddressRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
+        public AddressRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null) : base(options, context)
         {
         }
     }

@@ -1,10 +1,15 @@
 ﻿using DAL.Data.Entities.Base;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DAL.Data.Entities
 {
     public class ShowRoomAddress : EntityBase
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         public int ProvinceId { get; set; }
         public int DistrictId { get; set; }
         public int WardId { get; set; }

@@ -31,11 +31,11 @@ namespace OnlineStore.Areas.Admin.ViewComponents
         public Task<IViewComponentResult> InvokeAsync(int orderId)
         {
             var order = _orderRepository.Find(orderId);
-            List<OrderItem> lineItems = _orderItemRepository.GetSome(x => x.OrderId == orderId);
+            var lineItems = _orderItemRepository.GetSome(x => x.OrderId == orderId);
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 
             List<OrderProductInfoViewModel> orderProducts = new List<OrderProductInfoViewModel>();
-            if(lineItems?.Any() == true)
+            if (lineItems?.Any() == true)
             {
                 decimal total = 0;
                 foreach (var item in lineItems)

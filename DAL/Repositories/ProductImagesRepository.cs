@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
-    public class ProductImagesRepository : RepoBase<ProductImages>, IProductImagesRepository
+    public class ProductImagesRepository : BaseRepository<ProductImages>, IProductImagesRepository
     {
         public ProductImagesRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
         {

@@ -16,6 +16,7 @@ namespace OnlineStore.Areas.Admin.Pages.Order
     {
         private readonly IReceivingTypeRepository _receivingTypeRepository;
         private readonly IOrderRepository _orderRepository;
+
         public ReceivingTypeManagementModel(
             IReceivingTypeRepository receivingTypeRepository,
             IOrderRepository orderRepository)
@@ -23,9 +24,9 @@ namespace OnlineStore.Areas.Admin.Pages.Order
             _receivingTypeRepository = receivingTypeRepository;
             _orderRepository = orderRepository;
         }
+
         public void OnGet()
         {
-
         }
 
         public IActionResult OnGetAllPaging()
@@ -70,7 +71,7 @@ namespace OnlineStore.Areas.Admin.Pages.Order
         {
             var receivingType = _receivingTypeRepository.Find(model.Id);
             _receivingTypeRepository.Delete(receivingType);
-            var orders = _orderRepository.GetSome(x => x.ReceivingTypeId == model.Id && x.IsDeleted == false);
+            var orders = _orderRepository.GetSome(x => (int)x.ReceivingTypeId == model.Id && x.IsDeleted == false);
             _orderRepository.DeleteRange(orders);
             return new OkResult();
         }

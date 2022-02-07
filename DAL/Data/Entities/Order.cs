@@ -15,6 +15,9 @@ namespace DAL.Data.Entities
             OrderItems = new HashSet<OrderItem>();
         }
 
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Ngày giao dự kiến")]
         [DataType(DataType.Date)]
         public DateTime? DeliveryDate { get; set; }
@@ -48,8 +51,10 @@ namespace DAL.Data.Entities
         public decimal? SaleOff { get; set; }
 
         public virtual ReceivingType ReceivingType { get; set; }
+
         [JsonIgnore]
         public virtual Address Address { get; set; }
+
         [JsonIgnore]
         public virtual ICollection<OrderItem> OrderItems { get; set; }
     }

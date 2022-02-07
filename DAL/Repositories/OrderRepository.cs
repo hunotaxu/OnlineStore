@@ -1,22 +1,26 @@
-﻿using System.Linq;
-using DAL.Data.Entities;
+﻿using DAL.Data.Entities;
 using DAL.Data.Enums;
 using DAL.EF;
 using DAL.Repositories.Base;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using Utilities.DTOs;
 
 namespace DAL.Repositories
 {
-    public class OrderRepository : RepoBase<Order>, IOrderRepository
+    public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
+        public OrderRepository(DbContextOptions<OnlineStoreDbContext> options, OnlineStoreDbContext context = null) : base(options, context)
+        {
+        }
+
         public PagedResult<Order> GetAllPaging(byte? deliveryTypeId, byte? orderStatus, string keyword, int pageIndex, int pageSize)
         {
             var query = GetSome(i => i.IsDeleted == false);
 
             if (deliveryTypeId.HasValue)
             {
-                query = query.Where(x => x.ReceivingTypeId == deliveryTypeId.Value);
+                query = query.Where(x => (byte)x.ReceivingTypeId == deliveryTypeId.Value);
             }
 
             if (orderStatus != 0)
@@ -47,10 +51,6 @@ namespace DAL.Repositories
         public void AddWithoutSave(Order order)
         {
             Table.Add(order);
-        }
-
-        public OrderRepository(DbContextOptions<OnlineStoreDbContext> options) : base(options)
-        {
         }
     }
 }

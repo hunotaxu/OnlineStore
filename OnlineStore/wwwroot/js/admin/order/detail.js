@@ -47,7 +47,7 @@
                         window.location.href = '/Admin/Order';
                     },
                     error: function () {
-                        commons.notify('Đã có lỗi xãy ra');
+                        commons.notify('Đã xảy ra lỗi');
                         commons.stopLoading();
                     }
                 });
@@ -81,7 +81,7 @@
                     commons.stopLoading();
                 },
                 error: function (response) {
-                    commons.notify('Đã có lỗi xãy ra', 'error');
+                    commons.notify('Đã xảy ra lỗi', 'error');
                     commons.stopLoading();
                 }
             });
