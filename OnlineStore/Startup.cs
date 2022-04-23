@@ -62,7 +62,7 @@ namespace OnlineStore
             services.AddSingleton(_ => Configuration);
             services.AddDbContext<OnlineStoreDbContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("xuhustoredb")).UseLazyLoadingProxies();
+                options.UseSqlServer(Configuration.GetConnectionString("timishopdb")).UseLazyLoadingProxies();
                 options.EnableSensitiveDataLogging();
             });
 
@@ -196,10 +196,11 @@ namespace OnlineStore
                 CultureInfo[] supportedCultures = new[]
                 {
                     new CultureInfo("vi"),
-                    new CultureInfo("en")
+                    //new CultureInfo("en")
                 };
                 //options.DefaultRequestCulture = new RequestCulture("en-GB");
-                options.DefaultRequestCulture = new RequestCulture("vi-VN");
+                //options.DefaultRequestCulture = new RequestCulture("vi-VN");
+                //options.DefaultRequestCulture = new RequestCulture("vi");
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
