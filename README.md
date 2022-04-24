@@ -1,5 +1,5 @@
 # Introduction
-XuhuStore is a simple e-commerce website built on .NET Core
+TimiStore is a simple e-commerce website built on .NET Core
 # Technologies and frameworks used:
 * ASP.NET Core 2.1 (Razor Pages)
 * Entity Framework Core
